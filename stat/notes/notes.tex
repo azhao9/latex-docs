@@ -1,0 +1,208 @@
+\documentclass{article}
+\usepackage[sexy, hdr, fancy]{evan}
+
+\setlength{\droptitle}{-4em}
+
+\lhead{\leftmark}
+\rhead{Introduction to Statistics}
+\cfoot{\thepage}
+
+\begin{document}
+\title{Introduction to Statistics Lecture Notes}
+\maketitle
+	This is EN.550.430 Introduction to Statistics, taught by Avanti Athreya.
+
+\thispagestyle{fancy}
+
+\tableofcontents
+\newpage
+
+\section{September 7, 2016}
+\subsection{Inferential Statistics}
+
+\begin{definition}[Inferential Statistics]
+	Using information from a \ul{sample} to draw conclusions about a \ul{population}.
+\end{definition}
+
+\begin{example}
+	Some examples\ldots
+	\begin{enumerate}
+		\ii Sample of newborn birth weights to understand mean birth weights in a country.
+
+		\ii Sample of respondents to a survey whether or not household has Direct TV. We refer to this as a \vocab{dichotomous} case because there are two possible values a response could take - yes or no.
+	\end{enumerate}
+\end{example}
+
+\subsection{Finite Population Sampling}
+
+Let a population be represented by $\{X_1, X_2, \cdots, X_N\}$ where $N$ is the size of the population. We have the \vocab{population parameters}:
+
+\begin{itemize}
+	\item \vocab{total }$\displaystyle\tau:=\sum_{i=1}^N X_i$
+	
+	\item \vocab{mean }$\mu:=\tau/N$
+
+	\item \vocab{variance }$\displaystyle\sigma^2:=\frac{1}{N}\sum_{i=1}^N(X_i-\mu)^2$
+\end{itemize}
+
+\begin{remark}
+	None of these are random values, they are deterministic. This distinction will become important.
+\end{remark}
+
+\begin{proposition}
+	In the dichotomous case, $\mu=p$ (the population \vocab{proportion}) and $\sigma^2=p(1-p).$ 
+\end{proposition}
+
+\begin{proof}
+	Since $X_i=1$ if the observation is true and $X_i=0$ if false, the sum is just the number of true observations, so divided by the total number of observations gives the proportion.
+
+	Next, observe that 
+	\begin{align*}
+		\sigma^2&=\frac{1}{N}\sum_{i=1}^N(X_i-\mu)^2=\frac{1}{N}\sum_{i=1}^N(X_i^2-2\mu X_i+\mu^2) \\
+		&= \frac{1}{N}\left( \sum_{i=1}^N X_i^2 - 2\mu\sum_{i=1}^N X_i + \sum_{i=1}^N \mu^2 \right) \\
+		&= \frac{1}{N}\left( \sum_{i=1}^N X_i^2-2\mu(\mu N) + N\mu^2 \right) = \frac{1}{N}\left( \sum_{i=1}^N X_i^2 - \mu^2 \right)
+	\end{align*}
+	In the dichotomous case, \[\frac{1}{N}\sum_{i=1}^N X_i^2 = p\] since $X_i^2=X_i$ because $X_i$ takes on either 0 or 1, and $\mu^2=p^2,$ so \[\sigma^2=p-p^2=p(1-p).\]
+\end{proof}
+
+\subsection{Simple Random Sampling and Unconscious Statisticians\ldots}
+Draw a sample of $n$ measurements from population: $\{X_1, X_2, \cdots, X_n\}$, and there are $\binom{N}{n}$ different possible subsets. Recall that $\{X_1, X_2, \cdots, X_N\}$ is the population. Then let $\{\xi_1, \xi_2, \cdots, \xi_m\}$ represent the set of all distinct observation values of $X_i.$ Note in particular that $m\le N.$
+
+Consider a random draw $X_i$ from the population so that $X_i\in\{\xi_1, \xi_2, \cdots, \xi_m\}.$ Define the distribution \[P(X_i = \xi_\ell)=\frac{\text{\# of }\xi_\ell\text{ in population}}{N} = \frac{n_\ell}{N},\] then we can compute 
+\begin{align*}
+	E[X_i] &= \sum_{j=1}^m \xi_j P(X_i = \xi_j) \\
+	&= \sum_{j=1}^m \xi_j\cdot\frac{n_j}{N} = \frac{1}{N}\sum_{j=1}^m \xi_j n_j = \frac{1}{N}\tau = \mu.
+\end{align*}
+
+The crucial step is the equality $\displaystyle\sum_{j=1}^m \xi_j n_j = \tau.$ Think about what $\xi_j$ and $n_j$ mean, and this becomes obvious. 
+
+We may think of $X_i$ as a way to estimate $\mu.$ It is \vocab{unbiased} because $E[X_i]=\mu,$ but it may not be a ``great'' estimate. We formulate a more specific notion of ``greatness'' of an estimate by considering its variance: the \ul{smaller} the variance, the \ul{better} the estimate. 
+
+\begin{theorem}[Law of the Unconscious Statistician]
+	Assume that $g$ behaves nicely. 
+	\begin{itemize}
+			\ii If $X$ is a discrete random variable with PMF $p_X(x),$ then $\displaystyle E[g(X)] = \sum_{x}g(x) p_X(x)$
+			
+			\ii If $X$ is a continuous random variable with PDF $f_X(x),$ then $\displaystyle E[g(X)]=\int_x g(x) f_X(x)\, dx$
+	\end{itemize}
+\end{theorem}
+
+This basically means the distribution of $g(X)$ has the same structure as the distribution of $X.$ Using this theorem, we can derive the variance of $X_i$ from earlier:
+\begin{align*}
+	V(X_i) &= E[X_i^2]-(E[X_i])^2 = E[X_i^2]-\mu^2 \\
+	&= \sum_{j=1}^m \xi_j^2 P(X_i = \xi_j)-\mu^2 \\
+	&= \frac{1}{N}\sum_{j=1}^m \xi_j^2 n_j - \mu^2 = \frac{1}{N}\sum_{j=1}^m X_i^2 - \mu^2 = \sigma^2
+\end{align*} thus $V(X_i)$ is an unbiased estimator for $\sigma^2.$ 
+
+\subsection{Multiple Observation Sampling}
+Now we shift from a single draw $X_i$ to a set of multiple draws. Given a sample of size $n$, the \vocab{sample mean} is defined as $\displaystyle\bar{X}=\frac{1}{n}\sum_{i=1}^n X_i.$ Now, \[E[\bar{X}] = \frac{1}{n}\sum_{i=1}^n E[X_i] = \frac{1}{n}n\mu=\mu\] so $\bar{X}$ is an unbiased estimator for $\mu$ as well. 
+
+Computing the variance of $\bar{X}$ is slightly complicated by the different ways we can sample the observations. We address the case where we sample \ul{with replacement.} Then 
+\begin{align*}
+	V(\bar{X}) &= V\left( \frac{1}{n}\sum_{i=1}^n X_i \right) = \frac{1}{n^2}V\left( \sum_{i=1}^n X_i\right) \\
+	&= \frac{1}{n^2}\left( E\left[ \left( \sum_{i=1}^n X_i \right)^2 \right] - \left( E\left[ \sum_{i=1}^n X_i \right] \right)^2 \right) \\
+	&= \frac{1}{n^2}\left( E\left[ \left( \sum_{i=1}^n X_i \right)^2 \right]-n^2\mu^2 \right)
+\end{align*} and discussion of this is left to next week.
+
+
+
+\newpage
+
+\section{September 12, 2016}
+\subsection{Review of Terms}
+
+From last time, we defined a population to consist of a set of observations $\{X_1, X_2, \cdots, X_N\}$ where $N$ is the size of the population.
+
+The \vocab{population parameters} are defined as
+\begin{align*}
+	\mu &= \frac{1}{N}\sum_{i=1}^N X_i \\
+	\sigma^2 &= \frac{1}{N}\sum_{i=1}^N (X_i-\mu)^2
+\end{align*}
+
+We considered a single random draw $X_i$ from the population, and we showed that $E[X_i]=\mu,$ thus $X_i$ is an unbiased estimator for $\mu.$ We also showed that $V(X_i)=\sigma^2.$ Refer to the previous day's notes to confirm these.
+
+Next we considered the random sample $\{X_1, X_2, \cdots, X_n\}$ where $n\le N$ and the \vocab{sample mean} \[\bar{X}=\frac{1}{n}\sum_{i=1}^n X_i. \] We showed that $E[\bar{X}] = \mu$ so that $\bar{X}$ is an unbiased estimator for $\mu$ as well. Next, we set out to compute the variance of $\bar{X},$ which is where we will continue the discussion.
+
+\subsection{Variance of $\bar{X}$}
+The variance of $\bar{X}$ is 
+\begin{align*}
+	V(\bar{X}) &= V\left( \frac{1}{n}\sum_{i=1}^n X_i \right) = \frac{1}{n^2}V\left( \sum_{i=1}^n X_i \right) \\
+	&= \frac{1}{n^2}\left( E\left[ \left( \sum_{i=1}^n X_i\right)^2 \right] - \left( E\left[ \sum_{i=1}^n X_i \right] \right)^2\right) \\
+	&= \frac{1}{n^2} \left( E\left[ \left( \sum_{i=1}^n X_i \right)^2 \right] - (n\mu)^2 \right)
+\end{align*}
+
+\begin{example}[$n=2$]
+	When $n=2,$ this expected value is equivalent to 
+	\begin{align*}
+		V(\bar{X}) &= \frac{1}{2^2} (E[(X_1+X_2)^2]-(2\mu)^2) \\
+		&= \frac{1}{4} (E[X_1^2+2X_1X_2+X_2^2]-4\mu^2) \\
+		&= \frac{1}{4} \left[ (E[X_1^2]-(E[X_1])^2) + 2(E[X_1X_2]-E[X_1]E[X_2]) + (E[X_2^2]-(E[X_2])^2) \right] \\
+		&= \frac{1}{4} \left[ V(X_1) + 2cov(X_1, X_2) + V(X_2) \right]
+	\end{align*}
+	Note the substitutions for $\mu^2,$ and recall that covariance is $cov(X_1, X_2)=E[X_1X_2]-E[X_1]E[X_2].$
+\end{example}
+
+This example motivates us to write the variance of $\bar{X}$ purely in terms of the covariances of the $X_i,$ since $V(X_i)=cov(X_i, X_i).$ We may write \[ V(\bar{X})=\frac{1}{n^2}\sum_{i=1}^n\sum_{j=1}^n cov(X_i, X_j), \] and this is indeed the correct expression since there is one copy of $cov(X_i, X_i)$ for each $i$ and two copies of $cov(X_i, X_j)$ whenever $i\neq j$ since $cov(X_i, X_j)=cov(X_j, X_i).$ 
+
+Now we must consider two different methods of sampling: with replacement and without replacement. 
+
+\subsection{Sampling With Replacement}
+When we sample with replacement, each draw is independent from every other draw because they are all taken from the same population. Since $X_i$ is independent from $X_j$ whenever $i\neq j,$ it follows that $cov(X_i, X_j)=0,$ so all terms in the double summation vanish except where $i=j,$ so the sum is exactly \[V(\bar{X})=\frac{1}{n^2}\sum_{k=1}^n cov(X_k, X_k)=\frac{1}{n^2}(n\sigma^2)=\frac{\sigma^2}{n}.\]
+
+\begin{remark}
+	Note that as $n\to\infty,$ the sample variance $\frac{\sigma^2}{n}\to 0,$ so then $\bar{X}\to \mu.$ This is known as the \vocab{Law of Large Numbers}.
+\end{remark}
+
+\subsection{Sampling Without Replacement}
+Next we examine sampling without replacement. To do so, we must understand $cov(X_i, X_j),$ since these comprise all terms of the sum of interest.
+
+\begin{claim}
+	$cov(X_i, X_j)=-\frac{\sigma^2}{N-1}$
+\end{claim}
+
+\begin{proof}
+	This derivation is very, very long and tedious, but it follows the ideas presented in lecture. Please bear with me.
+
+	By the definition of covariance, we have \[cov(X_i, X_j)=E[X_iX_j]-E[X_i]E[X_j] = E[X_iX_j]-\mu^2.\] To compute $E[X_iX_j],$ we can treat $X_iX_j$ as a random variable whose density function is the joint density, and evaluate the sum \[\sum_{x, y} (xy)\cdot P(X_i=x,  X_j=y).\] 
+
+	Recall the terminology from the previous lecture, where we define the set of distinct observations $\{\xi_1, \xi_2,\cdots, \xi_m\}$ where $m\le N.$ These are just the distinct values of all the $X_k$ in the population. We also have $n_k$ is the number of times $\xi_k$ appears in the population, that is, how many of the $X_k$ take on the value $\xi_k.$ Using this change of variables, we can rewrite the sum as \[\sum_{k, \ell} \xi_k \xi_\ell P(X_i = \xi_k, X_j = \xi_\ell) = \sum_{k=1}^m\sum_{\ell=1}^m \xi_k\xi_\ell P(X_i=\xi_k, X_j=\xi_\ell).\] 
+
+	The draws $X_i$ and $X_j$ are not independent because the result of $X_i$ affects $X_j.$ To understand this, imagine a bag with 2 blue and 3 red marbles. If I draw a blue marble first with probability $2/5,$ the probability I draw a blue marble on the second try is only $1/4,$ so the draws are not independent. To complete the analogy, the colors of the marbles are the distinct $\xi_k,$ and we are drawing from them.
+
+	Since the draws are not independent, it makes sense to condition on one of them. We can rewrite \[P(X_i=\xi_k, X_j=\xi_\ell)=P(X_i=\xi_k\, \vert\, X_j=\xi_\ell)P(X_j=\xi_\ell)\] where we have conditioned the value of $X_i$ on what $X_j$ turned out to be. Then we can rewrite the double sum as 
+	\begin{align*}
+		&\sum_{k=1}^m\sum_{\ell=1}^m \xi_k\xi_\ell P(X_i=\xi_k\, \vert\, X_j=\xi_\ell)P(X_j=\xi_\ell) \\
+		= &\sum_{\ell=1}^m \left(\xi_\ell P(X_j=\xi_\ell) \cdot \sum_{k=1}^m \xi_k P(X_i=\xi_k\, \vert\, X_j=\xi_\ell)\right)
+\end{align*} where we were allowed to move the $\xi_\ell P(X_j=\xi\ell)$ outside the inner summation because it does not have any $k$ in it. 
+
+	Consider the right hand sum, \[\sum_{k=1}^m \xi_k P(X_i=\xi_k\, \vert\, X_j = \xi_\ell).\] Note that as $k$ varies, $k\neq \ell$ most of the time, except when $k=\ell.$ In the case that $k=\ell,$ that particular contribution to the sum is \[\xi_\ell P(X_i=\xi_\ell\, \vert\, X_j=\xi_\ell).\] We want the probability that $X_i=\xi_\ell$ given that $X_j$ was already $\xi_\ell.$ Since one copy of $\xi_\ell$ was already drawn as $X_j,$ there are $n_\ell-1$ copies remaining, out of a total of $N-1$ possibilities, so the probability is $\frac{n_\ell-1}{N-1},$ and the contribution is $\xi_\ell\frac{n_\ell-1}{N-1}.$ 
+
+	In the other cases, $k\neq\ell,$ so that after $X_j$ is determined to be $\xi_\ell,$ there are still $n_k$ copies of $\xi_k$ remaining, out of a total of $N-1,$ so their contributions are all $\xi_k\frac{n_k}{N-1}.$ Thus, the sum is split as 
+	\begin{align*}
+		\xi_\ell\frac{n_\ell-1}{N-1}+\sum_{k\neq\ell, k=1}^m \xi_k\frac{n_k}{N-1}&=\xi_\ell\frac{n_\ell}{N-1}-\frac{\xi_\ell}{N-1}+\sum_{k\neq\ell, k=1}^m \xi_k\frac{n_k}{N-1} \\
+		&= -\frac{\xi_\ell}{N-1}+\sum_{k=1}^m \xi_k\frac{n_k}{N-1}
+	\end{align*} where the value $\xi_\ell\frac{n_\ell}{N-1}$ was incorporated into the summation. Finishing, this is equal to \[-\frac{\xi_\ell}{N-1}+\frac{1}{N-1}\sum_{k=1}^m \xi_k n_k=\frac{\tau-\xi_\ell}{N-1}.\] Note that the sum here is equal to $\tau$ the total sum of all observations in the population. Think about what $\xi_k$ and $n_k$ mean if this is not clear.
+
+	Finally, we compute the summation
+\begin{align*}
+&\sum_{\ell=1}^m \xi_\ell P(X_j=\xi_\ell)\frac{\tau-\xi_\ell}{N-1} = \sum_{\ell=1}^m \xi_\ell \frac{n_\ell}{N}\frac{\tau-\xi_k}{N-1}=\frac{1}{N(N-1)}\sum_{\ell=1}^m \xi_\ell n_\ell (\tau-\xi_\ell) \\
+= &\frac{1}{N(N-1)}\sum_{\ell=1}^m\xi_\ell n_\ell (N\mu-\xi_k) = \frac{1}{N(N-1)}\left( N\mu\sum_{\ell=1}^m \xi_\ell n_\ell - \sum_{\ell=1}^m \xi_\ell^2 n_\ell \right) \\
+= &\frac{1}{N(N-1)}\left( N\mu(N\mu) - \sum_{i=1}^N X_i^2\right) = \frac{N\mu^2}{N-1} - \frac{1}{N(N-1)}\sum_{i=1}^N X_i^2
+\end{align*}
+Notice that summing $\xi_\ell^2 n_\ell$ is essentially taking each unique value in the population, squaring it, then multiplying by the number of times it appears. This is exactly the same as just taking the sum of the square of each value in the population. We know that \[V(X)=E[X^2]-(E[X])^2=\frac{1}{N}\sum_{i=1}^N X_i - \mu^2 = \sigma^2 \] is the variance of the entire population, so it follows that \[\sum_{i=1}^N X_i^2 = N(\mu^2+\sigma^2).\] Substituting this in above, we the expression becomes 
+\begin{align*}
+	\frac{N\mu^2}{N-1} - \frac{1}{N(N-1)}N(\mu^2+\sigma^2) &= \frac{N\mu^2}{N-1} - \frac{\mu^2+\sigma^2}{N-1} \\
+	&= \frac{\mu^2(N-1) - \sigma^2}{N-1} = \mu^2 - \frac{\sigma^2}{N-1}
+\end{align*}
+
+This is the value of $E[X_iX_j].$ To finally (yes, finally) compute the covariance $cov(X_i, X_j),$ we must subtract off $E[X_i]E[X_j]=\mu^2,$ so then 
+\begin{align*}
+	cov(X_i, X_j) &= E[X_iX_j]-E[X_i]E[X_j] \\
+	&= \left( \mu^2-\frac{\sigma^2}{N-1} \right) - \mu^2 \\
+	&= -\frac{\sigma^2}{N-1},
+\end{align*} as desired.
+\end{proof}
+
+Hopefully this clears up Dr. Athreya's lecture, which I noticed had many ``typoes'' and confusing switching of indices. 
+
+\end{document}
