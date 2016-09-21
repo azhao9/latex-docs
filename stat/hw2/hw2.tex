@@ -113,7 +113,7 @@
 			\end{center}
 			Now, the mean of the sampling distribution is 
 			\begin{align*}
-				E[\hat{p}]&=\sum_{\hat{p}} \hat{p} p_{\hat{P}} (\hat{p}) \\
+				E[\hat{p}]&=\sum_{\hat{p}} \hat{p}\cdot p_{\hat{P}} (\hat{p}) \\
 				&= 0\cdot\frac{3}{10} + \frac{1}{2}\cdot\frac{3}{5} + 1\cdot\frac{1}{10} \\
 				&= \boxed{\frac{2}{5}.}
 			\end{align*}
@@ -295,7 +295,7 @@
 
 			\ii Ignoring the finite population correction, show that \[ \var(R)=\frac{r(1-r)}{n}\] where $n$ is the sample size.
 			\begin{proof}
-				As in part c, define \[R=\frac{1}{n}\sum_{i=1}^n X_i\] where $X_i$ are from a sample $\{X_1, X_2, \cdots, X_n\}$ and $X_i=1$ if the $i$th respondent says Yes. Here, $E[X_i]=r$ and $\var(X_i)=r(1-r)$ since $X_i$ is Bernoulli. Then	\[\var(R) &= \var\left( \frac{1}{n}\sum_{i=1}^n X_i\right) = \frac{1}{n^2}\var\left( \sum_{i=1}^n X_i \right) \] Ignoring the finite population correction essentially assumes that each of $X_i$ are independent, so that the variance of their sum is the sum of their variances: \[\frac{1}{n^2}\var\left( \sum_{i=1}^n X_i \right) = \frac{1}{n^2}\sum_{i=1}^n \var(X_i) = \frac{1}{n^2}\sum_{i=1}^n r(1-r) = \frac{1}{n^2} nr(1-r) = \frac{r(1-r)}{n}\] as desired.
+				As in part c, define \[R=\frac{1}{n}\sum_{i=1}^n X_i\] where $X_i$ are from a sample $\{X_1, X_2, \cdots, X_n\}$ and $X_i=1$ if the $i$th respondent says Yes. Here, $E[X_i]=r$ and $\var(X_i)=r(1-r)$ since $X_i$ is Bernoulli. Then \[\var(R) = \var\left( \frac{1}{n}\sum_{i=1}^n X_i\right) = \frac{1}{n^2}\var\left( \sum_{i=1}^n X_i \right) \] Ignoring the finite population correction essentially assumes that each of $X_i$ are independent, so that the variance of their sum is the sum of their variances: \[\frac{1}{n^2}\var\left( \sum_{i=1}^n X_i \right) = \frac{1}{n^2}\sum_{i=1}^n \var(X_i) = \frac{1}{n^2}\sum_{i=1}^n r(1-r) = \frac{1}{n^2} nr(1-r) = \frac{r(1-r)}{n}\] as desired.
 				
 			\end{proof}
 
