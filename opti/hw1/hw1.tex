@@ -1,0 +1,234 @@
+\documentclass{article}
+\usepackage[sexy, hdr, fancy, diagrams]{evan}
+\setlength{\droptitle}{-4em}
+
+\lhead{Homework 1}
+\rhead{Introduction to Optimization}
+\lfoot{}
+\cfoot{\thepage}
+
+\begin{document}
+\title{Homework 1}
+\maketitle
+\thispagestyle{fancy}
+
+\begin{itemize}
+	\item[1:] Write a MATLAB function that minimizes $f(x)=(x-1)^2\sin x$ subject to $a\le x\le b$ where $a$ and $b$ are user input.
+
+	\item[2:] Analytically, find all global maximums, local maximums, global minimums, and local minimums for \[f(x)=(x^2-3)\sin x+2x\cos x\] subject to $-2\le x\le2.$ Justify.
+		\begin{soln}
+			Consider $f$ on the open interval $(-2, 2).$ Then the derivatives of $f$ exist everywhere, so we have 
+			\begin{align*}
+				f'(x) &= (x^2-3)\cos x + 2x\sin x + 2x(-\sin x) + 2\cos x \\
+				&= (x^2-1)\cos x \\
+				f''(x) &= (x^2-1)(-\sin x) + 2x\cos x
+			\end{align*}
+			The points of interest are where $f'(x)=0,$ which happens when $x^2-1=0$ or when $\cos x=0,$ which are $x=1, x=-1, x=\pi/2, x=-\pi/2.$ Evaluating $f$ at these points and the boundary points $x=2, x=-2,$ we have
+			\begin{align*}
+				f(1) &= -2\sin 1+2\cos 1 \approx -0.602\\
+				f(-1) &= -2\sin(-1)-2\cos(-1)  \approx 0.602 \\
+				f\left( \frac{\pi}{2} \right) &= \frac{\pi^2}{4}-3 \approx -0.533\\
+				f\left( -\frac{\pi}{2} \right) &= 3-\frac{\pi^2}{4} \approx 0.533\\
+				f(2) &= \sin2 + 4\cos 2 \approx -0.755\\
+				f(-2) &= \sin(-2)-4\cos(-2) \approx 0.755
+			\end{align*} Substituting the points into $f'',$ we have
+			\begin{align*}
+				f''(1) &= 2\cos 1 > 0 \\
+				f''(-1) &= -2\cos(-1) < 0 \\
+				f''\left( \frac{\pi}{2} \right) &= 1-\frac{\pi^2}{4} < 0 \\
+				f''\left( -\frac{\pi}{2} \right) &= \frac{\pi^2}{4}-1 > 0
+			\end{align*} so we can conclude that
+			\begin{center}
+				\begin{tabular}{c|c|c}
+					$x$ & $f(x)$ & type \\
+					\hline
+					1 & $-2\sin 1+2\cos 1$ & local minimum \\
+					-1 & $2\sin 1 - 2\cos 1$ & local maximum \\
+					$\frac{\pi}{2}$ & $\frac{\pi^2}{4} - 3$ & local maximum \\
+					$-\frac{\pi}{2}$ & $3-\frac{\pi^2}{4}$ & local minimum \\
+					2 & $\sin 2 + 4\cos 2$ & global minimum \\
+					-2 & $-\sin2-4\cos2$ & global maximum
+				\end{tabular}
+			\end{center}
+		\end{soln}
+
+
+	\item[3:] Solve the optimization problem
+		\begin{align*}
+			\max & & 1+x_1^2(x_2&-1)^3 e^{-x_1-x_2} \\
+			\text{s.t.} & & x_2&\ge\log x_1 \\
+			& &x_1+x_2 &\le 6 \\
+			& &x_1, x_2 &\ge 0
+		\end{align*} by brute force using MATLAB, trying all choices of $x_1=0, 0.001, 0.002, \cdots, 6$ together with all choices of $x_2=0, 0.001, \cdots, 6$ that give feasible points. Give the approximate optimal solution and the optimal objective function value.
+
+	\item[4:] 
+		\begin{enumerate}[a)]
+			\ii Write the following Linear Program in standard form. In so doing, provide the relevant coefficient matrix and right-hand-side vector and cost vector as matrices/vectors.
+			\begin{align*}
+				\max\quad 4x_1-6x_2+\quad17x_4-x_5 & \\
+				\text{s.t.}\quad\quad x_1+3x_2-6x_3+\quad x_5 &\ge 3 \\
+				5x_1-x_2+17x_3+x_4+5x_5 &\le 7 \\
+				-2x_1+3x_2-6x_3+3x_4+7x_5 &= 9 \\
+				\quad\quad\quad\quad\quad\quad x_4\quad &\le 20 \\
+				x_1, x_2, x_3\ge 0, \quad x_4, x_5 \text{ unrestricted.}
+			\end{align*}
+
+			\begin{soln}
+				We wish to write the constraints as a matrix of the form $A\vec{x}=\vec{b}$ such that all variables are also non-negative. We introduce dummy variables into the constraints:
+
+				\begin{align*}
+					x_1+3x_2-6x_3+\quad\quad\quad x_5 - a \quad\quad\quad\quad&= 3 \\
+					5x_1-x_2+17x_3+x_4+5x_5\quad+ b \quad\quad&= 7 \\
+					-2x_1+3x_2-6x_3+3x_4+7x_5\quad\quad \quad\quad&= 9 \\
+					\quad\quad\quad\quad\quad\quad x_4 + \quad\quad\quad\quad  c &= 20
+				\end{align*} where $a, b, c$ are all non-negative. Then, let $x_4 = d - e$ and $x_5=f - g$ such that $d, e, f, g$ are all non-negative. The objective function then becomes $4x_1-6x_2+17d-17e,$ and since we want to maximize that, it is equivalent to minimizing its negative, $-4x_1+6x_2-17d+17e.$ Then the constraints become 
+				\begin{align*}
+					x_1+3x_2-6x_3+f - g - a &= 3 \\
+					5x_1-x_2+17x_3+d-e+5f-5g+b &= 7 \\
+					-2x_1+3x_2-6x_3+3d-3e+7f-7g &= 9 \\
+					d - e + c &= 20 \\
+					x_1, x_2, x_3, a, b, c, d, e, f, g &\ge 0
+				\end{align*} 
+
+				Now, we can write \[A=\begin{bmatrix}
+						1 & 3 & -6 & 0 & 0 & 1 & -1 & -1 & 0 & 0 \\
+						5 & -1 & 17 & 1 & -1 & 5 & -5 & 0 & 1 & 0 \\
+						-2 & 3 & -6 & 3 & -3 & 7 & -7 & 0 & 0 & 0 \\
+						0 & 0 & 0 & 1 & -1 & 0 & 0 & 0 & 0 & 1
+				\end{bmatrix} \] The cost vector $c$ is then \[c =\begin{bmatrix}
+					-4 & 6 & 0 & -17 & 17 & 0 & 0 & 0 & 0 & 0
+			\end{bmatrix}\] and the RHS vector is still \[b=\begin{bmatrix}
+				3 \\ 7 \\ 9 \\ 20 \end{bmatrix}\] Thus the problem is now in the form $A\vec{x}=\vec{b},$ $\vec{x}\ge 0,$ as desired.
+
+			\end{soln}
+
+			\ii Now write this Linear Program in canonical form. In so doing, provide the relevant coefficient matrix and right-hand-side vector and cost vector as matrices/vectors.
+			\begin{soln}
+				We already have the problem in standard form. The constraint $A\vec{x}=\vec{b}$ is equivalent to the two simultaneous conditions 
+				\begin{align*}
+					&\begin{cases}
+						A\vec{x}\ge \vec{b} \\
+						A\vec{x} \le \vec{b}
+					\end{cases} \\
+					\implies&\begin{cases}
+						A\vec{x} &\ge \vec{b} \\
+						(-A)\vec{x} &\ge -\vec{b}
+					\end{cases}
+				\end{align*}
+
+				We may ``combine'' the two LHS matrices into a single matrix, 
+				\[A^*=\begin{bmatrix}
+					A \\ -A
+				\end{bmatrix} = 
+				\begin{bmatrix}
+					1 & 3 & -6 & 0 & 0 & 1 & -1 & -1 & 0 & 0 \\
+					5 & -1 & 17 & 1 & -1 & 5 & -5 & 0 & 1 & 0 \\
+					-2 & 3 & -6 & 3 & -3 & 7 & -7 & 0 & 0 & 0 \\
+					0 & 0 & 0 & 1 & -1 & 0 & 0 & 0 & 0 & 1 \\
+					-1 & -3 & 6 & 0 & 0 & -1 & 1 & 1 & 0 & 0 \\
+					-5 & 1 & -17 & -1 & 1 & -5 & 5 & 0 & -1 & 0 \\
+					2 & -3 & 6 & -3 & 3 & -7 & 7 & 0 & 0 & 0 \\
+					0 & 0 & 0 & -1 & 1 & 0 & 0 & 0 & 0 & -1
+				\end{bmatrix}\] and the two RHS vectors into a single vector, 
+				\[\vec{b}^*=\begin{bmatrix}
+					\vec{b} \\ -\vec{b}
+				\end{bmatrix} = 
+				\begin{bmatrix}
+					3 \\ 7 \\ 9 \\ 20 \\ -3 \\ -7 \\ -9 \\ -20
+			\end{bmatrix}.\] Thus the problem is now expressed in the form $A^*\vec{x}\ge\vec{b}^*,$ as desired.
+			\end{soln}
+			
+		\end{enumerate}
+
+	\item[5.] Suppose there are the following one-way shipping lanes from the following cities to the following cities, with the specified maximum capacities of tons of tomatoes per year:
+		\begin{center}
+			\begin{tabular}{ccc}
+				\bf{From} & \bf{To} & \bf{Capacity} \\
+				\hline
+				Athens & Baltimore & 5.1 \\
+				Athens & Cairo & 7.2 \\
+				Cairo & Baltimore & 2.1 \\
+				Baltimore & Delhi & 5.9 \\
+				Cairo & El Paso & 3.1 \\
+				Delhi & El Paso & 2.9 \\
+				Delhi & Frankfurt & 4.0 \\
+				El Paso & Frankfurt & 10.5
+			\end{tabular}
+		\end{center}
+		Consider the problem of finding how many tons of (nonperishable) tomatoes should be sent yearly along each of these different shipping lanes to maximize the number of tomatoes delivered from Athens to Frankfurt. Express this problem as a linear programming problem in standard form. For extra credit, find a solution to this problem in an ad-hoc way, but demonstrate that your solution is indeed optimal.
+		\begin{soln}
+			Let $s_1, s_2, s_3, s_4, s_5, s_6, s_7, s_8\ge0$ represent the amounts shipped from point A to point B, where $s_i$ correspond to the $i$th row of the table. Then we have the following flow diagram: 
+			\begin{diagram}
+				A & \rTo^{s_1} & B & \rTo^{s_4} & D & \rTo^{s_7} & F \\
+				  & \rdTo^{s_2} & \uTo^{s_3} & & \dTo^{s_6} & \ruTo^{s_8} \\
+				  & & C & \rTo^{s_5} & E & & 
+			\end{diagram}
+			We wish to maximize the total shipment into Frankfurt, which is $s_7+s_8.$ Since we are told that tomatoes are neither created nor destroyed, it must be that the sum of inflow must equal the sum of outflow from any given city (other than Athens and Frankfurt). Combined with the maximum capacity per lane, we have the following constraints:
+			\begin{align*}
+				s_1 + s_3 - s_4 &= 0 \\
+				s_2 - s_3 - s_5 &= 0 \\
+				s_4 - s_6 - s_7 &= 0 \\
+				s_5 + s_6 - s_8 &= 0 \\
+				s_1 &\le 5.1 \\
+				s_2 &\le 7.2 \\
+				s_3 &\le 2.1 \\
+				s_4 &\le 5.9 \\
+				s_5 &\le 3.1 \\
+				s_6 &\le 2.9 \\
+				s_7 &\le 4.0 \\
+				s_8 &\le 10.5
+			\end{align*}
+			Since we want standard form, introduce dummy variables $a_1, \cdots, a_8$ so that the last 8 constraints become equalities:
+			\begin{align*}
+				s_1+a_1 &= 5.1 \\
+				s_2+a_2 &= 7.2 \\
+				s_3+a_3 &= 2.1 \\
+				s_4 +a_4 &= 5.9 \\
+				s_5+a_5 &= 3.1 \\
+				s_6+a_6 &= 2.9 \\
+				s_7+a_7 &= 4.0 \\
+				s_8+a_8 &= 10.5
+			\end{align*}
+			where $a_1, \cdots, a_8\ge 0.$ Thus, combined with the first 4 constraints above, the problem is expressed in standard form.
+
+		\end{soln}
+
+	\item[6:] Suppose there are 3 machines X, Y, Z, each of which can produce liquids A, B, C, or D, and suppose that the number of gallons per hour the machines produce is given by the following table:
+
+		\begin{center}
+			\begin{tabular}{c|cccc}
+				& liquid A & liquid B & liquid C & liquid D \\
+				\hline
+				machine X & 4 & 3 & 9 & 2 \\
+				machine Y & 1 & 6 & 3 & 5 \\
+				machine Z & 9 & 2 & 7 & 1
+			\end{tabular}
+		\end{center}
+		Suppose we need to produce 3, 2.5, 4.5, and 2 gallons per hour of the respective liquids A, B, B, and D, and that the costs in dollars of production per gallon are given by the following table:
+
+		\begin{center}
+			\begin{tabular}{c|cccc}
+				& liquid A & liquid B & liquid C & liquid D \\
+				\hline
+				machine X & 8 & 2 & 5 & 7 \\
+				machine Y & 3 & 3 & 4 & 1 \\
+				machine Z & 4 & 3 & 6 & 9
+			\end{tabular}
+		\end{center}
+		Write the problem of finding a cheapest way to make the required liquids as a linear program in canonical form.
+		\begin{soln}
+			Let $x_a$ be the fraction of time machine X is working to produce liquid A. Define $x_b, y_a, z_a$ etc similarly. Then we have the constraints:
+			\begin{align*}
+				4x_a+y_a+9z_a &= 3 \\
+				3x_b+6y_b+2z_b &= 2.5 \\
+				9x_c+3y_c+7z_c &= 4.5 \\
+				2x_d + 5y_d + z_d &= 2 \\
+				x_a+x_b+x_c+x_d &\le 1 \\
+				y_a+y_b+y_c+y_d &\le 1 \\
+				z_a+z_b+z_c+z_d &\le 1
+			\end{align*}<++>
+		\end{soln}<++>
+
+\end{itemize}
+
+\end{document}
