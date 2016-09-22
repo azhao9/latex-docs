@@ -1,0 +1,45 @@
+[solution, optimalobjfunct] = AleckZhaoMinimizef(-3, 3, .001)
+
+solution =
+
+   -2.1380
+
+
+optimalobjfunct =
+
+   -8.3051
+
+[solution, optimalobjfunct] = AleckZhaoMinimizef(-.1, 3, .001)
+
+solution =
+
+   -0.1000
+
+
+optimalobjfunct =
+
+   -0.1208
+
+[solution, optimalobjfunct] = AleckZhaoMinimizef(.1, 3, .001)
+
+solution =
+
+     1
+
+
+optimalobjfunct =
+
+     0
+
+[solution, optimalobjfunct] = AleckZhaoMinimizef(.1, 4, .001)
+
+solution =
+
+     4
+
+
+optimalobjfunct =
+
+   -6.8112
+
+diary off
