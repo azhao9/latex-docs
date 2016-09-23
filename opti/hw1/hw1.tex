@@ -14,6 +14,16 @@
 
 \begin{itemize}
 	\item[1:] Write a MATLAB function that minimizes $f(x)=(x-1)^2\sin x$ subject to $a\le x\le b$ where $a$ and $b$ are user input.
+		\begin{enumerate}[a)]
+			\ii A copy of the file AleckZhaoMinimizef.m
+				\lstset{language=Matlab}
+				\lstinputlisting{AleckZhaoMinimizef.m} 
+			\ii A diary.
+				\lstinputlisting{hw1_1}
+		\end{enumerate}
+
+		
+		\newpage
 
 	\item[2:] Analytically, find all global maximums, local maximums, global minimums, and local minimums for \[f(x)=(x^2-3)\sin x+2x\cos x\] subject to $-2\le x\le2.$ Justify.
 		\begin{soln}
@@ -53,6 +63,9 @@
 		\end{soln}
 
 
+
+		\newpage
+
 	\item[3:] Solve the optimization problem
 		\begin{align*}
 			\max & & 1+x_1^2(x_2&-1)^3 e^{-x_1-x_2} \\
@@ -60,6 +73,7 @@
 			& &x_1+x_2 &\le 6 \\
 			& &x_1, x_2 &\ge 0
 		\end{align*} by brute force using MATLAB, trying all choices of $x_1=0, 0.001, 0.002, \cdots, 6$ together with all choices of $x_2=0, 0.001, \cdots, 6$ that give feasible points. Give the approximate optimal solution and the optimal objective function value.
+		\lstinputlisting{MaxFunc.m}
 
 	\item[4:] 
 		\begin{enumerate}[a)]
