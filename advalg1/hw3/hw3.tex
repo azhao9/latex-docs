@@ -1,0 +1,59 @@
+\documentclass{article}
+\usepackage[sexy, hdr, fancy]{evan}
+\setlength{\droptitle}{-4em}
+
+\lhead{Homework 3}
+\rhead{Advanced Algebra I}
+\lfoot{}
+\cfoot{\thepage}
+
+\begin{document}
+\title{Homework 3}
+\maketitle
+\thispagestyle{fancy}
+
+\section*{Section 1.4: Permutations}
+\begin{itemize}
+	\item[6.] If $\sigma$ and $\tau$ fix $k,$ show that $\sigma\tau$ and $\sigma^{-1}$ both fix $k.$
+
+	\item[12.] Let $\sigma=(1\quad2\quad3)$ and $\tau=(1\quad2)$ in $S_3.$
+
+		(a) Show that $S_3=\{\varepsilon, \sigma, \sigma^2, \tau, \tau\sigma, \tau\sigma^2\}$ and that $\sigma^3=\varepsilon=\tau^2$ and $\sigma\tau=\tau\sigma^2.$
+
+		(b) Use (a) to fill in the multiplication table for $S_3.$
+
+	\item[16.] If $\sigma=(1\quad2\quad3\quad\cdots\quad n),$ show that $\sigma^n=\varepsilon$ and that $n$ is the smallest positive integer with this property.
+		
+\end{itemize}
+
+\section*{Section 2.1: Binary Operations}
+\begin{itemize}
+	\item[1.] In each case a binary operation $*$ is given on a set $M.$ Decide whether it is commutative or associative, whether a unity exists, and find the units (if there is a unity).
+
+		(c) $M=\RR; a*b=a+b-ab$
+
+		(g) $M=\NN^+; a*b=\gcd(a, b)$
+
+	\item[5.] Given an alphabet $A,$ call an $n$-tuple $(a_1, a_2, \cdots, a_n)$ with $a_i\in A$ a word of length $n$ from $A$ and write it as $a_1a_2\cdots a_n.$ Multiply two words by $(a_1a_2\cdots a_n)\cdot(b_1b_2\cdots b_m)=a_1a_2\cdots a_n b_1b_2\cdots b_m,$ and call this product juxtaposition. We decree the existence of an empty word $\lambda$ with no letters. Show that the set $W$ of all words from $A$ is a monoid, noncommutative if $\vert A\vert>1,$ and find the units.
+
+	\item[11.] An element $e$ is called a left unity for an operation if $ex=x$ for all $x.$ If an operation has two left unities, show that it has no right unity.
+		
+\end{itemize}
+
+\section*{Section 2.2: Groups}
+\begin{itemize}
+	\item[7.] Show that the set \[G=\left\{ \begin{bmatrix}
+			1 & a & b \\
+			0 & 1 & c \\
+			0 & 0 & 1
+	\end{bmatrix}\bigg\vert\, a, b, c\in\RR\right\} \] is a group under matrix multiplication.
+		
+	\item[16.] If $fgh=1$ in a group $G$, show that $ghf=1.$ Must $gfh=1?$
+
+	\item[20.] Show that a group $G$ is abelian if $g^2=1$ for all $g\in G.$ Give an example showing that the converse is false.
+
+	\item[28.] Let $a$ and $b$ be elements of a group $G.$ If $a^n=b^n$ and $a^m=b^m$ where $\gcd(m, n)=1,$ show that $a=b.$ (Hint: Theorem 1.2.4)
+
+\end{itemize}
+
+\end{document}
