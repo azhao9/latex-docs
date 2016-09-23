@@ -1,0 +1,98 @@
+\documentclass{article}
+\usepackage[sexy, hdr, fancy]{evan}
+\setlength{\droptitle}{-4em}
+
+\lhead{Homework 3}
+\rhead{Introduction to Statistics}
+\lfoot{}
+\cfoot{\thepage}
+
+\newcommand{\var}{\mathrm{Var}}
+\newcommand{\cov}{\mathrm{Cov}}
+
+\begin{document}
+\title{Homework 3}
+\maketitle
+\thispagestyle{fancy}
+
+\begin{enumerate}
+	\item A population consists of $N$ individuals. Each individual has a certain number of friends. Suppose the count of individuals in the population with a given number of friends is as in the following table:
+		\begin{center}
+			\begin{tabular}{c|c}
+				$k$ & number in population with $k$ friends \\
+				\hline 
+				0 & 1 \\
+				1 & 1 \\
+				$M$ & $N-4$ \\
+				$2M-1$ & 1 \\
+				$2M$ & 1
+			\end{tabular}
+		\end{center}
+		where $M\ge3$ is an unknown positive integer and $N\ge7.$ A sample if size 3 is drawn without replacement and the numbers of friends for the $i$ sampled individual is denoted by $X_i,$ for $i=1, 2, 3.$
+
+		\begin{enumerate}[(a)]
+			\item Let $S$ denote the 3-tuple of elements $X_1, X_2, X_3$ that are drawn but written in increasing order. Write down a list of the 15 possible values $S$ can take on.
+
+			\item Make a table giving the PMF of $S.$
+
+			\item Compute the PMF of $Y=X_1+X_2+X_3.$ Note that $Y$ is a function of $S$ the set that is drawn.
+
+			\item Compute the PMF of $\bar{X}=(X_1+X_2+X_3)/3$ and use this to determine $E[\bar{X}].$
+
+			\item Compute the population variance $\sigma^2.$ Compute $\var(\bar{X}).$ 
+
+			\item If we use $\bar{X}$ to estimate $M,$ what is the mean square error $E[(\bar{X}-M)^2]?$
+
+			\item Let $T$ denote the \textit{sample median}. Compute the PMF of $T$ and determine $E[T].$
+
+			\item Find an expression for $\var(T)$ and simplify it.
+
+			\item If we use $T$ to estimate $M,$ what is the mean squared error $E[(T-M)^2]?$
+
+			\item Suppose we will decide which estimator of $M$ to use (sample mean or sample median) based on which has a smaller MSE. Define the \textit{efficiency} of the sample median \textit{relative} to the sample mean to be \[\text{eff}=\frac{E[(\bar{X}-M)^2}{E[(T-M)^2]}.\] Show that this expression can be written as the product of two terms, one which is linear in $N$ and the other which is a ratio of two quadratics in $M.$
+
+			\item Describe situations (for some integers $M$ and $N$ with $M\ge3$ and $N\ge7$) when the sample mean has a smaller MSE than the sample median. If $N>12,$ show that the sample median has a smaller MSE than the sample mean no matter what $M$ is (as long as it is at least 3).
+
+		\end{enumerate}
+
+	\item Complete the following:
+		\begin{enumerate}[(a)]
+			\item Show that if $X_i$ are iid Bernoulli random variables with success probability $p$ for some $p\in(0, 1),$ then \[\frac{1}{n}\sum_{i=1}^n X_i\to p\] as $n\to\infty.$
+
+			\item In R, get an approximation to the expected value of the length of the longest run in $n$ flips of a fair coin for $n=10, 20, 30, \cdots, 250.$
+
+			\item Plot the expected value in (a) vs $n$ and try to fit a curve of the form $y=c\log n$ for some $c$ to the data.
+
+			\item Use your fit in (c) to predict the expected value when $n=500.$ Then approximate the value you get using simulation and compare.
+				
+			\item Now, consider a Monte-Carlo approximation of the variance of a random variable. Explain why the expression \[\frac{1}{n}\sum_{i=1}^n X_i^2\] can be used to approximate $E[X^2],$ and thus why \[\frac{1}{n}\sum_{i=1}^n X_i^2 - \left( \frac{1}{n}\sum_{i=1}^n X_i \right)^2 \approx E[X^2]-\mu^2=\var(X).\]
+
+			\item From the previous part, explain why, for large $n,$ we can approximate $\var(X)$ using the sample variance of the values $X_1, \cdots, X_n$ \[\frac{1}{n-1}\sum_{i=1}^n (X_i-\bar{X})^2.\]
+
+			\item Take $X$ to be the length of the longest run in $n$ trials. Estimate $\var(X)$ for $n=10, 20, 30, \cdots, 250,$ and plot $\var(X)$ vs $n.$
+				
+		\end{enumerate}
+
+	\item Consider sampling \textit{with replacement} using a sample of size $n$ from a population of size $N$ where each individual $i$ has two attributes $x_i, y_i.$ Let \[\sigma_{xy}=\frac{1}{n}\sum_{i=1}^n (x_i-\mu_x)(y_i-\mu_y)\] denote the population covariance between $x$ and $y$ where $\mu_x$ and $\mu_y$ denote the population means. Let $(X_i, Y_i), \, i=1, \cdots, n$ denote the $(x, y)$ values for the individuals sampled. 
+
+		Show that the sample covariance \[s_{xy}=\frac{1}{n-1}\sum_{i=1}^n (X_i-\bar{X})(Y_i-\bar{Y})\] is unbiased for $\sigma_{xy}.$
+
+\end{enumerate}
+
+\section*{Chapter 7: Survey Sampling}
+\begin{itemize}
+	\item[45.]
+
+	\item[46.]
+
+	\item[48.]
+
+\end{itemize}
+
+\section*{Chapter 4: Expected Values}
+\begin{itemize}
+	\item[102.]
+		
+\end{itemize}
+
+\end{document}
