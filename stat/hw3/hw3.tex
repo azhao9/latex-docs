@@ -137,8 +137,22 @@
 				\end{soln}
 
 			\item Compute the population variance $\sigma^2.$ Compute $\var(\bar{X}).$ 
+				\begin{soln}
+					The population mean is given by \[\mu=\frac{1}{M}(1(0)+1(1)+(N-4)(M)+1(2M-1)+1(2M) = M, \] so the population variance is given by
+					\begin{align*}
+						\sigma^2 &= \frac{1}{N}\sum_{}^{}(x_i-\mu)^2 \\
+						&= \frac{1}{N}( (0-M)^2+(1-M)^2+(2M-1-M)^2+(2M-M)^2) \\
+						&= \boxed{\frac{4M^2-4M+2}{N}}
+					\end{align*}
+
+					Next, for $\var(\bar{X}),$ we use the relation \[\var(\bar{X})=E[\bar{X}^2] - (E[\bar{X}])^2 = E[\bar{X}^2]-M^2.\] Then $E[\bar{X}^2]$ is calculated similarly to $E[\bar{X}],$ replacing all $\bar{x}$ with $\bar{x}^2$ in the summation, and we get \[\var(\bar{X})=\boxed{\frac{N-3}{3N(N-1)}(4M^2-4M+2).}\]
+
+				\end{soln}
 
 			\item If we use $\bar{X}$ to estimate $M,$ what is the mean square error $E[(\bar{X}-M)^2]?$
+				\begin{soln}
+					The MSE can be rewritten as \[E[\bar{X}^2-2M\bar{X}+M^2]=E[\bar{X}^2]-2M^2+M^2=E[\bar{X}^2]-M^2 = \boxed{\frac{N-3}{3N(N-3)}(4M^2-4M+2).} \]
+				\end{soln}
 
 			\item Let $T$ denote the \textit{sample median}. Compute the PMF of $T$ and determine $E[T].$
 				\begin{soln}
@@ -153,24 +167,94 @@
 						\begin{tabular}{c||c|c|c}
 							$t$ & 1 & $M$ & $2M-1$ \\
 							\hline
-							$p_T(t)$ & $\displaystyle\frac{(N-4) + 2(1)}{\binom{N}{3}}$ & $\displaystyle\frac{\binom{N-4}{3}+4\binom{N-4}{2}+4(N-4)}{\binom{N}{3}}$ & $\displaystyle\frac{3(1)}{\binom{N}{3}}$
+							$p_T(t)$ & $\displaystyle\frac{(N-4) + 2(1)}{\binom{N}{3}}$ & $\displaystyle\frac{\binom{N-4}{3}+4\binom{N-4}{2}+4(N-4)}{\binom{N}{3}}$ & $\displaystyle\frac{2(1)+(N-4)}{\binom{N}{3}}$
 						\end{tabular}
 					\end{center}
 
 					Thus
 					\begin{align*}
 						E[T] &= \sum_{t}^{}t\cdot p_T(t) \\
-						&= \frac{1}{\binom{N}{3}} \left[ 1\cdot(N-2)+M\cdot\left( \binom{N-4}{3}+4\binom{N-4}{2}+4(N-4) \right)+ (2M-1)\cdot 3 \right]
-					\end{align*}<++>
-				\end{soln}<++>
+						&= \frac{1}{\binom{N}{3}} \left[ 1\cdot(N-2)+M\cdot\left( \binom{N-4}{3}+4\binom{N-4}{2}+4(N-4) \right)+ (2M-1)\cdot (N-4) \right] \\
+						&= \boxed{M}
+					\end{align*} after algebra. 
+					
+				\end{soln}
 
 			\item Find an expression for $\var(T)$ and simplify it.
+				\begin{soln}
+					We have the relation $\var(T)=E[T^2]-(E[T])^2=E[T^2]-M^2.$ Calculating $E[T^2]$ similarly to $E[T],$ and applying the Law of the Unconscious Statistician, we find that \[\var(T)=\boxed{\frac{12}{N(N-1)}(M^2-2M+1)}\]
+				\end{soln}
 
 			\item If we use $T$ to estimate $M,$ what is the mean squared error $E[(T-M)^2]?$
+				\begin{soln}
+					We have 
+					\begin{align*}
+						E[(T-M)^2]&=E[T^2-2TM+M^2]=E[T^2]-2M\cdot E[T]+E[M^2] \\
+						&=E[T^2]-2M^2+M^2=E[T^2]-M^2 \\
+						&= \boxed{\frac{12}{N(N-1)}(M^2-2M+1)}
+					\end{align*}			
+				\end{soln}
 
 			\item Suppose we will decide which estimator of $M$ to use (sample mean or sample median) based on which has a smaller MSE. Define the \textit{efficiency} of the sample median \textit{relative} to the sample mean to be \[\text{eff}=\frac{E[(\bar{X}-M)^2}{E[(T-M)^2]}.\] Show that this expression can be written as the product of two terms, one which is linear in $N$ and the other which is a ratio of two quadratics in $M.$
+				\begin{proof}
+					Substituting our expressions in from the previous parts, this is
+					\begin{align*}
+						\text{eff} &= \frac{\frac{N-3}{3N(N-1)}(4M^2-4M+2)}{\frac{12}{N(N-1)}(M^2-2M+1)} \\
+						&= \frac{N}{36} \cdot \frac{4M^2-4M+2}{M^2-2M+1}
+					\end{align*} which is in the form desired.
+
+				\end{proof}
 
 			\item Describe situations (for some integers $M$ and $N$ with $M\ge3$ and $N\ge7$) when the sample mean has a smaller MSE than the sample median. If $N>12,$ show that the sample median has a smaller MSE than the sample mean no matter what $M$ is (as long as it is at least 3).
+				We first show that when $N>12$ the MSE of $\bar{X}$ is always greater than MSE of $T.$ We have 
+				\begin{align*}
+					\frac{N-3}{3N(N-1)}(4M^2-4M+2) &> \frac{12-3}{3N(N-1)}(4M^2-4M+2) \\
+					&= \frac{3}{N(N-1)}(4M^2-4M+2)\\
+					&= \frac{12}{N(N-1)}\left( M^2-M+\frac{1}{2} \right)
+				\end{align*} 
+				Comparing $M^2-M+\frac{1}{2}$ and $M^2-2M+1,$ we find that the former is greater than the latter whenever $M>1/2,$ but since we are given $M\ge 3,$ this is true. Thus the MSE of $\bar{X}$ is always greater than that of $T$ whenever $N>12$ and $M\ge 3,$ as desired.
+
+				That means the situations when the MSE of $\bar{X}$ is smaller than that of $T$ can only happen when $N=7, 8, \cdots, 12.$ This is equivalent to 
+				\begin{align*}
+					\frac{N-3}{3N(N-1)}(4M^2-4M+2) &< \frac{12}{N(N-1)}(M^2-2M+1) \\
+					\frac{N-3}{3}(4M^2-4M+2) &< 12(M^2-2M+1)
+				\end{align*} Tackle these by cases.
+
+				Case 1: $N=7.$ Then
+				\begin{align*}
+					\frac{4}{3}(4M^2-4M+2) &< 12(M^2-2M+1) \\
+					\implies M &>\frac{7+\sqrt{14}}{5} 
+				\end{align*} so whenever $M\ge 3.$
+
+				Case 2: $N=8.$ Then
+				\begin{align*}
+					\frac{5}{3}(4M^2-4M+2) &< 12(M^2-2M+1) \\
+					\implies M &> \frac{13+\sqrt{65}}{8} 
+				\end{align*} so whenever $M\ge 3.$
+
+				Case 3: $N=9.$ Then
+				\begin{align*}
+					\frac{6}{3}(4M^2-4M+2) &< 12(M^2-2M+1) \\ 
+					\implies M &> 2+\sqrt{2}
+				\end{align*} so whenever $M\ge 4.$
+
+				Case 4: $N=10.$ Then 
+				\begin{align*}
+					\frac{7}{3}(4M^2-4M+2) &< 12(M^2-2M+1) \\
+					\implies M &> \frac{11+\sqrt{77}}{4}
+				\end{align*} so whenever $M\ge 5.$
+
+				Case 5: $N=11.$ Then 
+				\begin{align*}
+					\frac{8}{3}(4M^2-4M+2) &< 12(M^2-2M+1) \\
+					\implies M &> 5+2\sqrt{5}
+				\end{align*} so whenever $M\ge 10.$
+
+				Case 6: $N=12.$ Then
+				\begin{align*}
+					\frac{9}{3}(4M^2-4M+2) &< 12(M^2-2M+1) \\
+					\implies M &< \frac{1}{2}
+				\end{align*} but since we must have $M\ge 3,$ there are no solutions in this case.
 
 		\end{enumerate}
 
