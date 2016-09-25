@@ -43,8 +43,6 @@
 
 			\item Make a table giving the PMF of $S.$
 				\begin{soln}
-					There are $\binom{N}{3}$ total ways to choose 3 people from $N.$ The probability of each event listed above is the number of ways to obtain that event, divided by $\binom{N}{3}.$
-
 					Any event without $M$ can only happen in 1 way since there is only 1 individual of each of the number of friends 0, 1, $2M-1, 2M.$ 
 
 					For $(0, 1, M),$ there is only 1 way to choose the individuals with 0 and 1 friends, and $N-4$ ways to choose the one with $M$ friends, so this can happen in $N-4$ ways. Similarly for $(0, M, 2M-1)$ and $(0, M, 2M)$ and $(1, M, 2M-1)$ and $(1, M, 2M)$ and $(M, 2M-1, 2M).$
@@ -53,7 +51,7 @@
 
 					For $(M, M, M),$ there are $\binom{N-4}{3}$ ways to choose from the $N-4$ people with $M$ friends each. 
 
-					Thus, the PMF for $S$ can be summarized as:
+					There are $\binom{N}{3}$ ways to form groups of 3, the PMF for $S$ can be summarized as:
 					\begin{center}
 						\begin{tabular}{c||c|c|c|c}
 							$s$ & $\begin{matrix}
@@ -75,7 +73,7 @@
 								(M, M, 2M)
 							\end{matrix}$ & $(M, M, M)$ \\
 							\hline
-							$p_S(s)$ & $\displaystyle\frac{1}{\binom{N}{3}}$ & $\displaystyle\frac{N-4}{\binom{N}{3}}$ & $\displaystyle\frac{\binom{N-4}{2}}{\binom{N}{3}}$ & $\displaystyle\frac{\binom{N-4}{3}}{\binom{N}{3}}$
+							$p_S(s)$ & $1/\binom{N}{3}$ & $(N-4)/\binom{N}{3}$ & $\binom{N-4}{2}/\binom{N}{3}$ & $\binom{N-4}{3}/\binom{N}{3}$
 						\end{tabular}
 					\end{center}
 
@@ -205,6 +203,7 @@
 
 				\end{proof}
 
+				\newpage
 			\item Describe situations (for some integers $M$ and $N$ with $M\ge3$ and $N\ge7$) when the sample mean has a smaller MSE than the sample median. If $N>12,$ show that the sample median has a smaller MSE than the sample mean no matter what $M$ is (as long as it is at least 3).
 				We first show that when $N>12$ the MSE of $\bar{X}$ is always greater than MSE of $T.$ We have 
 				\begin{align*}
@@ -272,8 +271,19 @@
 				\end{answer*}
 
 			\item Plot the expected value in (a) vs $n$ and try to fit a curve of the form $y=c\log n$ for some $c$ to the data.
+				\begin{soln}
+					The results from the previous part are plotted below, and the generated fit was $y=0.357 + 1.438\ln x,$ where $x$ was the number of flips, and $y$ was the average of the longest run.
+					\begin{center}
+						\includegraphics[width=6cm]{longest_run.png}
+					\end{center}
+					
+				\end{soln}
 
 			\item Use your fit in (c) to predict the expected value when $n=500.$ Then approximate the value you get using simulation and compare.
+				\begin{soln}
+					From the fit equation, we have \[E[R_{500}]\approx 0.357+1.438\ln500 \approx 9.2936. \] The simulation run on $n=500$ gave an expectation of 9.3033, so the two agree closely.
+					
+				\end{soln}
 				
 			\item Now, consider a Monte-Carlo approximation of the variance of a random variable. Explain why the expression \[\frac{1}{n}\sum_{i=1}^n X_i^2\] can be used to approximate $E[X^2],$ and thus why \[\frac{1}{n}\sum_{i=1}^n X_i^2 - \left( \frac{1}{n}\sum_{i=1}^n X_i \right)^2 \approx E[X^2]-\mu^2=\var(X).\]
 
