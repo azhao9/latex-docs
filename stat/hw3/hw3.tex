@@ -271,13 +271,9 @@
 				\end{answer*}
 
 			\item Plot the expected value in (a) vs $n$ and try to fit a curve of the form $y=c\log n$ for some $c$ to the data.
-				\begin{soln}
-					The results from the previous part are plotted below, and the generated fit was $y=0.357 + 1.438\ln x,$ where $x$ was the number of flips, and $y$ was the average of the longest run.
 					\begin{center}
-						\includegraphics[width=6cm]{longest_run.png}
-					\end{center}
-					
-				\end{soln}
+						\includegraphics[width=14cm]{longest_run.png}
+					\end{center}					
 
 			\item Use your fit in (c) to predict the expected value when $n=500.$ Then approximate the value you get using simulation and compare.
 				\begin{soln}
@@ -286,8 +282,16 @@
 				\end{soln}
 				
 			\item Now, consider a Monte-Carlo approximation of the variance of a random variable. Explain why the expression \[\frac{1}{n}\sum_{i=1}^n X_i^2\] can be used to approximate $E[X^2],$ and thus why \[\frac{1}{n}\sum_{i=1}^n X_i^2 - \left( \frac{1}{n}\sum_{i=1}^n X_i \right)^2 \approx E[X^2]-\mu^2=\var(X).\]
+				\begin{soln}
+					If $n$ is large, then the average over all trials will approach the true mean of $X^2$ since the variance of the sum goes to 0. By similar reasoning, it follows that \[\frac{1}{n}\sum_{i=1}^{n}X_i\to E[X]=\mu, \] so substituting these into the LHS expression gives the RHS.
+
+				\end{soln}
 
 			\item From the previous part, explain why, for large $n,$ we can approximate $\var(X)$ using the sample variance of the values $X_1, \cdots, X_n$ \[\frac{1}{n-1}\sum_{i=1}^n (X_i-\bar{X})^2.\]
+				\begin{soln}
+					We have 
+					.align 
+				\end{soln}<++>
 
 			\item Take $X$ to be the length of the longest run in $n$ trials. Estimate $\var(X)$ for $n=10, 20, 30, \cdots, 250,$ and plot $\var(X)$ vs $n.$
 				
