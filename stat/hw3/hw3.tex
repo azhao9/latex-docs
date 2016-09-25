@@ -289,11 +289,23 @@
 
 			\item From the previous part, explain why, for large $n,$ we can approximate $\var(X)$ using the sample variance of the values $X_1, \cdots, X_n$ \[\frac{1}{n-1}\sum_{i=1}^n (X_i-\bar{X})^2.\]
 				\begin{soln}
-					We have 
-					.align 
-				\end{soln}<++>
+				If $n$ is large, then \[\frac{1}{n-1}\approx \frac{1}{n}.\] Then the expression becomes 
+				\begin{align*}
+					\frac{1}{n-1}\sum_{i=1}^{n}(X_i-\bar{X})^2 &\approx \frac{1}{n}\sum_{i=1}^{n}\left( X_i-\frac{1}{n}\sum_{j=1}^{n}X_j \right)^2 \\
+					&= \frac{1}{n} \sum_{i=1}^{n}\left[ X_i^2 - \frac{2}{n}X_i\sum_{j=1}^{n} X_j + \frac{1}{n^2}\left(\sum_{j=1}^{n}X_j\right)^2 \right] \\
+					&= \frac{1}{n}\left[ \sum_{i=1}^{n} X_i^2 - \frac{2}{n}\sum_{i=1}^{n}X_i\sum_{j=1}^{n} X_j + \frac{1}{n^2}\sum_{i=1}^{n}\left( \sum_{j=1}^{n} X_j \right)^2 \right] \\
+					&= \frac{1}{n}\left[ \sum_{i=1}^{n}X_i^2 - \frac{2}{n}\left( \sum_{i=1}^{n} X_i \right)^2 + \frac{1}{n}\left( \sum_{j=1}^{n} X_j \right)^2  \right] \\
+					&= \frac{1}{n} \left[ \sum_{i=1}^{n} X_i^2 - \frac{1}{n}\left(\sum_{i=1}^{n} X_i\right)^2\right] \\
+					&= \frac{1}{n}\sum_{i=1}^{n} X_i^2 - \left( \frac{1}{n}\sum_{i=1}^{n} X_i \right)^2 \\
+					&\approx \var(X)
+				\end{align*} as desired.
+				
+				\end{soln}
 
 			\item Take $X$ to be the length of the longest run in $n$ trials. Estimate $\var(X)$ for $n=10, 20, 30, \cdots, 250,$ and plot $\var(X)$ vs $n.$
+				\begin{center}
+					\includegraphics[width=14cm]{longest_run_var.png}
+				\end{center}	
 				
 		\end{enumerate}
 
@@ -329,6 +341,7 @@
 				&= \frac{1}{n-1}(n\sigma_{xy}-\sigma_{xy}) \\
 				&= \sigma_{xy}
 			\end{align*} as desired.
+
 		\end{proof}
 
 \end{enumerate}
