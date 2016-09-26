@@ -289,16 +289,15 @@
 
 			\item From the previous part, explain why, for large $n,$ we can approximate $\var(X)$ using the sample variance of the values $X_1, \cdots, X_n$ \[\frac{1}{n-1}\sum_{i=1}^n (X_i-\bar{X})^2.\]
 				\begin{soln}
-				If $n$ is large, then \[\frac{1}{n-1}\approx \frac{1}{n}.\] Then the expression becomes 
+				If $n$ is large, then $\frac{1}{n-1}\approx \frac{1}{n}.$ Then the expression becomes 
 				\begin{align*}
 					\frac{1}{n-1}\sum_{i=1}^{n}(X_i-\bar{X})^2 &\approx \frac{1}{n}\sum_{i=1}^{n}\left( X_i-\frac{1}{n}\sum_{j=1}^{n}X_j \right)^2 \\
 					&= \frac{1}{n} \sum_{i=1}^{n}\left[ X_i^2 - \frac{2}{n}X_i\sum_{j=1}^{n} X_j + \frac{1}{n^2}\left(\sum_{j=1}^{n}X_j\right)^2 \right] \\
 					&= \frac{1}{n}\left[ \sum_{i=1}^{n} X_i^2 - \frac{2}{n}\sum_{i=1}^{n}X_i\sum_{j=1}^{n} X_j + \frac{1}{n^2}\sum_{i=1}^{n}\left( \sum_{j=1}^{n} X_j \right)^2 \right] \\
 					&= \frac{1}{n}\left[ \sum_{i=1}^{n}X_i^2 - \frac{2}{n}\left( \sum_{i=1}^{n} X_i \right)^2 + \frac{1}{n}\left( \sum_{j=1}^{n} X_j \right)^2  \right] \\
 					&= \frac{1}{n} \left[ \sum_{i=1}^{n} X_i^2 - \frac{1}{n}\left(\sum_{i=1}^{n} X_i\right)^2\right] \\
-					&= \frac{1}{n}\sum_{i=1}^{n} X_i^2 - \left( \frac{1}{n}\sum_{i=1}^{n} X_i \right)^2 \\
 					&\approx \var(X)
-				\end{align*} as desired.
+				\end{align*}
 				
 				\end{soln}
 
@@ -309,6 +308,7 @@
 				
 		\end{enumerate}
 
+		\newpage
 	\item Consider sampling \textit{with replacement} using a sample of size $n$ from a population of size $N$ where each individual $i$ has two attributes $x_i, y_i.$ Let \[\sigma_{xy}=\frac{1}{N}\sum_{i=1}^N (x_i-\mu_x)(y_i-\mu_y)\] denote the population covariance between $x$ and $y$ where $\mu_x$ and $\mu_y$ denote the population means. Let $(X_i, Y_i), \, i=1, \cdots, n$ denote the $(x, y)$ values for the individuals sampled. 
 
 		Show that the sample covariance \[s_{xy}=\frac{1}{n-1}\sum_{i=1}^n (X_i-\bar{X})(Y_i-\bar{Y})\] is unbiased for $\sigma_{xy}.$
@@ -349,8 +349,32 @@
 \section*{Chapter 7: Survey Sampling}
 \begin{itemize}
 	\item[45.] In the population of hospitals, the correlation of the number of beds and the number of discharges is $\rho=0.91.$ To see how $\var(\bar{Y}_R)$ would be different if the correlation were different, plot $\var(\bar{Y}_R)$ for $n=64$ as a function of $\rho$ for $-1<\rho<1.$
+		\begin{answer*}
+			Using the following approximation for $\var(\bar{Y}_R),$ \[\var(\bar{Y}_R)\approx \frac{1}{n}\left( 1-\frac{n-1}{N-1} \right)(R^2\sigma_x^2 + \sigma_y^2 - 2R\rho\sigma_x\sigma_y)\]
+			\begin{center}
+				\includegraphics[width=14cm]{var_ratio_rho.png}
+			\end{center}
+		\end{answer*}
+		
 
-	\item[46.] Use the central limit theorem to sketch the approximate sampling distribution of $\bar{Y}$ for $n=64$ for the population of hospitals. Compare to the approximate sampling distribution of $\bar{Y}.$
+	\item[46.] Use the central limit theorem to sketch the approximate sampling distribution of $\bar{Y}_R$ for $n=64$ for the population of hospitals. Compare to the approximate sampling distribution of $\bar{Y}.$
+		\begin{soln}
+			Since $R=\bar{Y}/\bar{X}$ is approximately normal, it follows that $\bar{Y}_R=\mu_x R$ is also approximately normal. Then 
+			\begin{align*}
+				E[\bar{Y}_R] &= E[\mu_x R] = \mu_x E[R] \\
+				&\approx \mu_x \left[ r+\frac{1}{n}\left( 1-\frac{n-1}{N-1} \right)\frac{1}{\mu_x^2}(r\sigma_x^2-\rho\sigma_x\sigma_y) \right] \\
+				&= 274.8 \left[ 2.96 + \frac{1}{64}\left( 1-\frac{64-1}{393-1} \right)\frac{1}{(274.8)^2}(2.96(213.2)^2-0.91(213.2)(589.7) \right] \\
+				&\approx 813.4
+			\end{align*}
+
+			We also have 
+			\begin{align*}
+				\var(\bar{Y}_R) &\approx \frac{1}{n} \left( 1-\frac{n-1}{N-1} \right)(r^2\sigma_x^2+\sigma_y^2-2r\rho\sigma_x\sigma_y) \\
+				& \approx 22.4
+			\end{align*}
+
+			so $\bar{Y}_R\sim N(813.4, 22.4),$ and the distribution is plotted below:
+		\end{soln}<++>
 
 	\item[48.] A simple random sample of 100 households located in a city recorded the number of people living in the household, $X,$ and the weekly expenditure for food, $Y.$ it is known that there are 100000 households in the city. In the sample, 
 		\begin{align*}
