@@ -377,10 +377,11 @@
 			\begin{center}
 				\includegraphics[width=14cm]{y_bar_plot.png}
 			\end{center}
+			The darker points are the distribution of $\bar{Y}_R$ and the lighter ones are the distribution of $\bar{Y}.$ 
 
-			The sampling distribution of $\bar{Y}$ is approximately a normal distribution with mean $\mu_y$ and variance $\sigma_y^2/n,$ which for.
-		\end{soln}<++>
+		\end{soln}
 
+		\newpage
 	\item[48.] A simple random sample of 100 households located in a city recorded the number of people living in the household, $X,$ and the weekly expenditure for food, $Y.$ it is known that there are 100000 households in the city. In the sample, 
 		\begin{align*}
 			\sum X_i &= 320 \\
@@ -409,19 +410,15 @@
 					\end{align*}
 					Here, we calculate
 					\begin{align*}
-						s_x^2 &= \frac{1}{n-1}\sum_{i=1}^{n} (X_i-\bar{X})^2 \\
-						&= \frac{1}{n-1} \sum_{i=1}^{n} (X_i^2-2X_i\bar{X}+\bar{X}^2) \\
+						s_x^2 &= \frac{1}{n-1}\sum_{i=1}^{n} (X_i-\bar{X})^2 = \frac{1}{n-1} \sum_{i=1}^{n} (X_i^2-2X_i\bar{X}+\bar{X}^2) \\
 						&= \frac{1}{n-1}\left( \sum_{i=1}^{n} X_i^2 - 2\bar{X}\sum_{i=1}^{n} X_i + \sum_{i=1}^{n} \bar{X}^2 \right) \\
-						&= \frac{1}{100-1}\left( 1250 - 2(3.20)(320) + 100(3.20)^2 \right) \\
-						&= \frac{226}{99} \\
+						&= \frac{1}{100-1}\left( 1250 - 2(3.20)(320) + 100(3.20)^2 \right) = \frac{226}{99} \\
 						s_y^2 &= \frac{1}{n-1} \left( \sum_{i=1}^{n} Y_i^2 - 2\bar{Y}\sum_{i=1}^{n} Y_i + \sum_{i=1}^{n} \bar{Y}^2 \right) \\
-						&= \frac{1}{100-1} \left( 1100000-2(100)(10000)+100(100)^2 \right) \\
-						&= \frac{100000}{99} \\
+						&= \frac{1}{100-1} \left( 1100000-2(100)(10000)+100(100)^2 \right) = \frac{100000}{99} \\
 						s_{xy} &= \frac{1}{n-1} \sum_{i=1}^{n}(X_i-\bar{X})(Y_i-\bar{Y}) \\
 						&= \frac{1}{n-1} \left( \sum_{i=1}^{n}X_iY_i-\sum_{i=1}^{n}\bar{Y}X_i - \sum_{i=1}^{n} \bar{X}Y_i + \sum_{i=1}^{n} \bar{X}\bar{Y}\right) \\
 						&= \frac{1}{n-1} \left( \sum_{i=1}^{n}X_iY_i - \bar{Y}\sum_{i=1}^{n}X_i - \bar{X}\sum_{i=1}^{n} Y_i  + n\bar{X}\bar{Y}\right) \\
-						&= \frac{1}{100-1}\left( 36000-100(320)-3.20(10000)+100(	3.20)(100) \right) \\
-						&= \frac{4000}{99}
+						&= \frac{1}{100-1}\left( 36000-100(320)-3.20(10000)+100(	3.20)(100) \right) = \frac{4000}{99}
 					\end{align*}
 					Substituting these into the expression for the variance, we have
 					\begin{align*}
