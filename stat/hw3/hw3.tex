@@ -205,6 +205,7 @@
 
 				\newpage
 			\item Describe situations (for some integers $M$ and $N$ with $M\ge3$ and $N\ge7$) when the sample mean has a smaller MSE than the sample median. If $N>12,$ show that the sample median has a smaller MSE than the sample mean no matter what $M$ is (as long as it is at least 3).
+				\begin{soln}
 				We first show that when $N>12$ the MSE of $\bar{X}$ is always greater than MSE of $T.$ We have 
 				\begin{align*}
 					\frac{N-3}{3N(N-1)}(4M^2-4M+2) &> \frac{12-3}{3N(N-1)}(4M^2-4M+2) \\
@@ -222,38 +223,40 @@
 				Case 1: $N=7.$ Then
 				\begin{align*}
 					\frac{4}{3}(4M^2-4M+2) &< 12(M^2-2M+1) \\
-					\implies M &>\frac{7+\sqrt{14}}{5} 
-				\end{align*} so whenever $M\ge 3.$
+					\implies M &>\frac{7+\sqrt{14}}{5} \implies M\ge3 
+				\end{align*}
 
 				Case 2: $N=8.$ Then
 				\begin{align*}
 					\frac{5}{3}(4M^2-4M+2) &< 12(M^2-2M+1) \\
-					\implies M &> \frac{13+\sqrt{65}}{8} 
-				\end{align*} so whenever $M\ge 3.$
+					\implies M &> \frac{13+\sqrt{65}}{8} \implies M\ge 3 
+				\end{align*} 
 
 				Case 3: $N=9.$ Then
 				\begin{align*}
 					\frac{6}{3}(4M^2-4M+2) &< 12(M^2-2M+1) \\ 
-					\implies M &> 2+\sqrt{2}
-				\end{align*} so whenever $M\ge 4.$
+					\implies M &> 2+\sqrt{2} \implies M\ge 4
+				\end{align*} 
 
 				Case 4: $N=10.$ Then 
 				\begin{align*}
 					\frac{7}{3}(4M^2-4M+2) &< 12(M^2-2M+1) \\
-					\implies M &> \frac{11+\sqrt{77}}{4}
-				\end{align*} so whenever $M\ge 5.$
+					\implies M &> \frac{11+\sqrt{77}}{4} \implies M\ge 5
+				\end{align*} 
 
 				Case 5: $N=11.$ Then 
 				\begin{align*}
 					\frac{8}{3}(4M^2-4M+2) &< 12(M^2-2M+1) \\
-					\implies M &> 5+2\sqrt{5}
-				\end{align*} so whenever $M\ge 10.$
+					\implies M &> 5+2\sqrt{5}\implies M\ge 10
+				\end{align*} 
 
 				Case 6: $N=12.$ Then
 				\begin{align*}
 					\frac{9}{3}(4M^2-4M+2) &< 12(M^2-2M+1) \\
 					\implies M &< \frac{1}{2}
 				\end{align*} but since we must have $M\ge 3,$ there are no solutions in this case.
+
+			\end{soln}
 
 		\end{enumerate}
 
@@ -275,6 +278,7 @@
 						\includegraphics[width=14cm]{longest_run.png}
 					\end{center}					
 
+					\newpage
 			\item Use your fit in (c) to predict the expected value when $n=500.$ Then approximate the value you get using simulation and compare.
 				\begin{soln}
 					From the fit equation, we have \[E[R_{500}]\approx 0.357+1.438\ln500 \approx 9.2936. \] The simulation run on $n=500$ gave an expectation of 9.3033, so the two agree closely.
