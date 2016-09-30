@@ -1,0 +1,84 @@
+\documentclass{article}
+\usepackage[sexy, hdr, fancy]{evan}
+\setlength{\droptitle}{-4em}
+
+\lhead{Homework 4}
+\rhead{Advanced Algebra I}
+\lfoot{}
+\cfoot{\thepage}
+
+\begin{document}
+\title{Homework 4}
+\maketitle
+\thispagestyle{fancy}
+
+\section*{Section 2.2: Groups}
+\begin{itemize}
+	\item[13.] If $G$ is any group, define $\alpha:G\to G$ by $\alpha(g)=g^{-1}.$ Show that $\alpha$ is injective and surjective.
+		
+\end{itemize}
+
+\section*{Section 2.3: Subgroups}
+\begin{itemize}
+	\item[2.] If $H$ is a subset of a group $G,$ show that $H$ is a subgroup if and only if $H$ is nonempty and $ab^{-1}\in H$ whenever $a\in H$ and $b\in H.$
+
+	\item[5.] \begin{enumerate}[(a)]
+			\item If $G$ is an abelian group, show that $H=\left\{ a\in G | a^2=1 \right\}$ is a subgroup of $G.$
+
+			\item Give an example where $H$ is not a subgroup.
+				
+		\end{enumerate}
+
+	\item[8.] If $X$ is a nonempty subset of a group $G,$ let $\left< X\right>$ be the set of all products of powers of elements of $X;$ more formally \[\left< X\right>=\left\{ x_1^{k_1}x_2^{k_2}\cdots x_m^{k_m}\, |\, m\ge 1, x_i\in X \right\}\]
+		\begin{enumerate}[(a)]
+			\item Show that $\left< X\right>$ is a subgroup of $G$ that contains $X.$
+
+			\item Show that $\left< X\right>\subseteq H$ for every subgroup $H$ such that $X\subseteq H.$ Thus, $\left< X\right>$ is the \textit{smallest} subgroup of $G$ that contains $X,$ and is called the \textbf{subgroup generated} by $X.$
+				
+		\end{enumerate}
+
+	\item[13.] \begin{enumerate}[(a)]
+			\item If $G$ is a group, show that $\left\{ (g, g) | g\in G \right\}$ is a subgroup of $G\times G.$
+
+			\item Determine the groups $G$ such that $\left\{ (g, g^{-1})|g\in G \right\}$ is a subgroup of $G\times G.$
+				
+		\end{enumerate}
+
+	\item[22.] Find $Z[GL_2(\RR)].$
+		
+\end{itemize}
+
+\section*{Section 2.4: Cyclic Groups and the Order of an Element}
+\begin{itemize}
+	\item[6.] If $G$ is a group and $g\in G,$ show that $\left< g\right>=\left< g^{-1}\right>.$
+
+	\item[7.] Let $o(g)=20$ in a group $G.$ Compute
+		\begin{enumerate}[(a)]
+			\item $o(g^2)$ 
+
+			\item $o(g^8)$ 
+
+			\item $o(g^5)$
+
+			\item $o(g^3)$
+				
+		\end{enumerate}
+
+	\item[10.] \begin{enumerate}[(a)]
+			\item If $gh=hg$ in a group and $o(g)$ and $o(h)$ are finite, show that $o(gh)$ is finite.
+
+			\item Show that (a) fails if $gh\neq hg$ by considering $\begin{bmatrix}
+					0 & -1 \\
+					1 & 0
+				\end{bmatrix}$ and $\begin{bmatrix}
+					0 & 1 \\
+					-1 & -1
+				\end{bmatrix}.$
+				
+		\end{enumerate}
+
+	\item[18.] If $G=\left< g\right>$ and $H=\left< h\right>,$ show that $G\times H=\left< (g, 1), (1, h)\right>$
+		
+\end{itemize}
+
+\end{document}
