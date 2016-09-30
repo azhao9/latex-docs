@@ -257,7 +257,9 @@
 				x_1+x_2+x_3+x_4+x_5+x_6 &\le 3000 \\
 				x_7+x_8 &\le 2000 \\
 				x_1+x_2+x_3 &\ge 1000 \\
-				0.9(x_4+x_5+x_6) &\ge 1000
+				0.9(x_4+x_5+x_6) &\ge 1000 \\
+				x_1+x_2+x_3 &\le 1500 \\
+				0.9(x_4+x_5+x_6) &\le 2000
 			\end{align*} 
 			Then the amount of cottage cheese made is $0.9(x_4+x_5+x_6).$ Then assume that all the cream cheese and cottage cheese made is sold, then the cost of operations is given by \[0.4(x_1+x_2+x_3) + 0.4(x_4+x_5+x_6) + 0.4x_7+0.4x_8+0.8(x_1+x_4+x_7) + 0.4(x_2+x_5+x_8)\] and the amount earned is \[1.5(x_1+x_2+x_3)+1.2(0.9(x_4+x_5+x_6))\] thus the profit is given by the amount earned minus the amount spent, which is \[0.3x_1+0.7x_2+1.1x_3 -0.12x_4+0.28x_5+0.68x_6-1.2x_7-0.8x_8\]
 
@@ -272,7 +274,9 @@
 				-x_1-x_2-x_3-x_4-x_5-x_6 &\ge -3000 \\
 				-x_7-x_8 &\ge -2000 \\
 				x_1+x_2+x_3 &\ge 1000 \\
-				0.9x_4+0.9x_5+0.9x_6 &\ge 1000
+				0.9x_4+0.9x_5+0.9x_6 &\ge 1000 \\
+				-x_1-x_2-x_3 &\ge -1500 \\
+				-0.9x_4-0.9x_5-0.9x_6 &\ge -2000
 			\end{align*}
 			so \[A=\begin{bmatrix}
 					1 & -2 & 0 & 0 & 0 & 0 & 0 & 0 \\
@@ -284,9 +288,11 @@
 					-1 & -1 & -1 & -1 & -1 & -1 & 0 & 0 \\
 					0 & 0 & 0 & 0 & 0 & 0 & -1 & -1 \\
 					1 & 1 & 1 & 0 & 0 & 0 & 0 & 0 \\
-					0 & 0 & 0 & 0.9 & 0.9 & 0.9 & 0 & 0
+					0 & 0 & 0 & 0.9 & 0.9 & 0.9 & 0 & 0 \\
+					-1 & -1 & -1 & 0 & 0 & 0 & 0 & 0 \\
+					0 & 0 & 0 & -0.9 & -0.9 & -0.9 & 0 & 0
 			\end{bmatrix}, b=\begin{bmatrix}
-					0 \\ 0 \\ 0 \\ 0 \\ 0 \\ 0 \\ -3000 \\ -2000 \\ 1000 \\ 1000
+					0 \\ 0 \\ 0 \\ 0 \\ 0 \\ 0 \\ -3000 \\ -2000 \\ 1000 \\ 1000 \\ -1500 \\ -2000
 			\end{bmatrix}\] and the cost vector is \[c^T = \begin{bmatrix}
 					0.3 & 0.7 & 1.1 & -0.12 & 0.28 & 0.68 & -1.2 & -0.8
 			\end{bmatrix}\]
