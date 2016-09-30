@@ -15,6 +15,18 @@
 \section*{Section 2.2: Groups}
 \begin{itemize}
 	\item[13.] If $G$ is any group, define $\alpha:G\to G$ by $\alpha(g)=g^{-1}.$ Show that $\alpha$ is injective and surjective.
+		\begin{proof}
+			To show $\alpha$ is injective, consider $g_1$ and $g_2$ such that $\alpha(g_1)=\alpha(g_2).$ Then $g_1^{-1}=g_2^{-1},$ and left multiplying by $g_2g_1,$ we have 
+			\begin{align*}
+				g_2g_1g_1^{-1} &= g_2g_1g_2^{-1} \\
+				g_2 &= g_2g_1g_2^{-1} \\
+				g_2 g_2 &= g_2g_1g_2^{-1}g_2 \\
+				g_2 g_2 &= g_2 g_1 
+			\end{align*} and by the cancellation law, we have $g_2=g_1,$ so $\alpha$ is injective, as desired.
+
+			To show $\alpha$ is surjective, we must show that for all $g\in G,$ there exists a $g_0\in G$ such that $\alpha(g_0)=g.$ Since $gg^{-1}=1$ it follows that $(g^{-1})^{-1}=g,$ so then $g_0=g^{0-1}$ will satisfy this, and since $G$ is a group, every element has an inverse, so $\alpha$ is surjective, as desired.
+			
+		\end{proof}
 		
 \end{itemize}
 
@@ -22,7 +34,8 @@
 \begin{itemize}
 	\item[2.] If $H$ is a subset of a group $G,$ show that $H$ is a subgroup if and only if $H$ is nonempty and $ab^{-1}\in H$ whenever $a\in H$ and $b\in H.$
 
-	\item[5.] \begin{enumerate}[(a)]
+	\item[5.] 
+		\begin{enumerate}[(a)]
 			\item If $G$ is an abelian group, show that $H=\left\{ a\in G | a^2=1 \right\}$ is a subgroup of $G.$
 
 			\item Give an example where $H$ is not a subgroup.
@@ -37,7 +50,8 @@
 				
 		\end{enumerate}
 
-	\item[13.] \begin{enumerate}[(a)]
+	\item[13.] 
+		\begin{enumerate}[(a)]
 			\item If $G$ is a group, show that $\left\{ (g, g) | g\in G \right\}$ is a subgroup of $G\times G.$
 
 			\item Determine the groups $G$ such that $\left\{ (g, g^{-1})|g\in G \right\}$ is a subgroup of $G\times G.$
@@ -55,16 +69,29 @@
 	\item[7.] Let $o(g)=20$ in a group $G.$ Compute
 		\begin{enumerate}[(a)]
 			\item $o(g^2)$ 
+				\begin{answer*}
+					Since $o(g)=20,$ that means $g^{20}=1.$ Then $(g^2)^{10}=g^{20}=1,$ so $o(g^2)=\boxed{10.}$
+				\end{answer*}
 
-			\item $o(g^8)$ 
+			\item $o(g^8)$
+				\begin{answer*}
+					Since $o(g)=20,$ that means $g^{20}=1.$ Then $(g^8)^5=g^{40}=(g^{20})^2=1,$ so $o(g^8)=\boxed{5.}.$
+				\end{answer*}
 
 			\item $o(g^5)$
+				\begin{answer*}
+					Since $o(g)=20,$ that means $g^{20}=1.$ Then $(g^5)^4=g^{20}=1,$ so $o(g^5)=\boxed{4.}$
+				\end{answer*}
 
 			\item $o(g^3)$
+				\begin{answer*}
+					Since $o(g)=20,$ that means $g^{20}=1.$ Then $(g^3)^{20}=(g^{20})^3=1,$ so $o(g^3)=\boxed{20.}$
+				\end{answer*}
 				
 		\end{enumerate}
 
-	\item[10.] \begin{enumerate}[(a)]
+	\item[10.] 
+		\begin{enumerate}[(a)]
 			\item If $gh=hg$ in a group and $o(g)$ and $o(h)$ are finite, show that $o(gh)$ is finite.
 
 			\item Show that (a) fails if $gh\neq hg$ by considering $\begin{bmatrix}
