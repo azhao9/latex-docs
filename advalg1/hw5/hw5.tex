@@ -50,7 +50,7 @@
 				\begin{soln}
 					Here, $G=\left\{ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 \right\},$ and we have
 					\begin{align*}
-						1 &\equiv 2^{10} \\
+						1 &\equiv 1 \\
 						2 &\equiv 2^1 \\
 						3 &\equiv 2^8 \\
 						4 &\equiv 2^2 \\
@@ -80,6 +80,12 @@
 \section*{Section 2.5: Homomorphisms and Isomorphisms}
 \begin{itemize}
 	\item[3.] If $G$ is any group, define $\alpha:G\to G$ by $\alpha(g)=g\inv.$ Show that $G$ is abelian if and only if $\alpha$ is a homomorphism.
+		\begin{proof}
+			If $G$ is abelian, then $gf=fg$ for any $f, g\in G.$ Then $\alpha(gf)=\alpha(fg)=(fg)\inv=g\inv f\inv = \alpha(g) \alpha(f)$ so $\alpha(gf)=\alpha(g)\alpha(f),$ so $\alpha$ is a homomorphism, as desired.
+
+			If $\alpha$ is a homomorphism, then $\alpha(fg)=\alpha(f)\alpha(g)$ for all $f, g\in G.$ Then $(fg)\inv=f\inv g\inv = (gf)\inv$ so in fact $fg=gf$ since inverses are unique, and $G$ is abelian, as desired.
+			
+		\end{proof}
 
 	\item[6.] Show that there are exactly two homomorphisms $\alpha:C_6\to C_4.$
 
