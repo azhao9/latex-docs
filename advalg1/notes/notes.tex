@@ -1,5 +1,5 @@
 \documentclass{article}
-\usepackage[sexy, hdr, fancy]{evan}
+\usepackage[sexy, hdr, fancy, diagrams]{evan}
 
 \setlength{\droptitle}{-4em}
 
@@ -276,8 +276,104 @@ Suppose $G$ is a group and $H\subset G$ is a subgroup of $G.$ Then for some $a\i
 
 \begin{example}[non-example]
 	$G=S_3$ and take $H=\left\{ \varepsilon, \tau \right\}$ where $\tau^2=\varepsilon$ and let $\sigma\in S_3$ such that $\sigma^3=\varepsilon.$ Then $\sigma H\neq H\sigma.$
-\end{example}<++>
+\end{example}
 
 
+
+
+\newpage
+
+\section{12 October, 2016}
+\subsection{Normal Subgroups}
+
+\begin{definition}
+	If $G$ is a group, and $H\subset G$ is a subgroup, $H$ is a \vocab{normal subgroup} if $Hg=gH$ for all $g\in G.$ That is, the left and right cosets coincide. This is $H\unlhd G.$
+\end{definition}
+
+Then we can define the \vocab{quotient groups} as $G/H:=\left\{ gH\, |\, g\in G \right\}.$ We may also define the product of cosets as $gH\cdot g_1H:=(gg_1)H.$ 
+
+We can write a chain of normal subgroups \[\left\{ 0 \right\}\subset H_1\unlhd H_2\unlhd \cdots \unlhd H_n\unlhd G\] where all $H_i$ are normal in $G.$ We can write \[G=\bigoplus_{i=1}^n H_i/H_{i-1}\] which is a direct sum.
+
+\begin{definition}
+	When $G$ has no non-trivial normal subgroup then $G$ is called \vocab{simple.} 
+\end{definition}
+
+\begin{example*}
+	$A_n\subset S_n$ for all $n\ge 5$.
+\end{example*}
+
+\begin{remark*}
+	$H=\left< (123)\right>\unlhd A_4$ is normal.
+\end{remark*}
+
+\begin{example*}
+	Let $G=\left< a, b\, |\, o(a)=4, o(b)=2, aba=b\right>.$ Then explicitly \[G=\left\{ 1, a, a^2, a^3, b, ba, ba^2, ba^3 \right\}.\] Let $K=\left< a\right>,$ so $|K|=4,$ and $|G:K|=2,$ hence $K$ is normal in $G.$ Then $G/K=\left\{ K, Kb \right\}.$ 
+	
+	Next, let $H=\left< b\right>,$ so $|G:H|=4.$ Let $S=\left\{ H, Ha, Ha^2, Ha^3 \right\}$ with $Ha=\left\{ a, ba \right\}\neq aH=\left\{ a, ab \right\}$ since $ab\neq ba.$ Thus $H$ is not normal in $G$ and $S$ is not actually a group.
+\end{example*}
+
+\begin{theorem*}
+	Let $K\unlhd Z(G)\unlhd G$ st $G/K$ is cyclic. Then $G$ is abelian.
+\end{theorem*}
+
+\begin{proof}
+	We have $G/K=\left< Kg\right>$ for some $g\in G.$ Let $a, b\in G,$ we need to show $ab=ba.$ Consider $Ka, Kb$ in the quotient $G/K.$ Then $Ka=(Kg)^m=Kg^m$ and $Kb=Kg^n$ for some $m, n\in\ZZ.$ Since these are cosets that are either disjoint or equal, we have $b\in Kg^n\implies b=k_1g^n$ and $a=kg^m$ for some $k, k_1\in K.$ Now \[ab=(kg^m)(k_1g^n)=(kk_1)g^{m+n}=(k_1g^n)(kg^m)=ba\] since as cosets, $KaKb=Kab=abK=KbKa.$ 
+\end{proof}
+
+\subsection{The Isomorphism Theorem}
+
+Let $\varphi:G\to H$ where $\varphi$ is a group homomorphism. Then $\ker(\varphi):=\left\{ g\in G\, |\, \varphi(g)=1_H \right\}\unlhd G$ is a normal subgroup. Clearly $\ker(\varphi)$ is a subgroup. Now we want to see if $\ker(\varphi)$ is normal, that is if \[g\ker(\varphi)g\inv=\ker(\varphi)\] for all $g\in G.$ 
+
+Let $h\in\ker(\varphi),$ so $\varphi(h)=1.$ Then $\varphi(ghg\inv)=\varphi(g)\varphi(h)\varphi(g\inv)=\varphi(g)\varphi(g\inv)=1$ for all $h\in\ker(\varphi)$ so in fact $g\ker(\varphi)g\inv=\ker(\varphi).$
+
+For the converse, given $K\unlhd G$ a normal subgroup, where $\varphi:G\to G/K,$ we define $\ker(\varphi)=K$ by construction of $G/K.$
+
+\textbf{Conclusion:} There is a 1-1 correspondence between normal subgroups of $G$ and group homomorphisms $\varphi:G\to H.$
+
+\begin{example*}
+	Let $\varphi:G\to H$ be a group homomorphism. Then \[H\supset \varphi``(G)=\left\{ \varphi(g)\, |\, g\in G \right\}\] is a subgroup, but in general not normal
+\end{example*}
+
+\begin{example*}
+	Take $H\subset G$ be not normal, and consider the natural embedding $\varphi=i:H\to G,$ then $\varphi``(G)=i``(G)=H,$ which we said was not normal in $G.$
+\end{example*}
+
+\begin{remark*}
+	Sometimes one shows that $H\subset G$ is normal by showing that $H=\ker(\varphi)$ for a suitable $\varphi.$
+\end{remark*}
+
+\begin{theorem}
+	Let $\varphi:G\to H$ be a group homomorphism. Then the following are equivalent:
+	\begin{itemize}
+		\ii $\varphi$ is injective
+		\ii $\ker(\varphi)=\left\{ 1_G \right\}$
+	\end{itemize}
+\end{theorem}
+
+\begin{proof}
+	Let $g\in\ker(\varphi),$ so $\varphi(g)=1=\varphi(1_G).$ Then since $\varphi$ is injective, we must have $g=1_G.$
+
+	Next, assume $\ker(\varphi)=1_G.$ Then let $a, b\in G$ such that $\varphi(a)=\varphi(b)\iff \varphi(ab\inv)=1_H.$ Thus $ab\inv=1_G,$ so $a=b,$ thus $\varphi$ is injective.
+	
+\end{proof}
+
+\begin{remark*}
+	The statement for monoids would fail since the proof assumes the existence of inverses.
+\end{remark*}
+
+\begin{example*}
+	Let $\varphi:M\to\left\{ 0, 1 \right\}$ be a monoid homomorphism, where $1+1=1,$ and $0+1=1+0=1.$ Define $\varphi(m)=1$ for all $m\neq 1_M$ and $\varphi(1_M)=0.$ Then $\ker(\varphi)=\left\{ 1_M \right\}$ but $\varphi$ is clearly not injective.
+	
+\end{example*}
+
+\begin{theorem}[Isomorphism Theorem]
+	Let $\varphi:G\to H$ be a group homomorphism, and $K:=\ker(\varphi)\unlhd G.$ Then \[\varphi``(G)\cong G/K\]
+
+	\begin{diagram}
+		G & \rTo^{\varphi} & H \\
+		\dTo & & \uTo^{i} \\
+		G/K & \rTo^{\bar{\varphi}} & \varphi``(G)
+	\end{diagram}
+\end{theorem}
 
 \end{document}
