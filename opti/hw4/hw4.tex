@@ -15,7 +15,7 @@
 \thispagestyle{fancy}
 
 \begin{enumerate}[1:]
-	\item Consider the linear program (LP) min $c^Tx$ such that $Ax=b, x\ge0$ where \[A=\begin{bmatrix}
+	\item \[A=\begin{bmatrix}
 				-6 & -5 & 25 & 3 & -85 & 4 & 30 \\
 				24 & -2 & 28 & 6 & -55 & 1 & -9 \\
 				9 & -5 & 11 & 2 & -55 & -1 & 19
@@ -23,10 +23,10 @@
 				62 \\ 62 \\ 3
 			\end{bmatrix}, \quad c= \begin{bmatrix}
 				23 & 1 & -16 & -1 & 52 & -6 & -12
-		\end{bmatrix}^T\] Solve this problem using the Simplex Method, starting from the basis consisting of $A$'s columns 1, 3, 6.
+		\end{bmatrix}^T\] 
 		\lstinputlisting{hw4_1}
 
-	\item Consider the linear program (LP) min $c^Tx$ such that $Ax=b, x\ge 0$ where \[A=\begin{bmatrix}
+	\item \[A=\begin{bmatrix}
 				8 & -226 & -33 & 10 & 9 & 49 & -1 \\
 				9 & -199 & -51 & 10 & 3 & 25 & -25 \\
 				2 & 24 & 45 & -6 & 3 & -45 & -15
@@ -34,10 +34,11 @@
 				107 \\ 55 \\ 25
 			\end{bmatrix}, \quad c=\begin{bmatrix}
 				-4 & 63 & 7 & -2 & -2 & 0 & 21
-		\end{bmatrix}^T\] Solve this problem using the Simplex Method, starting from the basis consisting of $A$'s columns 1, 3, 4.
+		\end{bmatrix}^T\] 
 		\lstinputlisting{hw4_2}
 
-	\item Consider the linear program (LP) min $c^T x$ such that $Ax=b, x\ge 0$ where \[A=\begin{bmatrix}
+		\newpage
+	\item \[A=\begin{bmatrix}
 				7 & 7 & 45 & -1 & 3 & -53 & -68 \\
 				9 & -5 & 27 &  -115 & 7 & -129 & 42 \\
 				5 & -3 & 63 & -96 & 10 & -109 & 86
@@ -48,10 +49,14 @@
 		\end{bmatrix}^T\]
 		\begin{enumerate}[a)]
 			\item Solve this problem using the Simplex Method, starting from the basis consisting of $A$'s columns 1, 2, 5.
+				\lstinputlisting{hw4_3a}
 
 			\item Solve this problem using the Simplex Method, starting from the basis consisting of $A$'s columns 1, 2, 7. Comment on the difference in outcome between this part b and the previous part a.
+				\lstinputlisting{hw4_3b}
 
+				\newpage
 			\item Solve this problem using the Simplex Method, starting from the basis consisting of $A$'s columns 1, 3, 6. Observe how the objective function changes through this particular Simplex Method implementation, and comment on an anomaly.
+				\lstinputlisting{hw4_3c}
 				
 		\end{enumerate}
 \end{enumerate}
