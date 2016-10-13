@@ -68,8 +68,16 @@
 
 	\item[20.] \begin{enumerate}[(a)]
 			\item Find three elements of $C_6\times C_{15}$ of maximum order.
+				\begin{soln}
+					Let $C_6=\left\{ 1, g, \cdots, g^5 \right\}$ and $C_{15}=\left\{ 1, f, \cdots, f^{14} \right\}.$ Then the element of max order in $C_6$ is $g^5,$ where $o(g^5)=6$ since 5 and 6 are relatively prime. Similarly, the elements of max order in $C_{15}$ are the elements $f^k$ where $k$ is relatively prime to 15, which are $k=7, 11, 13.$ Then the elements in $C_6\times C_{15}$ of max order are \[\boxed{(g^5, f^7), \quad (g^5, f^{11}), \quad (g^5, f^{13})}\] which all have order $\lcm(6, 15)=30.$
+					
+				\end{soln}
 
 			\item Find one element of maximum order in $C_m\times C_n.$
+				\begin{soln}
+					If $C_m=\left< g\right>$ and $C_n=\left< f\right>$ then we are guaranteed $o(g^{m-1})=m$ and $o(f^{n-1})=n$ since $m-1$ and $n-1$ are relatively prime to $m$ and $n,$ respectively. Thus, the element $\boxed{(g^{m-1}, f^{n-1})}$ is of maximum order $\lcm(m, n).$
+					
+				\end{soln}
 				
 		\end{enumerate}
 
