@@ -147,14 +147,17 @@
 					This is the same as \[P\left( |\hat{\theta}-\theta| > \frac{\varepsilon}{\sqrt{n}} \right)=\left( 1-\frac{\varepsilon}{\theta\sqrt{n}} \right)^n\] due to the probability we calculated in part b). We want to find the limit as $n\to\infty,$ which is the same as finding the limit of the logarithm as $n\to\infty,$ and taking the exponential of that. We have 
 					\begin{align*}
 						\lim_{n\to\infty} n\log\left( 1-\frac{\varepsilon}{\theta\sqrt{n}} \right) &= \lim_{n\to\infty} \frac{\log\left( 1-\frac{\varepsilon}{\theta\sqrt{n}} \right)}{1/n} \\
-					\end{align*} and then applying l'Hopital's rule, this limit tends to $-\infty$ so the probability from above tends $e^{-\infty}=0.$ 
+					\end{align*} and then applying l'Hopital's rule, this limit tends to $-\infty$ so the probability from above tends $e^{-\infty}=0.$
 					
 				\end{soln}
 
 			\item What do your previous answers suggest about the asymptotic distribution of \[\sqrt{n}(\hat{\theta}_n-\theta)?\] In particular, does this still look approximately normal?
 				\begin{soln}
-					From part b), we know that $\hat{\theta}$ is a consistent estimator for $\theta.$ 
-				\end{soln}<++>
+					From part b), we know that $\hat{\theta}$ is a consistent estimator for $\theta.$ We also have \[E[\hat{\theta}_n]=\int_0^\theta x\cdot\frac{nx^{n-1}}{\theta^n}\, dx=\frac{n}{n+1}\theta\] so $\hat{\theta}$ is also asymptotically unbiased as $n\to\infty$
+
+					This is probably asymptotically normal, but I don't know how to show it.
+
+				\end{soln}
 				
 		\end{enumerate}
 		
@@ -179,7 +182,7 @@
 
 			\item Find the asymptotic variance of the MLE.
 				\begin{soln}
-					If we let the phenotypes Hp1-1, Hp1-2, and Hp2-2 represent -1, 0, and 1 from a random variable $X,$ then the distribution of $X$ is \[f(x|\theta)=\frac{2}{2^{|x|}} \theta^{1-x}(1-\theta)^{1+x}\] so the Fisher information is given by 
+					If we let the phenotypes Hp2-2, Hp1-2, and Hp1-1 represent -1, 0, and 1 from a random variable $X,$ then the distribution of $X$ is \[f(x|\theta)=\frac{2}{2^{|x|}} \theta^{1-x}(1-\theta)^{1+x}\] so the Fisher information is given by 
 					\begin{align*}
 						I(\theta) &= -E\left[ \frac{\partial^2}{\partial\theta^2} \log f(X|\theta) \right] = -E\left[ \frac{\partial^2}{\partial\theta^2}\log\left( \frac{2}{2^{|X|}} \theta^{1-X}(1-\theta)^{1+X} \right) \right] \\
 						&= -E\left[ \frac{\partial^2}{\partial\theta^2}\left( (1-|X|)\log 2 + (1-X)\log \theta + (1+X)\log (1-\theta) \right) \right] \\
@@ -201,16 +204,27 @@
 					From the data, we have 
 					\begin{align*}
 						E[\hat{\theta}] &= \frac{73}{95}\approx 0.768 \\
-						\var(\hat{\theta}) &\to \frac{\hat{\theta}(1-\hat{\theta})}{2n} = \frac{\frac{73}{95}\cdot\frac{22}{95}}{2(190)} \approx 0.00047
-					\end{align*} and $z_{1/2}= 2.576,$ so the 99\% confidence interval is given by \[0.768\pm 2.576\sqrt{0.00047}\approx 0.768\pm 0.056.\]
+						\var(\hat{\theta}) &\to \frac{\hat{\theta}(1-\hat{\theta})}{2n} = \frac{\frac{73}{95}\cdot\frac{22}{95}}{2(190)} \approx 0.000468
+					\end{align*} and $z_{1/2}= 2.576,$ so the 99\% confidence interval is given by \[0.768\pm 2.576\sqrt{0.000468}\approx 0.768\pm 0.056.\]
 				\end{soln}
 
 			\item Use the bootstrap to find the approximate standard deviation of the MLE and compare to the result of part b).
+				\begin{soln}
+					If there are $a, b, c$ measurements of -1 (Hb2-2), 0 (Hb1-2), and 1 (Hb1-1) respectively, the likelihood function is \[\prod_{i=1}^{a} \theta^2\prod_{j=1}^{b}2\theta(1-\theta)\prod_{k=1}^{c}(1-\theta)^2=2^b \theta^{b+2a} (1-\theta)^{b+2c}\] and the derivative of the log-likelihood is given by \[\frac{b+2a}{\theta}-\frac{b+2c}{1-\theta}=0\implies \hat{\theta}=\frac{b+2a}{2a+2b+2c}.\] 
+
+					Use the bootstrap with $\theta=73/95,$ taking 190 draws, and computing $\hat{\theta}$ for each simulation, and taking 10000 simulations, we have $s^2=0.000466$ which is very close to the value from part b), which is \[\frac{\frac{73}{95}\cdot\frac{22}{95}}{2(190)}\approx 0.000468.\]
+
+				\end{soln}
 
 			\item Use the bootstrap to find an approximate 99\% confidence interval and compare to part c).
+				\begin{soln}
+					Using the sample from part d), we have \[\bar{\hat{\theta}} = 0.7685, \quad\quad \var(\hat{\theta})=0.000466\] so the 99\% confidence interval is given by \[0.7685\pm 2.576\sqrt{0.000466}\approx 0.7685\pm 0.0556\] which is very close to the confidence interval obtained in part c).
+					
+				\end{soln}
 				
 		\end{enumerate}
 
+		\newpage
 	\item[30.] The exponential distribution if $f(x;\lambda)=\lambda e^{-\lambda x}$ and $E[X]=\lambda\inv.$ The CDF is $F(x)=P(X\le x)=1-e^{-\lambda x}.$ Three observations are made by an instrument that reports $x_1=5, x_2=3,$ but $x_3$ is too large for the instrument to measure and it only reports that $x_3>10.$
 
 		\begin{enumerate}[a.]
@@ -267,10 +281,21 @@
 
 		\begin{enumerate}[a.]
 			\item Explain why the bootstrap estimate of the distribution of $\hat{\mu}$ is $N\left( \hat{\mu}, \frac{\hat{\sigma}^2}{n} \right).$
+				\begin{answer*}
+					The MLE $\hat{\mu}$ of $\mu$ is the sample mean $\bar{X}$ for a normal distribution, and we have $\var(\hat{\mu})=\var(\bar{X})=\sigma^2/n.$ If we treat the sample as a population, the variance of the population is the same as the mean squared deviation $\hat{\sigma}^2,$ which is also the MLE. 
+
+					Taking a bootstrap and averaging over many trials, the distribution of $\hat{\mu}$ will approach $N\left( \hat{\mu}, \frac{\hat{\sigma}^2}{n} \right).$
+				\end{answer*}
 
 			\item Explain why the bootstrap estimate of the distribution of $\hat{\mu}-\mu$ is $N\left( 0, \frac{\hat{\sigma}^2}{n} \right).$
+				\begin{answer*}
+					Since $\hat{\mu}\sim N\left( \hat{\mu}, \frac{\hat{\sigma}^2}{n} \right)$ it follows that $E[\hat{\mu}-\mu]=E[\hat{\mu}]-E[\mu]=E\left[ \bar{X} \right]-\mu=0$ for large samples. Thus \[\hat{\mu}-\mu\sim N\left( 0, \frac{\hat{\sigma}^2}{n} \right).\]
+				\end{answer*}
 
 			\item According to the result of the previous part, what is the from of the bootstrap confidence interval for $\mu,$ and how does it compare to the exact confidence interval based on the $t$ distribution?
+				\begin{answer*}
+					The bootstrap confidence interval for $\mu$ is given by \[\hat{\mu}\pm z_{\alpha/2} \sqrt{\frac{\hat{\sigma}^2}{n}}=\hat{\mu}\pm z_{\alpha/2}\frac{\hat{\sigma}}{\sqrt{n}}.\] This is symmetric, unlike the confidence interval based on the $t$ distribution.
+				\end{answer*}
 				
 		\end{enumerate}
 
