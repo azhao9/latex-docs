@@ -20,6 +20,13 @@
 	\item Prove the converse of the factorization theorem, namely prove that if $T$ is a sufficient statistic, then the joint density can be factored as \[f(x_1, \cdots, x_n\mid\theta)=g(T, \theta)h(x_1, \cdots, x_n)\] Also show that if $T$ is sufficient for $\theta,$ then the MLE must be a function of $T.$
 
 	\item Let $\hat{\theta}$ be an estimator for a parameter $\theta,$ and suppose that $\var(\hat{\theta})<\infty.$ Let $T$ be a sufficient statistic for $\theta.$ Consider the random variable \[Y=E[\hat{\theta}\mid T]\] Prove that \[E\left[ \left( Y-\theta \right)^2 \right]\le E\left[ \left( \hat{\theta}-\theta \right)^2 \right]\]
+		\begin{proof}
+			We have \[E[Y]=E\left[ E[\hat{\theta}\mid T] \right] = E[\hat{\theta}]\] so
+			\begin{align*}
+				E\left[ (Y-\theta)^2 \right] &= E[Y^2]-2\theta E[Y] + \theta^2 \\
+				&= E[Y^2] - 2\theta E[\hat{\theta}]+\theta^2
+			\end{align*}<++>
+		\end{proof}<++>
 
 	\item Complete all the details of the example we discussed in lecture. Let $X_1, \cdots, X_n$ be iid data from a normal distribution with unknown mean and known variance $\sigma^2.$ Suppose that $\theta$ is assumed to be random, with prior distribution also normal; assume that the mean and variance of the prior distribution of $\theta_0$ and $\sigma_{pr}^2,$ where both $\sigma_0$ and $\sigma_{pr}^2$ are known.
 

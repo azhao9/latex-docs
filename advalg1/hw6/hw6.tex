@@ -22,8 +22,16 @@
 		\end{proof}
 
 	\item[15.] If $H$ and $K$ are subgroups of a group and $\abs{H}$ is prime, show that either $H\subseteq K$ or $H\cap K=\left\{ 1 \right\}.$
+		\begin{proof}
+			Let $|H|=p$ where $p$ is a prime. Thus, $H$ must be a cyclic group, and is the only one of order $p.$ We have $H\cap K$ is a subgroup of $H,$ so $|H\cap K|$ divides $|H|,$ so either $|H\cap K|=p$ or $|H\cap K|=1.$ In the first case, $H\cap K=H,$ so $H\subseteq K,$ and in the second case, $H\cap K=\left\{ 1 \right\},$ as desired.
+			
+		\end{proof}
 
 	\item[27.] Is $D_5\times C_3\cong D_3\times C_5?$ Prove your answer.
+		\begin{soln}
+			The element $(\theta, g)\in D_3\times C_5$ has order $\lcm(2, 5) = 10,$ but there is no element of order $10$ in $D_5\times C_3.$ The maximum order of any element in $D_5$ is 5, and elements in $C_3$ have order 3, except the identity. Thus, the orders of elements in $D_5\times C_3$ are $5$ and $15,$ but none have order 10.
+			
+		\end{soln}
 		
 \end{itemize}
 
@@ -37,8 +45,24 @@
 		\end{proof}
 
 	\item[11.] Let $p$ and $q$ be distinct primes. If $G$ is a group of order $pq$ that has a unique subgroup of order $p$ and a unique subgroup of order $q,$ show that $G$ is cyclic.
+		\begin{proof}
+			Let $H$ and $K$ be the subgroups with order $p$ and $q.$ Then $H$ and $K$ are both cyclic and normal because they are the only ones with these orders. The intersection $H\cap K=\left\{ 1 \right\}$ because it is a subgroup of both $H$ and $K,$ thus its order must divide both primes $p$ and $q,$ so the only possible order is 1. Thus, by Corollary 2 of Theorem 6, $G\cong H\times K,$ so $G=C_p\times C_q.$ This is a cyclic group of order $pq,$ as desired.
+			
+		\end{proof}
 
 	\item[16.] Show that $\Inn G\unlhd \Aut G$ for any group $G.$
+		\begin{proof}
+			Let $\varphi\in\Aut G$ be an isomorphism and $\sigma_a\in\Inn G$ be an inner automorphism. Then consider for some $g\in G,$
+			\begin{align*}
+				(\varphi\sigma_a\varphi\inv)(g) &= \varphi(\sigma_a(\varphi\inv(g))) \\
+				&= \varphi(a\varphi\inv(g)a\inv) \\
+				&= \varphi(a)\varphi(\varphi\inv(g))\varphi(a\inv) \\
+				&= \varphi(a) g \varphi(a\inv) \\
+				&= \varphi(a) g(\varphi(a))\inv \\
+				&= \sigma_{\varphi(a)}(g)
+			\end{align*} so $\varphi\sigma_a\varphi\inv\in \Inn G,$ so by part 2 of the Normality test, $\Inn G\unlhd \Aut G$ as desired.
+			
+		\end{proof}
 
 	\item[25.] If $X$ is a nonempty subset of a group $G,$ define the \textbf{normalizer} $N(X)$ of $X$ by \[N(X)=\Set{a\in G}{aXa\inv=X}.\]
 		\begin{enumerate}[(a)]
@@ -60,8 +84,16 @@
 				\end{proof}
 
 			\item If $H$ is a subgroup of $G,$ show that $H\unlhd N(H).$
+				\begin{proof}
+					We must show that for all $n\in N(H),$ it holds that $nHn\inv=H.$ However, by the way $N(H)$ is defined, $N(H)$ consists exactly of all elements $g\in G$ such that $gHg\inv=H.$ Thus, for all $n\in N(H),$ it olds that $nHn\inv=H,$ so $H\unlhd N(H),$ as desired.
+					
+				\end{proof}
 
 			\item If $H$ is a subgroup of $G,$ show that $N(H)$ is the largest subgroup of $G$ in which $H$ is normal. That is, if $H\unlhd K,$ and $K$ if a subgroup of $G,$ then $K\subseteq N\left( H \right).$
+				\begin{proof}
+					By the normality test, if $k\in K$ since $H$ is normal in $K,$ we have $kHk\inv= H.$ The normalizer of $H$ is defined as all $g\in G$ such that $gHg\inv=H.$ Thus, if $k\in K,$ it must be that $k\in N(H),$ so $K\subseteq N(H),$ as desired.
+					
+				\end{proof}
 				
 		\end{enumerate}
 		
@@ -71,8 +103,29 @@
 
 \begin{itemize}
 	\item[7.] If $\alpha:G\to G_1$ is a group homomorphism and both $\alpha(G)$ and $\ker \alpha$ are finitely generated, show that $G$ is finitely generated.
+		\begin{proof}
+			Let $\alpha(G)=\left< X\right>=\left< x_1, x_2, \cdots, x_n\right>$ and $\ker \alpha=\left< Y\right>=\left< y_1, \cdots, y_m\right>$ where $x_1, \cdots, x_n\in \alpha(G)$ and $y_1, \cdots, y_m\in G.$ Then since $x_i$ are in the image, let $x_i=\alpha(z_i)$ for some $z_i\in G.$ Thus, for some $g\in G,$ its image $\alpha(g)\in G,$ so we can write it as 
+			\begin{align*}
+				\alpha(g) &= x_1^{k_1}x_2^{k_2}\cdots x_n^{k_n} \\
+				&= \alpha(z_1)^{k_1}\alpha(z_2)^{k_2}\cdots \alpha(z_n)^{k_n} \\
+				&= \alpha\left( z_1^{k_1} z_2^{k_2}\cdots z_n^{k_n} \right)
+			\end{align*} since $\alpha$ is a homomorphism. Let $h=z_1^{k_1}\cdots z_n^{k_n},$ so
+			\begin{align*}
+				\alpha(gh\inv)&=\alpha(g)\alpha(h\inv)=\alpha(g)\alpha(h)\inv \\
+				&= \alpha(z_1^{k_1}\cdots z_n^{k_n}) \alpha(z_1^{k_1}\cdots z_n^{k_n}) = 1 \\
+				\implies gh\inv&\in\ker \alpha \\
+				\implies gh\inv &= y_1^{j_1} y_2^{j_2}\cdots y_m^{j_m} \\
+				\implies g &= y_1^{j_1} \cdots y_m^{j_m} h \\
+				&= y_1^{j_1} \cdots y_m^{j_m} z_1^{k_1} \cdots z_n^{k_n}
+			\end{align*} thus any $g\in G$ is in the set $\left< y_1, \cdots, y_m, z_1, \cdots, z_n\right>$ which is finite. Thus, $G$ is finitely generated, as desired.
+			
+		\end{proof}
 
 	\item[9.] If $K=\left\{ \varepsilon, (12)(34), (13)(24), (14)(23) \right\},$ is there a group homomorphism $\alpha:S_4\to A_4$ with $\ker \alpha=K?$
+		\begin{soln}
+			If such a group homomorphism exists, then $\alpha(S_4)\cong S_4/K$ by the isomorphism theorem. We have $|S_4/K|=4!/4=6,$ and the only groups of order 6 are $C_6$ and $S_3.$ Clearly this quotient group is not cyclic, so it must be isomorphic to $S_3.$ Thus, $\alpha(S_4)\cong S_3$ is a subgroup of $A_4.$ However, $\sigma^2=(312)\in S_3$ but $\sigma^2\not\in A_4,$ so this is a contradiction, so no such homomorphism exists.
+			
+		\end{soln}
 
 	\item[21.] Show that $\CC^*/\CC^0\cong \RR^+$ where $\CC^0=\Set{z}{\abs{z}=1}$ is the circle group.
 		\begin{proof}
