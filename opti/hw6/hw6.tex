@@ -1,0 +1,76 @@
+\documentclass{article}
+\usepackage[sexy, hdr, fancy]{evan}
+\setlength{\droptitle}{-4em}
+
+\lhead{Homework 6}
+\rhead{Introduction to Optimization}
+\lfoot{}
+\cfoot{\thepage}
+
+\begin{document}
+\title{Homework 6}
+\maketitle
+\thispagestyle{fancy}
+
+\begin{enumerate}
+	\item Recall that by strong duality there are exactly four possibilities for any linear program LP and its dual DP. Namely,
+		\begin{enumerate}[i)]
+				\ii LP and DP are both feasible and have equal optimal objective function values
+				\ii LP is unbounded and DP is infeasible
+				\ii LP is infeasible and DP is unbounded
+				\ii LP and DP are both infeasible
+		\end{enumerate}
+
+		Consider the linear program (LP) min $c^T x$ such that $Ax=b$ and $x\ge 0$ where $A$ happens to be a matrix of all zeros. Determine and show which of the four above scenarios occurs in (each possible) different choices of $b$ and $c.$
+
+	\item Consider the following LP:
+		\begin{align*}
+			\max \quad 4x_1-6x_2 & \\
+			\text{s.t.}\quad x_1+3x_2 &\ge 3 \\
+			5x_1-x_2 &\le 7 \\
+			-2x_1+3x_2 &= 9 \\
+			x_1\ge 0 &\quad x_2\text{ unrestricted}
+		\end{align*}
+
+		\begin{enumerate}[a)]
+			\item Write LP in standard form, then write its standard form dual.
+
+			\item Write LP in canonical form, then write its canonical form dual.
+
+			\item Show how the dual programs from part a, b, are equivalent.
+
+		\end{enumerate}
+
+	\item Consider the linear program (LP) min $c^T x$ such that $Ax=b, x\ge 0$ where \[A=\begin{bmatrix}
+				-6 & -5 & 25 & 3 & -85 & 4 & 30 \\
+				24 & -2 & 28 & 6 & -55 & 1 & -9 \\
+				9 & -5 & 11 & 2 & -55 & -1 & 10
+			\end{bmatrix}\quad b=\begin{bmatrix}
+				62 \\ 62 \\ 3
+			\end{bmatrix}\quad c=\begin{bmatrix}
+				23 & 1 & -17 & -1 & 52 & -6 & -12
+		\end{bmatrix}^T\]
+		Write the dual program (DP) and then solve the dual problem.
+
+	\item Concerning the specific LP discussed in the previous problem:
+
+		\begin{enumerate}[a)]
+			\item Suppose you may change the value of $b_1$ (currently 62) to anything you want. To what value should you set $b_1$ in order to have the adjusted LP have optimal objective function value -70? Compute the optimal solution for the adjusted LP.
+
+			\item Suppose you may change the value of $b_2$ (currently 62) to anything you want. To what value should you set $b_2$ in order to have the adjusted LP have optimal objective function value -68.5? Compute the optimal solution for the adjusted LP.
+				
+		\end{enumerate}
+
+	\item Consider the linear program (LP) min $c^T x$ such that $Ax=b, x\ge 0$ where \[ A=\begin{bmatrix}
+				7 & 7 & 45 & -1 & 3 & -53 & -68 \\
+				9 & -5 & 27 & -115 & 7 & -129 & 42 \\
+				5 & -3 & 63 & -96 & 10 & -109 & 86
+			\end{bmatrix}\quad b=\begin{bmatrix}
+				26 \\ 18 \\ 34
+			\end{bmatrix}\quad c=\begin{bmatrix}
+				1 & 7 & -37 & 94 & -9 & 76 & -146
+		\end{bmatrix}^T\] Write the dual program (DP) and then solve the dual problem. Compute the optimal dual variables using one of the optimal bases for (LP), and then repeat this for the other optimal basis.
+
+\end{enumerate}
+
+\end{document}
