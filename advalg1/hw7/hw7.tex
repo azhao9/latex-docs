@@ -16,25 +16,124 @@
 
 \begin{itemize}
 	\item[22.] Show that $\RR^*/\left\{ 1, -1 \right\}\cong \RR^+.$
+		\begin{soln}
+			Define the mapping $\varphi:\RR^*\to \RR^+$ given by $\varphi(x)=x^2$ for $x\in \RR^*.$ This is indeed a homomorphism:
+			\begin{align*}
+				\varphi(xy) &= (xy)^2 = x^2 y^2 = \varphi(x)\varphi(y)
+			\end{align*} and the kernel is the set $\left\{ 1, -1 \right\}$ since $\varphi(1)=\varphi(-1)=1.$ Here, the image of $\RR^*$ under $\varphi$ is exactly $\RR^+,$ since the square of non-zero elements of $\RR$ are positive. Thus, by the Isomorphism theorem, \[\varphi``(\RR^*)=\RR^+\cong \RR^*/\ker \varphi = \RR^*/\left\{ 1, -1 \right\}\] as desired.
+			
+		\end{soln}
 
 	\item[29.] Let $G=\left\{ \begin{bmatrix}
 		1 & a & b \\ 0 & 1 & c \\ 0 & 0 & 1
 	\end{bmatrix}\Bigg\vert a, b, c\in \RR\right\}.$ 
 	\begin{enumerate}[(a)]
 		\item Show that $G$ is a subgroup of $M_3(\RR)^*$ and that $Z(G)\cong \RR.$
+			\begin{proof}
+				Clearly $\begin{bmatrix}
+					1 & 0 & 0 \\ 0 & 1 & 0 \\ 0 & 0 & 1
+				\end{bmatrix}\in G$ which is the identity in $\GL_3(\RR).$ Then let
+				\begin{align*}
+					A &= \begin{bmatrix}
+						1 & a & b \\
+						0 & 1 & c \\
+						0 & 0 & 1
+					\end{bmatrix} \\
+					M &= \begin{bmatrix}
+						1 & m & n \\
+						0 & 1 & p \\
+						0 & 0 & 1
+					\end{bmatrix}
+				\end{align*} be in $G,$ so their product \[AM = \begin{bmatrix}
+						1 & a & b \\
+						0 & 1 & c \\
+						0 & 0 & 1
+					\end{bmatrix} \begin{bmatrix}
+						1 & m & n \\
+						0 & 1 & p \\
+						0 & 0 & 1
+				\end{bmatrix} = \begin{bmatrix}
+				1 & m+a & n+ap+b \\
+				0 & 1 & p+c \\
+				0 & 0 & 1
+				\end{bmatrix}\] is also in $G.$ Finally, the inverse of $A$ is given by
+				\[A\inv = \begin{bmatrix}
+				1 & -a & ac-b \\
+				0 & 1 & -c \\
+				0 & 0 & 1
+				\end{bmatrix}\] which is also in $G.$ Thus, $G$ is a subgroup of $\GL_3(\RR_),$ as desired.
 
+				Let $M\in Z(G).$ Then we have 
+				\begin{align*}
+					AM &= \begin{bmatrix}
+						1 & m+a & n+ap+b \\
+						0 & 1 & p+c \\
+						0 & 0 & 1 
+					\end{bmatrix} \\
+					MA &= \begin{bmatrix}
+						1 & a+m & b+mc+n \\
+						0 & 1 & c+p \\
+						0 & 0 & 1
+					\end{bmatrix}
+				\end{align*} so since $M\in Z(G),$ we must have $AM=MA,$ which is equivalent to having $n+ap+b=b+mc+n$ or $ap=mc.$ Since $a$ and $c$ can be anything, it must be the case that $m=p=0.$ Thus, the general form of $M\in Z(G)$ is \[M=\begin{bmatrix}
+						1 & 0 & n \\ 0 & 1 & 0 \\ 0 & 0 & 1
+					\end{bmatrix}, \quad n\in \RR
+			\] and we can construct a mapping $\varphi:Z(G)\to\RR$ where \[\varphi\left( \begin{bmatrix}
+					1 & 0 & n \\ 0 & 1 & 0 \\ 0 & 0 & 1
+			\end{bmatrix}\right) = n\] which is obviously bijective. It is also a homomorphism because 
+			\begin{align*}
+				\varphi\left( \begin{bmatrix}
+					1 & 0 & n \\ 0 & 1 & 0 \\ 0 & 0 & 1
+				\end{bmatrix}\begin{bmatrix}
+					1 & 0 & m \\ 0 & 0 & 1 \\ 0 & 0 & 1
+				\end{bmatrix}\right) &= \varphi\left( \begin{bmatrix}
+					1 & 0 & m+n \\ 0 & 1 & 0 \\ 0 & 0 & 1
+				\end{bmatrix}\right) = m+n \\
+				\varphi\left( \begin{bmatrix}
+					1 & 0 & n \\ 0 & 1 & 0 \\ 0 & 0 & 1
+				\end{bmatrix}\right)+\varphi\left( \begin{bmatrix}
+					1 & 0 & m \\ 0 & 1 & 0 \\ 0 & 0 & 1
+				\end{bmatrix}\right) &= m+n
+			\end{align*}
+			Thus $Z(G)\cong \RR,$ as desired.
+
+		\end{proof}
 		\item Show that $G/Z(G)\cong \RR\times\RR.$
+			\begin{proof}
+				Construct a mapping $\varphi:G\to \RR\times \RR$ where \[\varphi\left( \begin{bmatrix}
+						1 & a & b \\ 0 & 1 & c \\ 0 & 0 & 1
+				\end{bmatrix}\right) = (a, c)\] If we take $A$ and $M$ as above, then \[AM=\begin{bmatrix}
+						1 & m+a & n+ap+b \\ 0 & 1 & p+c \\ 0 & 0 & 1
+				\end{bmatrix}\] so $\varphi(AM)=(m+a, p+c)$ while \[\varphi(A)+\varphi(M)=(a, c) + (m, p) = (a+m, c+p)\] so $\varphi$ is a homomorphism where $\varphi``(G)=\RR\times\RR$ since $a, c\in \RR.$ Here, $\ker \varphi$ is exactly the set of matrices where $b\in \RR$ and $(a, c)=(0, 0),$ so $a=c=0,$ which is exactly $Z(G).$ Thus, by the Isomorphism theorem, \[\varphi``(G) = \RR\times \RR \cong G/\ker \varphi = G/Z(G)\] as desired.
+				
+			\end{proof}
 			
 	\end{enumerate}
 		
-\end{itemize}
-
+\end{itemize} 
 \section*{Section 8.2: Cauchy's Theorem}
 
 \begin{itemize}
 	\item[7.] If $H$ and $K$ are conjugate subgroups in $G,$ show that $N(H)$ and $N(K)$ are conjugate.
+		\begin{proof}
+			Let $H=g_0 K g_0\inv$ for some $g_0\in G.$ Then we have
+			\begin{align*}
+				N(H) &= \Set{g\in G}{gHg\inv=H} \\
+				&= \Set{g\in G}{g(g_0 Kg_0\inv)g\inv = g_0 Kg_0\inv} \\
+				&= \Set{g\in G}{(g_0\inv gg_0) K (g_0\inv g\inv g_0) = K} \\
+				&= \Set{g\in G}{(g_0\inv gg_0) K (g_0\inv gg_0)\inv = K}
+			\end{align*} so the set given by $g_0\inv N(H) g_0$ is exactly
+			\begin{align*}
+				g_0\inv N(H) g_0 &= \Set{g_0\inv gg_0 \in G}{(g_0\inv gg_0) K(g_0\inv gg_0)=K} = \Set{g_1\in G}{g_1 K g_1\inv = K} = N(K)
+			\end{align*} so $N(H)=g_0 N(K) g_0\inv,$ thus $N(H)$ and $N(K)$ are conjugate, as desired.
+			
+		\end{proof}
 
 	\item[14.] Let $D_3=\left\{ 1, a, a^2, b, ba, ba^2 \right\}$ where $o(a)=3, o(b)=2, aba=b.$ If $H=\left\{ 1, b \right\},$ show that $N(H)=H.$
+		\begin{proof}
+			Since $N(H)$ is a subgroup of $D_3$ so its order must divide 6. Since $H$ is a subgroup of $D_3,$ it is also a subgroup of $N(H),$ so $|H|=2\mid |N(H)|.$ Thus, $|N(H)|$ is even and divides 6, so $|N(H)|=2$ or 6. $N(H)$ can't possibly be all of $D_3$ since $ab\neq ba,$ so we must have $|N(H)|=2,$ so in fact $N(H)=H$ since $N(H)$ contains $H.$
+			
+		\end{proof}
 
 	\item[23.] Let $G^{\omega}$ be the group of sequences $[g_i)=(g_0, g_1, \cdots)$ from a group $G$ with component-wise multiplication $[g_i)\cdot [h_i)=[g_ih_i).$ Show that if $G\neq \left\{ 1 \right\}$ is a finite $p$-group, then $G^{\omega}$ is an infinite $p$-group.
 
