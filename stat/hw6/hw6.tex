@@ -18,6 +18,9 @@
 
 \begin{enumerate}
 	\item Prove the converse of the factorization theorem, namely prove that if $T$ is a sufficient statistic, then the joint density can be factored as \[f(x_1, \cdots, x_n\mid\theta)=g(T, \theta)h(x_1, \cdots, x_n)\] Also show that if $T$ is sufficient for $\theta,$ then the MLE must be a function of $T.$
+		\begin{proof}
+			If $T$ is a sufficient statistic, then by definition the distribution of $X_1, \cdots, X_n$ given $T=t$ does not depend on $\theta.$
+		\end{proof}<++>
 
 	\item Let $\hat{\theta}$ be an estimator for a parameter $\theta,$ and suppose that $\var(\hat{\theta})<\infty.$ Let $T$ be a sufficient statistic for $\theta.$ Consider the random variable \[Y=E[\hat{\theta}\mid T]\] Prove that \[E\left[ \left( Y-\theta \right)^2 \right]\le E\left[ \left( \hat{\theta}-\theta \right)^2 \right]\]
 		\begin{proof}
@@ -28,27 +31,114 @@
 			\end{align*}<++>
 		\end{proof}<++>
 
-	\item Complete all the details of the example we discussed in lecture. Let $X_1, \cdots, X_n$ be iid data from a normal distribution with unknown mean and known variance $\sigma^2.$ Suppose that $\theta$ is assumed to be random, with prior distribution also normal; assume that the mean and variance of the prior distribution of $\theta_0$ and $\sigma_{pr}^2,$ where both $\sigma_0$ and $\sigma_{pr}^2$ are known.
+	\item Complete all the details of the example we discussed in lecture. Let $X_1, \cdots, X_n$ be iid data from a normal distribution with unknown mean $\theta$ and known variance $\sigma^2.$ Suppose that $\theta$ is assumed to be random, with prior distribution also normal; assume that the mean and variance of the prior distribution of $\theta_0$ and $\sigma_{pr}^2,$ where both $\theta_0$ and $\sigma_{pr}^2$ are known.
 
 		\begin{enumerate}[(a)]
 			\item Compute the posterior distribution \[f_{\theta\mid\bm{X}} (\theta\mid x_1, \cdots, x_n)\] where $\bm{X}=(X_1, \cdots, X_n),$ and specify all the parameters of this distribution.
+				\begin{soln}
+					The posterior distribution is given by
+					\begin{align*}
+						f_{\theta|X}(\theta\mid X_1, \cdots, X_n) &= \frac{f_{X|\theta}(X_1, \cdots, X_n\mid \theta)f(\theta)}{\displaystyle\int f_{X|\theta}(X_1, \cdots, X_n\mid \theta)f(\theta)\, d\theta} \\
+						&= \frac{\displaystyle\prod_{i=1}^{n} \frac{1}{\sqrt{2\pi}\sigma}\exp\left( -\frac{(X_i-\theta)^2}{2\sigma^2} \right) \frac{1}{\sqrt{2\pi}\sigma_{pr}} \exp\left( -\frac{(\theta-\theta_0)^2}{2\sigma_{pr}^2} \right)}{\displaystyle\int \displaystyle\prod_{i=1}^{n} \frac{1}{\sqrt{2\pi}\sigma}\exp\left( -\frac{(X_i-\theta)^2}{2\sigma^2} \right) \frac{1}{\sqrt{2\pi}\sigma_{pr}} \exp\left( -\frac{(\theta-\theta_0)^2}{2\sigma_{pr}^2} \right)\, d\theta} \\
+						&= \frac{\displaystyle\exp\left( -\frac{1}{2\sigma^2}\sum_{i=1}^{n}(X_i-\theta)^2 - \frac{1}{2\sigma_{pr}^2}(\theta-\theta_0)^2 \right)}{\displaystyle\int \exp\left( -\frac{1}{2\sigma^2}\sum_{i=1}^{n}(X_i-\theta)^2 - \frac{1}{2\sigma_{pr}^2}(\theta-\theta_0)^2 \right)\, d\theta}
+					\end{align*}
+					The numerator can be expanded to
+					\begin{align*}
+						\exp\left( -\frac{1}{2\sigma^2}\left[ \sum_{i=1}^{n} X_i^2 - 2\theta\sum_{i=1}^{n}X_i + n\theta^2 \right] - \frac{1}{2\sigma_{pr}^2}\left[ \theta^2-2\theta_0\theta+\theta_0^2] \right] \right)
+					\end{align*} and similarly for the integrand in the denominator, and in this case, we may cancel anything not involving $\theta$ since the integral treats those as constants. We may write $\sum_{}^{}X_i=n\bar{X}$ so the numerator (and integrand) is 
+					\[ \exp\left( \frac{2\theta n\bar{X}-n\theta^2}{2\sigma^2}+\frac{2\theta_0\theta-\theta^2}{2\sigma_{pr}^2} \right)\] 
+					From here, we wish to complete the square within the exponent with respect to $\theta:$
+					\begin{align*}
+						\frac{2\theta n\bar{X}-n\theta^2}{2\sigma^2}+\frac{2\theta_0 \theta-\theta^2}{2\sigma_{pr}^2} &= \frac{2\theta n\bar{X}\sigma_{pr}^2-n\theta^2\sigma_{pr}^2+2\theta_0\theta\sigma^2-\sigma^2\theta^2}{2\sigma^2\sigma_{pr}^2} \\
+						&= -\frac{1}{2\sigma^2\sigma_{pr}^2}\left[ \theta^2\left( n\sigma_{pr}^2+\sigma^2 \right) - \theta\left( 2n\bar{X}\sigma_{pr}^2+2\theta_0\sigma^2 \right) \right] \\
+						&= -\frac{n\sigma_{pr}^2+\sigma^2}{2\sigma^2\sigma_{pr}^2}\left[ \theta^2 - 2\left( \frac{n\bar{X}\sigma_{pr}^2+\theta_0\sigma^2}{n\sigma_{pr}^2+\sigma^2}\right)\theta \right] \\
+						&= -\frac{n\sigma_{pr}^2+\sigma^2}{2\sigma^2\sigma_{pr}^2}\left[\left( \theta-\frac{n\bar{X}\sigma_{pr}^2+\theta_0\sigma^2}{n\sigma_{pr}^2+\sigma^2} \right)^2 - \left( \frac{n\bar{X}\sigma_{pr}^2 + \theta_0\sigma^2}{n\sigma_{pr}^2+\sigma^2} \right)^2\right]
+					\end{align*}
+					Note that the final term does not include any $\theta,$ so since this same expression is in the denominator, it will also cancel. Finally, the numerator simplifies to
+					\begin{align*}
+						\exp\left( -\frac{n\sigma_{pr}^2+\sigma^2}{2\sigma^2\sigma_{pr}^2}\left( \theta-\frac{n\bar{X}\sigma_{pr}^2 + \theta_0\sigma^2}{n\sigma_{pr}^2+\sigma^2} \right)^2 \right) &= \exp\left( -\frac{\left( \theta-\frac{n\bar{X}\sigma_{pr}^2+\theta_0\sigma^2}{n\sigma_{pr}^2+\sigma^2} \right)^2}{2\cdot \frac{\sigma^2\sigma_{pr}^2}{n\sigma_{pr}^2+\sigma^2}} \right)
+					\end{align*}
+					If we take 
+					\begin{align*}
+						\theta_{post} &= \frac{n\bar{X}\sigma_{pr}^2+\theta_0\sigma^2}{n\sigma_{pr}^2+\sigma^2} \\
+						\sigma_{post}^2 &= \frac{\sigma^2\sigma_{pr}^2}{n\sigma_{pr}^2+\sigma^2}
+					\end{align*} then this expression is just missing the factor of \[\frac{1}{\sqrt{2\pi}\sigma_{post}}\] in front of the exponential. Then if we do this in the denominator, the integral evaluates to 1 since it is a normal density, and finally the posterior distribution of $\theta$ is given by a normal distribution with the above parameters.
+
+				\end{soln}
 
 			\item For what value of $\theta$ is this posterior density maximized? Given this, what would you choose as an estimate for $\theta?$
+				\begin{soln}
+					The value of $\theta$ that maximizes this posterior density is clearly the posterior mean, thus \[\theta=\frac{n\bar{X}\sigma_{pr}^2+\theta_0\sigma^2}{n\sigma_{pr}^2+\sigma^2}\] is the desired estimate (note the dependence on the data in $\bar{X}$)
+					
+				\end{soln}
 
 			\item How do the prior variance $\sigma_{pr}^2$ and the posterior variance compare? Which one is larger? Does this make sense? Why?
+				\begin{soln}
+					The posterior variance is given by \[\sigma_{post}^2 = \frac{\sigma^2\sigma_{pr}^2}{n\sigma_{pr}^2+\sigma^2}\] which less than $\sigma_{pr}^2.$ We can confirm this by clearing the denominators. It makes sense that the posterior variance is smaller because the data should have given us a better idea of what the actual value is.
+					
+				\end{soln}
 
 			\item How does the estimator you obtained in part b compare to the MLE?
+				\begin{soln}
+					The MLE for the mean of a normal distribution is simply the sample mean. For large $n,$ the sample mean should approach its true value of $\theta_0,$ so these estimators are asymptotically the same.
+					
+				\end{soln}
 				
 		\end{enumerate}
 
 	\item Suppose we are in the Bayesian framework and we wish to estimate a parameter $\theta$ with prior distribution $f$ from some family of distributions $G.$ If, conditional on the value of the parameter, the data have some distribution $H$ and the posterior distribution is again in the family $G,$ we say that $G$ and $H$ are conjugate.
 
 		\begin{enumerate}[(a)]
-			\item Show that if $X_i$ are iid Bernoulli $(p)$ and $p$ has a Beta-distributed prior, so that \[f_p(x)=\frac{\Gamma(\alpha+\beta)}{\Gamma(\alpha+\beta)\Gamma(\beta)}x^{\alpha-1}(1-x)^{\beta-1}\] where, as usual, \[\Gamma(u)=\int_0^\infty t^{u-1}e^{-t}\, dt\] then the Bernoulli and Beta families are conjugate.
+			\item Show that if $X_i$ are iid Bernoulli $(p)$ and $p$ has a Beta-distributed prior, so that \[f_p(x)=\frac{\Gamma(\alpha+\beta)}{\Gamma(\alpha)\Gamma(\beta)}x^{\alpha-1}(1-x)^{\beta-1}\] where, as usual, \[\Gamma(u)=\int_0^\infty t^{u-1}e^{-t}\, dt\] then the Bernoulli and Beta families are conjugate.
+				\begin{proof}
+					The distribution of $X_i$ given $p$ is a Bernoulli $p$ distribution.
+
+					We have the posterior distribution of $p$ is 
+					\begin{align*}
+						f_{P|X}(p\mid x) &= \frac{f_{X|P}(x_1, \cdots, x_n\mid p)f(p)}{\int f_{X|P}(x_1, \cdots, x_n\mid p) f(p)\, dp} \\
+						&= \frac{\displaystyle \prod_{i=1}^{n} p^{x_i}(1-p)^{1-x_i}\frac{\Gamma(\alpha+\beta)}{\Gamma(\alpha)\Gamma(\beta)}p^{\alpha-1}(1-p)^{\beta-1}}{\displaystyle \int\prod_{i=1}^{n} p^{x_i}(1-p)^{1-x_i}\frac{\Gamma(\alpha+\beta)}{\Gamma(\alpha)\Gamma(\beta)}p^{\alpha-1}(1-p)^{\beta-1}} \\
+						&= \frac{p^{\sum_{}^{}x_i} (1-p)^{n-\sum_{}^{}x_i} p^{\alpha-1}(1-p)^{\beta-1}}{\displaystyle \int p^{\sum_{}^{}x_i} (1-p)^{n-\sum_{}^{}x_i} p^{\alpha-1}(1-p)^{\beta-1}} \\ 
+						&= \frac{p^{\alpha+\sum_{}^{}x_i - 1} (1-p)^{\beta+n-\sum_{}^{}x_i-1}}{\int p^{\alpha+\sum_{}^{}x_i-1}(1-p)^{\beta+n-\sum_{}^{}x_i-1}\, dp} \\
+						&= \frac{\frac{\Gamma\left( \alpha+\sum_{}^{}x_i \right)\Gamma\left( \beta+n-\sum_{}^{}x_i \right)}{\Gamma\left( \alpha+\beta+n \right)}p^{\alpha+\sum_{}^{}x_i - 1} (1-p)^{\beta+n-\sum_{}^{}x_i-1}}{\displaystyle\int \frac{\Gamma\left( \alpha+\sum_{}^{}x_i \right)\Gamma\left( \beta+n-\sum_{}^{}x_i \right)}{\Gamma(\alpha+\beta+n)} p^{\alpha+\sum_{}^{}x_i - 1} (1-p)^{\beta+n-\sum_{}^{}x_i-1}\, dp}
+					\end{align*}
+					The integrand in the denominator evaluates to 1 since it is the density of the Beta with parameters $\alpha+\sum_{}^{}x_i$ and $\beta+n-\sum_{}^{}x_i.$ Thus, the posterior distribution of $p$ is this same Beta distribution. 
+
+					Thus, the Bernoulli and Beta families are conjugate, as desired.
+					
+				\end{proof}
 
 			\item What if the $X_i$ are binomial with parameters $n, p$ where $n$ is known and $p$ has, again, a Beta distribution? Are the binomial and Beta families conjugate?
+				\begin{soln}
+					The distribution of $X_i$ given $p$ is a Binomial $n, p$ distribution.
+
+					We have the posterior distribution of $p$ is
+					\begin{align*}
+						f_{P|X}(p\mid x) &= \frac{f_{X|P}(x_1, \cdots, x_n\mid p) f(p)}{\int f_{X|P} (x_1, \cdots, x_n\mid p)f(p)\, dp} \\
+						&= \frac{\displaystyle\prod_{i=1}^{m}\binom{n}{x_i} p^{x_i}(1-p)^{n-x_i} \frac{\Gamma(\alpha+\beta)}{\Gamma(\alpha)\Gamma(\beta)}p^{\alpha-1}(1-p)^{\beta-1}}{\displaystyle\int\prod_{i=1}^{m}\binom{n}{x_i} p^{x_i}(1-p)^{n-x_i} \frac{\Gamma(\alpha+\beta)}{\Gamma(\alpha)\Gamma(\beta)}p^{\alpha-1}(1-p)^{\beta-1}\, dp } \\
+						&= \frac{p^{\sum_{}^{}x_i} (1-p)^{n^2-\sum_{}^{}x_i} p^{\alpha-1}(1-p)^{\beta-1}}{\displaystyle\int p^{\sum_{}^{}x_i} (1-p)^{n^2-\sum_{}^{}x_i} p^{\alpha-1}(1-p)^{\beta-1}\, dp} \\
+						&= \frac{p^{\alpha+\sum_{}^{}x_i-1} (1-p)^{\beta+n^2-\sum_{}^{}x_i-1}}{\displaystyle\int p^{\alpha+\sum_{}^{}x_i-1} (1-p)^{\beta+n^2-\sum_{}^{}x_i-1} \, dp}
+					\end{align*}
+					Note the similarity to the form in the previous problem, so we may conclude this has a Beta distribution with parameters $\alpha+\sum_{}^{}x_i$ and $\beta+n^2-\sum_{}^{}x_i.$ 
+
+					Thus, the binomial and Beta families are conjugate.
+					
+				\end{soln}
 
 			\item Show that if $X_i$ are iid exponential with parameter $\lambda,$ and $\lambda$ has a Gamma-distributed prior, then the posterior also has a Gamma distribution. What is a reasonable estimate for $\lambda$ in this Bayesian setting? How doe sit compare to the MLE for the exponential?
+				\begin{proof}
+					Suppose the distribution of $\lambda$ is given by \[f(\lambda)=\frac{\beta^{\alpha}}{\Gamma(\alpha)}\lambda^{\alpha-1} e^{-\lambda\beta}\] The posterior distribution of $\lambda$ is given by
+					\begin{align*}
+						f_{L|X}(\lambda\mid x) &= \frac{f_{X|L}(x_1, \cdots, x_n\mid \lambda) f(\lambda)}{\int f_{X|L}(x_1, \cdots, x_n\mid\lambda) f(\lambda)\, d\lambda} \\
+						&= \frac{\displaystyle \prod_{i=1}^{n} \lambda e^{-\lambda x_i} \frac{\beta^{\alpha}}{\Gamma(\alpha)}\lambda^{\alpha-1}e^{-\lambda\beta}}{\displaystyle\int \prod_{i=1}^{n} \lambda e^{-\lambda x_i} \frac{\beta^{\alpha}}{\Gamma(\alpha)}\lambda^{\alpha-1}e^{-\lambda\beta}\, d\lambda} \\
+						&= \frac{e^{-\lambda\sum_{}^{}x_i} \lambda^{\alpha-1} e^{-\lambda\beta}}{\displaystyle \int e^{-\lambda\sum_{}^{}x_i} \lambda^{\alpha-1} e^{-\lambda\beta}\, d\lambda} \\
+						&= \frac{e^{-\lambda\left( \beta+\sum_{}^{}x_i \right)}\lambda^{\alpha-1} }{\displaystyle\int e^{-\lambda\left( \beta+\sum_{}^{}x_i \right)}\lambda^{\alpha-1}\, d\lambda} \\
+						&= \frac{\frac{\left( \beta+\sum_{}^{}x_i \right)^\alpha}{\Gamma(\alpha)}e^{-\lambda\left( \beta+\sum_{}^{}x_i \right)} \lambda^{\alpha-1}}{\displaystyle\int \frac{\left( \beta+\sum_{}^{}x_i \right)^\alpha}{\Gamma(\alpha)}e^{-\lambda\left( \beta+\sum_{}^{}x_i \right)} \lambda^{\alpha-1}\, d\lambda}
+					\end{align*} 
+					Note that the denominator is the Gamma distribution with parameters $\alpha$ and $\beta+\sum_{}^{}x_i,$ so it evaluates to 1. Thus, the posterior distribution of $\lambda$ is this same Gamma distribution (which is specified in the numerator). 
+
+					A reasonable estimate for $\lambda$ is the mean of this distribution, which is given by \[\hat{\lambda}=\frac{\alpha}{\beta+\sum_{}^{}x_i}\] The MLE for the exponential is given by \[\hat{\lambda} = \frac{n}{\sum_{}^{}x_i}\] so these are plausibly similar.
+					
+				\end{proof}
 				
 		\end{enumerate}
 
@@ -56,8 +146,18 @@
 
 		\begin{enumerate}[(a)]
 			\item Find the MLE for $\theta.$
+				\begin{soln}
+					Since these are uniform variables, we must have \[\theta\ge \max_{1\le i\le n} \left\lvert X_i \right\rvert\] otherwise there would be an impossible data element. The likelihood function is given by 
+					\begin{align*}
+						f(X_1, \cdots, X_n\mid \theta) &= \prod_{i=1}^{n} \frac{1}{2\theta} = \frac{1}{2^n \theta^n}
+					\end{align*} which is a decreasing function in $\theta,$ so the MLE is in fact given by \[\hat{\theta}=\max_{1\le i\le n} \left\lvert X_i \right\rvert\] 
+				\end{soln}
 
 			\item Show that the pair $T=\max\left\{ X_1, \cdots, X_n \right\}$ and $S=\min\left\{ X_1, \cdots, X_n \right\}$ are sufficient for $\theta.$
+				\begin{proof}
+					The distribution of $X_i$ given $T$ and $S$ is simply a uniform distribution from $S$ to $T.$ We know they were initially drawn from a uniform distribution, but we don't know anything about its endpoints, so if we are given $S$ and $T$ as the endpoints, the distribution is uniform $[S, T],$ which in particular does not depend on $\theta.$ Thus, $T$ and $S$ are sufficient for $\theta.$
+					
+				\end{proof}
 				
 		\end{enumerate}
 
@@ -158,7 +258,7 @@
 						&\tag{1}=\frac{\theta^2}{(2n+1)^2}\left( \frac{n}{n+1}+1 \right) \\ 
 						&= \frac{\theta^2}{(n+1)(2n+1)}
 					\end{align*}
-					Since \[\frac{n}{n+1}\to1\] as $n\to\infty,$ the squared bias and the variance contribute equally to the MSE.
+					In (1), since \[\frac{n}{n+1}\to1\] as $n\to\infty,$ the squared bias and the variance contribute equally to the MSE.
 					
 				\end{soln}
 
@@ -185,12 +285,24 @@
 
 		\begin{enumerate}[a.]
 			\item $X$ follows a uniform distribution on $[0, 1].$
+				\begin{answer*}
+					This is simple, since it specifies the entire distribution of $X.$
+				\end{answer*}
 
 			\item A die is unbiased.
+				\begin{answer*}
+					This is simple, since it specifies the distribution of the roll (each has probability $1/6$).
+				\end{answer*}
 
 			\item $X$ follows a normal distribution with mean 0 and variance $\sigma^2>10.$
+				\begin{answer*}
+					This is composite, since the variance is not specified entirely.
+				\end{answer*}
 
 			\item $X$ follows a normal distribution with mean $\mu=0.$
+				\begin{answer*}
+					This is composite, because the variance is not specified at all.
+				\end{answer*}
 				
 		\end{enumerate}
 
