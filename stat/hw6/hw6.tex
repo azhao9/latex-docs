@@ -310,20 +310,44 @@
 
 		\begin{enumerate}[a.]
 			\item The significance level of a statistical test is equal to the probability that the null hypothesis is true.
+				\begin{answer*}
+					This is \boxed{\text{false.}} The significance level is the probability of a type I error, not the probability the null hypothesis is true.
+				\end{answer*}
 
 			\item If the significance level of a test is decreased, the power would be expected to increase.
+				\begin{answer*}
+					This is \boxed{\text{false.}} Decreasing the significance level increases the chance of a type II error, which decreases the power.
+				\end{answer*}
 
 			\item If a test is rejected at the significance level $\alpha,$ the probability that the null hypothesis is true equals $\alpha.$
+				\begin{answer*}
+					This is \boxed{\text{false.}} We know nothing about the probability that the null hypothesis is true, only that the test statistic falls into the rejection region.
+				\end{answer*}
 
 			\item The probability that the null hypothesis is falsely rejected is equal to the power of the test.
+				\begin{answer*}
+					This is \boxed{\text{false.}} Falsely rejecting the null hypothesis means rejecting the null when it is actually true. This is a type I error and is the significance level, not the power.
+				\end{answer*}
 
 			\item A type I error occurs when the test statistic falls in the rejection region of the test.
+				\begin{answer*}
+					This is \boxed{\text{false.}} When the statistic falls in the rejection region, we reject the null hypothesis. This says nothing about whether the null was actually true to begin with or not.
+				\end{answer*}
 
 			\item A type II error is more serious than a type I error.
+				\begin{answer*}
+					This can't be answered definitively, but it is not in general true.
+				\end{answer*}
 
 			\item The power of a test is determined by the null distribution of the test statistic.
+				\begin{answer*}
+					This is \boxed{\text{false.}} The power of a test is determined by the alternative distribution.
+				\end{answer*}
 
 			\item The likelihood ratio is a random variable.
+				\begin{answer*}
+					This is \boxed{\text{true.}} It is a function of the data, which are random variables.
+				\end{answer*}
 				
 		\end{enumerate}
 
@@ -341,8 +365,18 @@
 
 		\begin{enumerate}[a.]
 			\item Compare the likelihood ratio, $\Lambda,$ for each possible value $X$ and order the $x_i$ according to $\Lambda.$
+				\begin{soln}
+					We have 
+					\begin{align*}
+						\Lambda_1 &= \frac{P(X=x_1\mid H_0)}{P(X=x_1\mid H_A)} = \frac{0.2}{0.1} = 2 \\
+						\Lambda_2 &= \frac{P(X=x_2\mid H_0)}{P(X=x_2\mid H_A)}=\frac{0.3}{0.4}=\frac{3}{4} \\
+						\Lambda_3 &= \frac{P(X=x_3\mid H_0)}{P(X=x_3\mid H_A)} = \frac{0.3}{0.1} = 3 \\
+						\Lambda_4 &= \frac{P(X=x_4\mid H_0)}{P(X=x_4\mid H_A)} = \frac{0.2}{0.4}=\frac{1}{2}
+					\end{align*}
+					So the ordering from least to greatest is \[\Lambda_4<\Lambda_2<\Lambda_1<\Lambda_3\]
+				\end{soln}
 
-			\item What is the likelihood ratio test of $H_0$ versus $H_A$ are the level $\alpha=0.2?$ What is the test at the level $\alpha=0.5?$
+			\item What is the likelihood ratio test of $H_0$ versus $H_A$ at the level $\alpha=0.2?$ What is the test at the level $\alpha=0.5?$
 
 			\item If the prior probabilities are $P(H_0)=P(H_A),$ which outcomes favor $H_0?$
 
