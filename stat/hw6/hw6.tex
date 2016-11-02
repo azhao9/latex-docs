@@ -294,8 +294,8 @@
 
 			\item Show that for the method of moments estimator and the MLE, is it the case that the distribution of $\hat{\theta}/\theta$ does not depend on $\theta.$ Explain why this means we can write \[MSE_\theta(\hat{\theta})=\theta^2\left( MSE_{\theta=1}(\hat{\theta}) \right)\] From this, explain why it suffices that we compare the two estimators when $\theta=1.$
 				\begin{proof}
-					The MoM estimator was $\hat{\theta}=2\sqrt{\hat{\mu}_2},$ so \[\hat{\theta}/\theta = \frac{2}{\theta}\sqrt{\sum_{i=1}^{n} X_i^2} = 2\sqrt{\sum_{i=1}^{n}\frac{X_i^2}{\theta^2}}\]
-				\end{proof}<++>
+					The MLE was \[\hat{\theta}=\max_{1\le i\le n}\sqrt{X_i^2+Y_i^2}\] so consider the probability \[P(\hat{\theta}/\theta \le t) = P(\hat{\theta}\le t\theta) = \frac{(t\theta)^{2n}}{\theta^{2n}} = t^{2n}\] from the density derived in part (c), so the density of $\hat{\theta}/\theta$ does not depend on $\theta.$ 
+				\end{proof}
 				
 		\end{enumerate}
 		
@@ -409,9 +409,9 @@
 							$p(\lambda)$ & 0.2 & 0.3 & 0.2 & 0.3
 						\end{tabular}
 					\end{center}
-					Thus, at the level $\alpha=0.2,$ we have \[P(\Lambda\le c \mid H_0) = 0.2\] so $c\in [0.5, 0.75)$ defines the upper bound of the rejection region.
+					Thus, at the level $\alpha=0.2,$ we have \[P(\Lambda\le c \mid H_0) = 0.2\] so $c\in [0.5, 0.75)$ defines the upper bound of the rejection region. We would reject if we picked $x_4.$
 						
-					At the level $\alpha=0.5,$ we have \[P(\Lambda\le c\mid H_0) = 0.5\] so $c\in [0.75, 2).$
+					At the level $\alpha=0.5,$ we have \[P(\Lambda\le c\mid H_0) = 0.5\] so $c\in [0.75, 2).$ We would reject if we picked $x_2$ or $x_4.$
 
 				\end{soln}
 
@@ -426,6 +426,7 @@
 				
 		\end{enumerate}
 
+		\newpage
 	\item[7.] Let $X_1, \cdots, X_n$ be a sample from a Poisson distribution. Find the likelihood ratio for testing $H_0:\lambda=\lambda_0$ versus $H_a:\lambda=\lambda_1,$ where $\lambda_1>\lambda_0.$ Use the fact that the sum of independent Poisson random variables follows a Poisson distribution to explain how to determine a rejection region for a test at level $\alpha.$
 		\begin{soln}
 			Let $S_n=\displaystyle \sum_{i=1}^{n} X_i.$ The likelihood ratio is given by
@@ -449,6 +450,7 @@
 
 		\end{soln}
 
+		\newpage
 	\item[9.] Let $X_1,\cdots, X_{25}$ be a sample from a normal distribution having a variance of 100. Find the rejection region for a test at level $\alpha=0.10$ of $H_0:\mu=0$ versus $H_A: \mu=1.5.$ What is the power of the test? Repeat for $\alpha=0.01.$
 		\begin{soln}
 			The variance is 100, so the density is given by \[f(x) = \frac{1}{10\sqrt{2\pi}}\exp\left( -\frac{(x-\mu)^2}{200} \right)\] Thus, the likelihood ratio is given by
