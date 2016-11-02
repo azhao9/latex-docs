@@ -19,17 +19,34 @@
 \begin{enumerate}
 	\item Prove the converse of the factorization theorem, namely prove that if $T$ is a sufficient statistic, then the joint density can be factored as \[f(x_1, \cdots, x_n\mid\theta)=g(T, \theta)h(x_1, \cdots, x_n)\] Also show that if $T$ is sufficient for $\theta,$ then the MLE must be a function of $T.$
 		\begin{proof}
-			If $T$ is a sufficient statistic, then by definition the distribution of $X_1, \cdots, X_n$ given $T=t$ does not depend on $\theta.$
-		\end{proof}<++>
+			If $T$ is a sufficient statistic, then by definition the distribution of $X_1, \cdots, X_n$ given $T=t$ does not depend on $\theta$ and only depends on the data $X_1,\cdots X_n.$ Thus, let \[f(X_1, \cdots, X_n\mid T) = h(X_1, \cdots, X_n)\] be a function of just the data. Next, let \[g(T, \theta) = g(T(X_1, \cdots, X_n), \theta) = f(T(X_1, \cdots, X_n)\mid \theta)=f(T\mid \theta)\] be the density of $T.$ Thus, we have
+			\begin{align*}
+				g(T, \theta) h(X_1, \cdots, X_n) &= f(X_1, \cdots, X_n\mid T) f(T\mid \theta) \\
+				&= f(X_1, \cdots, X_n\mid \theta)
+			\end{align*} as desired.
 
-	\item Let $\hat{\theta}$ be an estimator for a parameter $\theta,$ and suppose that $\var(\hat{\theta})<\infty.$ Let $T$ be a sufficient statistic for $\theta.$ Consider the random variable \[Y=E[\hat{\theta}\mid T]\] Prove that \[E\left[ \left( Y-\theta \right)^2 \right]\le E\left[ \left( \hat{\theta}-\theta \right)^2 \right]\]
+		\end{proof}
+
+	\item Let $\hat{\theta}$ be an estimator for a parameter $\theta,$ and suppose that $\var(\hat{\theta})<\infty.$ Let $T$ be a sufficient statistic for $\theta.$ Consider the random variable \[Y=E[\hat{\theta}\mid T]\] Prove that \[E\left[ \left( Y-\theta \right)^2 \right]\le E\left[ \left( \hat{\theta}-\theta \right)^2 \right]\] Explain why this suggests that a sufficient statistic can be particularly useful in parametric estimation.
 		\begin{proof}
 			We have \[E[Y]=E\left[ E[\hat{\theta}\mid T] \right] = E[\hat{\theta}]\] so
 			\begin{align*}
 				E\left[ (Y-\theta)^2 \right] &= E[Y^2]-2\theta E[Y] + \theta^2 \\
-				&= E[Y^2] - 2\theta E[\hat{\theta}]+\theta^2
-			\end{align*}<++>
-		\end{proof}<++>
+				&= E[Y^2] - 2\theta E[\hat{\theta}]+\theta^2 \\
+				E\left[ \left( \hat{\theta}-\theta \right)^2 \right] &= E[\hat{\theta}^2] - 2\theta E[\hat{\theta}] + \theta^2
+			\end{align*}
+			so we must show that $E[Y^2] \le E[\hat{\theta}^2].$
+
+			We have \[ E[\hat{\theta}^2]-E[\theta]^2 = \var(\hat{\theta})=\var(E[\hat{\theta}\mid T])+E[\var(\hat{\theta}\mid T)]\] Thus, we have
+			\begin{align*}
+				E[\hat{\theta}^2] &= E[\hat{\theta}]^2+\var(Y)+E[\var(\hat{\theta}\mid T)] \\
+				&= E[\hat{\theta}]^2+E[Y^2]-E[Y]^2+E[\var(\hat{\theta}\mid T)] \\
+				&= E[Y^2] + E[\var(\hat{\theta}\mid T)]
+			\end{align*} since $E[\hat{\theta}] = E[Y].$ Since a variance is always non-negative, it follows that $E[\var(\hat{\theta}\mid T)]\ge 0,$ so \[E[\hat{\theta}^2]\ge E[Y^2]\] as desired.
+
+			We have $\hat{\theta}=\hat{\theta}(X_1, \cdots, X_n)$ is a function of the data. Thus, the density of $\hat{\theta}$ is the same as the joint density $f(X_1, \cdots, X_n).$ Since $T$ is sufficient for $\theta,$ it follows that $f(X_1, \cdots, X_n\mid T)$ is a function of purely the data, and therefore, the density of $(\hat{\theta}\mid T)$ is a function of purely the data. Thus, $E[\hat{\theta}\mid T]$ does not depend on $\theta,$ so it can be said to be an estimator for $\theta.$ Our result shows that no matter what $\hat{\theta}$ is, the MSE of $E[\hat{\theta}\mid T]$ is at most the MSE of $\hat{\theta},$ so it is a better estimator. 
+			
+		\end{proof}
 
 	\item Complete all the details of the example we discussed in lecture. Let $X_1, \cdots, X_n$ be iid data from a normal distribution with unknown mean $\theta$ and known variance $\sigma^2.$ Suppose that $\theta$ is assumed to be random, with prior distribution also normal; assume that the mean and variance of the prior distribution of $\theta_0$ and $\sigma_{pr}^2,$ where both $\theta_0$ and $\sigma_{pr}^2$ are known.
 
@@ -124,6 +141,7 @@
 					
 				\end{soln}
 
+				\newpage
 			\item Show that if $X_i$ are iid exponential with parameter $\lambda,$ and $\lambda$ has a Gamma-distributed prior, then the posterior also has a Gamma distribution. What is a reasonable estimate for $\lambda$ in this Bayesian setting? How doe sit compare to the MLE for the exponential?
 				\begin{proof}
 					Suppose the distribution of $\lambda$ is given by \[f(\lambda)=\frac{\beta^{\alpha}}{\Gamma(\alpha)}\lambda^{\alpha-1} e^{-\lambda\beta}\] The posterior distribution of $\lambda$ is given by
@@ -142,6 +160,7 @@
 				
 		\end{enumerate}
 
+		\newpage
 	\item Suppose we observe an iid sample $X_1, \cdots, X_n$ from the distribution that is uniform in the interval $[-\theta, \theta]$ for some unknown $\theta>0.$
 
 		\begin{enumerate}[(a)]
@@ -208,8 +227,9 @@
 
 			\item Show that $(X_1^2+Y_1^2, \cdots, X_n^2+Y_n^2)$ is a sufficient statistic for $\theta.$
 				\begin{proof}
-					Let $W_i=X_i^2+Y_i^2.$ Then the likelihood function is given by \[f(W_1, \cdots, W_n\mid \theta) = \prod_{i=1}^{n}f(W_i\mid\theta)=\prod_{i=1}^{n}\frac{2w_i}{\theta^2} = \frac{2^n}{\theta^{2n}}\prod_{i=1}^{n}w_i\]
-				\end{proof}<++>
+					Let $W_i=X_i^2+Y_i^2.$ Then the likelihood function is given by \[f(W_1, \cdots, W_n\mid \theta) = \prod_{i=1}^{n}f(W_i\mid\theta)=\prod_{i=1}^{n}\frac{2W_i}{\theta^2} = \frac{2^n}{\theta^{2n}}\prod_{i=1}^{n}W_i\] Since \[T\left[ (X_1, Y_1), \cdots, (X_n, Y_n) \right] = (X_1^2+Y_1^2, \cdots, X_n^2+Y_n^2)=(W_1, \cdots, W_n)\] is a function of the data, we may write $h\left[ (X_1, Y_1), \cdots, (X_n, Y_n) \right] = 1$ and \[g(T, \theta) = g[(W_1, \cdots, W_n), \theta)]= \frac{2^n}{\theta^{2n}}\prod_{i=1}^{n} W_i\] so $T$ is a sufficient statistic by the Factorization theorem.
+					
+				\end{proof}
 
 			\item Find the MLE and determine its density function and its bias. Are the regularity assumptions were require on the MLE satisfied here?
 				\begin{soln}
@@ -228,7 +248,7 @@
 						&= \frac{2nt^{2n+1}}{\theta^{2n}(2n+1)}\bigg\vert_0^\theta =\frac{2n\theta}{(2n+1)} 
 					\end{align*} so the bias of $\hat{\theta}$ is \[E[\hat{\theta}]-\theta=\frac{2n\theta}{2n+1}-\theta = -\frac{\theta}{2n+1}.\]
 
-					The support of the distribution of $(X_i, Y_i)$ is \[\Set{(x_i, y_i)}{f[(x_i, y_i)\mid\theta]>0}=\Set{(x_i, y_i)}{1/\theta^2\pi>0}\] which is the entire domain, and doesn't depend on $\theta.$ Thus the MLE satisfies the regularity conditions.
+					The support of the distribution of $(X_i, Y_i)$ is \[\Set{(x_i, y_i)}{f[(x_i, y_i)\mid\theta]>0}=\Set{(x_i, y_i)}{1/\theta^2\pi>0}\] which is the entire domain, and doesn't depend on $\theta,$ so MLE satisfies the regularity conditions.
 					
 				\end{soln}
 
@@ -273,6 +293,9 @@
 			\item Compare the performance of the MLE and the method of moments estimator as follows: In R, do the following 10000 times. Sample the uniform distribution in the unit circle using a sample of size 10, and compute the three estimators (MLE, MoM $X_i,$ MoM $Y_i$). Compute estimates of the bias, the variance, and the MSE of each. Estimate the correlation coefficient between $\hat{\theta}_x$ and $\hat{\theta}_y.$ Assuming your estimate in the previous parts are correct, how much should we impove the variance of one of $\hat{\theta}_x$ or $\hat{\theta}_y$ by averaging them?
 
 			\item Show that for the method of moments estimator and the MLE, is it the case that the distribution of $\hat{\theta}/\theta$ does not depend on $\theta.$ Explain why this means we can write \[MSE_\theta(\hat{\theta})=\theta^2\left( MSE_{\theta=1}(\hat{\theta}) \right)\] From this, explain why it suffices that we compare the two estimators when $\theta=1.$
+				\begin{proof}
+					The MoM estimator was $\hat{\theta}=2\sqrt{\hat{\mu}_2},$ so \[\hat{\theta}/\theta = \frac{2}{\theta}\sqrt{\sum_{i=1}^{n} X_i^2} = 2\sqrt{\sum_{i=1}^{n}\frac{X_i^2}{\theta^2}}\]
+				\end{proof}<++>
 				
 		\end{enumerate}
 		
@@ -377,16 +400,112 @@
 				\end{soln}
 
 			\item What is the likelihood ratio test of $H_0$ versus $H_A$ at the level $\alpha=0.2?$ What is the test at the level $\alpha=0.5?$
+				\begin{soln}
+					If $H_0$ is true, then the PMF of $\Lambda$ is given by 
+					\begin{center}
+						\begin{tabular}{c||c|c|c|c}
+							$\Lambda$ & 0.5 & 0.75 & 2 & 3 \\
+							\hline
+							$p(\lambda)$ & 0.2 & 0.3 & 0.2 & 0.3
+						\end{tabular}
+					\end{center}
+					Thus, at the level $\alpha=0.2,$ we have \[P(\Lambda\le c \mid H_0) = 0.2\] so $c\in [0.5, 0.75)$ defines the upper bound of the rejection region.
+						
+					At the level $\alpha=0.5,$ we have \[P(\Lambda\le c\mid H_0) = 0.5\] so $c\in [0.75, 2).$
+
+				\end{soln}
 
 			\item If the prior probabilities are $P(H_0)=P(H_A),$ which outcomes favor $H_0?$
+				\begin{soln}
+					If $P(H_0)=P(H_A),$ then the likelihood ratio is given by \[\frac{P(X\mid H_0)}{P(X\mid H_A)} = \frac{P(H_A)}{P(H_0)}\cdot \frac{P(H_0\mid X)}{P(H_A\mid X)}=\frac{P(H_0\mid X)}{P(H_A\mid X)}\]
+					The outcomes that favor $H_0$ are the outcomes where this ratio is greater than 1. These occur exactly when the probability of $x_i$ under $H_0$ is greater than the probability under $H_a,$ which are when $X=x_1$ and $X=x_3.$
+					
+				\end{soln}
 
 			\item What prior probabilities correspond to the decision rules with $\alpha=0.2$ and $\alpha=0.5?$
 				
 		\end{enumerate}
 
 	\item[7.] Let $X_1, \cdots, X_n$ be a sample from a Poisson distribution. Find the likelihood ratio for testing $H_0:\lambda=\lambda_0$ versus $H_a:\lambda=\lambda_1,$ where $\lambda_1>\lambda_0.$ Use the fact that the sum of independent Poisson random variables follows a Poisson distribution to explain how to determine a rejection region for a test at level $\alpha.$
+		\begin{soln}
+			Let $S_n=\displaystyle \sum_{i=1}^{n} X_i.$ The likelihood ratio is given by
+			\begin{align*}
+				\Lambda &= \frac{P(X_1, \cdots, X_n\mid \lambda=\lambda_0)}{P(X_1, \cdots, X_n\mid \lambda=\lambda_1} \\
+				&= \frac{\displaystyle \prod_{i=1}^{n} \frac{\lambda_0^{X_i} e^{-\lambda_0}}{X_i!}}{\displaystyle \prod_{i=1}^{n} \frac{\lambda_1^{X_i} e^{-\lambda_1}}{X_i!}} \\
+				&= e^{-n(\lambda_0-\lambda_1)} \left( \frac{\lambda_0}{\lambda_1} \right)^{S_n}
+			\end{align*}
+
+			To determine a rejection region, we consider the probability \[P(\Lambda\le c\mid H_0)=\alpha\] which is
+			\begin{align*}
+				P(\Lambda\le c\mid H_0) &= P\left( e^{-n(\lambda_0-\lambda_1)} \left( \frac{\lambda_0}{\lambda_1} \right)^{S_n} \le c\bigg\vert \lambda=\lambda_0 \right) \\
+				&= P\left( \left( \frac{\lambda_0}{\lambda_1} \right)^{S_n}\le ce^{n(\lambda_0-\lambda_1)} \right) \\
+				&= P\left( S_n\log \left( \frac{\lambda_0}{\lambda_1}\right)\le n(\lambda_0-\lambda_1) \log c  \right) \\
+				&= P\left( S_n\ge n(\lambda_0-\lambda_1)\frac{\log c}{\log \left( \frac{\lambda_0}{\lambda_1} \right)} \right) \\
+				&= P\left( S_n\le n(\lambda_1-\lambda_0) \frac{\log c}{\log \lambda_0-\log \lambda_1} \right)	
+			\end{align*} Since $S_n$ is the sum of Poisson random variables, its density is given by \[f(s) = \frac{(n\lambda_0)^s e^{-n\lambda_0}}{s!}\] if we assume that $\lambda=\lambda_0.$ We must have $c<1$ otherwise the RHS will be negative, and the probability is 0. Suppose $M$ is the largest integer less than or equal to the RHS, so the probability is 
+			\begin{align*}
+				P\left( S_n\le n(\lambda_1-\lambda_0) \frac{\log c}{\log \lambda_0-\log \lambda_1} \right) &= \sum_{s=0}^{M} \frac{(n\lambda_0)^s e^{-n\lambda}}{s!}=\alpha
+			\end{align*} so we may solve explicitly for $c$ in terms of $\alpha$ since $M$ is a function of $c.$ 
+
+		\end{soln}
 
 	\item[9.] Let $X_1,\cdots, X_{25}$ be a sample from a normal distribution having a variance of 100. Find the rejection region for a test at level $\alpha=0.10$ of $H_0:\mu=0$ versus $H_A: \mu=1.5.$ What is the power of the test? Repeat for $\alpha=0.01.$
+		\begin{soln}
+			The variance is 100, so the density is given by \[f(x) = \frac{1}{10\sqrt{2\pi}}\exp\left( -\frac{(x-\mu)^2}{200} \right)\] Thus, the likelihood ratio is given by
+			\begin{align*}
+				\Lambda &= \frac{P(X_1, \cdots, X_{25}\mid H_0)}{P(X_1, \cdots, X_{25}\mid H_A)} \\
+				&= \frac{\displaystyle \prod_{i=1}^{25}\frac{1}{10\sqrt{2\pi}}\exp\left( -\frac{X_i^2}{200} \right)}{\displaystyle \prod_{i=1}^{25} \frac{1}{10\sqrt{2\pi}}\exp\left( -\frac{(X_i-1.5)^2}{200} \right)} \\
+				&= \exp\left( -\frac{1}{200}\left[ \sum_{i=1}^{25}X_i^2 - \sum_{i=1}^{25}(X_i-1.5)^2 \right] \right) \\
+				&= \exp\left( -\frac{1}{200}\left[ 3\sum_{i=1}^{25}X_i - 25(1.5)^2 \right] \right) \\
+				&= \exp\left( -\frac{1}{200}\left[ 3(25\bar{X})-25(1.5)^2 \right] \right) \\
+				&= \exp\left( \frac{2.25-3\bar{X}}{8} \right)
+			\end{align*}
+
+			At the level $\alpha=0.10,$ we have the rejection region given by
+			\begin{align*}
+				P(\Lambda\le c\mid H_0) &= P\left( \exp\left( \frac{2.25-3\bar{X}}{8} \right)\le c \right) \\
+				&= P\left( \frac{2.25-3\bar{X}}{8} \le \log c\right) \\
+				&= P\left( \bar{X} \ge \frac{2.25-8\log c}{3} \right)= 0.10
+			\end{align*}
+
+			If we assume the null hypothesis to be true, that is $\mu=0$, then the distribution of $\bar{X}$ is \[N\left( 0, \frac{10^2}{25} \right) = N(0, 2^2).\] Thus, the probability is
+			\begin{align*}
+				P\left(\bar{X}\ge \frac{2.25-8\log c}{3}\right) &= P\left( \frac{\bar{X}}{2}\ge \frac{2.25-8\log c}{6} \right) = 1-P\left( \frac{\bar{X}}{2}< \frac{2.25-8\log c}{6} \right) \\
+				&= 1-\Phi\left( \frac{2.25-8\log c}{6} \right) = 0.10 
+			\end{align*} so at this point we may solve for $c:$
+			\begin{align*}
+				\Phi\left( \frac{2.25-8\log c}{6} \right) &= 0.90 \\
+				\implies \frac{2.25-8\log c}{6} &= 1.282 \\
+				\implies c &= 0.506
+			\end{align*}
+
+			Thus, we reject $H_0$ if $\Lambda\in (0, 0.506].$ Let $\beta$ be the probability of a type II error, that is, \[\beta=P(\Lambda>0.506\mid H_A)\] If the alternative is true, then $\mu=1.5,$ and the distribution of $\bar{X}$ is $N(1.5, 2^2).$ Thus the probability is given by
+			\begin{align*}
+				P(\Lambda>0.506\mid H_A) &= P\left( \exp\left( \frac{2.25-3\bar{X}}{8}\right)>0.506 \right) \\
+				&= P\left( \frac{2.25-3\bar{X}}{8}>\log 0.506 \right) \\
+				&= P\left(\bar{X}<2.567\right) \\
+				&= P\left(\frac{\bar{X}-1.5}{2} < \frac{2.567-1.5}{2}\right) \\
+				&= \Phi(0.533) = 0.71
+			\end{align*} so the power is $1-\beta=1-0.71=0.29.$
+		
+
+			At the level $\alpha=0.01,$ basically everything is the same, except the distribution of $\bar{X}$ is \[N\left( 0, \frac{10^2}{100} \right) = N(0, 1)\] so
+			\begin{align*}
+				P\left( \bar{X}\ge \frac{2.25-8\log c}{3} \right) &= 1-\Phi\left( \frac{2.25-8\log c}{3} \right) = 0.01 \\
+				\Phi\left( \frac{2.25-8\log c}{3} \right) &= 0.99 \\
+				\implies \frac{2.25-8\log c}{3} &= 2.327 \\
+				\implies c &= 0.554
+			\end{align*}
+			Thus, we reject $H_0$ if $\Lambda\in (0, 0.554].$ If the alternative is true, then the distribution of $\bar{X}$ is $N(1.5, 1),$ so the probability of a type II error is
+			\begin{align*}
+				P(\Lambda>0.554\mid H_A) &= P\left( \exp\left( \frac{2.25-3\bar{X}}{8}>0.554 \right) \right) \\
+				&= P\left( \frac{2.25-3\bar{X}}{8}>\log 0.554 \right) \\
+				&= P(\bar{X}<2.325) \\
+				&= P(\bar{X}-1.5 < 2.325-1.5) \\
+				&= \Phi(0.825) = 0.795
+			\end{align*} so the power is $1-\beta=1-0.795=0.205.$
+			
+		\end{soln}
 		
 \end{itemize}
 
