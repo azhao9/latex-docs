@@ -150,15 +150,89 @@
 		\end{bmatrix}^T\]
 		Write the dual program (DP) and then solve the dual problem.
 		\begin{soln}
-			The dual program (DP) is given by max $y^T b$ such that $A^T y\le c.$ That is, 
-		\end{soln}<++>
+			The dual program (DP) is given by max $y^T b$ such that $A^T y\le c.$ From the final tableau in HW4, we know the optimal objective function value of this is -68 by the Supervisor Principle. Then using $y=c_B^T B\inv,$ where the basis was entries 2, 4, 6 from the LP, we have \[c_B^T=\begin{bmatrix}
+					1 & -1 & -6
+				\end{bmatrix}^T, \quad B = \begin{bmatrix}
+					-5 & 3 & 4 \\
+					-2 & 6 & 1 \\
+					-5 & 2 & -1
+			\end{bmatrix}\] so \[B\inv = \frac{1}{123}\begin{bmatrix}
+					-8 & 11 & -21 \\
+					-7 & 25 & -3 \\
+					26 & -5 & -24
+			\end{bmatrix}\] so \[y^T=c_B^T B\inv = \begin{bmatrix}
+					-157/123 & 16/123 & 42/41
+			\end{bmatrix}\] is the optimal solution.
+			
+		\end{soln}
 
 	\item Concerning the specific LP discussed in the previous problem:
 
 		\begin{enumerate}[a)]
 			\item Suppose you may change the value of $b_1$ (currently 62) to anything you want. To what value should you set $b_1$ in order to have the adjusted LP have optimal objective function value -70? Compute the optimal solution for the adjusted LP.
+				\begin{soln}
+					We have the objective function value $y^T b = -68.$ Now we want to compute $\Delta b$ such that $y^T(b+\Delta b) = -70.$ This means $y^T(\Delta b) = -2$ where $y^T$ was $\begin{bmatrix}
+						-157/123 & 16/123 & 42/41
+					\end{bmatrix}$ Since we only want to change $b_1,$ let \[\Delta b = \begin{bmatrix}
+							\Delta b_1 \\ 0 \\ 0
+					\end{bmatrix}\] so we must solve
+					\begin{align*}
+						y^T (\Delta b) &= \begin{bmatrix}
+							-157/123 \\ 16/123 \\ 42/41
+						\end{bmatrix}^T \begin{bmatrix}
+							\Delta b_1 \\ 0 \\ 0
+						\end{bmatrix} = -2 \\
+						\implies -\frac{157}{123}(\Delta b_1) &= -2 \\
+						\Delta b_1 &= \frac{246}{157}
+					\end{align*}
+					Thus we should increase our original $b_1$ value of 62 by $\Delta b= 246/157$ to have the adjusted LP optimal objective function value -70.
+
+					The solution to the adjusted (LP) corresponds to the value of $B\inv (b+\Delta b)=B\inv b+ B\inv (\Delta b),$ which is just the old solution plus the new part: \[\begin{bmatrix}
+							1 \\ 9 \\ 10
+						\end{bmatrix} + \frac{1}{123}\begin{bmatrix}
+							-8 & 11 & -21 \\
+							-7 & 25 & -3 \\
+							26 & -5 & -24
+						\end{bmatrix} \begin{bmatrix}
+							246/157 \\ 0 \\ 0
+						\end{bmatrix} = \frac{1}{157}\begin{bmatrix}
+							141 \\ 1399 \\ 1622
+					\end{bmatrix}\] Embed this into the entire vector of $x$ and we are done.
+
+				\end{soln}
 
 			\item Suppose you may change the value of $b_2$ (currently 62) to anything you want. To what value should you set $b_2$ in order to have the adjusted LP have optimal objective function value -68.5? Compute the optimal solution for the adjusted LP.
+				\begin{soln}
+					In a similar manner to last problem, let \[\Delta b = \begin{bmatrix}
+							0 \\ \Delta b_2 \\ 0
+					\end{bmatrix}\] and solve 
+					\begin{align*}
+						y^T (\Delta b) &= \begin{bmatrix}
+							-157/123 \\ 16/123 \\ 42/41
+						\end{bmatrix}^T \begin{bmatrix}
+							0 \\ \Delta b_2 \\ 0
+						\end{bmatrix} = -\frac{1}{2} \\
+						\implies \frac{16}{123}(\Delta b_2) &= -\frac{1}{2} \\
+						\Delta b_2 &= -\frac{123}{32}
+					\end{align*} so we should subtract this from the original $b_2$ value of 62 to have the adjusted LP optimal objective function value -68.5
+
+					The solution to the adjusted LP is given by
+					\begin{align*}
+						\begin{bmatrix}
+							1 \\ 9 \\ 10
+						\end{bmatrix} + \frac{1}{123}\begin{bmatrix}
+							-8 & 11 & -21 \\
+							-7 & 25 & -3 \\
+							26 & -5 & -24
+						\end{bmatrix}\begin{bmatrix}
+							0 \\ -123/32 \\ 0
+						\end{bmatrix} = \frac{1}{32}\begin{bmatrix}
+							21 \\ 263 \\ 325
+						\end{bmatrix}
+					\end{align*}
+					and again we embed this into the whole vector $x$ to obtain the solution.
+					
+				\end{soln}
 
 		\end{enumerate}
 
@@ -171,6 +245,32 @@
 			\end{bmatrix}\quad c=\begin{bmatrix}
 				1 & 7 & -37 & 94 & -9 & 76 & -146
 		\end{bmatrix}^T\] Write the dual program (DP) and then solve the dual problem. Compute the optimal dual variables using one of the optimal bases for (LP), and then repeat this for the other optimal basis.
+		\begin{soln}
+			The dual program (DP) is given by max $y^T b$ such that $A^T y\le c.$ From the final tableau in HW4, we know the optimal objective function value of the (DP) is -22 by the Supervisor Principle. Then using $y^T=c_B^T B\inv,$ where the basis was entries 1, 2, 5 from the LP, we have \[c_B^T = \begin{bmatrix}
+					1 & 7 & -9
+				\end{bmatrix}, \quad B=\begin{bmatrix}
+					7 & 7 & 3 \\
+					9 & -5 & 7 \\
+					5 & -3 & 10
+			\end{bmatrix}\] so \[B\inv = \frac{1}{594}\begin{bmatrix}
+					29 & 79 & -64 \\
+					55 & -55 & 22 \\
+					2 & -56 & 98
+			\end{bmatrix}\] so \[y^T=c_B^T B\inv = \begin{bmatrix}
+					2/3 & 1/3 & -4/3
+			\end{bmatrix}\] is the optimal solution with basis 1, 2, 5.
+
+			If we use basis 1, 2, 7, we have \[c_B^T = \begin{bmatrix}
+					1 & 7 & -146
+				\end{bmatrix}, \quad B=\begin{bmatrix}
+					7 & 7 & -68 \\
+					9 & -5 & 42 \\
+					5 & -3 & 86
+			\end{bmatrix}\] so \[c_B^T B\inv = \begin{bmatrix}
+					2/3 & 1/3 & -4/3
+			\end{bmatrix}\] as well, as expected.
+			
+		\end{soln}
 
 \end{enumerate}
 
