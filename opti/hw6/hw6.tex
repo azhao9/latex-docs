@@ -22,6 +22,19 @@
 		\end{enumerate}
 
 		Consider the linear program (LP) min $c^T x$ such that $Ax=b$ and $x\ge 0$ where $A$ happens to be a matrix of all zeros. Determine and show which of the four above scenarios occurs in (each possible) different choices of $b$ and $c.$
+		\begin{soln}
+			The dual program (DP) is given by max $y^T b$ such that $A^T y \le c, y$ unrestricted.
+			\begin{enumerate}[i)]
+				\item In this case, since $A$ is a matrix of all 0, we must have $b=\vec{0}$ in order for (LP) to be feasible. Then $A^T y = 0\le c$ so we must have $c\ge 0$ in order for (DP) to be feasible. Then the optimal objective function value is exactly 0.
+
+				\item In this case, if (LP) is feasible, then we must have $b=\vec{0}$ again. Then if any entry of $c^T$ is negative, the objective function value is unbounded since any $x\ge 0$ satisfies $Ax=0.$ This also corresponds to $A^T y = 0 \le c$ not being feasible if $c$ is not non-negative.
+
+				\item In this case, if (DP) is feasible, then we must have $A^T y = 0\le c.$ Then if any entry of $b$ is non-zero, then (LP) is infeasible, which also corresponds to the (DP) being unbounded since $y$ can be anything. 
+
+				\item In this case, if $b\neq 0$ and $c\not\ge 0,$ both (LP) and (DP) are infeasible.
+					
+			\end{enumerate}
+		\end{soln}
 
 	\item Consider the following LP:
 		\begin{align*}
@@ -136,6 +149,9 @@
 				23 & 1 & -17 & -1 & 52 & -6 & -12
 		\end{bmatrix}^T\]
 		Write the dual program (DP) and then solve the dual problem.
+		\begin{soln}
+			The dual program (DP) is given by max $y^T b$ such that $A^T y\le c.$ That is, 
+		\end{soln}<++>
 
 	\item Concerning the specific LP discussed in the previous problem:
 
