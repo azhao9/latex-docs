@@ -136,12 +136,34 @@
 		\end{proof}
 
 	\item[23.] Let $G^{\omega}$ be the group of sequences $[g_i)=(g_0, g_1, \cdots)$ from a group $G$ with component-wise multiplication $[g_i)\cdot [h_i)=[g_ih_i).$ Show that if $G\neq \left\{ 1 \right\}$ is a finite $p$-group, then $G^{\omega}$ is an infinite $p$-group.
+			\begin{proof}
+				Since $G$ is a finite $p$-group, suppose $\abs{G}=p^n$ for some $n\ge 1.$ Thus, $g^{p^n}=1$ for any $g\in G.$ Thus, for any sequence $[g_i)=(g_0, g_1, \cdots),$ we have
+					\begin{align*}
+						[g_i)^{p^n} &= (g_0^{p^n}, g_1^{p^n}, \cdots) \\
+							&=  (1, 1, \cdots)
+						\end{align*} thus $o\left([g_i)\right)$ must divide $p^n$ for any $[g_i)\in G^{\omega},$ so $G^{\omega}$ is a $p$-group. Clearly $G^{\omega}$ is not a finite group, in fact it is not even countable.
+							
+			\end{proof}
 
 	\item[26.] Let $G$ be a non-abelian group of order $p^3$ where $p$ is a prime. Show that
 		\begin{enumerate}[(a)]
 			\item $Z(G)=G'$ and this is the unique normal subgroup of $G$ of order $p.$
+				\begin{proof}
+					Since $Z(G)$ is a subgroup of $G,$ we must have $\abs{Z(G)}\mid p^3.$ By Theorem 6, since $G$ is a finite $p$-group, its center is not $\left\{ 1 \right\}.$ Thus, we must have one of the following: \[\abs{Z(G)} = p, p^2, p^3\] 
+					
+					We can't have $\abs{Z(G)}=p^3$ because then $Z(G)=G$ but we assumed $G$ was non-abelian. If $\abs{Z(G)}=p^2,$ then $G/Z(G)$ is a well-defined group since $Z(G)\unlhd G.$ However, this means the $G/Z(G)$ has order $p^3/p^2=p,$ so $G/Z(G)$ must be an abelian cyclic group. This implies $G$ was abelian to begin with, which is a contradiction. 
+
+					Thus, we must have $\abs{Z(G)}=p.$ Since $Z(G)$ is normal in $G,$ it is the only subgroup of order $p,$ as desired.
+					
+				\end{proof}
 
 			\item $G$ has exactly $p^2+p-1$ distinct conjugacy classes.
+				\begin{proof}
+					By the class equation, we have \[\abs{G} = \abs{Z(G)}+\sum_{}^{}\abs{G:N(a_i)}\] where $a_i$ are the representatives of the conjugacy classes. We must have $\abs{G:N(a_i)}$ divides the order of $G,$ so $\abs{G:N(a_i)}=p, p^2, p^3$ since we assume $a_i$ is not in the center. We can't have it be $p^3,$ since the center is non-empty. If $\abs{G:N(a_i)}=p^2$ for some $a_i,$ then \[\frac{\abs{G}}{\abs{N(a_i)}} = \frac{p^3}{\abs{N(a_i)}} = p^2 \implies \abs{N(a_i)}=p\] Thus, since $Z(G)$ is the unique subgroup of order $p,$ we must have $N(a_i)=Z(G).$ Thus, $a_i\in Z(G),$ but we assumed otherwise, contradiction.
+
+					Thus, we must have $\abs{G:N(a_i)}=p$ for all $a_i$ representatives not in the center. By the class equation, we have \[p^3=p+\sum_{}^{}p\implies p^3-p=p(p^2-1)=\sum_{}^{}p\] so there are $p^2-1$ distinct conjugacy classes that are not in the center, and $\abs{Z(G)}=p,$ so there are $p$ singleton conjugacy classes. Thus, the total number of conjugacy classes is $p^2+p-1,$ as desired.
+					
+				\end{proof}
 				
 		\end{enumerate}
 		
@@ -151,18 +173,83 @@
 
 \begin{itemize}
 	\item[3.] If $p$ and $q$ are primes, show that no group of order $pq$ is simple.
+		\begin{proof}
+			By Cauchy's theorem, $p$ divides $pq$ so there exists an element of order $p.$ Suppose $o(g)=p$ for some $g\in G.$ Then $\abs{\left< g\right>}=g,$ so $\abs{G:\left< g\right>}=q.$ WLOG $q\le p,$ so by Corollary 1 of Theorem 1, $\left< g\right>\unlhd G,$ so $G$ is not simple.
+			
+		\end{proof}
 
 	\item[13.] Let $G=\left( \RR, + \right)$ and define $a\cdot z=e^{ia}z$ for all $z\in\CC$ and $a\in G.$ Show that $\CC$ is a $G$-set, describe the action geometrically, and find all orbits and stabilizers.
+		\begin{proof}
+			We have $0\in \RR$ is the identity, so $0\cdot z = e^{i\cdot 0} z = z.$ If $a, b\in\RR,$ we have
+			\begin{align*}
+				a\cdot(b\cdot z) &= a\cdot (e^{ib}z) = e^{ia}(z e^{ib}) = e^{i(a+b)}z \\
+				(ab)\cdot z &= (a+b)\cdot z = e^{i(a+b)}z
+			\end{align*}
+			Thus, $G$ acts on $\CC$ so $\CC$ is a $G$-set, as desired. 
 
+			This action is equivalent to a rotation by an angle $a\in \RR$ where $a$ is in radians. The orbits are the concentric circles about the origin with $r\ge 0,$ each circle being an orbit. The stabilizers are of the form $2k\pi\in \RR$ where $k\in\ZZ,$ since a rotation by a multiple of $2\pi$ does not change the position.
+			
+		\end{proof}
+
+		\newpage
 	\item[21.] If $H$ is a subgroup of $G,$ find a $G$-set $X$ and an element $x\in X$ such that $H=S(x).$
+		\begin{soln}
+			Let $X=G,$ and define the group action as follows for all $x\in G:$
+			\[g\cdot x = \begin{cases}
+					x \quad\text{if } g\in H \\
+					1 \quad\text{if } g\not\in H
+			\end{cases}\]
+			We may check that this is indeed a group action. We have $1\cdot x = x$ since $1\in H$ because $H$ is a subgroup. Next, consider two elements $g, h\in G.$ There are 4 cases:
+			\begin{align*}
+				\tag{1} g, h &\in H\implies gh\in H \\
+				\implies g\cdot (h\cdot x) &= g\cdot x = x = (gh)\cdot x \\
+				\tag{2} g&\in H, h\not\in H\implies gh\not\in H \\
+				\implies g\cdot (h\cdot x) &= g\cdot 1 = 1 = (gh)\cdot x \\
+				\tag{3} g&\not\in H, h\in H\implies gh\not\in H \\
+				\implies g\cdot (h\cdot x) &= g\cdot x = 1 = (gh)\cdot x \\
+				\tag{4} g, h &\not\in H\implies gh\not\in H \\
+				\implies g\cdot (h\cdot x) &= g\cdot 1 = 1 = (gh)\cdot x
+			\end{align*} thus, $X=G$ is indeed a $G$-set under this action. Then, for any $h\in G$ such that $h\neq 1,$ the stabilizer $S(h)$ all elements $g\in G$ such that $g\cdot h = h.$ The $g$ that fit this are the $g\in H,$ so $H=S(h),$ as desired.
+			
+		\end{soln}
 
 	\item[23.] Let $X$ be a $G$-set and let $x$ and $y$ denote elements of $X.$
 		\begin{enumerate}[(a)]
-			\item Show that $S(X)$ is a subgroup of $G.$
+			\item Show that $S(x)$ is a subgroup of $G.$
+				\begin{proof}
+					Clearly $1_g\cdot x = x$ because $X$ is a $G$-set. Next, if $g, h\in S(x),$ we have 
+					\begin{align*}
+						g\cdot x &= x = h\cdot x\\
+						\implies g\cdot(h\cdot x) &= x \\
+						\implies (gh)\cdot x &= x
+					\end{align*} so $gh\in S(x)$ as well. Finally, if $g\in S(x),$ we have
+					\begin{align*}
+						g\cdot x &= x \\
+						\implies g\inv(g\cdot x) &= g\inv\cdot x \\
+						\implies x &= g\inv\cdot x
+					\end{align*} so $g\inv\in S(x)$ as well. Thus, $S(x)$ is a subgroup of $G$, as desired
+					
+				\end{proof}
 
 			\item If $x\in X$ and $b\in G,$ show that $S(b\cdot x)=bS(x)b\inv.$
+				\begin{proof}
+					We have 
+					\begin{align*}
+						S(b\cdot x) &= \Set{g\in G}{g\cdot (b\cdot x) = b\cdot x} \\
+						&= \Set{g\in G}{(gb)\cdot x = b\cdot x} \\
+						&= \Set{g\in G}{(b\inv gb)\cdot x = x} \\
+						b\inv S(b\cdot x)b &= \Set{b\inv gb\in G}{(b\inv gb)\cdot x = x} \\
+						&= \Set{h\in G}{h\cdot x = x} \\
+						&= S(x)
+					\end{align*} so $S(b\cdot x) = bS(x)b\inv$ as desired.
+					
+				\end{proof}
 
 			\item If $S(x)$ and $S(y)$ are conjugate subgroups, show that $\abs{G\cdot x}=\abs{G\cdot y}.$
+				\begin{proof}
+					Let $S(x)=aS(y)a\inv$ for some $a\in G.$ Then define the mapping \[\varphi:G\cdot x\to G\cdot y\] by $\varphi(g\cdot x) = (ag)\cdot x.$ This is well defined: if $g_1\cdot x = g_2\cdot x,$ then $g_2 g_1\inv\in S(x),$ so the conjugate \[a(g_2 g_1\inv)a\inv = (ag_2)(ag_1)\inv \in S(y)\] so \[(ag_2)\cdot x = (ag_1)\cdot x\] This also means that $\varphi$ is 1-1 because we can simply recover the $g_1$ and $g_2.$ Clearly $\varphi$ is surjective because for any $(ag)\cdot x\in G\cdot y,$ we can recover the $g\cdot x\in G\cdot x.$ Thus, $\varphi$ is a bijective map, so the two groups have the same cardinality.
+					
+				\end{proof}
 				
 		\end{enumerate}
 		
