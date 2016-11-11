@@ -13,7 +13,21 @@
 \thispagestyle{fancy}
 
 \begin{enumerate}
-	\item For a symmetric (LP) min $c^T x$ such that $Ax\ge b, x\ge 0,$ recall that the dual problem is (DP) max $b^T y$ such that $A^T y\le c, y\ge 0.$ Suppose that $x$ is feasible in (LP) and $y$ is feasible in (DP). Prove that $x$ is optimal in (LP) and $y$ is optimal in (DP) if an only if $x$ is complementary to the dual slackness $c-A^t y,$ and $y$ is complementary to the primal slackness $Ax-b.$
+	\item For a symmetric (LP) min $c^T x$ such that $Ax\ge b, x\ge 0,$ recall that the dual problem is (DP) max $b^T y$ such that $A^T y\le c, y\ge 0.$ Suppose that $x$ is feasible in (LP) and $y$ is feasible in (DP). Prove that $x$ is optimal in (LP) and $y$ is optimal in (DP) if an only if $x$ is complementary to the dual slackness $c-A^T y,$ and $y$ is complementary to the primal slackness $Ax-b.$
+		\begin{proof}
+			Suppose $x$ is optimal in (LP) and $y$ is optimal in (DP). By Strong Duality, we must have $c^Tx = b^T y.$ Then consider \[(c-A^T y)^T x = c^Tx - (A^T y)^T x = c^T x - y^T Ax\] We know that $Ax\ge b,$ so this becomes \[(c-A^T y)^T x\le c^T x - y^Tb = 0\] But at the same time, we have $A^Ty\le c$ and $x\ge 0,$ so the LHS is non-negative. Thus, we have \[(c-A^T y)^T x \le 0, \quad\quad (c-A^Ty)^T x\ge 0\] so it follows that \[(c-A^Ty)^T x = 0\] thus $x$ is complementary to $c-A^T y.$
+			Similarly, consider \[(Ax-b)^T y = (Ax)^Ty - b^T y = x^T A^T y - b^T y \le x^T c - b^T y = 0\] since $A^T y\le c.$ However, since $Ax\ge b$ and $y\ge 0,$ the LHS is non-negative, so as above, we must have \[(Ax-b)^T y = 0\] so $y$ is complementary to $Ax-b,$ as desired.
+
+			For the other direction, suppose $x$ is complementary to $c-A^T y$ and $y$ is complementary to $Ax-b.$ Then we have
+			\begin{align*}
+				(c-A^T y)^T x &= c^T x - y^T Ax = 0 \\
+				\implies c^T x &= y^T Ax \ge y^T b \\
+				(Ax-b)^T y&= x^T A^T y - b^T y = 0 \\
+				\implies b^T y = x^T A^T y\le x^T c
+			\end{align*}
+			These two inequalities combine to give us $c^T x = b^T y,$ so the by Supervisor Principle, $x$ is optimal in (LP) and $y$ is optimal in (DP), as desired.
+
+		\end{proof}
 
 	\item Consider the canonical form linear program min $c^T x$ such that $Ax\ge b$ and $x\ge 0$ where \[A=\begin{bmatrix}
 				6 & 2 & -5 & 7 & 9 & -3 & 1 & 9 \\
@@ -24,6 +38,9 @@
 			\end{bmatrix}\quad c^T = \begin{bmatrix}
 				5 & 1 & 7 & 3 & 0 & 1 & 2 & 3
 		\end{bmatrix}\] Run the dual simplex method starting from the basis introduced by the slack variables. Show the successive tableaux, give the optimal solution to the primal linear program and to the dual of this linear program. 
+		\begin{answer*}
+			See attached.
+		\end{answer*}
 
 	\item Consider the canonical form linear program min $c^T x$ such that $Ax\ge b$ and $x\ge 0$ where \[A=\begin{bmatrix}
 				-1 & 3 & 4 & 6 & -2 & 4 & 1 \\
@@ -33,6 +50,9 @@
 			\end{bmatrix} \quad c^T = \begin{bmatrix}
 				5 & 2 & 1 & 0 & 1 & 3 & 2
 		\end{bmatrix}\] Run the dual simplex method starting from the basis introduced by the slack variables. Show the successive tableaux, report and note any degeneracy encountered, and give the optimal solution to the primal linear program and to the dual of this linear program.
+		\begin{answer*}
+			See attached.
+		\end{answer*}
 
 	\item Consider the canonical form linear program min $c^T x$ such that $Ax\ge b$ and $x\ge 0$ where \[A=\begin{bmatrix}
 				1 & -2 & -2 & -2 \\
@@ -42,6 +62,9 @@
 			\end{bmatrix}\quad c^T=\begin{bmatrix}
 				1 & 2 & 3 & 4
 		\end{bmatrix}\] Run the dual simplex method starting from the basis introduced by the slack variables. Show the successive tableaux, and report the conclusion given by the algorithm.
+		\begin{answer*}
+			See attached.
+		\end{answer*}
 		
 \end{enumerate}
 
