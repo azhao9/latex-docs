@@ -16,6 +16,11 @@
 
 \begin{itemize}
 	\item[2.] Partition $D_n$ into conjugacy classes where $n$ is odd.
+		\begin{soln}
+			Let $D_n=\left< r, s\mid r^n=s^2=srsr=1\right>.$ There is the trivial conjugacy class $cl(1)=\left\{ 1 \right\}.$ Next, consider an arbitrary element $r^k.$ We can conjugate it by $r^i$ which gives \[r^i r^k r^{-i}=r^{k}\] and by $sr^i$ which gives \[(sr^i) r^k (sr^i)\inv = sr^i r^k r^{-i} s\inv = sr^ks\inv= r^{-k}\] Thus, $cl(r^k)=\left\{ r^k, r^{n-k} \right\}$ for all $r^k.$ Finally, consider the element $sr^k.$ Conjugating by $r^i$ we have \[r^i sr^k r^{-i} = sr^{-i}r^kr^{-i}=sr^{k-2i}\] Conjugating by $sr^i$ we have \[(sr^i)sr^k (sr^i)\inv = sr^i sr^k r^{-i} s\inv = ssr^{-i} r^k r^{-i}s = sr^{2i-k}\] Thus, the conjugacy class of $sr^k$ is exactly \[\left\{ sr^{k-2i}\mid i\in \ZZ \right\}\] Since $n$ is odd, this set cycles through all exponents of $r,$ so $cl(sr^k)=\left\{ s, sr, \cdots, sr^{k-1} \right\}.$
+
+			Thus, \[D_n=\left\{ 1 \right\}\cup \coprod \left\{ r^i, r^{n-i} \right\}\cup \left\{ s, sr, \cdots, sr^{n-1} \right\}\]
+		\end{soln}
 		
 \end{itemize}
 
@@ -23,12 +28,78 @@
 
 \begin{itemize}
 	\item[2.] If $\abs{G}=24$ and $G$ has a subgroup of order 8, show that $G$ is not simple.
+		\begin{proof}
+			Let $H$ be this subgroup, so $\abs{G:H}=3.$ Thus by the Extended Cayley Theorem, there exists a homomorphism $\theta:G\to S_3$ where $\ker \theta$ is a normal subgroup in $G.$ If $\ker \theta=\left\{ 1 \right\},$ then $\abs{\theta``(G)}\le \abs{S_3}=6,$ but $\abs{G}=36,$ so this is a contradiction. Thus, $\ker\theta\neq \left\{ 1 \right\}$ so $G$ has a non-trivial normal subgroup, and is not simple.
+			
+		\end{proof}
 
+		\newpage
 	\item[4.] Show that every group of order 15 is cyclic.
+		\begin{proof}
+			Suppose the group is $G.$ By Cauchy's Theorem, the primes 3 and 5 divide the order of the group, so there exist elements of order 3 and order 5. Suppose $o(a)=5$ and $o(b)=3.$ Since $A=\left< a\right>$ has index 3, it is normal in $G$ by Corollary 1. Thus, $gag\inv\in A$ for any $g\in G,$ so we must have \[bab\inv \in A\implies bab\inv = a^k\] for some $1\le k\le 4.$ Note that $k\neq 0$ because otherwise $bab\inv=1\implies a=1.$ 
+
+			Now, we claim $b^n ab^{-n}=a^{k^n}$ for all $n\ge 1.$ Proceed by induction. The base case is trivially $bab\inv=a^k$ as we established earlier. Suppose $b^i ab^{-i}=a^{k^i}$ for some $i.$ Then raise each side to the $k$ power:
+			\begin{align*}
+				(b^i ab^{-i})^k &= (b^iab^{-i})(b^i ab^{-i}) \cdots (b^i ab^{-i}) \\
+				&= b^i a^k b^{-i} \\
+				&= b^i (bab\inv)b^{-i} \\
+				&= b^{i+1} ab^{-(i+1)} \\
+				&= (a^{k^i})^k = a^{k^{i+1}}
+			\end{align*}
+			Thus, $b^{i+1}ab^{-(i+1)} = a^{k^{i+1}}$ so the claim is proven. 
+
+			We have 
+			\begin{align*}
+				a&=b^{-n} a^{k^n} b^n = b^{-(n+3)} a^{k^{n+3}} b^{n+3} \\
+				\implies b^3 a^{k^n} &= a^{k^{n+3}} b^3 \\
+				\implies a^{k^n} &= a^{k^{n+3}} \\
+				\implies a^{k^{n+3}-k^n} &= 1 \\
+				\implies a^{k^n(k^3-1)} &= 1
+			\end{align*}
+
+			Now, since $o(a)=5,$ we must have $5\mid k^n (k^3-1)$ for all $n$ where $1\le k\le 4.$ Obviously $5\nmid k^n$ so $5\mid (k^3-1),$ and it's easy to check that this holds only for $k=1.$ Thus, $bab\inv=a.$ Thus, $ba=ab,$ so $a$ and $b$ commute. Consider the order of $o(ab)=n.$ Then $(ab)^n=a^n b^n=1,$ and the smallest value this can happen for is 15. Thus, $G$ contains an element of order 15, so it is cyclic, as desired.
+			
+		\end{proof}
 
 	\item[14.] Let $X=\RR[x_1, \cdots, x_n],$ the polynomial ring in the indeterminates $x_1,\cdots, x_n.$ Given $\sigma\in S_n$ and $f=f(x_1, \cdots, x_n)\in X,$ define $\sigma\cdot f = f(x_{\sigma1}, x_{\sigma2}, \cdots, x_{\sigma n}).$ Show that this is an action and describe the fixer. If $n=3,$ give three polynomials in the fixer and compute $S_3\cdot g$ and $S(g),$ where $g(x_1, x_2, x_3)=x_1+x_2.$
+		\begin{proof}
+			If $\varepsilon$ is the identity permutation, we have \[\varepsilon \cdot f = f(x_{\varepsilon1}, \cdots, x_{\varepsilon n}) = f(x_1, \cdots, x_n) = f\] Next, if $\sigma, \tau\in S_n,$ we have 
+			\begin{align*}
+				\sigma\cdot(\tau\cdot f) &= \sigma \cdot f(x_{\tau1}\cdots, x_{\tau n}) \\
+				&= f(x_{\sigma(\tau1)}, \cdots, x_{\sigma(\tau n)} ) \\
+				&= f(x_{(\sigma\tau)1}, \cdots, x_{(\sigma\tau) n} ) \\
+				&= (\sigma\tau)\cdot f
+			\end{align*}
+			Thus, this is a group action, as desired.
+
+			The fixer is the set $\Set{\sigma\in S_n}{\sigma\cdot f=f}.$ This means \[\sigma\cdot f=f(x_{\sigma1},\cdots, x_{\sigma n}) = f(x_1, \cdots, x_n)\] for all $f\in X,$ so the only element in the fixer is $\varepsilon.$ 
+
+			In the case $n=3,$ three polynomials that are always fixed are 
+			\begin{align*}
+				f_1(x_1, x_2, x_3) &= x_1 + x_2+x_3 \\
+				f_2(x_1, x_2, x_3) &= x_1^2+x_2^2+x_3^2 \\
+				f_3(x_1, x_2, x_3) &= 2x_1+2x_2+2x_3
+			\end{align*}
+			If $g(x_1, x_2, x_3)=x_1+x_2$ and $S_3=\left\{ \varepsilon, (123), (132), (12), (13), (23) \right\}$ then we have
+			\begin{align*}
+				\varepsilon\cdot g(x_1, x_2, x_3) &= x_1+x_2 \\
+				(123)\cdot g(x_1, x_2, x_3) &= g(x_2, x_3, x_1) = x_2+x_3 \\
+				(132) \cdot g(x_1, x_2, x_3) &= g(x_3, x_1, x_2) = x_3+x_1 \\
+				(12) \cdot g(x_1, x_2, x_3) &= g(x_2, x_1, x_3) = x_2+x_1 \\
+				(13)\cdot g(x_1, x_2, x_3) &= g(x_3, x_2, x_1) = x_3+x_2 \\
+				(23) \cdot g(x_1, x_2, x_3) &= g(x_1, x_3, x_2) = x_1+x_3
+			\end{align*}
+			So let $g_1=x_1+x_3$ and $g_2=x_2+x_3.$ Then $S_3\cdot g=\left\{ g, g_1, g_2 \right\}.$
+
+			From above, we see elements that fix $g$ are just $\varepsilon$ and (12), so $S(g)=\left\{ \varepsilon, (12) \right\}.$
+			
+		\end{proof}
 
 	\item[26.] Let $G$ be a finite $p$-group. If $\left\{ 1 \right\}\neq H\unlhd G,$ show that $H\cap Z(G)\neq \left\{ 1 \right\}.$ 
+		\begin{proof}
+			Every normal subgroup contains the center because $ghg\inv=h$ whenever $h\in Z(G).$ Since $G$ is a $p$-group, its center is non-trivial. Thus, $H\cap Z(G)\neq \left\{ 1 \right\},$ as desired.
+			
+		\end{proof}
 		
 \end{itemize}
 
@@ -36,20 +107,63 @@
 
 \begin{itemize}
 	\item[1.] Find all Sylow 3-subgroups of $S_4,$ and show explicitly that all are conjugate.
+		\begin{soln}
+			The Sylow 3-subgroups of $S_4$ have order 3. They are \[\left< (123)\right>, \left< (124)\right>, \left< 234\right>, \left< (134)\right>\]
+			We have 
+			\begin{align*}
+				(34)(123)(34)\inv &= (124) \\
+				(234)(123)(234)\inv &= (134) \\
+				(1234)(123)(1234)\inv &= (234)
+			\end{align*}
+			so these groups are all conjugate, as desired.
+			
+		\end{soln}
 
+		\newpage
 	\item[2.] Find all Sylow 2-subgroups of $D_n,$ where $n$ is odd, and show explicitly that all are conjugate.
+		\begin{soln}
+			Since $\abs{D_n}=2n$ and $n$ is odd, the Sylow 2-subgroups have order 2. Thus, the Sylow 2-subgroups are given by \[\left\{ 1, s \right\}, \left\{ 1, sr \right\}, \cdots, \left\{ 1, sr^{n-1} \right\}\] Consider the subgroup $\left\{ 1, s \right\}.$ Conjugating by $sr^i$ we have \[(sr^i)\left\{ 1, s \right\}(sr^i)\inv = \left\{ 1, r^isr^{-i} \right\}=\left\{ 1, sr^{-2i} \right\} = \left\{ 1, sr^{n-2i} \right\}\] Since $n$ is odd, this will cycle through each possible exponent, and thus a suitable choice of $i$ will allow us to generate any other Sylow 2-subgroup from $\left\{ 1, s \right\},$ so they are all conjugate.
+			
+		\end{soln}
 
 	\item[10.] Show that $G$ has a cyclic normal subgroup of index 5 if
 		\begin{enumerate}[(a)]
 			\item $\abs{G}=385$
+				\begin{proof}
+					Since $385=5\cdot77,$ a subgroup of index 5 has order 77. By Sylow's Third Theorem, we have $n_{77}\equiv 1\pmod{77}$ and $n_{77}\mid 5.$ Thus, $n_{77}$ must be 1 or 5, but $5\not\equiv 1\pmod{77},$ so we must have $n_p=1.$ Thus, this subgroup is the only one of index 5, so it is unique, and thus normal.
+
+					Suppose this subgroup is $H,$ where $\abs{H}=77=7\cdot 11,$ and consider Sylow $p$-subgroups of $H.$ Then by Sylow's Theorem again, we have $n_7\equiv1\pmod 7$ and $n_5\equiv\pmod 5$ but since 5 and 7 are prime, it must be that $n_5=n_7=1.$ Thus, these subgroups are both unique in $H$ are are both cyclic since they have prime order. Thus, by a theorem, $H\cong C_5\times C_7,$ which is cyclic, as desired.
+					
+				\end{proof}
 
 			\item $\abs{G}=455$
+				\begin{proof}
+					Since $455=5\cdot 91,$ a subgroup of index 5 has order 91. Similarly to the previous part, we have $n_{91}\equiv 1\pmod{91}$ so $n_{91}=1,$ so it is unique and normal. Then the subgroup of order 91 has $n_7=n_{13}=1$ subgroup of order 7 and 13, respectively, so these subgroups are normal. By a theorem, this subgroup is isomorphic to $C_7\times C_{13},$ which is cyclic, as desired.
+					
+				\end{proof}
 				
 		\end{enumerate}
 
 	\item[12.] If $\abs{G}=pq$ where $p<q$ are primes and $p$ does not divide $q-1,$ show that $G$ is cyclic.
+		\begin{proof}
+			We have $n_p\equiv 1\pmod p$ and $n_p\mid q,$ so since $q$ is prime, $n_p=1$ or $n_p=q.$ If $n_p=q,$ then $q\equiv1\pmod p\implies q-1\equiv0\pmod p,$ but since $p$ does not divide $q-1,$ this is a contradiction. Thus, $n_p=1,$ so the subgroup of order $p$ is normal in $G.$ 
 
-	\item[16.] Let $P\unlhd H$ and $H\unlhd P.$ If $P$ is a Sylow subgroup of $G,$ show that $P\unlhd G.$
+			We also have $n_q\equiv1\pmod q$ and $n_q\mid p,$ so $n_q=1$ or $n_q=p.$ If $n_q=p,$ then $p\equiv 1\pmod q,$ which is impossible since we assumed $p<q.$ Thus, $n_q=1,$ so the subgroup of order $q$ is unique and normal in $G.$
+
+			By a theorem, we have $G\cong C_p\times C_q,$ which is cyclic since $p$ and $q$ are prime, as desired.
+			
+		\end{proof}
+
+	\item[16.] Let $P\unlhd H$ and $H\unlhd G.$ If $P$ is a Sylow subgroup of $G,$ show that $P\unlhd G.$
+		\begin{proof}
+			Let $P, P'$ be two Sylow subgroups of $G$ with the same order. Thus they must be conjugate, so suppose $P=g_0P'g_0\inv$ for some $g_0\in G.$ We know that $P\unlhd H$ so $hPh\inv=P$ for all $h\in H.$ Substituting, we have 
+			\begin{align*}
+				h(g_0P'g_0\inv)h\inv &= g_0P'g_0\inv \\
+				\implies (g_0\inv hg_0) P' (g_0\inv hg_0)\inv &= P'
+			\end{align*}
+			for all $h\in H.$ Since $H\unlhd G,$ it follows that $g_0\inv hg_0\in H,$ so it follows that $h_1 P' h_1\inv = P'$ for all $h_1\in H.$ Thus, $P'\unlhd H.$ However, since $P$ is a Sylow subgroup of $H$ and is normal in $H,$ it must be unique. Thus $P=P'$ so there is exactly one Sylow subgroup $P$ in $G.$ Thus, $P\unlhd G,$ as desired.
+			
+		\end{proof}
 		
 \end{itemize}
 
