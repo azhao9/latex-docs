@@ -21,11 +21,11 @@
 			For the other direction, suppose $x$ is complementary to $c-A^T y$ and $y$ is complementary to $Ax-b.$ Then we have
 			\begin{align*}
 				(c-A^T y)^T x &= c^T x - y^T Ax = 0 \\
-				\implies c^T x &= y^T Ax \ge y^T b \\
+				\tag{1}\implies c^T x &= y^T Ax \ge y^T b \\
 				(Ax-b)^T y&= x^T A^T y - b^T y = 0 \\
-				\implies b^T y = x^T A^T y\le x^T c
+				\tag{2}\implies b^T y &= x^T A^T y\le x^T c
 			\end{align*}
-			These two inequalities combine to give us $c^T x = b^T y,$ so the by Supervisor Principle, $x$ is optimal in (LP) and $y$ is optimal in (DP), as desired.
+			The two inequalities in (1) and (2) combine to give us $c^T x = b^T y,$ so the by Supervisor Principle, $x$ is optimal in (LP) and $y$ is optimal in (DP), as desired.
 
 		\end{proof}
 
