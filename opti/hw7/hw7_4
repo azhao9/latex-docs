@@ -1,3 +1,4 @@
+% Problem 4
 A = [1 0 0 -1 -2 -3 -4 0;
 0 1 0 -1 2 2 2 -3;
 0 0 1 2 -1 2 2 -4]
@@ -19,5 +20,5 @@ A =
      0     1     2     3     0     6     6   -11
      0     0    -1    -2     1    -2    -2     4
 
-% row 2 is all positive, problem is infeasible
+% row 2 is all positive, (LP) is infeasible
 diary off
