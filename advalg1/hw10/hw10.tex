@@ -16,10 +16,19 @@
 
 \begin{itemize}
 	\item[3.] Show that a general ring homomorphism $\theta:\ZZ\to \ZZ$ is either a ring isomorphism or $\theta(k)=0$ for all $k\in \ZZ.$
+		\begin{proof}
+			A homomorphism is determined entirely by the value of $\theta(1).$ Suppose $\theta(1)=a\in\ZZ,$ so $\theta(k)=ka$ for all $k\in \ZZ.$ If $a\neq =,$ then the image $\theta``(\ZZ)\cong a\ZZ,$ but we know that $\ZZ\cong a\ZZ$ by the isomorphism $\varphi(n)=an$ for $n\in \ZZ.$ Thus, the image is isomorphic to $\ZZ$ if $a\neq 0.$ Otherwise, $a=0$ and $\theta(k)=0$ for all $k\in \ZZ,$ as desired.
+		\end{proof}
 
-	\item[4.] Determine all onto ring homomorphisms $\ZZ_{12}\to\ZZ_6.$
+	\item[4.] Determine all onto general ring homomorphisms $\ZZ_{12}\to\ZZ_6.$
+		\begin{soln}
+			The homomorphism is determined entirely by the value that 1 is mapped to. The homomorphism given by $1\mapsto 1$ is obviously onto and a homomorphism. We can't have $1\mapsto 2$ because then there is no element that maps to 1. Similarly we can't have $1\mapsto 3$ or $1\mapsto 4$ otherwise nothing maps to 1. However, we can have $1\mapsto 5,$ and this determines another homomorphism. Finally, $1\mapsto 0$ is obviously not onto. Thus, $1\mapsto 1$ and $1\mapsto 5$ are the only onto general ring homomorphisms.
+		\end{soln}
 
 	\item[20.] If $n>0$ in $\ZZ,$ describe all the ideals of $\ZZ$ that contain $n\ZZ.$
+		\begin{soln}
+			The only ideals of $\ZZ$ are of the form $k\ZZ.$ If an ideal $k\ZZ$ contains $n\ZZ,$ then we must have $k\mid n,$ and these are all ideals that contain $n\ZZ.$
+		\end{soln}
 		
 \end{itemize}
 
@@ -29,20 +38,41 @@
 	\item[2.]
 		\begin{itemize}
 			\item[(c)] Compute $(1+x)^5$ in $\ZZ_5[x].$
+				\begin{soln}
+					This expands to \[1+5x+10x^2+10x^3+5x^4+x^5\equiv 1+x^5\] in $\ZZ_5[x].$
+				\end{soln}
 				
 		\end{itemize}
 
 	\item[4.]
 		\begin{itemize}
 			\item[(a)] Find all roots of $(x-4)(x-5)$ in $\ZZ_6;$ in $\ZZ_7.$
+				\begin{soln}
+					In $\ZZ_6,$ the possibilities are 
+					\begin{align*}
+						x-\bar{4} &= \bar{0}\implies x = \bar{4} \\
+						x-\bar{5} &= \bar0\implies x=\bar 5 \\
+						(x-\bar4) &= \bar2, (x-\bar5)=\bar3 \implies \text{no solution} \\
+						(x-\bar4) &= \bar3, (x-\bar5)=\bar2 \implies x=\bar1
+					\end{align*}
+					Thus, in $\ZZ_6,$ the solutions are $x=\bar1, \bar4, \bar5.$
+
+					Since $\ZZ_7$ is an integral domain, the only possibilities are $x=\bar4, \bar 5.$
+				\end{soln}
 				
 		\end{itemize}
 
 	\item[13.] Divide $x^3-4x+5$ by $2x+1$ in $\QQ[x].$ Why is it impossible in $\ZZ[x]?$
+		\begin{soln}
+			We have \[x^3-4x+5=\left( \frac{1}{2}x^2-\frac{1}{4}x-\frac{15}{8} \right)\cdot(2x+1) + \frac{55}{8}\] The division is impossible in $\ZZ[x]$ because $2x+1$ is not monic, and quotients don't make sense in $\ZZ.$
+		\end{soln}
 
 	\item[24.] If $R$ is a commutative ring, a polynomial $f$ in $R[x]$ is said to \textbf{annihilate} $R$ if $f(a)=0$ for every $a\in R.$ 
 		\begin{itemize}
 			\item[(a)] Show that $x^p-x$ annihilates $\ZZ_p.$
+				\begin{proof}
+					By Fermat's Little Theorem, we have $x^p\equiv x\pmod p,$ so $x^p-x\equiv0\pmod p,$ thus $x^p-x$ annihilates $\ZZ_p,$ as desired.
+				\end{proof}
 				
 		\end{itemize}
 		
@@ -54,12 +84,29 @@
 	\item[5.] 
 		\begin{itemize}
 			\item[(a)] Determine whether the polynomial $x^2-3$ is irreducible over each of the fields $\QQ, \RR, \CC, \ZZ_2, \ZZ_3, \ZZ_5, \ZZ_7.$
+				\begin{soln}
+					This degree 2 polynomial has no solution in $\QQ,$ so it is irreducible over $\QQ.$ In $\RR,$ it factors as $(x-\sqrt{3})(x+\sqrt{3}),$ so it is reducible in $\RR,$ and also in $\CC.$
+
+					In $\ZZ_2,$ if $x=\bar{1},$ then $x^2-3=0,$ so the polynomial has a root and is not irreducible. In $\ZZ_3,$ we have $x=\bar{0}$ is a solution, so it is not irreducible. In $\ZZ_5,$ the values of $x^2$ are $0, 1, 4,$ so we can't have $x^2-3=0,$ thus it is irreducible. In $\ZZ_7,$ the values of $x^2$ are 0, 1, 2, 4, so we can't have $x^2-3=0,$ thus it is irreducible.
+				\end{soln}
 
 		\end{itemize}
 
 	\item[9.] Show that an odd degree polynomial has a real root.
+		\begin{proof}
+			By Theorem 4, every polynomial in $\RR[x]$ factors as \[f = a(x-r_1)(x-r_2)\cdots(x-r_m)q_1q_2\cdots q_k\] where $r_i\in \RR$ and $q_i$ are irreducible quadratics. The degree of the RHS is $m+2k,$ which is also the degree of $f,$ which is odd. Thus, $m$ must be odd, so it is at least 1, and there is at least 1 real root, as desired.
+		\end{proof}
 
 	\item[10.] Find all monic irreducible cubics in $\ZZ_2[x].$
+		\begin{soln}
+			Let $f(x)=x^3+ax^2+bx+c$ be an irreducible cubic in $\ZZ_2[x].$ Since $f$ has degree 3, it is irreducible if and only if it has no roots in $\ZZ_2.$ That is, $f(\bar{0})\neq\bar0$ and $f(\bar1)\neq\bar0,$ so they must be equal to $\bar1.$ This means
+			\begin{align*}
+				1+a+b+c&= 1 \\
+				c &= 1 \\
+				\implies a+b &= 1
+			\end{align*}
+			Thus, either $a=1, b=0$ or $a=0, b=1,$ so the irreducible monic cubics in $\ZZ_2[x]$ are \[x^3+x^2+1, \quad\quad x^3+x+1\]
+		\end{soln}
 		
 \end{itemize}
 
