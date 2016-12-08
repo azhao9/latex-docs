@@ -1,0 +1,116 @@
+\documentclass{article}
+\usepackage[sexy, hdr, fancy]{evan}
+\setlength{\droptitle}{-4em}
+
+\lhead{Homework 9}
+\rhead{Introduction to Statistics}
+\lfoot{}
+\cfoot{\thepage}
+
+\newcommand{\var}{\mathrm{Var}}
+\newcommand{\cov}{\mathrm{Cov}}
+
+\begin{document}
+\title{Homework 9}
+\maketitle
+\thispagestyle{fancy}
+
+\section*{Chapter 12: The Analysis of Variance}
+
+\begin{itemize}
+	\item[5.] Derive the likelihood ratio for the null hypothesis of the one-way layout, and show that it is equivalent to the $F$ test.
+
+	\item[7.] Show that, as claimed in Theorem B of Section 12.2.1, $SS_B/\sigma^2\sim\chi_{I-1}^2.$
+
+	\item[11.] Consider a hypothetical two-way layout with four factors (A, B, C, D) each at three levels (I, II, III). Construct a table of cell means for which there is no interaction.
+
+	\item[12.] Consider a hypothetical two-way layout with three factors (A, B, C) each at two levels (I, II). Is it possible for there to be interactions but no main effects?
+
+	\item[21.] During each of four experiments on the use of carbon tetrachloride as a worm killer, ten rats were infested with larvae. Eight days later, five rats were treated with carbon tetrachloride; the other five were kept as controls. After two more days, all the rats were killed and the numbers of worms were counted. The table below gives the counts of worms for the four control groups. Significant differences, although not expected, might be attributable to changes in experimental conditions. A finding of significant differences could result in more carefully controlled experimentation and thus greater precision in later work. Use both graphical techniques and the $F$ test to test whether there are significant differences among the four groups. Use a nonparametric technique as well.
+
+	\item[34.] Conduct a two-way analysis of variance to test the effects of the two main factors and their interaction.
+
+\end{itemize}
+
+\section*{Chapter 14: Linear Least Squares}
+
+\begin{itemize}
+	\item[1.] Convert the following relationships into linear relationships by making transformations and defining new variables.
+		\begin{enumerate}[a.]
+			\item $y=a/(b+cx)$
+
+			\item $y=ae^{-bx}$
+
+			\item $y=ab^x$
+
+			\item $y=x/(a+bx)$
+
+			\item $y=1/(1+e^{bx})$
+				
+		\end{enumerate}
+
+	\item[2.] Plot $y$ versus $x:$
+		\begin{enumerate}[a.]
+			\item Fit a line $y=a+bx$ by the method of least squares, and sketch it on the plot.
+
+			\item Fit a line $x=c+dy$ by the method of least squares, and sketch it on the plot.
+
+			\item Are the lines in parts (a) and (b) the same? If not, why not?
+
+		\end{enumerate}
+
+	\item[3.] Suppose that $y_i=\mu+e_i,$ where $e_i$ are independent errors with mean zero and variance $\sigma^2.$ Show that $\bar y$ is the least squares estimate of $\mu.$
+
+	\item[6.] Two objects of unknown weights $w_1$ and $w_2$ are weighed on an error-prone pan balance in the following way: (1) object 1 is weighed by itself, and the measurement is 3g; (2) object 2 is weighed by itself, and the result is 3g; (3) the difference of the weights (1-2) is 1g; (4) the sum of the weights measured as 7g. The problem is to estimate the true weights of the objects from these measurements.
+		\begin{enumerate}[a.]
+			\item Set up a linear model, $\mathbf{Y}=\mathbf{X}\mathbf{\beta}+\mathbf{e}.$
+
+			\item Find the least squares estimates of $w_1$ and $w_2.$
+
+			\item Find the estimate of $\sigma^2.$
+
+			\item Find the estimated standard errors of the least square estimates of part (b).
+
+			\item Estimate $w_1-w_2$ and its standard error.
+
+			\item Test the null hypothesis $H_0: w_1=w_2.$
+				
+		\end{enumerate}
+
+	\item[10.] Show that the least squares estimate of the slope and intercept of a line may be expressed as \[\hat\beta_0=\bar y-\hat\beta_1\bar x\] and \[\hat\beta_1=\frac{\displaystyle \sum_{i=1}^{n} (x_i-\bar x)(y_i-\bar y)}{\displaystyle \sum_{i=1}^{n} (x_i-\bar x)^2}\]
+
+	\item[11.] Show that if $\bar x=0,$ the estimated slope and intercept are uncorrelated under the assumptions of the standard statistical model.
+
+	\item[12.] Use the result of Problem 10 to show that the line fit by the method of least squares passes through the point $(\bar x, \bar y).$
+
+	\item[13.] Suppose that a line is fit by the method of least squares to $n$ points, that the standard statistical model holds, and that we want to estimate the line at a new point, $x_0.$ Denoting the value on the line by $\mu_0,$ the estimate is \[\hat\mu_0=\hat\beta_0+\hat\beta_1x_0\] 
+		\begin{enumerate}[a.]
+			\item Derive an expression for the variance of $\hat\mu_0.$
+
+			\item Sketch the SD of $\hat\mu_0$ as a function of $x_0-\bar x.$ The slope of the curve should be intuitively plausible.
+
+			\item Derive a 95\% confidence interval for $\mu_0=\beta_0+\beta_1x_0$ under an assumption of normality.
+				
+		\end{enumerate}
+			
+	\item[14.] Problem 13 dealt with how to form a CI for the value of a line of at a point $x_0.$ Suppose that instead we want to predict the value of a new observation, $Y_0,$ at $x_0,$ \[Y_0=\beta_0+\beta_1x_0+e_0\] by the estimate \[\hat Y_0=\hat\beta_0+\hat\beta_1x_0\]
+		\begin{enumerate}[a.]
+			\item Find an expression for the variance of $\hat Y_0-Y_0,$ and compare it to the expression for the variance of $\hat\mu_0$ obtained in part (a) of Problem 13. Assume that $e_0$ is independent of the original observations and has the variance $\sigma^2.$
+
+			\item Assuming that $e_0$ is normally distributed, find the distribution of $\hat Y_0-Y_0.$ Use this result to find an interval $I$ such that $P(Y_0\in I)=1-\alpha.$ This interval is called a $100(1-\alpha)\%$ prediction interval.
+				
+		\end{enumerate}
+		
+	\item[40.] The following data come from the calibration of a proving ring, a device for measuring force.
+		\begin{enumerate}[a.]
+			\item Plot load versus deflection. Does the plot look linear?
+
+			\item Fit deflection as a linear function of load, and plot the residuals versus load. Do the residuals show any systematic lack of fit?
+
+			\item Fit deflection as a quadratic function of load, and estimate the coefficients and their standard errors. Plot the residuals. Does the fit look reasonable?
+				
+		\end{enumerate}
+
+\end{itemize}
+
+\end{document}
