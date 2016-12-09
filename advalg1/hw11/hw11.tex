@@ -42,9 +42,9 @@
 
 	\item[26.] Show that $\sqrt[n]{m}$ is not rational unless $m=k^n$ for some integer $k.$
 		\begin{proof}
-			Consider the polynomial $x^n-m.$ This polynomial has a root $\sqrt[n]{m}.$ If $\sqrt[n]{m}$ is rational, then it must satisfy $\sqrt[n]{m}\mid m$ by the Rational Root Theorem and thus must be an integer as well. Let $\sqrt[n]{m}=k\in\ZZ,$ so $m=k^n,$ as desired.
+			The problem statement appears to be wrong. If $m=(a/b)^n\in \QQ$ for $a, b\in \ZZ,$ then we also have $\sqrt[n]{m}=a/b\in \QQ,$ so we do not require that $m=k^n$ for some integer $k.$ We may assume that $m\in \ZZ$ to make this question somewhat interesting.
 
-			The problem statement appears to be wrong. If $m=(a/b)^n\in \QQ$ for $a, b\in \ZZ,$ then we also have $\sqrt[n]{m}=a/b\in \QQ,$ so we do not require that $m=k^n$ for some integer $k.$
+			Suppose $\sqrt[n]m=k/b$ where $k, b\in \ZZ$ are relatively prime. Then $k^n=mb^n,$ so $b^n\mid k^n\implies b\mid k.$ Since $b\mid k$ it must be that $b=1$ since $\gcd(k, b)=1.$ Thus, it must be that $\sqrt[n]m=k\implies m=k^n,$ as desired. 
 		\end{proof}
 		
 \end{itemize}
