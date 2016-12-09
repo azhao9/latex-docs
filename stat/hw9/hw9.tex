@@ -82,9 +82,19 @@
 			Yes, this is possible. The means may be the same, but they could still cross over.
 		\end{answer*}
 
-	\item[21.] During each of four experiments on the use of carbon tetrachloride as a worm killer, ten rats were infested with larvae. Eight days later, five rats were treated with carbon tetrachloride; the other five were kept as controls. After two more days, all the rats were killed and the numbers of worms were counted. The table below gives the counts of worms for the four control groups. Significant differences, although not expected, might be attributable to changes in experimental conditions. A finding of significant differences could result in more carefully controlled experimentation and thus greater precision in later work. Use both graphical techniques and the $F$ test to test whether there are significant differences among the four groups. 
+	\item[21.] Use both graphical techniques and the $F$ test to test whether there are significant differences among the four groups. 
+		\begin{soln}
+			In R, the $F$ test had a value of 2.271 and a $p$-value of 0.115, so at the level $\alpha=0.05$ we conclude that there are no main effects.
+		\end{soln}
 
 	\item[34.] Conduct a two-way analysis of variance to test the effects of the two main factors and their interaction.
+		\begin{soln}
+			In R, the $F$ test for difference in treatments had value 14.015 and $p$-value $3.28\times 10^{-6}$ so the treatments differ. The $F$ test for difference in poisons had value 23.570 and $p$ value $2.86\times 10^{-7}$ so the poisons differ. The $F$ test for interactions had value 1.887 and $p$-value 0.11. If we are at a significance level $\alpha=0.05,$ then the interactions are not significant.
+
+			Conducting Tukey's test for treatments at the significance level $\alpha=0.05,$ we conclude that the means differ between the pairs of treatments (A, B), (A, C), (B, D).
+
+			Conducting Tukey's test for poisons at the significance level $\alpha=0.05,$ we conclude that the means differ between the pairs of poisons (1, 3), (2, 3).
+		\end{soln}
 
 \end{itemize}
 
@@ -263,8 +273,8 @@
 
 			\item Derive a 95\% confidence interval for $\mu_0=\beta_0+\beta_1x_0$ under an assumption of normality.
 				\begin{soln}
-					Under an assumption of normality, it holds that $\hat\mu_0$ is normally distributed with mean $\beta_0+\beta_1 x_0$ and variance as found in part a. Thus, the 95\% confidence interval is given by
-					\[(\beta_0+\beta_1x_0) \pm\sigma\sqrt{\frac{1}{n} + \frac{(x_0-\bar x)^2}{\sum_{}^{}(x_i-\bar x)^2}} z_{5/2}\]
+					Under an assumption of normality, it holds that $\hat\mu_0$ follows a $t_{n-1}$ distribution and variance as found in part a. Using $s^2$ to estimate $\sigma^2,$ we have the 95\% confidence interval is given by
+					\[(\beta_0+\beta_1x_0) \pm s\sqrt{\frac{1}{n} + \frac{(x_0-\bar x)^2}{\sum_{}^{}(x_i-\bar x)^2}} t_{n-2}(5/2)\]
 				\end{soln}
 				
 		\end{enumerate}
@@ -292,8 +302,6 @@
 
 			\item Fit deflection as a linear function of load, and plot the residuals versus load. Do the residuals show any systematic lack of fit?
 
-			\item Fit deflection as a quadratic function of load, and estimate the coefficients and their standard errors. Plot the residuals. Does the fit look reasonable?
-				
 		\end{enumerate}
 
 \end{itemize}
