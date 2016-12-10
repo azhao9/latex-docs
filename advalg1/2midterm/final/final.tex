@@ -20,7 +20,7 @@
 		\begin{enumerate}[(a)]
 			\item (5 points) How many 3-Sylow subgroups are there in G?
 				\begin{soln}
-					We have $\abs{G}=3\cdot 2.$ By Sylow's Third Theorem, we have
+					We have $\abs{G}=3^1\cdot 2.$ By Sylow's Third Theorem, we have
 					\begin{align*}
 						n_3 &\equiv 1\pmod 3 \\
 						n_3 &\mid 2
@@ -30,12 +30,7 @@
 
 			\item (5 points) Show that $G$ contains at least one subgroup of order 2.
 				\begin{proof}
-					We have $\abs{G}=2\cdot 3.$ By Sylow's Third Theorem, we have
-					\begin{align*}
-						n_2 &\equiv 1\pmod 2 \\
-						n_2&\mid 3
-					\end{align*}
-					From the second condition, we must have either $n_2=1$ or $n_2=3.$ In either case, the first condition is satisfied. Thus, there is at least one Sylow 2-subgroup, so in this case there is at least one subgroup of order 2, as desired.
+					Since $\abs{G}=2^1\cdot 3,$ by Sylow's First Theorem, $G$ contains a subgroup of order $2^1=2,$ as desired.
 				\end{proof}
 
 				Assume, for the remaining part of the exercise, that $G$ is not cyclic.
@@ -44,18 +39,29 @@
 				\[G\times \Omega\to \Omega, \quad (g, aH)\mapsto gaH, \quad \forall g\in G, \forall a\in G\]
 				Determine the cardinality $\abs{\Omega}$ of $\Omega.$
 				\begin{soln}
-					By a theorem, we have the equation
-					\[\abs{\Omega} = \abs{\Omega_f}+\sum_{i=1}^{n}\abs{G\cdot a_iH}\]
-					Here, $a_iH$ are the elements of $\Omega$ that have a non-trivial orbit, and $\Omega_f$ are the elements of $\Omega$ that are fixed under action by $G.$
-
-					Let $aH\in \Omega_f,$ so $g(aH)=(ga)H=aH.$ Because these are cosets, it follows that $(ga)(a\inv)=g\in H.$ Since $\abs{H}=2,$ that means $\abs{\Omega_f}=2.$
-
-
-				\end{soln}<++>
+					We have 
+					\[\abs{G:H}=\frac{\abs{G}}{\abs{H}}=\frac{6}{2}=3\]
+					and $\abs{G:H}$ counts the number of cosets of $H$ in $G,$ which is exactly $\abs{\Omega}.$
+				\end{soln}
 
 			\item (5 points) Let
 				\[\varphi:G\to S_{\abs{\Omega}}, \quad \varphi(g)(aH) = gaH\]
 				be the group homomorphism of $G$ into the group of permutations of $\Omega.$ Determine $\ker(\varphi).$
+				\begin{soln}
+					Since $\abs{G}=2^1\cdot 3$ and $H$ is a Sylow 2-subgroup, by Sylow's Third Theorem, we have the following:
+					\begin{align*}
+						n_2 &\equiv 1\pmod 2 \\
+						n_2 &\mid 3 \\
+						n_2 &= \abs{G:N(H)}
+					\end{align*}
+					Since $G$ is not commutative, it follows that $N(H)\neq G,$ so $n_2\neq 1.$ Thus, it must be that $n_2=3$ to satisfy the first 2 equations, so there are 3 unique Sylow 2-subgroups.
+
+					If $g\in \ker(\varphi),$ then
+					\[\varphi(g)(aH)=aH\implies (ga)H=aH, \quad \forall a\in G\]
+					Since these are cosets, we must have
+					\[a\inv ga\in H\implies g\in aHa\inv, \quad \forall a\in G\]
+					Since there are three unique Sylow 2-subgroups that are all conjugates of $H,$ the only element contained in all conjugates of $H$ is the identity element. Thus, $g=1,$ so $\ker(\varphi)=\left\{ 1 \right\}.$
+				\end{soln}
 				
 		\end{enumerate}
 
@@ -78,7 +84,7 @@
 				&= (1, 10, 5, 7, 2, 9, 12)^{7\cdot 285 + 5}(3, 8, 6)^{3\cdot 666 + 2}(4, 11)^{2\cdot 1000} \\
 				&= (1, 10, 5, 7, 2, 9, 12)^5 (3, 8, 6)^2
 			\end{align*}
-			In the first exponent, we have
+			Let $\tau=(1, 10, 5, 7, 2, 9, 12)$ and $\lambda=(3, 8, 6).$ We have
 			\[\tau=\begin{cases}
 					1\mapsto 10 \\
 					10\mapsto 5 \\
@@ -96,7 +102,7 @@
 					2\mapsto 5 \\
 					5\mapsto 1
 			\end{cases}\]
-			and in the second exponent, we have
+			and
 			\[\lambda=\begin{cases}
 					3\mapsto 8 \\
 					8\mapsto 6 \\
@@ -140,14 +146,16 @@
 
 			\item (10 points) Is $I$ a maximal ideal? Prove or disprove it.
 				\begin{proof}
-					Since $A$ is a commutative ring, $I$ being a maximal ideal is equivalent to $A/I$ being a field. We already know that $A/I$ is a ring, so we must show that every element has an inverse. Let $f+I, g+I\in A/I$ be inverses of each other, where $f, g\in A.$ Then 
-					\[(f+I)(g+I)=fg+I=1+I\implies fg-1\in I\]
+					Since $A$ is a commutative ring, $I$ being a maximal ideal is equivalent to $A/I$ being a field. We already know that $A/I$ is a ring, so we must show that every element except the 0 coset has an inverse. Let $f+I, g+I\in A/I$ be inverses of each other, where $f, g\notin I.$ The identity element is $f_1+I$ where $f_1(x)\equiv1.$ Then 
+					\[(f+I)(g+I)=fg+I=f_1+I\implies fg-f_1\in I\]
 					Thus,
 					\begin{align*}
-						(fg)(1/2)-1=f(1/2)\cdot g(1/2)-1 = 0&\implies f(1/2)\cdot g(1/2)=1 \\
+						(fg-f_1)(1/2)=f(1/2)\cdot g(1/2)-f_1(1/2) = 0&\implies f(1/2)\cdot g(1/2)=1 \\
 						&\implies f(1/2) = \frac{1}{g(1/2)}
 					\end{align*}
-					If we let $g=1/f\in A$ then it follows that \[(f+I)\left(\frac{1}{f}+I\right) = 1+I\] so every coset in $A/I$ has an inverse. Thus, $A/I$ is a field, so $I$ is indeed a maximal ideal.
+					Let
+					\[g(x):=\frac{1}{f(1/2)}\]
+					which is a continuous function because we assumed that $f\notin I$ so $f(1/2)\neq 0.$ Thus, any $f+I\in A/I$ has the inverse $g+I$ where $g$ is as prescribed above, so $A/I$ is a field. Thus, $I$ is indeed a maximal ideal.
 				\end{proof}
 				
 		\end{enumerate}
@@ -220,7 +228,7 @@
 					\begin{align*}
 						(ax+b)^3-1 &= (ax+b-1)\left[ (ax+b)^2+(ax+b)+1 \right] \in I
 					\end{align*}
-					If this is in $I,$ then $x^2+2x+3$ divides this product, and since $s^2+2x+3$ is irreducible in $\ZZ_5[x],$ it must divide the quadratic part:
+					If this is in $I,$ then $x^2+2x+3$ divides this product, and since $x^2+2x+3$ is irreducible in $\ZZ_5[x],$ it must divide the quadratic part:
 					\[q(x^2+2x+3) = (ax+b)^2+(ax+b)+1 = a^2x^2 + (2ab+a)x + (b^2+b+1)\]
 					The only possibility is $q=a^2,$ so 
 					\[a^2(x^2+2x+3)=a^2+2a^2x+3a^2 = a^2x^2 + (2ab+a)x + (b^2+b+1)\]
