@@ -196,12 +196,11 @@
 					\end{align*}
 					Thus, the multiplicative inverse of $\overline x$ is given by $3x+1+I.$
 
-					Let $o(\overline x)=n,$ so that
-					\begin{align*}
-						(x+I)^n &= x^n+I = 1+I \\
-						\implies x^n-1 &\in I
-					\end{align*}
-					Note that $x^5\equiv x\pmod 5$ by Fermat's Little Theorem, so $x^4=1$ in $\ZZ_5.$ If $n=4q+r$ where $1\le r\le 4,$ then \[x^n-1= x^{4q+r}-1=x^r-1\] in $\ZZ_5.$ However, since we assumed $n$ was the smallest integer that satisfied $x^n-1\in I,$ it must be that $r=n,$ so $1\le n\le4.$
+					If $o(\overline x)=n,$ then we have
+					\[(x+I)^n=x^n+I=1+I\implies x^n-1\in I\]
+					Note that $x^5\equiv x\pmod 5$ by Fermat's Little Theorem, so
+					\[x^4=1\implies x^4-1=0\in I\]
+					so $o(\overline x)\mid 4,$ so the order is 1, 2, or 4. 
 
 					If $n=1,$ then 
 					\[x-1\in I\implies x-1=h(x^2+2x+3)\]
@@ -210,12 +209,6 @@
 					If $n=2,$ then
 					\[x^2-1\in I\implies x^2-1=h(x^2+2x+3)\]
 					Here, we must have $\deg h=0$ and $h$ monic, so $h=1,$ but this does not satisfy the equality. Thus, $n\neq 2.$
-
-					If $n=3,$ then
-					\[x^3-1\in I\implies x^3-1=h(x^2+2x+3)\]
-					Here, we must have $\deg h=1$ and $h$ monic, so $h=x+a$ and $a\in\ZZ_5,$ and 
-					\[x^3-1=(x+a)(x^2+2x+3)=x^3+(2+a)x^2 + (3+2a)x+3a\]
-					We must have $2+a=0\implies a=3,$ but then $3+2a=3+2(3)=9\neq 0,$ so there is no solution for $a.$ Thus, $n\neq 3.$
 
 					Thus, $n=4$ is the smallest integer that satisfies $x^n-1\in I,$ and we know this is true because $x^4-1\equiv1-1=0$ in $\ZZ_5.$ Thus, the order of $\overline x$ is \boxed{4.}
 				\end{proof}
@@ -237,7 +230,30 @@
 						2a^2 &= 2ab+a \\
 						3a^2 &= b^2+b+1
 					\end{align*}
-					Since $\ZZ_5$ is an integral domain, the first equation implies that $2a=2b+1,$ which is impossible. Thus, there are no solutions for $a$ and $b,$ so no such $f$ exists, and there is no coset of order 3 in $F^\times.$
+					Since $\ZZ_5$ is an integral domain, the first equation implies that $2a=2b+1.$ For the second equation, we have the following:
+					\[3a^2 = \begin{cases}
+							0 \mapsto 0 \\
+							1\mapsto 3 \\
+							2\mapsto 2 \\
+							3\mapsto 2\\
+							4\mapsto 3
+						\end{cases}, \quad\quad b^2+b+1 =\begin{cases}
+							0\mapsto 1 \\
+							1\mapsto 3 \\
+							2\mapsto 2 \\
+							3\mapsto 3 \\
+							4\mapsto 1
+					\end{cases}\]
+					so the possible pairs satisfying the second equation and corresponding equation 1 results are
+					\[(a, b) = \begin{cases}
+							(1, 1) \implies 2(1)\neq 2(1)+1\\
+							(1, 3) \implies 2(1) = 2(3)+1\\
+							(2, 2) \implies 2(2) \neq 2(2)+1\\
+							(3, 2) \implies 2(3) \neq 2(2)+1 \\
+							(4, 1) \implies 2(4) = 2(1)+1 \\
+							(4, 3) \implies 2(4) \neq 2(3)+1
+					\end{cases}\]
+					Thus, $f=x+3$ and $f=4x+1$ both work, so the coset $x+3+I$ has order 3 in $F^\times.$
 				\end{soln}
 				
 		\end{enumerate}
