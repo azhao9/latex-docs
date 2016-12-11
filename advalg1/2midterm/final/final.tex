@@ -51,10 +51,9 @@
 					Since $\abs{G}=2^1\cdot 3$ and $H$ is a Sylow 2-subgroup, by Sylow's Third Theorem, we have the following:
 					\begin{align*}
 						n_2 &\equiv 1\pmod 2 \\
-						n_2 &\mid 3 \\
-						n_2 &= \abs{G:N(H)}
+						n_2 &\mid 3
 					\end{align*}
-					Since $G$ is not commutative, it follows that $N(H)\neq G,$ so $n_2\neq 1.$ Thus, it must be that $n_2=3$ to satisfy the first 2 equations, so there are 3 unique Sylow 2-subgroups.
+					From the second equation, there must be either 1 or 3 Sylow 2-subgroups. From part (a), there is exactly 1 Sylow 3-subgroup, suppose it is $K$ and it is normal in $G.$ If $H$ is the only Sylow 2-subgroup, it is also normal in $G,$ and $\abs{G}=\abs{H}\cdot\abs{K},$ so by a theorem, $G\cong HK.$ However, $H\cong C_2$ and $K\cong C_3$ since these subgroups have prime order, so $G\cong C_2\times C_3,$ which is cyclic. This is a contradiction, since we assumed $G$ was not cyclic. Thus, $n_2=3$ and there are three Sylow 2-subgroups.
 
 					If $g\in \ker(\varphi),$ then
 					\[\varphi(g)(aH)=aH\implies (ga)H=aH, \quad \forall a\in G\]
@@ -146,16 +145,17 @@
 
 			\item (10 points) Is $I$ a maximal ideal? Prove or disprove it.
 				\begin{proof}
-					Since $A$ is a commutative ring, $I$ being a maximal ideal is equivalent to $A/I$ being a field. We already know that $A/I$ is a ring, so we must show that every element except the 0 coset has an inverse. Let $f+I, g+I\in A/I$ be inverses of each other, where $f, g\notin I.$ The identity element is $f_1+I$ where $f_1(x)\equiv1.$ Then 
-					\[(f+I)(g+I)=fg+I=f_1+I\implies fg-f_1\in I\]
-					Thus,
+					Clearly $I\neq A$ since not all continuous functions evaluate to 0 at $1/2.$ Let $J$ be an ideal in $A$ such that $I\subsetneq J\subseteq A.$ Then there exists an element $g\in J$ such that $g\notin I\implies g(1/2)\neq 0.$ Then consider some $f\in A,$ which we may write as
+					\[f=\left( f-\frac{f(1/2)}{g(1/2)}\cdot g \right) + \frac{f(1/2)}{g(1/2)}\cdot g\]
+					Note that
 					\begin{align*}
-						(fg-f_1)(1/2)=f(1/2)\cdot g(1/2)-f_1(1/2) = 0&\implies f(1/2)\cdot g(1/2)=1 \\
-						&\implies f(1/2) = \frac{1}{g(1/2)}
+						\left( f-\frac{f(1/2)}{g(1/2)}\cdot g \right)(1/2) = f(1/2) - \frac{f(1/2)}{g(1/2)}\cdot g(1/2) = 0&\implies f-\frac{f(1/2)}{g(1/2)}\cdot g\in I \\
+						&\implies f-\frac{f(1/2)}{g(1/2)}\cdot g\in J
 					\end{align*}
-					Let
-					\[g(x):=\frac{1}{f(1/2)}\]
-					which is a continuous function because we assumed that $f\notin I$ so $f(1/2)\neq 0.$ Thus, any $f+I\in A/I$ has the inverse $g+I$ where $g$ is as prescribed above, so $A/I$ is a field. Thus, $I$ is indeed a maximal ideal.
+					since $I$ is a subset of $J,$ and 
+					\[\frac{f(1/2)}{g(1/2)}\cdot g\in J\]
+					since it is a constant times $g\in J.$ Thus, $f$ is a sum of elements in $J,$ which is an additive subgroup of $A$ and therefore closed under addition, so we conclude that $f\in J$ as well, so $A\subseteq J.$ Combining this with the fact that $J\subseteq A$ we get $A=J.$ Thus, the only ideal of $A$ containing $I$ is $A$ itself, so $I$ is indeed maximal.
+
 				\end{proof}
 				
 		\end{enumerate}
