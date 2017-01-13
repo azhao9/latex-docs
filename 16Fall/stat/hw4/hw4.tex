@@ -1,0 +1,521 @@
+\documentclass{article}
+\usepackage[sexy, hdr, fancy]{evan}
+\setlength{\droptitle}{-4em}
+
+\lhead{Homework 4}
+\rhead{Introduction to Statistics}
+\lfoot{}
+\cfoot{\thepage}
+
+\newcommand{\var}{\mathrm{Var}}
+\newcommand{\cov}{\mathrm{Cov}}
+
+\begin{document}
+\title{Homework 4}
+\maketitle
+\thispagestyle{fancy}
+
+\begin{enumerate}
+	\item Consider a finite population of size $N$ of objects, and suppose for each object $i$ there are a pair of measurements $(x_i, y_i).$ Suppose we obtain a sample of size $n$ of these pairs of values from this population, where we sample without replacement. Let $\bar{X}$ and $\bar{Y}$ be the sample means of the $x$-measurements and the $y$-measurements, respectively. We claimed in lecture that \[\tag{1}\cov(\bar{X}, \bar{Y})=\frac{\sigma_{xy}}{n}\left( 1-\frac{n-1}{N-1} \right).\] Here $\sigma_{xy}$ is the population covariance, defined by \[\sigma_{xy}=\frac{1}{N}\sum_{i=1}^{N}(x_i-\mu_x)(y_i-\mu_y)\] where $\mu_x$ and $\mu_y$ are the population means, respectively, of the $x$- and $y$-measurements. Prove that Equation 1 holds.
+		\begin{proof}
+			We have 
+			\begin{align*}
+				\bar{X} = \frac{1}{n} \sum_{i=1}^{n} X_i, \quad \quad\bar{Y} = \frac{1}{n} \sum_{i=1}^{n} Y_i
+			\end{align*} where $X_i$ and $Y_i$ are measurements of the sample. Then the covariance is given by 
+			\begin{align*}
+				\cov(\bar{X}, \bar{Y}) &= \cov\left( \frac{1}{n}\sum_{i=1}^{n}X_i, \frac{1}{n}\sum_{j=1}^{n} Y_j \right) \\
+				&= \frac{1}{n^2}\cov\left( \sum_{i=1}^{n} X_i, \sum_{j=1}^{n} Y_j \right) \\
+				&= \frac{1}{n^2}\sum_{i=1}^{n} \sum_{j=1}^{n} \cov(X_i, Y_j)
+			\end{align*} 
+
+			Here, if $i=j,$ then $\cov(X_i, Y_j)=\cov(X_i, Y_i)=\sigma_{xy}$ is the population covariance. Otherwise let $i\neq j$ and we have \[\cov(X_i, Y_j) = E[X_iY_j] - E[X_i][Y_j] = E[X_iY_j]-\mu_x\mu_y.\] Now, considering $X_iY_j$ as a random variable, we have \[E[X_iY_j] = \sum_{}^{}xy \cdot P(X_i=x, Y_j=y), \] where the probability is the joint distribution. Suppose the distinct values of $x_i$ and $y_i$ be represented by the sets 
+			\begin{align*}
+				\left\{ \alpha_1, \alpha_2, \cdots, \alpha_k \right\} \\
+				\left\{ \beta_1, \beta_2, \cdots, \beta_\ell \right\}
+			\end{align*} respectively, where $k, \ell \le n.$ Then suppose $n_a$ and $m_b$ represent the number of times $\alpha_a$ and $\beta_b$ appear in the sample, respectively. Now, rewrite the expectation as 
+			\begin{align*}
+				E[X_iY_j] &= \sum_{a=1}^{k} \sum_{b=1}^{\ell} \alpha_a \beta_b \cdot P(X_i=\alpha_a, Y_j = \beta_b) \\
+				&= \sum_{a=1}^{k}\sum_{b=1}^{\ell} \alpha_a\beta_b P(X_i=\alpha_a|Y_j=\beta_b)P(Y_j=\beta_b) \\
+				&= \sum_{b=1}^{\ell} \left( \beta_b P(Y_j=\beta_b)\cdot \sum_{a=1}^{k} \alpha_a P(X_i=\alpha_a | Y_j = \beta_b) \right) \\
+				&= \sum_{b=1}^{\ell} \left( \beta_b \frac{m_b}{N}\cdot \sum_{a=1}^{k} \alpha_a P(X_i=\alpha_a | Y_j=\beta_b \right)
+			\end{align*}
+
+			The right summation split into two parts. If $(\alpha_a, \beta_b)$ belong to the same pair $(x_i, y_i),$ then if $Y_j=\beta_b,$ since $i\neq j,$ there are $n_a-1$ remaining elements of $x$ with value $\alpha_a,$ out of a total of $N-1$ remaining elements total, so the probability is $\frac{n_a-1}{N-1}.$ 
+
+			If $(\alpha_a, \beta_b)$ don't belong to the same pair $(x_i, y_i),$ then there are still $n_a$ remaining $\alpha_a$ values left, and $N-1$ total, so the probability is $\frac{n_a}{N-1}.$
+
+			The case when $(\alpha_a, \beta_b)$ belong to the same pair only occurs once in the summation, suppose when $a=p(b)$ where $p$ is a function of $b,$ so it can split up as 
+			\begin{align*}
+				\sum_{a=1}^{k}\alpha_a P(X_i=\alpha_a|Y_j=\beta_b) &= \sum_{a=p}^{} \alpha_a P(X_i=\alpha_a|Y_j=\beta_b) + \sum_{a\neq p}^{} \alpha_a P(X_i=\alpha_a|Y_j=\beta_b) \\
+				&= \alpha_p \frac{n_p-1}{N-1} + \sum_{a\neq p}^{}\alpha_a \frac{n_a}{N-1} \\
+				&= \alpha_p \frac{n_p}{N-1} - \frac{\alpha_p}{N-1}+ \sum_{a\neq p}^{}\alpha_a \frac{n_a}{N-1} \\
+				&= -\frac{\alpha_p}{N-1} + \sum_{a=1}^{k} \alpha_a \frac{n_a}{N-1} \\
+				&= -\frac{\alpha_p}{N-1} + \frac{\tau_x}{N-1}
+			\end{align*}
+
+			Now, substituting this into the summation above, we have
+			\begin{align*}
+				E[X_iY_j] &= \sum_{b=1}^{\ell}\left( \beta_b \frac{m_b}{N}\cdot\left( \frac{\tau_x-\alpha_p}{N-1} \right) \right) \\
+				&= \frac{1}{N(N-1)} \sum_{b=1}^{\ell}(\beta_b m_b \tau_x - \beta_b m_b \alpha_{p(b)}) \\
+				&= \frac{1}{N(N-1)}\left( \tau_x \sum_{b=1}^{\ell}\beta_b m_b - \beta_b m_b \alpha_{p(b)}\right) \\
+				&= \frac{1}{N(N-1)} \left(\tau_x\tau_y - \sum_{b=1}^{\ell}\beta_b m_b \alpha_{p(b)} \right) \\
+				&= \frac{\tau_x\tau_y}{N(N-1)} - \frac{1}{N(N-1)}\sum_{i=1}^{N} x_iy_i
+			\end{align*} where the second summation was taking the sum of every instance where the two values $\alpha_{p(b)}$ and $\beta_b$ belonged to the same pair, which is the same as summing over all pairs $(x_i, y_i)$ in the population.
+
+			Manipulating the population variance, we have
+			\begin{align*}
+				\sigma_{xy} &= \frac{1}{N} \sum_{i=1}^{N} (x_i-\mu_x)(y_i-\mu_y) \\
+				&= \frac{1}{N}\left( \sum_{i=1}^{N}x_iy_y - \mu_x\sum_{i=1}^{N} y_i - \mu_y\sum_{i=1}^{N} x_k + \sum_{i=1}^{N}\mu_x\mu_y \right) \\
+				&= \frac{1}{N} \left( \sum_{i=1}^{N}x_iy_i - \mu_x\tau_y-\mu_y\tau_x+N\mu_x\mu_y \right) \\
+				&= \frac{1}{N}\sum_{i=1}^{N}x_iy_i - \mu_x\frac{\tau_y}{N}-\mu_y\frac{\tau_x}{N}+\mu_x\mu_y \\
+				&= \frac{1}{N}\sum_{i=1}^{N}x_iy_i - \mu_x\mu_y \\
+				\implies N(\sigma_{xy}+\mu_x\mu_y)&= \sum_{i=1}^{N}x_iy_i
+			\end{align*} 
+
+			Substituting this above, we have 
+			\begin{align*}
+				E[X_iY_j] &= \frac{\tau_x\tau_y}{N(N-1)}-\frac{N(\sigma_{xy}+\mu_x\mu_y}{N(N-1)} \\
+				&= \frac{N^2\mu_x\mu_y - N\sigma_{xy}-N\mu_x\mu_y}{N(N-1)} \\
+				&= \frac{(N^2-N)\mu_x\mu_y - N\sigma_{xy}}{N(N-1)} \\
+				&= \mu_x\mu_y - \frac{\sigma_{xy}}{N-1} \\
+				\implies \cov(X_i, Y_j) &= E[X_iY_j]-\mu_x\mu_y \\
+				&= -\frac{\sigma_{xy}}{N-1}
+			\end{align*}
+			Finally, using this in the summation for $\cov(\bar{X}, \bar{Y}),$ we have
+			\begin{align*}
+				\cov(\bar{X}, \bar{Y}) &= \frac{1}{n^2}\left( \sum_{i=j}^{}\sigma_{xy} + \sum_{i\neq j}^{}-\frac{\sigma_{xy}}{N-1}\right) \\
+				&= \frac{1}{n^2}\left( n\sigma_{xy} + n(n-1)\left( -\frac{\sigma_{xy}}{N-1} \right) \right) \\
+				&= \frac{\sigma_{xy}}{n}\left( 1-\frac{n-1}{N-1} \right)
+			\end{align*} as desired.
+			
+		\end{proof}
+
+		\newpage
+	\item Let $X_1,\cdots, X_n$ be an iid sample from some distribution having mean $\mu$ and variance $\sigma^2.$ Recall that the CLT says that $\sqrt{n}(\bar{X}-\mu)$ has an approximate $N(0, \sigma^2)$ distribution as $n$ tends to infinity. Let $g$ be a smooth function with $g'(\mu)\neq 0.$ 
+		\begin{enumerate}[(a)]
+			\item Write down a first order Taylor's expansion with remainder for $g$ about $\mu.$
+				\begin{soln}
+					We have \[g(x) \approx g(\mu)+g'(\mu)(x-\mu)+\frac{1}{2}g''(\mu)(x-\mu)^2 + R.\]
+				\end{soln}
+
+			\item Substitute $\bar{X}$ for $x$ in the expansion in (a) and use this to express $\sqrt{n}(g(\bar{X})-g(\mu))$ as a sum of two terms, one involving $(\bar{X}-\mu)$ and the other involving $(\bar{X}-\mu)^2.$
+				\begin{soln}
+					We have \[g(\bar{X}) \approx g(\mu)+g'(\mu)(\bar{X}-\mu) + \frac{1}{2}g''(\mu)(\bar{X}-\mu)^2 + R\] so using this, we have 
+					\begin{align*}
+						\sqrt{n}(g(\bar{X})-g(\mu)) &\approx \sqrt{n}\left[\left(  g(\mu)+g'(\mu)(\bar{X}-\mu) + \frac{1}{2}g''(\mu)(\bar{X}-\mu)^2 + R\right)-g(\mu)\right] \\
+						&= \sqrt{n}g'(\mu)(\bar{X}-\mu) + \frac{\sqrt{n}g''(\mu)}{2}(\bar{X}-\mu)^2 + R
+					\end{align*}
+					as desired.
+
+				\end{soln}
+
+			\item Explain why the linear term should have a distribution that is approximately $N(0, g'(\mu)^2\sigma^2)$ as $n$ tends to infinity. (Hint: If $Y\sim N(0, \sigma^2)$ what is the distribution of $cY$ where $c$ is a constant?)
+				\begin{soln}
+					Since we know $Y=\sqrt{n}(\bar{X}-\mu)$ is approximately $N(0, \sigma^2),$ it follows that the distribution of $g'(\mu)Y\sim N(0, g'(\mu)^2\sigma^2),$ as desired.
+
+				\end{soln}
+
+			\item Explain why the quadratic term should tend to zero as $n$ tends to infinity.
+				
+				\begin{soln}
+					By the Law of Large Numbers, the random variable $(\bar{X}-\mu)^2$ should approach its true value as $n\to\infty,$ which is $E[(\bar{X}-\mu)^2]=\sigma^2/n.$ Then \[\frac{\sqrt{n}g''(\mu)}{2}\frac{\sigma^2}{n}=\frac{g''(\mu)}{2}\frac{\sigma^2}{\sqrt{n}} \to 0\] as $n\to \infty,$ as desired.
+					
+				\end{soln}
+		\end{enumerate}
+
+		\newpage
+	\item Suppose $X_i$ are iid Poisson random variables with parameter $\lambda.$
+		\begin{enumerate}[(a)]
+			\item Determine the distribution of the sum $S=\displaystyle\sum_{i=1}^{N}X_i.$ (Hint: consider the case $n=2$ and then use induction.)
+				\begin{soln}
+					We claim the distribution of the sum $S_n=\displaystyle\sum_{i=1}^{n} X_i$ is given by \[p_{S_n}(s) = \frac{(n\lambda)^s e^{-n\lambda}}{s!}\] which is just a Poisson with parameter $n\lambda.$
+
+					Let $S_2=X_1+X_2.$ Let $p(x)$ be the density of both $X_1$ and $X_2.$ Then by convolution, 
+					\begin{align*}
+						p_{S_2}(s) &= \sum_{i=0}^{s}p(i)p(s-i) \\
+						&= \sum_{i=0}^{s} \frac{\lambda^i e^{-\lambda}}{i!}\cdot\frac{\lambda^{s-i} e^{-\lambda}}{(s-i)!} \\
+						&= \frac{\lambda^s e^{-2\lambda}}{s!}\sum_{i=0}^{s}\frac{s!}{i!(s-i)!} = \frac{\lambda^s e^{-2\lambda}}{s!}\sum_{i=0}^{s}\binom{s}{i} \\
+						&= \frac{\lambda^s e^{-2\lambda}}{s!} 2^s = \frac{(2\lambda)^s e^{-2\lambda}}{s!}
+					\end{align*} so the base case is true.
+
+					Now, suppose this closed form expression for the distribution holds for arbitrary $k,$ so that \[p_{S_k}(s) = \frac{(k\lambda)^s e^{-k\lambda}}{s!}. \] Then the distribution of $S_{k+1}=S_k+X_{k+1}$ can be calculated by convolution:
+					\begin{align*}
+						f_{S_{k+1}}(s) &= \sum_{i=0}^{s}p_{S_k}(i) f(s-i) \\
+						&= \sum_{i=0}^{s} \frac{(k\lambda)^i e^{-k\lambda}}{i!} \cdot \frac{\lambda^{s-i} e^{-\lambda}}{(s-i)!}\\
+						&= \frac{\lambda^s e^{-(k+1)\lambda}}{s!} \sum_{i=0}^{s} k^i\cdot\frac{s!}{i!(s-i)!} \\
+						&= \frac{\lambda^s e^{-(k+1)\lambda}}{s!}\sum_{i=0}^{s}k^i\binom{s}{i} \\
+						&= \frac{\lambda^s e^{-(k+1)\lambda}}{s!} (1+k)^s \\
+						&= \frac{[(k+1)\lambda]^s e^{-(k+1)\lambda}}{s!} \\
+						&= p_{S_{k+1}}(s)
+					\end{align*} so the claim is true, as desired.
+
+				\end{soln}
+
+			\item Obtain the method of moments estimator for $\lambda.$
+
+				\begin{soln}
+					We have 
+					\begin{align*}
+						\mu_1 &= E[X_i] = \sum_{j=0}^{\infty}j\cdot\frac{\lambda^j e^{-\lambda}}{j!} \\
+						&= \lambda e^{-\lambda} \sum_{j=0}^{\infty} \frac{\lambda^{j-1}}{(j-1)!} \\
+						&= \lambda e^{-\lambda} \sum_{k=1}^{\infty}\frac{\lambda^k}{k!} \\
+						&= \lambda e^{-\lambda} e^{\lambda}=\lambda
+					\end{align*} where the summation was the Taylor expansion for $e^x$ at $\lambda.$ Thus, the method of moments estimator for $\lambda$ is given by \[\hat{\lambda}=\hat{\mu_1}=\bar{X}=S/n.\]
+					
+				\end{soln}
+			\item Assuming $n$ is large, obtain an approximate 95\% confidence interval for $\lambda.$ Your confidence interval should be in terms of your confidence level, your estimator, n, etc.
+				\begin{soln}
+					We have 
+					\begin{align*}
+						E[\hat{\lambda}] &= E\left[ \frac{S}{n} \right] = \frac{1}{n} E[S]= \frac{1}{n} n\lambda=\lambda \\
+						\var(\hat{\lambda}) &= \var\left( \frac{S}{n} \right) = \frac{1}{n^2}\var(S)=\frac{1}{n^2}n\lambda=\frac{\lambda}{n}
+					\end{align*} since $S$ is Poisson. Then if $n$ is large, the distribution for $\hat{\lambda}$ is approximately normal. Let $z_{5/2}$ be the value corresponding to 95\% confidence, thus the confidence interval is given by \[\hat{\lambda} \pm z_{5/2} \sqrt{\frac{\hat{\lambda}}{n}}.\]
+				\end{soln}
+
+			\item Using R, generate a vector of 1000 Poisson random variables with parameter $\lambda=4$ (you can use the rpois command for this). Now suppose you had this vector of data, but you did not, in fact, know $\lambda.$ Generate a specific 95\% confidence interval for $\lambda$ based on this data.
+				\begin{soln}
+					After generating the vector, we had $\bar{X}=4.022=\hat{\lambda}.$ Then, $z_{5/2}=1.96,$ so the confidence interval is given by \[\hat{\lambda}\pm z_{5/2}\sqrt{\frac{\hat{\lambda}}{n}} = 4.022\pm 0.089.\]
+				\end{soln}
+
+			\item Now suppose that you don't see all of the data. What is the only piece of information from the sample that you need in order to generate the confidence interval in the previous part? Do you really need all $n$ values from the sample?
+				
+				\begin{answer*}
+					We only need to know that the distribution was Poisson, so the variance could be calculated properly.
+
+				\end{answer*}
+		\end{enumerate}
+
+	\item Recall that the PDF for a gamma distribution is of the form \[f(x; \alpha, \lambda)=\frac{\lambda^{\alpha}}{\Gamma(\alpha)}x^{\alpha-1}e^{-\lambda x}, x>0\] where $\alpha$ and $\lambda$ are unknown positive parameters. Recall that the first two moments $\mu_1$ and $\mu_2$ can be expressed in terms of $\alpha$ and $\lambda$ and are given by 
+		\begin{align*}
+			\mu_1 &= \frac{\alpha}{\lambda} \\
+			\mu_2 &= \frac{\alpha(\alpha+1)}{\lambda^2}
+		\end{align*}
+		In lecture, we showed how this system of equations can be successfully inverted to express $\alpha, \lambda$ in terms of $\mu_1, \mu_2:$ 
+		\begin{align*}
+			\alpha &= \frac{\mu_1^2}{\mu_2-\mu_1^2} \\
+			\lambda &= \frac{\mu_1}{\mu_2-\mu_1^2}
+		\end{align*}
+		
+		\begin{enumerate}[(a)]
+			\item Suppose $\left\{ X_1, \cdots, X_n \right\}$ are an iid sample from the gamma distribution with parameters $\alpha$ and $\lambda.$ In terms of these quantities, what is the exact mean and variance of $\hat{\mu_1}$ and $\hat{\mu_2}?$ Also what is the exact covariance between $\hat{\mu_1}$ and $\hat{\mu_2}?$
+				\begin{soln}
+					We have $\mu_1=E[X_i]=\alpha/\lambda,$ and \[\mu_2 = E[X_i^2]=\frac{\alpha(\alpha+1)}{\lambda^2}=\var(X_i) + \left( \frac{\alpha}{\lambda} \right)^2\] so we can calculate
+					\begin{align*}
+						E[\hat{\mu_1}] &= E\left[ \frac{1}{n}\sum_{i=1}^{n} X_i \right] = \frac{1}{n} \sum_{i=1}^{n} E[X_i] \\
+						&= \frac{1}{n} n\frac{\alpha}{\lambda} = \boxed{\frac{\alpha}{\lambda}} \\
+						\var(\hat{\mu_1}) &= \var\left( \frac{1}{n}\sum_{i=1}^{n} X_i \right) = \frac{1}{n^2} \var\left( \sum_{i=1}^{n} X_i \right) \\
+						&= \frac{1}{n^2}\sum_{i=1}^{n} \var(X_i) \\
+						&= \frac{1}{n^2}\sum_{i=1}^{n} \left[ \frac{\alpha(\alpha+1)}{\lambda^2}-\frac{\alpha^2}{\lambda^2}  \right] \\
+						&= \frac{1}{n^2}n\cdot\frac{\alpha}{\lambda^2} = \boxed{\frac{\alpha}{n\lambda^2}} \\
+						E[\hat{\mu_2}] &= E\left[ \frac{1}{n}\sum_{i=1}^{n} X_i^2 \right] = \frac{1}{n} \sum_{i=1}^{n} E[X_i^2] \\
+						&= \frac{1}{n}n\frac{\alpha(\alpha+1)}{\lambda^2} = \boxed{\frac{\alpha(\alpha+1)}{\lambda^2}} \\
+						\var(\hat{\mu_2}) &= \var\left( \frac{1}{n}\sum_{i=1}^{n} X_i^2 \right) = \frac{1}{n^2}\var\left( \sum_{i=1}^{n} X_i^2 \right) \\
+						&= \frac{1}{n^2} \sum_{i=1}^{n}\var(X_i^2) = \frac{1}{n^2}\sum_{i=1}^{n}\left( E[X_i^4]-E[X_i^2] \right)
+					\end{align*}
+
+					Here, we calculate $E[X^4]$ by using integrating:
+					\begin{align*}
+						E[X^4] &= \int_0^\infty x^4 \frac{\lambda^\alpha}{\Gamma(\alpha)}x^{\alpha-1}e^{-\lambda x}\, dx \\
+						&= \frac{\alpha(\alpha+1)(\alpha+2)(\alpha+3)}{\lambda^4}\int_0^{\infty} \frac{\lambda^{\alpha+4}}{\Gamma(\alpha+4)} x^{(\alpha+4)-1}e^{\lambda x}\, dx \\
+						&= \frac{\alpha(\alpha+1)(\alpha+2)(\alpha+3)}{\lambda^4}
+					\end{align*} since the integrand was the density of the gamma distribution $f(x:\alpha+4, \lambda),$ whose integral is 1. Then since $E[X_i^2]=\frac{\alpha(\alpha+1)}{\lambda^2},$ we have \[\var(X_i^2] = \frac{\alpha(\alpha+1)(\alpha+2)(\alpha+3)}{\lambda^4} - \frac{\alpha^2(\alpha+1)^2}{\lambda^4} = \frac{\alpha(\alpha+1)(4\alpha+6)}{\lambda^4}\] so using this in the sum, we have 
+					\begin{align*}
+						\var(\hat{\mu_2}) &= \frac{1}{n^2}\sum_{i=1}^{n}\frac{\alpha(\alpha+1)(4\alpha+6)}{\lambda^4} \\
+						&= \boxed{\frac{\alpha(\alpha+1)(4\alpha+6)}{n\lambda^4}}
+					\end{align*}
+
+					For the covariance between $\hat{\mu_1}, \hat{\mu_2},$ we have 
+					\begin{align*}
+						\cov(\hat{\mu_1}, \hat{\mu_2}) &= \cov\left( \frac{1}{n}\sum_{i=1}^{n} X_i, \frac{1}{n}\sum_{j=1}^{n} X_j^2 \right) \\
+						&= \frac{1}{n^2}\sum_{i=1}^{n} \sum_{j=1}^{n} \cov(X_i, X_j^2)
+					\end{align*} Since the $X_i$ are independently sampled, it follows that $\cov(X_i, X_j^2)=0$ whenever $i\neq j.$ Thus the sum becomes \[\frac{1}{n^2}\sum_{i=1}^{n} \cov(X_i, X_i^2)=\frac{1}{n^2}\sum_{i=1}^{n} (E[X_i^3]-E[X_i]E[X_i^2])\] where 
+					\begin{align*}
+						E[X_i^3] &= \int_0^\infty x^3 \frac{\lambda^\alpha}{\Gamma(\alpha)}x^{\alpha-1} e^{-\lambda x}\, dx \\
+						&= \frac{\alpha(\alpha+1)(\alpha+2)}{\lambda^3}\int_0^\infty \frac{\lambda^{\alpha+3}}{\Gamma(\alpha+3)} x^{(\alpha+3)-1} e^{-\lambda x}\, dx \\
+						&= \frac{\alpha(\alpha+1)(\alpha+2)}{\lambda^3}
+					\end{align*} so the covariance is given by
+					\begin{align*}
+						\cov(\hat{\mu_1}, \hat{\mu_2}) &= \frac{1}{n^2}\sum_{i=1}^{n} \left( \frac{\alpha(\alpha+1)(\alpha+2)}{\lambda^3}-\frac{\alpha}{\lambda}\cdot\frac{\alpha(\alpha+1)}{\lambda^2}  \right) \\
+						&= \frac{1}{n^2}\sum_{i=1}^{n}\frac{2\alpha(\alpha+1)}{\lambda^3} \\
+						&= \boxed{\frac{2\alpha(\alpha+1)}{n\lambda^3}}
+					\end{align*}
+
+				\end{soln}
+
+			\item Using the delta method, what is the approximate mean and variance of $\hat{\alpha}?$ Considering these expressions as functions of $n,$ which contributes more toward the MSE of $\hat{\alpha}:$ the squared bias or the variance, for large values of $n?$
+				\begin{soln}
+					Let \[\hat{\alpha}=f(\hat{\mu_1}, \hat{\mu_2})=\frac{\hat{\mu_1^2}}{\hat{\mu_2}-\hat{\mu_1^2}}\] be a function of $\hat{\mu_1}$ and $\hat{\mu_2}$ and let $\hat{\mu_1}=x$ and $\hat{\mu_2}=y$ for convenience. Then consider the second order Taylor expansion about the point $(\mu_1, \mu_2)$ (assume the function and its derivatives are evaluated there):
+					\begin{align*}
+						\alpha &\approx f + f_x(x-\mu_1) + f_y(y-\mu_2) + \frac{1}{2}\left[ f_{xx} (x-\mu_1)^2 + 2f_{xy}(x-\mu_1)(y-\mu_2)+f_{yy}(y-\mu_2)^2 \right] \\
+					\end{align*} where 
+					\begin{align*}
+						f_{xx} &= \frac{2y(3x^2+y)}{(y-x^2)^3} \\
+						f_{yy} &= \frac{2x^2}{(y-x^2)^3} \\
+						f_{xy} &= -\frac{2x(x^2+y)}{(y-x^2)^3}
+					\end{align*} according to Wolfram.
+
+					Note that when we take the expectation of the RHS, the first order derivatives can be ignored since $E[\mu_1-\hat{\mu_1}]=0$ and similarly for $\mu_2.$ Then $E[(\hat{\mu_1}-\mu_1)^2]=\var(\hat{\mu_1})$ and similarly for $\hat{\mu_2},$ and $E[(\hat{\mu_1}-\mu_1)(\hat{\mu_2}-\mu_2)]=\cov(\hat{\mu_1}, \hat{\mu_2})$. Then, we have $\mu_1=\alpha/\lambda$ and $\mu_2=\alpha(\alpha+1)/\lambda^2,$ so
+					\begin{align*}
+						E[\hat{\alpha}] &= E[f] + \frac{1}{2}\left( f_{xx} E[(x-\mu_1)^2] + 2f_{xy}E[(x-\mu_1)(y-\mu_2)] + f_{yy} E[(y-\mu_2)^2\right) \\
+							&= \frac{\mu_1^2}{\mu_2-\mu_1^2}+\frac{1}{2}\left( \frac{2\mu_2(3\mu_1^2+\mu_2)}{(\mu_2-\mu_1^2)^3}\var(\hat{\mu_1})  -\frac{4\mu_1(\mu_1^2+\mu_2)}{(\mu_2-\mu_1^2)^3}\cov(\hat{\mu_1}, \hat{\mu_2}) + \frac{2\mu_1^2}{(\mu_2-\mu_1^2)^3}\var(\hat{\mu_2}) \right) \\
+							&= \alpha+\frac{3(\alpha+1)}{n}
+					\end{align*} after substituting and algebra. 
+			
+					I gave up on computing the variance. Oh well.
+
+				\end{soln}
+
+			\item Using the delta method, what is the approximate mean and variance of $\hat{\lambda}?$ Considering these expressions as functions of $n,$ which contributes more toward the MSE of $\hat{\lambda}:$ the squared bias or the variance, for large values of $n?$
+				\begin{soln}
+					Similarly to the previous problem, let \[\hat{\lambda}=f(\hat{\mu_1}, \hat{\mu_2})=\frac{\hat{\mu_1}}{\hat{\mu_2}-\hat{\mu_1}}\] be a function of $\hat{\mu_1}$ and $\hat{\mu_2}$ and let these be $x$ and $y$ for convenience. The second order Taylor expansion about the point $(\mu_1, \mu_2)$ is given by 
+					\[\hat{\lambda} \approx f+f_x(x-\mu_1)+f_y(y-\mu_2)+\frac{1}{2}\left[ f_{xx}(x-\mu_1)^2+2f_{xy}(x-\mu_1)(y-\mu_2)+f_{yy}(y-\mu_2)^2 \right]\] where
+					\begin{align*}
+						f_{xx} &= \frac{2x(x^2+3y)}{(y-x^2)^3} \\
+						f_{yy} &= \frac{2x}{(y-x^2)^3} \\
+						f_{xy} &= -\frac{3x^2+y}{(y-x^2)^3}
+					\end{align*} and the linear terms go to 0 when the expectation is pulled through, so the expectation is given by 
+					\begin{align*}
+						E[\hat{\lambda}] &= E[f] + \frac{1}{2}\left[ \frac{2x(x^2+3y)}{(y-x^2)^3}\var(\hat{\mu_1}) - \frac{2(3x^2+y)}{(y-x^2)^3}\cov(\hat{\mu_1}, \hat{\mu_2}) + \frac{2x}{(y-x^2)^3}\var(\hat{\mu_2}) \right] \\
+						&=\lambda+\frac{\lambda}{n}\left( \frac{3\alpha+4}{\alpha} \right)
+					\end{align*} after substituting and algebra. Gave up on the variance for this question too.
+
+				\end{soln}
+
+			\item Using the delta method, what is the approximate covariance between $\hat{\alpha}$ and $\hat{\lambda}?$ (Hint: use a linear approximation to relate $\hat{\alpha}$ to $\hat{\mu_1}$ and $\hat{\mu_2}$ and do the same for $\hat{\lambda},$ then compute the covariance between the approximations)
+				\begin{soln}
+					Use the first order Taylor expansions for $\hat{\alpha}$ at $(\mu_1, \mu_2)$ assuming $\hat{\alpha}=f(\hat{\mu_1}, \hat{\mu_2}) = \frac{\hat{\mu_1}^2}{\hat{\mu_2}-\hat{\mu_1}^2}$ is a function, and letting $x$ and $y$ substitute for $\hat{\mu_1}$ and $\hat{\mu_2},$ we have 
+					\begin{align*}
+						\hat{\alpha} &\approx \alpha + f_x(x-\mu_1) + f_y(y-\mu_2) \\
+						&= \alpha + \frac{2xy}{(y-x^2)^2}(x-\mu_1) - \frac{x^2}{(y-x^2)^2}(y-\mu_2) \\
+						&= \alpha + 2\lambda(\alpha+1)(\hat{\mu_1}-\mu_1) - \lambda^2(\hat{\mu_2}-\mu_2)
+					\end{align*}
+
+					Similarly, for $\hat{\lambda},$ let $\hat{\lambda}=g(\hat{\mu_1}, \hat{\mu_2})=\frac{\hat{\mu_1}}{\hat{\mu_2}-\hat{\mu_1}^2}$ be a function whose first order Taylor Expansion is 
+					\begin{align*}
+						\hat{\lambda} &\approx \lambda+g_x (x-\mu_1)+g_y(y-\mu_2) \\
+						&= \lambda + \frac{x^2+y}{(y-x^2)^2}(x-\mu_1) - \frac{x}{(y-x^2)^2}(y-\mu_2) \\
+						&= \lambda+\frac{\lambda^2(\alpha+\lambda)}{\alpha}(\hat{\mu_1}-\mu_1) - \frac{\lambda^3}{\alpha}(\hat{\mu_2}-\mu_2)
+					\end{align*}
+					Then the covariance between the approximations is given by 
+					\begin{align*}
+						\cov(\hat{\alpha}, \hat{\lambda}) &\approx \cov\left( \alpha + 2\lambda(\alpha+1)(\hat{\mu_1}-\mu_1) - \lambda^2(\hat{\mu_2}-\mu_2),  \lambda+\frac{\lambda^2(\alpha+\lambda)}{\alpha}(\hat{\mu_1}-\mu_1) - \frac{\lambda^3}{\alpha}(\hat{\mu_2}-\mu_2)\right) \\
+						&= \cov\left(2\lambda(\alpha+1)(\hat{\mu_1}-\mu_1), \frac{\lambda^2(\alpha+\lambda)}{\alpha}(\hat{\mu_1}-\mu_1)\right) \\
+						&\quad + \cov\left( 2\lambda(\alpha+1)(\hat{\mu_1}-\mu_1), -\frac{\lambda^3}{\alpha}(\hat{\mu_2}-\mu_2) \right) \\
+						&\quad + \cov\left( -\lambda^2(\hat{\mu_2}-\mu_2), \frac{\lambda^2(\alpha+\lambda)}{\alpha}(\hat{\mu_1}-\mu_1) \right) \\
+						&\quad + \cov\left( -\lambda^2(\hat{\mu_2}-\mu_2), -\frac{\lambda^3}{\alpha}(\hat{\mu_2}-\mu_2) \right) \\
+						&= \frac{2\lambda^3(\alpha+1)(\alpha+\lambda)}{\alpha}\cov(\hat{\mu_1}, \hat{\mu_1}) - \frac{2\lambda^4(\alpha+1)}{\alpha}\cov(\hat{\mu_1}, \hat{\mu_2}) \\
+						&\quad-\frac{\lambda^4(\alpha+\lambda)}{\alpha}\cov(\hat{\mu_2}, \hat{\mu_1}) + \frac{\lambda^5}{\alpha}\cov(\hat{\mu_2}, \hat{\mu_2}) \\
+						&= \frac{2\lambda(\alpha+1)}{n}
+					\end{align*} after algebra.
+
+				\end{soln}
+
+		\end{enumerate}
+
+	\item In lecture, we described how to use simulation to obtain approximate distributions of our estimators and to determine an estimated standard error. In this exercise, we address this. First, consider fixing the values of $\alpha, \lambda$ in our gamma distribution at $\alpha=12$ and $\lambda=4,$ and also fixing $n,$ the sample size, at $n=200.$ In R, complete the following steps:
+		\begin{enumerate}[a)]
+			\item First, do the following for 10, 000 trials. In each trial, sample the gamma distribution using a sample of size 200 (use the rgamma() command) and compute $\hat{\mu_1}$ and $\hat{\mu_2}.$ Store the results from each trial as an entry in a vector. You will thus obtain a vector of 10, 000 realizations of values of $\hat{\mu_1}$ and 10, 000 realizations of $\hat{\mu_2}.$
+
+			\item Next, for each pair of $(\hat{\mu_1}, \hat{\mu_2})$ values, compute the corresponding values of $\hat{\alpha}$ and $\hat{\lambda},$ and once again store each result as an entry in a vector. You will thus obtain a vector of 10, 000 realizations of values of $\hat{\alpha}$ and 10, 000 of $\hat{\lambda}.$ These vectors of realizations represent independent samples from the sampling distributions of these quantities, and we can use them to understand these distributions.
+
+			\item Compute the sample mean and variance of the vector of $\hat{\mu_1}$ values and compare with the theoretical values you computed in the previous problem (Problem 2 (a)). Similarly, compute the sample mean and variance of the vector of $\hat{\mu_2}$ values and compare. Finally, compute the sample covariance between the vectors of $\hat{\mu_1}$ and $\hat{\mu_2}$ values and compare.
+				\begin{soln}
+					The mean of the $\hat{\mu_1}$ values was 2.99994, which matches closely with $\alpha/\lambda=12/4=3.$ The variance was 0.003738, which is very close to \[\frac{\alpha}{n\lambda^2}=\frac{12}{200\cdot4^2}=0.00375.\]
+
+				The mean of the $\hat{\mu_2}$ values is 9.7503, which is close to expression $\alpha(\alpha+1)/\lambda^2=12(13)/4^2=9.75.$ The variance was 0.16397, which is approximately \[\frac{\alpha(\alpha+1)(4\alpha+6)}{n\lambda^4} = \frac{12(13)(54)}{200(4)^4}=0.1645\]
+
+				The covariance between $\hat{\mu_1}$ and $\hat{\mu_2}$ was 0.02446, which is approximately equal to \[\frac{2\alpha(\alpha+1)}{n\lambda^3}=\frac{2(12)(13)}{200(4)^3}=0.02625\]
+
+				\end{soln}
+
+			\item Compute the sample mean and variance of the vector of $\hat{\alpha}$ values and compare with the values in Problem 2 (b), and compute the sample mean and variance of the vector of $\hat{\lambda}$ values and compare with the values in Problem 2 (c).
+				\begin{soln}
+					The sample mean of the $\hat{\alpha}$ values is 12.2105, which is close to the value of \[\alpha+\frac{3(\alpha+1)}{n}=12+\frac{3(13)}{200}=12.195.\] The sample variance is 1.6295.
+
+					The sample mean of the $\hat{\lambda}$ values is 4.0674, which agrees closely with the value of \[\lambda+\frac{\lambda}{n}\left( \frac{3\alpha+4}{\alpha}\right) = 4+\frac{4}{200}\left( \frac{3(12)+4}{12} \right)=4.067\]The sample variance is 0.1952.
+
+				\end{soln}
+
+			\item Compute the sample covariance between the vectors of $\hat{\alpha}$ and $\hat{\lambda}$ values and compare with the theoretical value in Problem 2 (d).
+				\begin{soln}
+					The sample covariance is 0.5671, which is approximately equal to \[\frac{2\lambda(\alpha+1)}{n}=\frac{2(12)(5)}{200}=0.6.\] 
+				\end{soln}
+				
+		\end{enumerate}
+
+	\item Recall that we said an estimator $\hat{\theta_n},$ which is based on a sample of size $n,$ is \textit{consistent} for a parameter $\theta_0$ if for any $\varepsilon>0,$ \[P\left( |\hat{\theta_n}-\theta_0| > \varepsilon \right)\to 0\] as $n\to\infty.$ Let $X_i, 1\le i\le n$ be an iid collection of random variables with $E[X_i]=\mu$ and $\var(X_i)=\sigma^2.$ Show that the sample mean $\bar{X}$ is consistent for $\mu$. (Hint: Use Chebyshev's inequality)
+		\begin{soln}
+			By Chebyshev's Inequality, we have 
+			\begin{align*}
+				P\left( |\bar{X}-\mu| > k\frac{\sigma}{\sqrt{n}} \right) \le \frac{1}{k^2}
+			\end{align*} for all $k>0,$ where $\sigma/\sqrt{n}$ is the variance of $\bar{X}.$ Then, suppose $k=\frac{\varepsilon\sqrt{n}}{\sigma},$ then the inequality becomes
+			\[ P\left( |\bar{X}-\mu| > \varepsilon \right) \le \frac{\sigma^2}{n\varepsilon^2}\] which will tend to 0 as $n\to\infty$ for any choice of $\varepsilon$ as desired.
+		\end{soln}
+
+\end{enumerate}
+
+\section*{Chapter 8: Estimation of Parameters and Fitting of Probability Distributions}
+
+\begin{itemize}
+	\item[4.] Suppose that $X$ is a discrete random variable with 
+				\begin{align*}
+					P(X=0)&=\frac{2}{3}\theta \\
+					P(X=1) &= \frac{1}{3}\theta \\
+					P(X=2) &= \frac{2}{3}(1-\theta) \\
+					P(X=3) &= \frac{1}{3}(1-\theta)
+				\end{align*}
+				where $0\le\theta\le1$ is a parameter. The following 10 independent observations were taken from such a distribution: (3, 0, 2, 1, 3, 2, 1, 0, 2, 1).
+		\begin{enumerate}[(a)]
+			\item Find the method of moments estimate of $\theta.$
+				\begin{soln}
+					We have 
+					\begin{align*}
+						\mu_1 &= E[X] = 0\cdot\frac{2}{3}\theta + 1\cdot\frac{1}{3}\theta+2\cdot\frac{2}{3}(1-\theta) + 3\cdot\frac{1}{3}(1-\theta) \\ 
+						&= \frac{7}{3}-2\theta
+					\end{align*} so solving for $\theta$ gives \[\theta=\frac{7}{6}-\frac{\mu_1}{2}\] so the method of moments estimate of $\theta$ is given by \[\hat{\theta}=\frac{7}{6}-\frac{\hat{\mu_1}}{2} = \frac{7}{6}-\frac{\bar{X}}{2} = \frac{7}{6}-\frac{3/2}{2} = \boxed{\frac{5}{12}.}\] 
+				\end{soln}
+
+			\item Find an approximate standard error for your estimate.
+				\begin{soln}
+					We have \[\var(\hat{\theta})=\var\left( \frac{7}{6}-\frac{\bar{X}}{2} \right) = \frac{1}{2^2}\var(\bar{X})\] We have 
+					\begin{align*}
+						\var(X)&=E[X^2]-E[X]^2=\left[ 0^2\cdot\frac{2}{3}\theta+1^2\cdot\frac{1}{3}\theta+2^2\frac{2}{3}(1-\theta) + 3^2\frac{1}{3}(1-\theta) \right] - \left( \frac{7}{3}-2\theta \right)^2 \\
+						&= \frac{2}{9}+4\theta-4\theta^2
+					\end{align*}
+					so the variance of the sample mean is given by \[\var(\bar{X})=\frac{\var(X)}{n}=\frac{\frac{2}{9}+4\theta-4\theta^2}{n}. \] Using the estimated value for $\hat{\theta}=\frac{5}{12},$ we have \[\var(\bar{X})=\frac{\frac{2}{9}-4\cdot\frac{5}{12}-4\cdot\left( \frac{5}{12} \right)^2}{10} = \frac{43}{360}\] Finally, \[s_{\hat{\theta}}=\sqrt{\var(\hat{\theta})}=\sqrt{\frac{1}{4}\cdot\frac{43}{360}} = \boxed{\frac{1}{12}\sqrt{\frac{43}{10}}}\]
+				\end{soln}
+
+		\end{enumerate}
+
+	\item[5.] Suppose that $X$ is a discrete random variable with $P(X=1)=\theta$ and $P(X=2)=1-\theta.$ Three independent observations of $X$ are made: $x_1=1, x_2=2, x_3=2.$
+		\begin{enumerate}[(a)]
+			\item Find the method of moments estimate of $\theta.$
+				\begin{soln}
+					We have \[\mu_1=E[X]=1\cdot\theta+2\cdot(1-\theta)=2-\theta\] so
+					\begin{align*}
+						\theta &= 2-\mu_1 \\
+						\implies \hat{\theta}&=2-\hat{\mu_1} = 2-\bar{X}
+					\end{align*}
+					where $\bar{X}=(1+2+2)/3=5/3,$ so the method of moments estimate of $\theta$ is given by \[\hat{\theta}=2-\frac{5}{3}=\boxed{\frac{1}{3}}.\]
+
+				\end{soln}
+
+			\item  What is the likelihood function?
+				\begin{soln}
+					The likelihood function is the joint PMF of $X_1, X_2, X_3.$ That is, the likelihood function is \[f(\theta)=P(X_1=1, X_2=2, X_3=2)=\theta(1-\theta)^2.\]
+
+				\end{soln}
+
+			\item What is the maximum likelihood estimate of $\theta?$
+				\begin{soln}
+					The MLE of $\theta$ is \[\argmax_{\theta} \theta(1-\theta)^2\] Since $\theta$ is in the closed interval [0, 1], we take the derivative of the likelihood function wrt $\theta$ to get \[f(\theta)=\theta(-2)(1-\theta)+(1-\theta)^2=3\theta^2-4\theta+1\] and the local minima occur where this derivative is 0, which occur when \[3\theta^2-4\theta+1=(\theta-1)(3\theta-1)=0\] so $\theta=1$ and $\theta=1/3.$ There is also an endpoint at $\theta=0$ to check. 
+
+					We have $f(0)=f(1)=0$ and $f(1/3)=4/27.$ By the second derivative test, we have $f''(1/3)=-2$ so $\boxed{\hat{\theta}=1/3}$ is a local max, and in fact the global max, so it is the MLE.
+
+				\end{soln}
+				
+		\end{enumerate}
+
+		\newpage
+	\item[7.] Suppose that $X$ follows a geometric distribution, \[P(X=k)=p(1-p)^{k-1}\] and assume an iid sample of size $n.$
+		\begin{enumerate}[(a)]
+			\item Find the method of moments estimate of $p.$
+
+				\begin{soln}
+					We have \[\mu_1=E[X]=1/p\] since $X$ is geometric, so 
+					\begin{align*}
+						p &= 1/\mu_1 \\
+						\implies \hat{p}&=1/\hat{\mu_1}=1/\bar{X}
+					\end{align*} is the method of moments estimate of $p.$
+
+				\end{soln}
+			\item Find the MLE of $p.$
+				\begin{soln}
+					The joint PMF is given by \[f(p)=P(X_1=x_1, X_2=x_2,\cdots, X_n=x_n)=\prod_{i=1}^n P(X_i=x_i)=\prod_{i=1}^n p(1-p)^{x_i-1}\] since $X_i$ are an iid sample. Since the natural log is an increasing function, maximizing this likelihood function is equivalent to maximizing its logarithm, so let
+					\begin{align*}
+						\ell(p) &=\log f(p)=\log\left( \prod_{i=1}^n p(1-p)^{x_i-1} \right)\\
+						&= \sum_{i=1}^{n}\log\left( p(1-p)^{x_i-1} \right) \\
+						&= \sum_{i=1}^{n}\left[ \log p + (x_i-1)\log(1-p) \right] \\
+						&= n\log p + \log(1-p)\sum_{i=1}^{n}(x_i-1) \\
+						&= n\log p - n\log(1-p) + \log(1-p)\sum_{i=1}^{n} x_i
+					\end{align*} by properties of logarithms. To maximize this, take the derivative with respect to $p$ and solve for $p$ to make the derivative 0:
+					\begin{align*}
+						\ell'(p) &= \frac{n}{p}+\frac{n}{1-p}-\frac{1}{1-p}\sum_{i=1}^{n}x_i = 0 \\
+						n(1-p) + np &= p\sum_{i=1}^{n} x_i \\
+						\hat{p} &= \frac{n}{\sum_{i=1}^{n}x_i} = \boxed{1/\bar{X}}
+					\end{align*} is the MLE.
+				\end{soln}
+
+			\item Find the asymptotic variance of the MLE.
+				\begin{soln}
+					The asymptotic variance of $\hat{p}$ is given by $\frac{1}{nI(p)},$ where 
+					\begin{align*}
+						I(p)&=-E\left[ \frac{\partial^2}{\partial p^2}\log P(X) \right] \\
+						&= -E\left[ \frac{\partial^2}{\partial p^2}\log[p(1-p)^{X-1}] \right] \\
+						&= E\left[ \frac{xp^2-2p+1}{(p-1)^2p^2} \right] \\
+						&= \frac{(1/p)p^2-2p+1}{(p-1)^2p^2} \\
+						&= \frac{1}{p^2(1-p)}
+					\end{align*}
+					so the asymptotic variance is \[\frac{1}{nI(p)}=\boxed{\frac{p^2(1-p)}{n}}\]
+				\end{soln}
+
+				
+		\end{enumerate}
+
+	\item[16.] Consider an iid sample of random variables with density function \[f(x|\sigma) = \frac{1}{2\sigma}\exp{\left( -\frac{|x|}{\sigma} \right)}\]
+		\begin{enumerate}[(a)]
+			\item Find the method of moments estimate of $\sigma.$
+				\begin{soln}
+					We have 
+					\begin{align*}
+						\mu_1 &= \int_{-\infty}^{\infty} x\left[ \frac{1}{2\sigma}\exp{\left( -\frac{|x|}{\sigma} \right)} \right]\, dx \\
+						&= \frac{1}{2\sigma}\left( \int_{-\infty}^0 xe^{x/\sigma}\, dx + \int_0^\infty xe^{-x/\sigma}\, dx \right) \\
+						&= 0
+					\end{align*} by symmetry. This won't work, so we use 
+					\begin{align*}
+						\mu_2 &= \int_{-\infty}^\infty x^2 \left[ \frac{1}{2\sigma}\exp{\left( -\frac{|x|}{\sigma} \right)} \right]\, dx \\
+						&= 2\sigma^2
+				\end{align*} according to Wolfram. Then, since $\mu_1=0,$ we have $\mu_2=\var(X)+\mu_1^2=\var(X).$ Thus,
+				\begin{align*}
+					\sigma &= \sqrt{\frac{\mu_2}{2}} \\
+					\implies \hat{\sigma} &= \sqrt{\frac{\hat{\mu_2}}{2}} = \sqrt{\frac{s^2}{2}} = \frac{s}{\sqrt{2}}
+				\end{align*} where $s^2$ is the sample variance. This is the method of moments estimate.
+
+				\end{soln}
+
+				\newpage
+			\item Find the MLE of $\sigma.$
+				\begin{soln}
+					We have the joint density \[g(\sigma)=f(x_1, x_2, \cdots, x_n | \sigma) = \prod_{i=1}^n f(x_i|\sigma) = \prod_{i=1}^n \frac{1}{2\sigma}\exp{\left(-\frac{|x_i|}{\sigma}\right)}\] Taking the natural log of both sides, we have
+					\begin{align*}
+						\ell(\sigma) &=\log g(\sigma) = \log\left[ \prod_{i=1}^n \frac{1}{2\sigma}\exp{\left( -\frac{|x_i|}{\sigma} \right)} \right] \\ 
+						&= \sum_{i=1}^{n} \log\left[ \frac{1}{2\sigma}\exp{\left( -\frac{|x_i|}{\sigma} \right)} \right] \\
+						&= \sum_{i=1}^{n} \left[ -\log(2\sigma) - \frac{|x_i|}{\sigma} \right] \\
+						&= -n\log(2\sigma)-\sigma^{-1}\sum_{i=1}^{n}|x_i|
+					\end{align*} and taking the derivative with respect to $\sigma$ and setting the result equal to 0:
+					\begin{align*}
+						\ell'(\sigma) &= -\frac{n}{\sigma} + \sigma^{-2}\sum_{i=1}^{n}|x_i| = 0 \\
+						\sigma &= \frac{1}{n}\sum_{i=1}^{n}|x_i| = \hat{\sigma}
+					\end{align*}
+				\end{soln}
+
+			\item Find the asymptotic variance of the MLE.
+				\begin{soln}
+					We have 
+					\begin{align*}
+						I(\sigma) &= -E\left[ \frac{\partial^2}{\partial \sigma^2}\log f(x|\sigma) \right] \\
+						&= -E\left[ \frac{\partial^2}{\partial \sigma^2} \log \left( \frac{1}{2\sigma} \exp{\left( -\frac{|x|}{\sigma} \right)} \right) \right] \\
+						&= E\left[ \frac{2|x|-\sigma}{\sigma^3} \right] \\
+						&= \frac{2E[|x|]-\sigma}{\sigma^3}
+					\end{align*} where 
+					\begin{align*}
+						E[|x|] &= \int_{-\infty}^\infty |x| \frac{1}{2\sigma} \exp{\left( -\frac{|x|}{\sigma} \right)}\, dx \\
+						&= \sigma
+					\end{align*} according to Wolfram, so then \[I(\sigma)=\frac{2\sigma-\sigma}{\sigma^3} = \frac{1}{\sigma^2}\] so the asymptotic variance is given by $\boxed{\sigma^2/n.}$
+
+				\end{soln}
+				
+		\end{enumerate}
+\end{itemize}
+
+\end{document}

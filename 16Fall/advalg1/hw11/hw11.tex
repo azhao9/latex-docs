@@ -1,0 +1,95 @@
+\documentclass{article}
+\usepackage[sexy, hdr, fancy]{evan}
+\setlength{\droptitle}{-4em}
+
+\lhead{Homework 11}
+\rhead{Advanced Algebra I}
+\lfoot{}
+\cfoot{\thepage}
+
+\begin{document}
+\title{Homework 11}
+\maketitle
+\thispagestyle{fancy}
+
+\section*{Section 4.1: Polynomials}
+
+\begin{itemize}
+	\item[7.]
+		\begin{enumerate}[a.]
+			\item Let $f$ and $g$ be nonzero polynomials in $R[x]$ and assume that the leading coefficient of one of them is a unit. Show that $fg\neq 0$ and that $\deg(fg)=\deg f+\deg g.$
+				\begin{proof}
+					WLOG, the leading coefficient of $f$ is $r\in R$ where $r$ is a unit. We may write $f$ and $g$ as
+					\begin{align*}
+						f &= rx^n + a_{n-1}x^{n-1} + \cdots + a_0 \\
+						g &= b_m x^m + b_{m-1}x^{m-1} + \cdots + b_0
+					\end{align*}
+					where $b_m\neq 0.$ The coefficient of $x^{m+n}$ in the product $fg$ is given by $rb_m.$ Suppose $rb_m=0,$ then multiplying by $1/r$ on both sides (which exists because $r$ is a unit) we have $b_m=0,$ a contradiction. Thus, $rb_m\neq 0,$ so $fg\neq 0,$ and the term of maximal degree in $fg$ is $rb_m x^{m+n},$ so \[\deg(fg) = m+n = \deg f + \deg g\] as desired.
+				\end{proof}
+
+			\item If $R$ is not a domain, show that linear polynomials $f$ and $g$ exist in $R[x]$ such that $\deg(fg)<\deg f + \deg g.$
+				\begin{proof}
+					Since $R$ is not a domain, there exist $a, b\in \RR$ such that $ab=0$ and $a, b\neq 0.$ Consider the polynomials $f=ax$ and $g=bx.$ Then $fg=(ax)(bx)=(ab)x=0.$ Here, \[\deg(fg)=0<1+1=\deg f + \deg g\] as desired.
+				\end{proof}
+				
+		\end{enumerate}
+
+	\item[13.] Divide $x^3-4x+5$ by $2x+1$ in $\QQ[x].$ Why is it impossible in $\ZZ[x]?$
+		\begin{soln}
+			We have \[x^3-4x+5=\left( \frac{1}{2}x^2-\frac{1}{4}x-\frac{15}{8} \right)\cdot(2x+1) + \frac{55}{8}\] The division is impossible in $\ZZ[x]$ because $2x+1$ is not monic, and quotients don't make sense in $\ZZ.$
+		\end{soln}
+
+
+	\item[26.] Show that $\sqrt[n]{m}$ is not rational unless $m=k^n$ for some integer $k.$
+		\begin{proof}
+			The problem statement appears to be wrong. If $m=(a/b)^n\in \QQ$ for $a, b\in \ZZ,$ then we also have $\sqrt[n]{m}=a/b\in \QQ,$ so we do not require that $m=k^n$ for some integer $k.$ We may assume that $m\in \ZZ$ to make this question somewhat interesting.
+
+			Suppose $\sqrt[n]m=k/b$ where $k, b\in \ZZ$ are relatively prime. Then $k^n=mb^n,$ so $b^n\mid k^n\implies b\mid k.$ Since $b\mid k$ it must be that $b=1$ since $\gcd(k, b)=1.$ Thus, it must be that $\sqrt[n]m=k\implies m=k^n,$ as desired. 
+		\end{proof}
+		
+\end{itemize}
+
+\section*{Section 4.2: Factorization of Polynomials over a Field}
+
+\begin{itemize}
+	\item[20.] Factor $x^5+x^2-x+1$ as a product of irreducible polynomials in $\ZZ_3[x].$
+		\begin{soln}
+			Let $f(x)=x^5+x^2-x+1.$ We have \[f(0)=1, \quad f(1)=2, \quad f(2) = 35 \equiv 2\] so $f$ has no roots in $\ZZ_3,$ thus has no degree 1 divisors. Thus, $f$ must factorize as the product of an irreducible quadratic and cubic. Let \[f=(x^3+ax^2+bx+c)(x^2+dx+e) = x^5+(a+d)x^4+(b+ad+e)x^3+(ae+bd+c)x^2+(be+cd)x+ce\] Equating coefficients, we have the system
+			\begin{align*}
+				a+d &= 0 \\
+				b+ad+e &= 0 \\
+				ae+bd+c &= 1 \\
+				be+cd &= -1 \\
+				ce &= 1
+			\end{align*}
+			From the last equation, we can have $c=e=1.$ Since $a=-d,$ the system becomes
+			\begin{align*}
+				b-a^2+1 &= 0 \\
+				a-ab+1 &= 1 \\
+				b-a &= -1 
+			\end{align*}
+			The second equation becomes $a(1-b)=0,$ so the possibilities are $a=0$ or $b=1$ since $\ZZ_3$ is an integral domain. If $b=1,$ there is no solution for $a,$ but if $a=0,$ then $b=2$ is a solution. Thus, $d=-a=0,$ so we have the factorization \[x^5+x^2-x+1=(x^3+2x+1)(x^2+1)\] Factorizations are always unique, but we may also check that $c=e=2$ in the last equation does not have any solutions.
+		\end{soln}
+
+	\item[24.] Show that $f=x^4+4x^3+4x^2+4x+5$ is irreducible over $\QQ$ by considering $f(x-1).$
+		\begin{proof}
+			We have 
+			\begin{align*}
+				f(x-1) &= (x-1)^4+4(x-1)^3+4(x-1)^2+4(x-1)+5 \\
+				&= (x^4-4x^3+6x^2-4x+1) + 4(x^3-3x^2+3x-1) + 4(x^2-2x+1)+ 4(x-1)+5 \\
+				&= x^4-2x^2+4x+2
+			\end{align*}
+			The possible rational roots of this polynomial are $\pm1, \pm2,$ none of which evaluate to 0. Thus, if this polynomial were to be reducible over $\QQ,$ it must factor as two irreducible quadratics. Let \[f(x-1)=(x^2+ax+b)(x^2+cx+d)=x^4+(a+c)x^3+(b+d+ac)x^2+(ad+bc)x+bd = x^4-2x^2+4x+2\] Then equating coefficients, we have the system
+			\begin{align*}
+				a+c &= 0 \\
+				b+d+ac &= -2 \\
+				ad+bc &= 4 \\
+				bd &= 2
+			\end{align*}
+			Since $a, b, c, d\in \ZZ,$ suppose $b=1, d=2$ to satisfy equation 4. Then since $a=-c$ from equation 1, we have \[1+2-a^2=-2 \implies a^2=5\] which has no solutions for $a\in \ZZ.$ Otherwise, suppose $b=-1, d=-2,$ so \[-1-2-a^2=-2\implies a^2=-1\] which also has no solutions for $a.$ The other situations are $b=2, d=1$ and $b=-2, d=-1$ which are identical to this case. Thus, since $f(x-1)$ has no proper factorization in $\ZZ,$ we conclude that $f$ is irreducible over $\QQ,$ as desired.
+			
+		\end{proof}
+		
+\end{itemize}
+
+\end{document}

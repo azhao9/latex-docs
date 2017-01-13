@@ -1,0 +1,277 @@
+\documentclass{article}
+\usepackage[sexy, hdr, fancy]{evan}
+\setlength{\droptitle}{-4em}
+
+\lhead{Homework 6}
+\rhead{Introduction to Optimization}
+\lfoot{}
+\cfoot{\thepage}
+
+\begin{document}
+\title{Homework 6}
+\maketitle
+\thispagestyle{fancy}
+
+\begin{enumerate}
+	\item Recall that by strong duality there are exactly four possibilities for any linear program LP and its dual DP. Namely,
+		\begin{enumerate}[i)]
+				\ii LP and DP are both feasible and have equal optimal objective function values
+				\ii LP is unbounded and DP is infeasible
+				\ii LP is infeasible and DP is unbounded
+				\ii LP and DP are both infeasible
+		\end{enumerate}
+
+		Consider the linear program (LP) min $c^T x$ such that $Ax=b$ and $x\ge 0$ where $A$ happens to be a matrix of all zeros. Determine and show which of the four above scenarios occurs in (each possible) different choices of $b$ and $c.$
+		\begin{soln}
+			The dual program (DP) is given by max $y^T b$ such that $A^T y \le c, y$ unrestricted.
+			\begin{enumerate}[i)]
+				\item In this case, since $A$ is a matrix of all 0, we must have $b=\vec{0}$ in order for (LP) to be feasible. Then $A^T y = 0\le c$ so we must have $c\ge 0$ in order for (DP) to be feasible. Then the optimal objective function value is exactly 0.
+
+				\item In this case, if (LP) is feasible, then we must have $b=\vec{0}$ again. Then if any entry of $c^T$ is negative, the objective function value is unbounded since any $x\ge 0$ satisfies $Ax=0.$ This also corresponds to $A^T y = 0 \le c$ not being feasible if $c$ is not non-negative.
+
+				\item In this case, if (DP) is feasible, then we must have $A^T y = 0\le c.$ Then if any entry of $b$ is non-zero, then (LP) is infeasible, which also corresponds to the (DP) being unbounded since $y$ can be anything. 
+
+				\item In this case, if $b\neq 0$ and $c\not\ge 0,$ both (LP) and (DP) are infeasible.
+					
+			\end{enumerate}
+		\end{soln}
+
+	\item Consider the following LP:
+		\begin{align*}
+			\max \quad 4x_1-6x_2 & \\
+			\text{s.t.}\quad x_1+3x_2 &\ge 3 \\
+			5x_1-x_2 &\le 7 \\
+			-2x_1+3x_2 &= 9 \\
+			x_1\ge 0 &\quad x_2\text{ unrestricted}
+		\end{align*}
+
+		\begin{enumerate}[a)]
+			\item Write LP in standard form, then write its standard form dual.
+				\begin{soln}
+					Let $x_2=a-b$ where $a, b\ge 0.$ Maximizing the objective function is equivalent to minimizing its negative. Substitute this into the constraints and the objective function:
+					\begin{align*}
+						\min\quad -4x_1+6a-6b & \\
+						\text{s.t.}\quad x_1+3a-3b &\ge 3 \\
+						5x_1-a+b &\le 7 \\
+						-2x_1+3a-3b &= 9 \\
+						x_1, a, b&\ge 0
+					\end{align*}
+					Add slack variables $c, d\ge 0$ the first and second constraints become
+					\begin{align*}
+						x_1+3a-3b-c &= 3 \\
+						5x_1-a+b+d &= 7
+					\end{align*} so finally the standard form is given by min $c^T x$ where $Ax=b, x\ge 0$ where \[A=\begin{bmatrix}
+							1 & 3 & -3 & -1 & 0 \\
+							5 & -1 & 1 & 0 & 1 \\
+							-2 & 3 & -3 & 0 & 0
+						\end{bmatrix}\quad b=\begin{bmatrix}
+							3 \\ 7 \\ 9
+						\end{bmatrix}\quad c=\begin{bmatrix}
+							-4 & 6 & -6 & 0 & 0
+					\end{bmatrix}^T\] The corresponding dual is given by
+					\begin{align*}
+						\max\quad b^T y & \\
+						\text{s.t.}\quad A^T y &\le c \\
+						y\text{ unrestricted}
+					\end{align*} or 
+					\begin{align*}
+						\max\quad 3y_1+7y_2+9y_3 & \\
+						\text{s.t.}\quad y_1+5y_2-2y_3 &\le -4 \\
+						3y_1-y_2+3y_3 &\le 6 \\
+						-3y_1+y_2-3y_3 &\le -6 \\
+						-y_1 &\le 0 \\
+						y_2 &\le 0 \\
+						y_1, y_2, y_3&\text{ unrestricted}
+					\end{align*}
+				\end{soln}
+
+			\item Write LP in canonical form, then write its canonical form dual.
+				\begin{soln}
+					As before, we substitute $x_2=a-b$ and convert maximization to minimization:
+					\begin{align*}
+						\min\quad -4x_1+6a-6b & \\
+						\text{s.t.}\quad x_1+3a-3b &\ge 3 \\
+						5x_1-a+b &\le 7  \\
+						-2x_1+3a-3b &= 9 \\
+						x_1, a, b\ge 0
+					\end{align*}
+					Now, flip the sign in the second constraint, and convert the third constraint into two inequalities:
+					\begin{align*}
+						-5x_1+a-b &\ge -7 \\
+						-2x_1+3a-3b &\ge 9 \\
+						2x_1-3a+3b &\ge -9
+					\end{align*} so finally the canonical form is given by $Ax\ge b, x\ge 0$ where \[ A=\begin{bmatrix}
+							1 & 3 & -3 \\
+							-5 & 1 & -1 \\
+							-2 & 3 & -3 \\
+							2 & -3 & 3
+						\end{bmatrix}\quad b=\begin{bmatrix}
+							3 \\ -7 \\ 9 \\ -9
+						\end{bmatrix}\quad c=\begin{bmatrix}
+							-4 & 6 & -6
+					\end{bmatrix}^T\] The corresponding dual is given by
+					\begin{align*}
+						\max\quad b^T z & \\
+						\text{s.t.}\quad A^T z&\le c \\
+						z\ge 0
+					\end{align*} or
+					\begin{align*}
+						\max\quad 3z_1-7z_2+9z_3-9z_4 & \\
+						\text{s.t.}\quad z_1-5z_2-2z_3+2z_4 &\le -4 \\
+						3z_1+z_2+3z_3-3z_4 &\le 6 \\
+						-3z_1-z_2-3z_3+3z_4 &\le -6 \\
+						z_1, z_2, z_3, z_4 &\ge 0
+					\end{align*}
+				\end{soln}
+
+			\item Show how the dual programs from part a, b, are equivalent.
+				\begin{proof}
+					In part a, the condition $-y_1\le 0$ means that $y_1\ge 0,$ so let $y_1=z_1\ge 0.$ Then we have $y_2\le 0$ so let $-y_2=z_2\ge 0.$ Then since $y_3$ is unrestricted, let $y_3=z_3-z_4,$ where $z_3, z_4\ge 0.$ Making these substitutions into the result from part a, we have
+					\begin{align*}
+						\max\quad 3z_1-7z_2+9z_3-9z_4 & \\
+						\text{s.t.}\quad z_1-5z_2-2z_3+2z_4 &\le -4 \\
+						3z_3+z_2+3z_3-3z_4 &\le 6 \\
+						-3z_1-z_2-3z_3+3z_4 &\le -6 \\
+						z_1, z_2, z_3, z_4 &\ge 0
+					\end{align*} which is exactly the problem we obtained in part b.
+					
+				\end{proof}
+
+		\end{enumerate}
+
+	\item Consider the linear program (LP) min $c^T x$ such that $Ax=b, x\ge 0$ where \[A=\begin{bmatrix}
+				-6 & -5 & 25 & 3 & -85 & 4 & 30 \\
+				24 & -2 & 28 & 6 & -55 & 1 & -9 \\
+				9 & -5 & 11 & 2 & -55 & -1 & 10
+			\end{bmatrix}\quad b=\begin{bmatrix}
+				62 \\ 62 \\ 3
+			\end{bmatrix}\quad c=\begin{bmatrix}
+				23 & 1 & -17 & -1 & 52 & -6 & -12
+		\end{bmatrix}^T\]
+		Write the dual program (DP) and then solve the dual problem.
+		\begin{soln}
+			The dual program (DP) is given by max $y^T b$ such that $A^T y\le c.$ From the final tableau in HW4, we know the optimal objective function value of this is -68 by the Supervisor Principle. Then using $y=c_B^T B\inv,$ where the basis was entries 2, 4, 6 from the LP, we have \[c_B^T=\begin{bmatrix}
+					1 & -1 & -6
+				\end{bmatrix}^T, \quad B = \begin{bmatrix}
+					-5 & 3 & 4 \\
+					-2 & 6 & 1 \\
+					-5 & 2 & -1
+			\end{bmatrix}\] so \[B\inv = \frac{1}{123}\begin{bmatrix}
+					-8 & 11 & -21 \\
+					-7 & 25 & -3 \\
+					26 & -5 & -24
+			\end{bmatrix}\] so \[y^T=c_B^T B\inv = \begin{bmatrix}
+					-157/123 & 16/123 & 42/41
+			\end{bmatrix}\] is the optimal solution.
+			
+		\end{soln}
+
+	\item Concerning the specific LP discussed in the previous problem:
+
+		\begin{enumerate}[a)]
+			\item Suppose you may change the value of $b_1$ (currently 62) to anything you want. To what value should you set $b_1$ in order to have the adjusted LP have optimal objective function value -70? Compute the optimal solution for the adjusted LP.
+				\begin{soln}
+					We have the objective function value $y^T b = -68.$ Now we want to compute $\Delta b$ such that $y^T(b+\Delta b) = -70.$ This means $y^T(\Delta b) = -2$ where $y^T$ was $\begin{bmatrix}
+						-157/123 & 16/123 & 42/41
+					\end{bmatrix}$ Since we only want to change $b_1,$ let \[\Delta b = \begin{bmatrix}
+							\Delta b_1 \\ 0 \\ 0
+					\end{bmatrix}\] so we must solve
+					\begin{align*}
+						y^T (\Delta b) &= \begin{bmatrix}
+							-157/123 \\ 16/123 \\ 42/41
+						\end{bmatrix}^T \begin{bmatrix}
+							\Delta b_1 \\ 0 \\ 0
+						\end{bmatrix} = -2 \\
+						\implies -\frac{157}{123}(\Delta b_1) &= -2 \\
+						\Delta b_1 &= \frac{246}{157}
+					\end{align*}
+					Thus we should increase our original $b_1$ value of 62 by $\Delta b= 246/157$ to have the adjusted LP optimal objective function value -70.
+
+					The solution to the adjusted (LP) corresponds to the value of $B\inv (b+\Delta b)=B\inv b+ B\inv (\Delta b),$ which is just the old solution plus the new part: \[\begin{bmatrix}
+							1 \\ 9 \\ 10
+						\end{bmatrix} + \frac{1}{123}\begin{bmatrix}
+							-8 & 11 & -21 \\
+							-7 & 25 & -3 \\
+							26 & -5 & -24
+						\end{bmatrix} \begin{bmatrix}
+							246/157 \\ 0 \\ 0
+						\end{bmatrix} = \frac{1}{157}\begin{bmatrix}
+							141 \\ 1399 \\ 1622
+					\end{bmatrix}\] Embed this into the entire vector of $x$ and we are done.
+
+				\end{soln}
+
+			\item Suppose you may change the value of $b_2$ (currently 62) to anything you want. To what value should you set $b_2$ in order to have the adjusted LP have optimal objective function value -68.5? Compute the optimal solution for the adjusted LP.
+				\begin{soln}
+					In a similar manner to last problem, let \[\Delta b = \begin{bmatrix}
+							0 \\ \Delta b_2 \\ 0
+					\end{bmatrix}\] and solve 
+					\begin{align*}
+						y^T (\Delta b) &= \begin{bmatrix}
+							-157/123 \\ 16/123 \\ 42/41
+						\end{bmatrix}^T \begin{bmatrix}
+							0 \\ \Delta b_2 \\ 0
+						\end{bmatrix} = -\frac{1}{2} \\
+						\implies \frac{16}{123}(\Delta b_2) &= -\frac{1}{2} \\
+						\Delta b_2 &= -\frac{123}{32}
+					\end{align*} so we should subtract this from the original $b_2$ value of 62 to have the adjusted LP optimal objective function value -68.5
+
+					The solution to the adjusted LP is given by
+					\begin{align*}
+						\begin{bmatrix}
+							1 \\ 9 \\ 10
+						\end{bmatrix} + \frac{1}{123}\begin{bmatrix}
+							-8 & 11 & -21 \\
+							-7 & 25 & -3 \\
+							26 & -5 & -24
+						\end{bmatrix}\begin{bmatrix}
+							0 \\ -123/32 \\ 0
+						\end{bmatrix} = \frac{1}{32}\begin{bmatrix}
+							21 \\ 263 \\ 325
+						\end{bmatrix}
+					\end{align*}
+					and again we embed this into the whole vector $x$ to obtain the solution.
+					
+				\end{soln}
+
+		\end{enumerate}
+
+	\item Consider the linear program (LP) min $c^T x$ such that $Ax=b, x\ge 0$ where \[ A=\begin{bmatrix}
+				7 & 7 & 45 & -1 & 3 & -53 & -68 \\
+				9 & -5 & 27 & -115 & 7 & -129 & 42 \\
+				5 & -3 & 63 & -96 & 10 & -109 & 86
+			\end{bmatrix}\quad b=\begin{bmatrix}
+				26 \\ 18 \\ 34
+			\end{bmatrix}\quad c=\begin{bmatrix}
+				1 & 7 & -37 & 94 & -9 & 76 & -146
+		\end{bmatrix}^T\] Write the dual program (DP) and then solve the dual problem. Compute the optimal dual variables using one of the optimal bases for (LP), and then repeat this for the other optimal basis.
+		\begin{soln}
+			The dual program (DP) is given by max $y^T b$ such that $A^T y\le c.$ From the final tableau in HW4, we know the optimal objective function value of the (DP) is -22 by the Supervisor Principle. Then using $y^T=c_B^T B\inv,$ where the basis was entries 1, 2, 5 from the LP, we have \[c_B^T = \begin{bmatrix}
+					1 & 7 & -9
+				\end{bmatrix}, \quad B=\begin{bmatrix}
+					7 & 7 & 3 \\
+					9 & -5 & 7 \\
+					5 & -3 & 10
+			\end{bmatrix}\] so \[B\inv = \frac{1}{594}\begin{bmatrix}
+					29 & 79 & -64 \\
+					55 & -55 & 22 \\
+					2 & -56 & 98
+			\end{bmatrix}\] so \[y^T=c_B^T B\inv = \begin{bmatrix}
+					2/3 & 1/3 & -4/3
+			\end{bmatrix}\] is the optimal solution with basis 1, 2, 5.
+
+			If we use basis 1, 2, 7, we have \[c_B^T = \begin{bmatrix}
+					1 & 7 & -146
+				\end{bmatrix}, \quad B=\begin{bmatrix}
+					7 & 7 & -68 \\
+					9 & -5 & 42 \\
+					5 & -3 & 86
+			\end{bmatrix}\] so \[c_B^T B\inv = \begin{bmatrix}
+					2/3 & 1/3 & -4/3
+			\end{bmatrix}\] as well, as expected.
+			
+		\end{soln}
+
+\end{enumerate}
+
+\end{document}

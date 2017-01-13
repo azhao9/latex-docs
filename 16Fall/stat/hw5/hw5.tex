@@ -1,0 +1,445 @@
+\documentclass{article}
+\usepackage[sexy, hdr, fancy]{evan}
+\setlength{\droptitle}{-4em}
+
+\lhead{Homework 5}
+\rhead{Introduction to Statistics}
+\lfoot{}
+\cfoot{\thepage}
+
+\newcommand{\var}{\mathrm{Var}}
+\newcommand{\cov}{\mathrm{Cov}}
+
+\begin{document}
+\title{Homework 5}
+\maketitle
+\thispagestyle{fancy}
+
+\begin{enumerate}
+	\item We stated the \textit{Cramer-Rao lower bound} in lecture; namely, that if $T=g(X_1, X_2, \cdots, X_n)$ is an unbiased estimate for a parameter $\theta$ based on iid observations $X_i$ from a sufficiently smooth density $f_\theta,$ then the variance of $T$ satisfies the following lower bound: \[\var(T)\ge\frac{1}{nI(\theta)}\] where $I(\theta)$ is the Fisher information. 
+
+		\begin{enumerate}[(a)]
+			\item Let \[Z=\sum_{i=1}^{n}\frac{\partial}{\partial\theta}\log f(X_i|\theta)\] Show that $E[Z]=0.$
+				\begin{proof}
+					We have 
+					\begin{align*}
+						E[Z] &= E\left[ \sum_{i=1}^{n} \frac{\partial}{\partial\theta}\log f(X_i|\theta) \right] = \sum_{i=1}^{n} E\left[ \frac{\partial}{\partial\theta}\log f(X_i|\theta) \right] \\
+						&=nE\left[ \frac{\partial}{\partial\theta}\log f(X|\theta) \right] = nE\left[ \frac{\frac{\partial}{\partial\theta}f(X|\theta)}{f(X|\theta)} \right]
+					\end{align*} where in the last step we invoke the chain rule. Treating the entire expression within the expectation as a random variable with density $f(x|\theta),$ this is
+					\begin{align*}
+						nE\left[  \frac{\frac{\partial}{\partial\theta}f(X|\theta)}{f(X|\theta)}\right] &= n\int \frac{\frac{\partial}{\partial\theta}f(x|\theta)}{f(x|\theta)}f(x|\theta)\, dx \\
+						&= n\int \frac{\partial}{\partial\theta} f(x|\theta)\, dx \\
+						&\implies n\frac{\partial}{\partial\theta}\int f(x|\theta)\, dx \\
+						&= n\frac{\partial}{\partial\theta}1 = 0
+					\end{align*} as desired.
+					
+				\end{proof}
+
+				\newpage
+			\item Use the fact that $E[Z]=0$ to prove that \[E[ZT]\le\sqrt{\var(Z)\var(T)}\]
+				\begin{proof}
+					We have \[\cov(Z, T)=E[ZT]-E[Z]E[T]=E[ZT]\] and since the correlation coefficient $-1\le\rho\le1$ we have 
+					\begin{align*}
+						\rho &= \frac{\cov(Z, T)}{\sqrt{\var(Z)\var(T)}}=\frac{E[ZT]}{\sqrt{\var(T)\var(Z)}}\le 1 \\
+						\implies E[ZT]&\le\sqrt{\var(Z)\var(T)}
+					\end{align*} as desired.
+					
+				\end{proof}
+
+			\item Compute the variance of $Z.$ 
+				\begin{soln}
+					We have 
+					\begin{align*}
+						Z&=\sum_{i=1}^{n}\frac{\partial}{\partial\theta}\log f(X_i|\theta)=\frac{\partial}{\partial\theta}\sum_{i=1}^{n}\log f(X_i|\theta) \\
+						\implies \var(Z) &= E[Z^2]-(E[Z])^2 = E[Z^2] \\
+						&= E\left[ \frac{\partial}{\partial\theta}\sum_{i=1}^{n} \log f(X_i|\theta) \right]^2 = -E\left[ \frac{\partial^2}{\partial\theta^2}\sum_{i=1}^{n}\log f(X_i|\theta)\right] \\
+						&= -\sum_{i=1}^{n} E\left[ \frac{\partial^2}{\partial\theta^2}\log f(X_i|\theta) \right] = nI(\theta)
+					\end{align*} 
+					
+				\end{soln}
+
+			\item Show that $\cov(Z, T)=1.$ 
+				\begin{proof}
+					We have $\cov(Z, T)=E[ZT],$ where $T$ is given by $g(X_1, \cdots, X_n)$ and the distribution of $Z$ is given by $f(X_1, \cdots, X_n|\theta),$ so this probability is given by 
+					\begin{align*}
+						E[ZT] &= \int\cdots\int Zg(x_1, \cdots, x_n) f(x_1, \cdots, x_n|\theta)\, dx_1\cdots dx_n \\
+						&= \int\cdots\int \sum_{i=1}^{n}\frac{\partial}{\partial\theta}\log f(x_i|\theta) \prod_{i=1}^n f(x_i|\theta) g(x_1, \cdots, x_n)\, dx_1\cdots dx_n \\
+						&= \int\cdots\int \frac{\partial}{\partial\theta}\log\left( \prod_{i=1}^n f(x_i|\theta) \right)\prod_{i=1}^n f(x_i|\theta) g(x_1, \cdots, x_n)\, dx_1\cdots dx_n \\
+						&= \int\cdots\int \frac{\frac{\partial}{\partial\theta}\prod_{i=1}^n f(x_i|\theta)}{\prod_{i=1}^n f(x_i|\theta)}\prod_{i=1}^n f(x_i|\theta) g(x_1, \cdots, x_n)\, dx_1\cdots dx_n \\
+						&= \int\cdots\int \frac{\partial}{\partial\theta}\prod_{i=1}^{n} f(x_i|\theta) g(x_1, \cdots, x_n)\, dx_1\cdots dx_n \\
+						&= \frac{\partial}{\partial\theta}\int\cdots\int \prod_{i=1}^{n}f(x_i|\theta)g(x_1, \cdots, x_n)\, dx_1\cdots dx_n = \frac{\partial}{\partial\theta} E[g(X_1, \cdots, X_n)] = \frac{\partial}{\partial\theta}\theta = 1
+					\end{align*} as desired.
+
+				\end{proof}
+				
+		\end{enumerate}
+
+	\item Let $X_1, \cdots, X_n$ be iid uniform on $[0, \theta].$
+
+		\begin{enumerate}[a.]
+			\item Find the method of moments estimate of $\theta$ and its mean and variance.
+				\begin{soln}
+					We have $\mu_1=E[X]=\theta/2,$ so the method of moments estimate of $\theta$ is $\hat{\theta}=2\hat{\mu}_1.$ Then,
+					\begin{align*}
+						E[\hat{\theta}] &= E[2\hat{\mu}_1]=2E[\hat{\mu}_1]=2(\theta/2)=\theta \\
+						\var(\hat{\theta}) &= \var(2\hat{\mu}_1) = 4\var(\hat{\mu}_1) \\
+						&= 4\cdot\frac{\var(X)}{n} 
+					\end{align*} where 
+					\begin{align*}
+						\var(X) &= E[X^2]-(E[X])^2 = E[X^2] - \left( \frac{\theta}{2} \right)^2 \\
+						&= \int_0^\theta x^2\frac{1}{\theta}\, dx - \frac{\theta^2}{4} \\
+						&= \frac{\theta^2}{3}-\frac{\theta^2}{4} \\
+						&= \frac{\theta^2}{12}
+					\end{align*} so the variance of the estimate is \[\var(\hat{\theta}) = \frac{4}{n}\cdot\frac{\theta^2}{12}= \frac{\theta^2}{3n}.\]
+					
+				\end{soln}
+
+			\item Find the MLE of $\theta.$
+				\begin{soln}
+					The likelihood function is \[f(X_1, X_2, \cdots, X_n|\theta)=\prod_{i=1}^n f(X_i|\theta)=\prod_{i=1}^n \frac{1}{\theta}=\frac{1}{\theta^n}\] Clearly, $\theta\ge X_i$ for all $X_i,$ and since $1/\theta^n$ is decreasing with respect to $\theta,$ the MLE is $\max{(X_1, X_2, \cdots, X_n)}.$
+					
+				\end{soln}
+
+			\item Find the probability density of the MLE, and calculate its mean and variance. Compare the variance, the bias, and the MSE to those of the method of moments estimate.
+				\begin{soln}
+					Consider the probability $P(\max{(X_1, X_2, \cdots, X_n)\le x}.$ This is equivalent to \[P(X_1, X_2, \cdots, X_n\le x) = \prod_{i=1}^n P(X_i\le x) = \prod_{i=1}^n \frac{x}{\theta} = \left( \frac{x}{\theta} \right)^n\] since the $X_i$ are iid uniform. Then the distribution of the MLE is the derivative of this with respect to $x,$ which is \[f(x) = \frac{nx^{n-1}}{\theta^n}\] where $x$ ranges from 0 to $\theta.$ Then 
+					\begin{align*}
+						E[\hat{\theta}] &= \int_0^\theta x\frac{nx^{n-1}}{\theta^n}\, dx = \frac{n\theta}{n+1} \\
+						\var(\hat{\theta}) &= E[\hat{\theta}^2]-(E[\hat{\theta}])^2 = E[\hat{\theta}^2]-\left( \frac{n\theta}{n+1} \right)^2 \\
+						&= \int_0^\theta x^2\frac{nx^{n-1}}{\theta^n}\, dx - \left( \frac{n\theta}{n+1} \right)^2 \\
+						&= \frac{n\theta^2}{n+2}-\frac{n^2\theta^2}{(n+1)^2} \\
+						&= \frac{n\theta^2}{(n+1)^2(n+2)}
+					\end{align*}
+
+					Clearly, these are different from the mean and variance of the method of moments estimators.
+
+				\end{soln}
+
+			\item Find a modification of the MLE that renders it unbiased.
+				\begin{soln}
+					We can just let \[\hat{\theta}_2=\frac{n+1}{n}\max{(X_1, X_2, \cdots, X_n)}\] be the modified MLE, so \[E[\hat{\theta}_2] = E\left[ \frac{n+1}{n}\hat{\theta} \right] = \frac{n+1}{n}\cdot\frac{n\theta}{n+1}=\theta\] which is unbiased, as desired.
+					
+				\end{soln}
+				
+		\end{enumerate}
+
+	\item Let $X_i$ be iid uniform on $[0, \theta].$ Let $\hat{\theta}_n$ be the MLE for $\theta$ that you obtained from the previous exercise.
+
+		\begin{enumerate}[a)]
+			\item Show that $P(\hat{\theta}_n-\theta > \varepsilon) = 0$ for any $\varepsilon > 0.$
+				\begin{proof}
+					The distribution of $\hat{\theta}$ is given by \[f(x)=\frac{nx^{n-1}}{\theta^n}\] for $0\le x\le \theta,$ so $P(\hat{\theta}-\theta>\varepsilon)=P(\hat{\theta}>\varepsilon+\theta)=0$ since $\hat{\theta}$ can only range from $0$ to $\theta$ and is 0 everywhere else.
+					
+				\end{proof}
+
+			\item For any $\varepsilon>0,$ determine an explicit expression for the probability \[P\left( |\hat{\theta}-\theta| > \varepsilon \right)\]
+				\begin{soln}
+					We have \[P(|\hat{\theta}-\theta|>\varepsilon) = P(\hat{\theta}-\theta>\varepsilon)+P(\hat{\theta}-\theta<-\varepsilon)=P(\hat{\theta}<\theta-\varepsilon)\] Since the density of $\hat{\theta}$ is \[f(x)=\frac{nx^{n-1}}{\theta^n}\] this probability is given by
+					\begin{align*}
+						P(\hat{\theta}<\theta-\varepsilon) &= \int_0^{\theta-\varepsilon} \frac{n x^{n-1}}{\theta^n}\, dx \\
+						&= \left( \frac{x}{\theta} \right)\bigg\vert^{\theta-\varepsilon}_0 = \left( \frac{\theta-\varepsilon}{\theta} \right)^n = \left( 1-\frac{\varepsilon}{\theta} \right)^n
+					\end{align*} which in particular tends to 0 as $n\to\infty.$
+
+				\end{soln}
+
+			\item Compute, for any $\varepsilon>0,$ the limit \[P\left( |\sqrt{n}(\hat{\theta}_n-\theta)| > \varepsilon \right) \] as $n\to\infty.$
+				\begin{soln}
+					This is the same as \[P\left( |\hat{\theta}-\theta| > \frac{\varepsilon}{\sqrt{n}} \right)=\left( 1-\frac{\varepsilon}{\theta\sqrt{n}} \right)^n\] due to the probability we calculated in part b). We want to find the limit as $n\to\infty,$ which is the same as finding the limit of the logarithm as $n\to\infty,$ and taking the exponential of that. We have 
+					\begin{align*}
+						\lim_{n\to\infty} n\log\left( 1-\frac{\varepsilon}{\theta\sqrt{n}} \right) &= \lim_{n\to\infty} \frac{\log\left( 1-\frac{\varepsilon}{\theta\sqrt{n}} \right)}{1/n} \\
+					\end{align*} and then applying l'Hopital's rule, this limit tends to $-\infty$ so the probability from above tends $e^{-\infty}=0.$
+					
+				\end{soln}
+
+			\item What do your previous answers suggest about the asymptotic distribution of \[\sqrt{n}(\hat{\theta}_n-\theta)?\] In particular, does this still look approximately normal?
+				\begin{soln}
+					From part b), we know that $\hat{\theta}$ is a consistent estimator for $\theta.$ We also have \[E[\hat{\theta}_n]=\int_0^\theta x\cdot\frac{nx^{n-1}}{\theta^n}\, dx=\frac{n}{n+1}\theta\] so $\hat{\theta}$ is also asymptotically unbiased as $n\to\infty$
+
+					This is probably asymptotically normal, but I don't know how to show it.
+
+				\end{soln}
+				
+		\end{enumerate}
+		
+\end{enumerate}
+
+\newpage
+\section*{Chapter 8: Estimation of Parameters and Fitting of Probability Distributions}
+
+\begin{itemize}
+	\item[58.] If gene frequencies are in equilibrium, the genotypes AA, Aa, and aa occur with probabilities $(1-\theta)^2, 2\theta(1-\theta),$ and $\theta^2$, respectively. Data on a sample of 190 people: 10 with Hp1-1, 68 with Hp1-2, 112 with Hp2-2.
+
+		\begin{enumerate}[a.]
+			\item Find the MLE of $\theta.$
+				\begin{soln}
+					The likelihood function is the product \[\prod_{i=1}^{10} (1-\theta)^2 \prod_{j=1}^{68} 2\theta(1-\theta)\prod_{k=1}^{112} \theta^2 = 2^{68} \theta^{292}(1-\theta)^{88}\] and the log-likelihood is \[\ell(\theta) = \log\left[ 2^{68}\theta^{292}(1-\theta)^{88} \right]=86\log 2 + 292\log \theta + 88\log(1-\theta)\] Taking the derivative with respect to $\theta$ and setting equal to 0, we have
+					\begin{align*}
+						\frac{\partial}{\partial\theta}\ell(\theta) &= \frac{292}{\theta}-\frac{88}{1-\theta} = 0 \\
+						\implies \hat{\theta} &= \frac{73}{95}
+					\end{align*} is the MLE.
+					
+				\end{soln}
+
+			\item Find the asymptotic variance of the MLE.
+				\begin{soln}
+					If we let the phenotypes Hp2-2, Hp1-2, and Hp1-1 represent -1, 0, and 1 from a random variable $X,$ then the distribution of $X$ is \[f(x|\theta)=\frac{2}{2^{|x|}} \theta^{1-x}(1-\theta)^{1+x}\] so the Fisher information is given by 
+					\begin{align*}
+						I(\theta) &= -E\left[ \frac{\partial^2}{\partial\theta^2} \log f(X|\theta) \right] = -E\left[ \frac{\partial^2}{\partial\theta^2}\log\left( \frac{2}{2^{|X|}} \theta^{1-X}(1-\theta)^{1+X} \right) \right] \\
+						&= -E\left[ \frac{\partial^2}{\partial\theta^2}\left( (1-|X|)\log 2 + (1-X)\log \theta + (1+X)\log (1-\theta) \right) \right] \\
+						&= -E\left[ \frac{\partial}{\partial\theta}\left(\frac{1-X}{\theta}-\frac{1+X}{1-\theta}\right) \right] = E\left[ \frac{1-X}{\theta^2} + \frac{1+X}{(1-\theta)^2} \right] \\
+						&= \frac{1}{\theta^2}\left( 1-E[X] \right) + \frac{1}{(1-\theta)^2}(1+E[X])
+					\end{align*}
+					Here, $E[X]=-\theta^2+(1-\theta)^2=1-2\theta$ so the expression above is
+					\begin{align*}
+						I(\theta) &= \frac{1}{\theta^2}(2\theta) + \frac{1}{(1-\theta)^2}(2-2\theta) \\
+						&= \frac{2}{\theta(1-\theta)}
+					\end{align*} so the asymptotic variance is given by 
+					\begin{align*}
+						\frac{1}{nI(\theta)} &= \frac{\theta(1-\theta)}{2n}
+					\end{align*}
+				\end{soln}
+
+			\item Find an approximate 99\% confidence interval for $\theta.$
+				\begin{soln}
+					From the data, we have 
+					\begin{align*}
+						E[\hat{\theta}] &= \frac{73}{95}\approx 0.768 \\
+						\var(\hat{\theta}) &\to \frac{\hat{\theta}(1-\hat{\theta})}{2n} = \frac{\frac{73}{95}\cdot\frac{22}{95}}{2(190)} \approx 0.000468
+					\end{align*} and $z_{1/2}= 2.576,$ so the 99\% confidence interval is given by \[0.768\pm 2.576\sqrt{0.000468}\approx 0.768\pm 0.056.\]
+				\end{soln}
+
+			\item Use the bootstrap to find the approximate standard deviation of the MLE and compare to the result of part b).
+				\begin{soln}
+					If there are $a, b, c$ measurements of -1 (Hb2-2), 0 (Hb1-2), and 1 (Hb1-1) respectively, the likelihood function is \[\prod_{i=1}^{a} \theta^2\prod_{j=1}^{b}2\theta(1-\theta)\prod_{k=1}^{c}(1-\theta)^2=2^b \theta^{b+2a} (1-\theta)^{b+2c}\] and the derivative of the log-likelihood is given by \[\frac{b+2a}{\theta}-\frac{b+2c}{1-\theta}=0\implies \hat{\theta}=\frac{b+2a}{2a+2b+2c}.\] 
+
+					Use the bootstrap with $\theta=73/95,$ taking 190 draws, and computing $\hat{\theta}$ for each simulation, and taking 10000 simulations, we have $s^2=0.000466$ which is very close to the value from part b), which is \[\frac{\frac{73}{95}\cdot\frac{22}{95}}{2(190)}\approx 0.000468.\]
+
+				\end{soln}
+
+			\item Use the bootstrap to find an approximate 99\% confidence interval and compare to part c).
+				\begin{soln}
+					Using the sample from part d), we have \[\bar{\hat{\theta}} = 0.7685, \quad\quad \var(\hat{\theta})=0.000466\] so the 99\% confidence interval is given by \[0.7685\pm 2.576\sqrt{0.000466}\approx 0.7685\pm 0.0556\] which is very close to the confidence interval obtained in part c).
+					
+				\end{soln}
+				
+		\end{enumerate}
+
+		\newpage
+	\item[30.] The exponential distribution if $f(x;\lambda)=\lambda e^{-\lambda x}$ and $E[X]=\lambda\inv.$ The CDF is $F(x)=P(X\le x)=1-e^{-\lambda x}.$ Three observations are made by an instrument that reports $x_1=5, x_2=3,$ but $x_3$ is too large for the instrument to measure and it only reports that $x_3>10.$
+
+		\begin{enumerate}[a.]
+			\item What is the likelihood function?
+				\begin{soln}
+					We have \[P(X_3>10)=1-P(X_3\le 10)=1-(1-e^{-10\lambda})=e^{-10\lambda}.\] Then the likelihood function is given by \[f(5)f(3)P(X_3>10)=(\lambda e^{-5\lambda})(\lambda e^{-3\lambda})e^{-10\lambda}=\lambda^2 e^{-15\lambda}.\]
+					
+				\end{soln}
+
+			\item What is the MLE of $\lambda?$
+				\begin{soln}
+					The log-likelihood is \[\log\left( \lambda^2 e^{-15\lambda} \right)=2\log\lambda-15\lambda.\] Taking the derivative with respect to $\lambda$ and setting equal to 0, we have
+					\begin{align*}
+						\frac{\partial}{\partial\lambda}\left( 2\log \lambda-15\lambda \right) &= \frac{2}{\lambda}-15 = 0 \\
+						\implies \hat{\lambda} &= \frac{2}{15}
+					\end{align*} is the MLE.
+					
+				\end{soln}
+				
+		\end{enumerate}
+
+	\item[31.] George spins a coin three times and observes no heads. He then gives the coin to Hilary. She spins it until the first head occurs, and ends up spinning it four times total. Let $\theta$ denote the probability the coin comes up heads.
+
+		\begin{enumerate}[a.]
+			\item What is the likelihood of $\theta?$
+				\begin{soln}
+					Let $p(x)=\theta^x (1-\theta)^{1-x}$ be the PMF for flipping a coin, where 1 represents H, and 0 represents T. Then the likelihood is the joint distribution of 7 iid flips, which is \[\prod_{i=1}^7 \theta^{X_i} (1-\theta)^{1-X_i}\]
+					
+				\end{soln}
+
+			\item What is the MLE of $\theta?$
+				\begin{soln}
+					We are given that $X_1$ through $X_6$ are 0, and $X_7$ is 1 from the sample. The log-likelihood function is 
+					\begin{align*}
+						\ell(\theta) &= \log\left( \prod_{i=1}^7 \theta^{X_i}(1-\theta)^{1-X_i} \right) \\
+						&= \sum_{i=1}^{7}\log\left[ \theta^{X_i}(1-\theta)^{1-X_i} \right] \\
+						&= \sum_{i=1}^{7} \left[ X_i\log\theta + (1-X_i)\log (1-\theta) \right] \\
+						&= \log\theta\sum_{i=1}^{7}X_i + \log(1-\theta)\sum_{i=1}^{7}(1-X_i)
+					\end{align*} so evaluating with the sample data, we have 
+					\begin{align*}
+						\ell(\theta) &= \log\theta+6\log(1-\theta)
+					\end{align*} and taking the derivative with respect to $\theta$ and setting equal to 0, we have 
+					\begin{align*}
+						\frac{\partial}{\partial\theta}\ell(\theta) &= \frac{\partial}{\partial\theta}\left[ \log\theta+6\log(1-\theta) \right] \\
+						&= \frac{1}{\theta}-\frac{6}{1-\theta} = 0 \\
+						\implies \hat{\theta} &= \frac{1}{7}
+					\end{align*} is the MLE.
+					
+				\end{soln}
+				
+		\end{enumerate}
+
+	\item[34.] Suppose that $X_1, X_2, \cdots, X_n$ are iid $N(\mu_0, \sigma_0^2)$ and $\mu$ and $\sigma^2$ are estimated by the method of maximum likelihood, with resulting estimates $\hat{\mu}$ and $\hat{\sigma}^2.$ Suppose the bootstrap is used to estimate the sampling distribution of $\hat{\mu}.$
+
+		\begin{enumerate}[a.]
+			\item Explain why the bootstrap estimate of the distribution of $\hat{\mu}$ is $N\left( \hat{\mu}, \frac{\hat{\sigma}^2}{n} \right).$
+				\begin{answer*}
+					The MLE $\hat{\mu}$ of $\mu$ is the sample mean $\bar{X}$ for a normal distribution, and we have $\var(\hat{\mu})=\var(\bar{X})=\sigma^2/n.$ If we treat the sample as a population, the variance of the population is the same as the mean squared deviation $\hat{\sigma}^2,$ which is also the MLE. 
+
+					Taking a bootstrap and averaging over many trials, the distribution of $\hat{\mu}$ will approach $N\left( \hat{\mu}, \frac{\hat{\sigma}^2}{n} \right).$
+				\end{answer*}
+
+			\item Explain why the bootstrap estimate of the distribution of $\hat{\mu}-\mu$ is $N\left( 0, \frac{\hat{\sigma}^2}{n} \right).$
+				\begin{answer*}
+					Since $\hat{\mu}\sim N\left( \hat{\mu}, \frac{\hat{\sigma}^2}{n} \right)$ it follows that $E[\hat{\mu}-\mu]=E[\hat{\mu}]-E[\mu]=E\left[ \bar{X} \right]-\mu=0$ for large samples. Thus \[\hat{\mu}-\mu\sim N\left( 0, \frac{\hat{\sigma}^2}{n} \right).\]
+				\end{answer*}
+
+			\item According to the result of the previous part, what is the from of the bootstrap confidence interval for $\mu,$ and how does it compare to the exact confidence interval based on the $t$ distribution?
+				\begin{answer*}
+					The bootstrap confidence interval for $\mu$ is given by \[\hat{\mu}\pm z_{\alpha/2} \sqrt{\frac{\hat{\sigma}^2}{n}}=\hat{\mu}\pm z_{\alpha/2}\frac{\hat{\sigma}}{\sqrt{n}}.\] This is symmetric, unlike the confidence interval based on the $t$ distribution.
+				\end{answer*}
+				
+		\end{enumerate}
+
+	\item[50.] Let $X_1,\cdots, X_n$ be an iid sample from a Rayleigh distribution with parameter $\theta>0$:\[f(x|\theta)=\frac{x}{\theta^2}e^{-x^2/2\theta^2}, \quad x\ge 0\]
+
+		\begin{enumerate}[a.]
+			\item Find the method of moments estimate of $\theta.$
+				\begin{soln}
+					We have \[\mu_1=E[X] = \int_0^\infty x\frac{x}{\theta^2}e^{-x^2/2\theta^2} = \theta\sqrt{\frac{\pi}{2}}\] according to Wolfram, so the method of moments estimate of $\theta$ is \[\hat{\theta}=\sqrt{\frac{2}{\pi}}\hat{\mu}_1.\]
+
+				\end{soln}
+
+			\item Find the MLE of $\theta.$
+				\begin{soln}
+					The log-likelihood function is 
+					\begin{align*}
+						\ell(\theta) &= \sum_{i=1}^{n} \log f(X_i|\theta)=\sum_{i=1}^{n}\log\left( \frac{X_i}{\theta^2}e^{-X_i^2/2\theta^2} \right) \\
+						&= \sum_{i=1}^{n} \left( \log X_i - \log \theta - \frac{X_i^2}{2\theta^2} \right) \\
+						&= -n\log \theta + \sum_{i=1}^{n} \log X_i - \frac{1}{2\theta^2}\sum_{i=1}^{n} X_i^2
+					\end{align*} so the partial with respect to $\theta$ and setting equal to 0, we have
+					\begin{align*}
+						\frac{\partial}{\partial\theta}\ell(\theta) &= \frac{\partial}{\partial\theta}\left( -n\log \theta + \sum_{i=1}^{n} \log X_i - \frac{1}{2\theta^2}\sum_{i=1}^{n} X_i^2\right) \\
+						&= -\frac{n}{\theta} + \frac{1}{\theta^3}\sum_{i=1}^{n}X_i^2 = 0 \\
+						\implies \hat{\theta} &= \sqrt{\frac{1}{n}\sum_{i=1}^{n}X_i^2}
+					\end{align*} is the MLE.
+					
+				\end{soln}
+
+			\item Find the asymptotic variance of the MLE.
+				\begin{soln}
+					We have
+					\begin{align*}
+						I(\theta) &= E\left[ \left(\frac{\partial}{\partial\theta}\log f(X|\theta)\right)^2 \right] \\
+						&= E\left[\left( \frac{\partial}{\partial\theta}\left( \log X-\log \theta-\frac{X^2}{2\theta^2} \right)\right)^2 \right] \\
+						&= E\left[ \left(-\frac{1}{\theta}+\frac{X^2}{\theta^3}\right)^2 \right] \\
+						&= \frac{1}{\theta^2}-\frac{2}{\theta^4}E[X^2]+\frac{1}{\theta^6}E[X^4]
+					\end{align*} where 
+					\begin{align*}
+						E[X^2] &= \int_0^\infty x^2\frac{x}{\theta^2}e^{-x^2/2\theta^2}\, dx=2\theta^2 \\
+						E[X^4] &= \int_0^\infty x^4 \frac{x}{\theta^2}e^{-x^2/2\theta^2}\, dx = 8\theta^4
+					\end{align*} according to Wolfram, so the Fisher information is given by \[I(\theta)=\frac{1}{\theta^2}-\frac{2}{\theta^4}(2\theta^2)+\frac{1}{\theta^6}(8\theta^4)=\frac{7}{\theta^2}\] so the asymptotic variance is given by \[\frac{1}{nI(\theta)}=\frac{\theta^2}{7n}\]
+					
+				\end{soln}
+				
+		\end{enumerate}
+
+	\item[73.] Find a sufficient statistic for the Rayleigh density \[f(x|\theta)=\frac{x}{\theta^2}e^{-x^2/(2\theta^2)}, \quad x\ge 0\]
+		\begin{soln}
+			The joint density for an iid sample $X_1, \cdots, X_n$ is given by 
+			\begin{align*}
+				f(X_1, \cdots, X_n|\theta) &= \prod_{i=1}^n f(X_i|\theta) = \prod_{i=1}^n \left( \frac{X_i}{\theta^2} e^{-X_i^2/(2\theta^2)} \right) \\
+					&= \frac{1}{\theta^{2n}}\exp{\left( -\frac{1}{2\theta^2}\sum_{i=1}^{n}X_i^2 \right)} \prod_{i=1}^n X_i 
+			\end{align*}
+			Thus, \[T(X_1, \cdots, X_n) = \sum_{i=1}^{n} X_i^2\] is a sufficient statistic, and the two factors are 
+			\begin{align*}
+				h(X_1, \cdots, X_n) &= \prod_{i=1}^n X_i \\
+				g(T, \theta) &= \frac{1}{\theta^{2n}}\exp{\left( -\frac{1}{2\theta^2}T \right)}
+			\end{align*} 
+			so $T$ is sufficient.
+			
+		\end{soln}
+		
+	\item[68.] Let $X_1, \cdots, X_n$ be an iid sample from a Poisson distribution with mean $\lambda$ and let $T=\displaystyle \sum_{i=1}^{n} X_i.$
+
+		\begin{enumerate}[a.]
+			\item Show that the distribution of $X_1, \cdots, X_n$ given $T$ is independent of $\lambda,$ and conclude that $T$ is sufficient for $\lambda.$
+				\begin{proof}
+					We have \[P(X_1=x_1,\cdots X_n=x_n|T=t)=\frac{P(X_1=x_1, \cdots, X_n=x_n, T=t)}{P(T=t)}\] where the distribution of $T$ is Poisson with parameter $n\lambda.$ We have
+					\begin{align*}
+						P(T=t) = \frac{(n\lambda)^t e^{-n\lambda}}{t!}
+					\end{align*} and the numerator is equivalent to the probability is
+					\begin{align*}
+						& P\left(X_1=x_1, \cdots X_{n-1}=x_{n-1}, X_n=t-\sum_{i=1}^{n-1}x_i\right) \\
+						&= \prod_{i=1}^{n-1}P(X_i=x_i)P\left( X_n=t-\sum_{i=1}^{n-1}x_i \right) \\ 
+						&=\frac{\lambda^{t-\sum_{i=1}^{n-1}x_i} e^{-\lambda}}{\left( t-\sum_{i=1}^{n-1}x_i \right)!} \prod_{i=1}^{n-1} \frac{\lambda^{x_i} e^{-\lambda}}{x_i!} \\
+						&= \frac{\lambda^{t-\sum_{i=1}^{n-1}x_i} e^{-\lambda}}{\left( t-\sum_{i=1}^{n-1}x_i \right)!} \lambda^{\sum_{i=1}^{n-1} x_i} e^{-\lambda(n-1)} \prod_{i=1}^{n-1}\frac{1}{x_i!} \\
+						&= \frac{\lambda^t e^{-n\lambda}}{\left(t-\sum_{i=1}^{n-1}x_i\right)!}\prod_{i=1}^{n-1}\frac{1}{x_i!}
+					\end{align*} so the conditional probability is given by the ratio
+					\begin{align*}
+						P(X_1=x_1, \cdots, X_n=x_n|T=t) &= \frac{P(X_1=x_1, \cdots, X_n=x_n, T=t)}{P(T=t)} \\
+						&= \frac{1}{n^t}\frac{\prod_{i=1}^{n-1}x_i! \left( t-\sum_{i=1}^{n-1} x_i \right)!}{t!}
+					\end{align*} which in particular doesn't depend on $\lambda,$ so $T$ is sufficient, as desired.
+					
+				\end{proof}
+
+			\item Show that $X_1$ is not sufficient.
+				\begin{soln}
+					We have 
+					\begin{align*}
+						P(X_1=x_1|T=t) = \frac{P(X_1=x_1, T=t)}{P(T=t)}=\frac{P\left( X_1=t-\sum_{i=2}^{n} x_i \right)}{P(T=t)} 
+					\end{align*}
+					where the numerator is given by
+					\begin{align*}
+						\frac{\lambda^{t-\sum_{i=2}^{n}x_i}e^{-\lambda}}{\left( t-\sum_{i=2}^{n}x_i \right)!}
+					\end{align*} and the denominator is given by $\displaystyle \frac{(n\lambda)^t e^{-n\lambda}}{t!}$ so the conditional probability is something ugly, but definitely depends on $\lambda,$ so $X_1$ is not sufficient, as desired.
+
+				\end{soln}
+
+			\item Use Theorem A of section 8.8.1 to show that $T$ is sufficient. Identify the functions $g$ and $h$ of that theorem.
+				\begin{proof}
+					The likelihood function is given by \[\prod_{i=1}^{n} P(X_i=x_i)=\prod_{i=1}^{n}\frac{\lambda^{x_i}e^{-\lambda}}{x_i!} = e^{-n\lambda} \lambda^{\sum_{i=1}^{n} x_i}\prod_{i=1}^{n} \frac{1}{x_i!}=e^{-n\lambda} \lambda^T \prod_{i=1}^{n}\frac{1}{x_i!}\] so by the factorization theorem, $T$ is sufficient, as desired. The functions $g$ and $h$ are given by
+					\begin{align*}
+						h(x_1, \cdots, x_n) &= \prod_{i=1}^{n}\frac{1}{x_i!} \\
+						g(T, \lambda) &= e^{-n\lambda} \lambda^T
+					\end{align*}
+					
+				\end{proof}
+				
+		\end{enumerate}
+
+	\item[69.] Use the factorization theorem to conclude that $\displaystyle T=\sum_{i=1}^{n} X_i$ is a sufficient statistic when the $X_i$ are an iid sample from a geometric distribution.
+		\begin{soln}
+			When $X_i$ are iid from a geometric distribution, the likelihood function is \[P(X_1, \cdots, X_n|p) = \prod_{i=1}^n p(1-p)^{X_i-1} = p^n (1-p)^{\sum_{i=1}^{n} X_i - n} = \left( \frac{p}{1-p}n \right)(1-p)^T\] so letting $h(X_i) = 1$ and \[g(T, \theta) = \left( \frac{p}{1-p} \right)^n (1-p)^T\] we can conclude that $T$ is indeed sufficient.
+			
+		\end{soln}
+
+	\item[70.] Use the factorization theorem to find a sufficient statistic for the exponential distribution.
+		\begin{soln}
+			The exponential distribution is given by $P(X=k)=\lambda e^{-\lambda k}$ for some unknown parameter $\lambda.$ For a sample $X_1, \cdots, X_n,$ the likelihood function is given by 
+			\begin{align*}
+				P(X_1, \cdots, X_n|\lambda) &= \prod_{i=1}^n \lambda e^{-\lambda X_i} = \lambda^n \exp{\left( -\lambda \sum_{i=1}^{n} X_i \right)}
+			\end{align*} so letting $L=\displaystyle \sum_{i=1}^{n} X_i,$ we can set $h(X_i)=1,$ and \[g(L, \lambda) = \lambda^n \exp{\left( -\lambda\sum_{i=1}^{n} X_i \right)}\] so $L$ is indeed a sufficient statistic.
+			
+		\end{soln}
+
+	\item[71.] Let $X_1, \cdots, X_n$ be an iid sample from a distribution with the density function \[f(x|\theta)=\frac{\theta}{(1+x)^{\theta+1}}, \quad 0<\theta<\infty; \quad 0\le x<\infty\] Find a sufficient statistic for $\theta.$
+		\begin{soln}
+			We have the likelihood function is
+			\begin{align*}
+				f(X_1,\cdots, X_n|\theta) &= \prod_{i=1}^n \frac{\theta}{(1+x)^{\theta+1}} = \frac{\theta^n}{\left( \displaystyle\prod_{i=1}^n (1+X_i) \right)^{\theta+1}}
+			\end{align*} so letting $T=\displaystyle\prod_{i=1}^n (1+X_i),$ we can set $h(X_i)=1$ and \[g(T, \theta) = \frac{\theta^n}{T^{\theta+1}}\] so $T$ is indeed a sufficient statistic.
+			
+		\end{soln}
+
+	\item[72.] Show that $\displaystyle \prod_{i=1}^n X_i$ and $\displaystyle\sum_{i=1}^{n} X_i$ are sufficient statistics for the gamma distribution.
+		\begin{proof}
+			The gamma distribution is given by \[f(x|\lambda, \alpha)=\frac{\lambda^\alpha}{\Gamma(\alpha)}x^{\alpha-1} e^{-\lambda x}\] so given a sample $X_1, \cdots, X_n,$ the likelihood function is 
+			\begin{align*}
+				f(X_1, \cdots, X_n|\lambda, \alpha) &= \prod_{i=1}^n \frac{\lambda^\alpha}{\Gamma(\alpha)}X_i^{\alpha-1} e^{-\lambda X_i} \\
+				&= \frac{\lambda^{n\alpha}}{\Gamma(\alpha)^n}\left( \prod_{i=1}^n X_i \right)^{\alpha-1} \exp{\left( -\lambda \sum_{i=1}^{n} X_i \right)}
+			\end{align*} so let $T=\displaystyle\prod_{i=1}^n X_i$ and $L=\displaystyle\sum_{i=1}^{n} X_i$ so then $h(X_i)=1$ and \[g(T, L, \lambda, \alpha) = \frac{\lambda^{n\alpha}}{\Gamma(\alpha)^n} T^{\alpha-1} e^{-\lambda L}\] so $T$ and $L$ are indeed sufficient statistics.
+			
+		\end{proof}
+
+\end{itemize}
+
+\end{document}

@@ -1,0 +1,303 @@
+\documentclass{article}
+\usepackage[sexy, hdr, fancy]{evan}
+\setlength{\droptitle}{-4em}
+
+\lhead{Homework 2}
+\rhead{Introduction to Optimization}
+\lfoot{}
+\cfoot{\thepage}
+
+\begin{document}
+\title{Homework 2}
+\maketitle
+\thispagestyle{fancy}
+
+\begin{enumerate}
+	\item Geometrically solve the following LP:
+		\begin{align*}
+			\min \quad x_1-2x_2 & \\
+			\text{s.t.}\quad x_1-x_2&\ge -4 \\
+			-3x_1-2x_2&\ge -18 \\
+			-3x_1+x_2&\ge-9 \\
+			x_1, x_2 &\ge 0
+		\end{align*}
+		Again geometrically solve for each of the LPs with the same feasible region as above but with the respective objective functions $-x_1+2x_2,$ and $-3x_1-x_2,$ and $3x_1+x_2,$ and $3x_1-3x_2.$ 
+		\begin{soln}
+			The plot of the feasible region and the extreme points is shown below:
+			\begin{center}
+				\begin{asy}
+					size(14cm);
+					import graph;
+
+					real f(real x) {
+						return x+4;
+					}
+
+					real g(real x) {
+						return -1.5 * x + 9;
+					}
+
+					real h(real x) {
+						return 3*x-9;
+					}
+
+					path xaxis = (-1, 0) -- (8, 0);
+					path yaxis = (0, -1) -- (0, 11);
+					Label xlabel = Label('$x_1$', position=EndPoint);
+					Label ylabel = Label('$x_2$', position=EndPoint);
+
+					path p1 = graph(f, -1, 5);
+					path p2 = graph(g, -1, 7);
+					path p3 = graph(h, 2.5, 6);
+
+					pair A = (0, 0);
+					pair B = (3, 0);
+					pair C = (4, 3);
+					pair D = (2, 6);
+					pair E = (0, 4);
+
+					filldraw(A--B--C--D--E--cycle, mediumgray);
+
+					dotfactor = dotfactor * 1.5;
+					dot(A, L="(0, 0)", SE);
+					dot(B, L="(3, 0)", SE);
+					dot(C, L="(4, 3)" );
+					dot(D, L="(2, 6)" );
+					dot(E, L="(0, 4)", NW);
+
+					draw(xaxis, arrow=Arrows, L=xlabel);
+					draw(yaxis, arrow=Arrows, L=ylabel);
+
+					draw(p1);
+					draw(p2);
+					draw(p3);
+
+				\end{asy}
+			\end{center}
+			Then we want to minimize the value of $\alpha$ such that the line $x_1-2x_2=\alpha$ intersects the feasible region. This is \[x_2=\frac{1}{2}x_1-\frac{\alpha}{2}\] so minimizing $\alpha$ means having the largest $x_2$ intercept, which is when $\alpha=-10$ and at the point $(2, 6).$
+
+			If the objective function is $-x_1+2x_2=\alpha,$ then \[x_2=-\frac{1}{2}x_1+\frac{\alpha}{2}\] and we want the smallest $x_2$ intercept now, which is when $\alpha=0$ and the at the point (0, 0).
+
+			If the objective function is $-3x_1-x_2=\alpha$ then $x_2=-3x_1-\alpha$ so we wish to maximize the $x_2$ intercept, which occurs when $\alpha=-15$ and at the point (4, 3).
+
+			If the objective function is $3x_1+x_2=\alpha,$ then $x_2=-3x_2+\alpha$ so we wish to minimize the $x_2$ intercept, which occurs when $\alpha=0$ and at the point (0, 0).
+
+			If the objective function is $3x_1-3x_2=\alpha,$ then \[x_2=x_1-\frac{\alpha}{3}\] so we wish to maximize the $x_2$ intercept, which occurs when $\alpha=-12$ and all along the segment joining (0, 4) and (2, 6).
+
+		\end{soln}
+
+		\newpage
+	\item Consider the matrix \[A=\begin{bmatrix}
+				4 & 3 & 6 & 9 \\
+				3 & 7 & 1 & 8 \\
+				7 & 2 & 2 & 1
+		\end{bmatrix}\] by considering the appropriate row operations and their associated elementary matrices, compute an invertible matrix $B\in\RR^{3\times 3}$ such that \[B\cdot A = \begin{bmatrix}
+				1 & 0 & * & * \\
+				0 & 1 & * & * \\
+				0 & 0 & * & *
+		\end{bmatrix} \] where $*$ denotes a nonzero number.
+		\begin{soln}
+			The row operations we perform and the corresponding elementary matrices are:
+			\begin{align*}
+				\begin{bmatrix}
+					4 & 3 & 6 & 9 \\
+					3 & 7 & 1 & 8 \\
+					7 & 2 & 2 & 1
+				\end{bmatrix} \to \begin{bmatrix}
+					1 & 3/4 & * & * \\
+					3 & 7 & 1 & 8 \\
+					7 & 2 & 2 & 1
+				\end{bmatrix} &\implies \begin{bmatrix}
+					1/4 & 0 & 0 \\
+					0 & 1 & 0 \\
+					0 & 0 & 1
+				\end{bmatrix} \\
+				\begin{bmatrix}
+					1 & 3/4 & * & * \\
+					3 & 7 & 1 & 8 \\
+					7 & 2 & 2 & 1
+				\end{bmatrix} \to \begin{bmatrix}
+					1 & 3/4 & * & * \\
+					0 & 19/4 & * & * \\
+					7 & 2 & 2 & 1
+				\end{bmatrix} &\implies \begin{bmatrix}
+					1 & 0 & 0 \\
+					-3 & 1 & 0 \\
+					0 & 0 & 1
+				\end{bmatrix} \\
+				\begin{bmatrix}
+					1 & 3/4 & * & * \\
+					0 & 19/4 & * & * \\
+					7 & 2 & 2 & 1
+				\end{bmatrix} \to \begin{bmatrix}
+					1 & 3/4 & * & * \\
+					0 & 19/4 & * & * \\
+					0 & -13/4 & * & * 
+				\end{bmatrix} &\implies \begin{bmatrix}
+					1 & 0 & 0 \\
+					0 & 1 & 0 \\
+					-7 & 0 & 1
+				\end{bmatrix} \\
+				\begin{bmatrix}
+					1 & 3/4 & * & * \\
+					0 & 19/4 & * & * \\
+					0 & -13/4 & * & *
+				\end{bmatrix} \to \begin{bmatrix}
+					1 & 3/4 & * & * \\
+					0 & 1 & * & * \\
+					0 & -13/4 & * & *
+				\end{bmatrix} &\implies \begin{bmatrix}
+					1 & 0 & 0 \\
+					0 & 4/19 & 0 \\
+					0 & 0 & 1
+				\end{bmatrix} \\
+				\begin{bmatrix}
+					1 & 3/4 & * & * \\
+					0 & 1 & * & * \\
+					0 & -13/4 & * & *
+				\end{bmatrix} \to \begin{bmatrix}
+					1 & 3/4 & * & * \\
+					0 & 1 & * & * \\
+					0 & 0 & * & *
+				\end{bmatrix} &\implies \begin{bmatrix}
+					1 & 0 & 0 \\
+					0 & 1 & 0 \\
+					0 & 13/4 & 1
+				\end{bmatrix} \\
+				\begin{bmatrix}
+					1 & 3/4 & * & * \\
+					0 & 1 & * & * \\
+					0 & 0 &* & *
+				\end{bmatrix} \to \begin{bmatrix}
+					1 & 0 & * & * \\
+					0 & 1 & * & * \\
+					0 & 0 & * & *
+				\end{bmatrix} &\implies \begin{bmatrix}
+					1 & -3/4 & 0 \\
+					0 & 1 & 0 \\
+					0 & 0 & 1
+				\end{bmatrix}
+			\end{align*}
+			Multiplying these elementary matrices, going left to right from bottom to top, we have from MATLAB:
+			\lstset{language=Matlab}
+			\lstinputlisting{hw2_2}
+			Thus \[B=\begin{bmatrix}
+					7/19 & -3/19 & 0 \\
+					-3/19 & 4/19 & 0 \\
+					-43/19 & 13/19 & 1
+			\end{bmatrix}\]
+		\end{soln}
+
+	\item Recall the nonlinear optimization problem which we have previously considered: 
+		\begin{align*}
+			\max \quad 1+x_1^2(x_2&-1)^3e^{-x_1-x_2} \\
+			\text{s.t.}\quad x_2&\ge\log x_1 \\
+			x_1+x_2 &\le 6 \\
+			x_1, x_2 &\ge 0
+		\end{align*}
+		We are interested in finding out where $x_1+x_2=6$ intersects $x_2=\log x_1.$ Note that $x_1$ would solve $x_1=6-\log x_1;$ this is called \textit{fixed point form} since for the function $f(x)=6-\log x$ it would hold that $x_1=f(x_1).$ Do the following in MATLAB: Start with any value $z$ which you guess is close to $x_1,$ then evaluate $f(z), f(f(z)), f(f(f(z))),$ until the sequence seems to converge\ldots and this sequence converges to $x_1$ if all goes well.
+		\begin{soln}
+			Here is the function definition for $f:$
+			\lstinputlisting{logapprox.m}
+
+			Here is the diary that iteratively feeds output back into the function until the difference between consecutive terms is small:
+			\lstinputlisting{hw2_3}
+			Thus the approximate fixed point for the function is $x_0\approx\boxed{4.49666.}$
+
+		\end{soln}
+
+		\newpage
+	\item Recall the nonlinear optimization problem which we have previously considered: 
+		\begin{align*}
+			\max \quad 1+x_1^2(x_2&-1)^3e^{-x_1-x_2} \\
+			\text{s.t.}\quad x_2&\ge\log x_1 \\
+			x_1+x_2 &\le 6 \\
+			x_1, x_2 &\ge 0
+		\end{align*}
+		Suppose that we further restricted the feasible region by additionally requiring that $x_1+x_2=6.$ Use calculus to solve the problem exactly.
+		\begin{soln}
+			If $x_1+x_2=6,$ let $x_2=6-x_1.$ Then the objective function becomes \[f(x_1)=1+x_1^2[(6-x_1)-1)^3e^{-6}=1+e^{-6}x_1^2(5-x_1)^3\] and its derivative is 
+			\begin{align*}
+				\frac{d}{dx_1}f(x_1) &= \frac{d}{dx_1}\left[ 1+e^{-6}x_1^2(5-x_1)^3 \right] \\
+				&= e^{-6}\left[ 2x_1(5-x_1)^3 + x_1^2(-3)(5-x_1)^2 \right] \\
+				&= e^{-6} x_1(5-x_1)^2 \left[ 2(5-x_1)-3x_1 \right] \\
+				&= e^{-6}x_1(5-x_1)^2(10-5x_1)
+			\end{align*} and the extreme points to consider are where this derivative equals 0 and the boundary points, which are $x_1=0, 2, 5, 6.$ However, $x_1=0$ is not in the feasible region because its logarithm is not defined, and $x_1=5$ and $x_1=6$ are not feasible either because their corresponding $x_2$ values don't satisfy $x_2\ge\log x_1.$ 
+			
+			Thus, the only value to consider is $x_1=2,$ which gives an objective function value of $f(2)=1.2677.$ If we compute the second derivative at the point $x_1=2,$ we find 
+			\begin{align*}
+				\frac{d}{dx_1}f'(x_1) &= \frac{d}{dx_1} \left[ 5e^{-6}x_1(5-x_1)^2(2-x_1) \right] \\
+				&= 5e^{-5}\left( -4x^3+36x^2-90x+50 \right) \\
+				\implies f''(2) &= -0.223 < 0
+			\end{align*} thus the point $(2, 4)$ is indeed a maximum for the objective function.
+			
+		\end{soln}
+
+		\newpage
+	\item Lizzie’s Dairy produces cream cheese and cottage cheese. Milk and cream are blended to produce these two products. Both high-fat and low-fat milk can be used to produce cream cheese and cottage cheese. High-fat milk is 60\% fat; low-fat milk is 30\% fat. The milk used to produce cream cheese must average at least 50\% fat, and that for cottage cheese at least 35\% fat. At least 40\% (by weight) of the inputs to cream cheese and at least 20\% (by weight) of the inputs to cottage cheese must be cream. Both cream cheese and cottage cheese are produced by putting milk and cream through the cheese machine. It costs \$0.40 to process 1 lb of inputs into a pound of cream cheese. It costs \$0.40 to produce 1 lb of cottage cheese, but every pound of input for cottage cheese yields 0.9 lb of cottage cheese and 0.1 lb of waste. Cream is produced by evaporating high-fat and low-fat milk. It costs \$0.40 to evaporate 1 lb of high-fat milk, and each pound of high-fat milk that is evaporated yields 0.6 lb of cream. It costs \$0.40 to evaporate 1 lb of low-fat milk, and each pound of low-fat milk that is evaporated yields 0.3 lb of cream. Each day, up to 3000 lb of input may be sent through the cheese machine. Each day, at least 1000 lb of cream cheese and 1000 lb of cottage cheese must be produced. Up to 1500 lb of cream cheese and 2000 lb of cottage cheese can be sold each day. Cream cheese is sold for \$1.50 per lb	and cottage cheese for \$1.20 per lb. High-fat milk is purchased for \$0.80 per lb, and low-fat milk for \$0.40 per lb. The evaporator can process at most 2000 lb of milk daily. Formulate a linear program in canonical form that can be used to maximize Lizzie’s daily profit.
+		In working on this problem, provide the matrix $A$ and vectors $b$ and $c$ for the LP. Declare
+		\begin{align*}
+			x_1 &= \text{lb of high-fat milk that will go to cream cheese in cheese machine} \\
+			x_2 &= \text{lb of low-fat milk that will go to cream cheese in cheese machine} \\
+			x_3 &= \text{lb of cream that will go to cream cheese in cheese machine} \\
+			x_4 &= \text{lb of high-fat milk that will go to cottage cheese in cheese machine} \\
+			x_5 &= \text{lb of low-fat milk that will go to cottage cheese in cheese machine} \\
+			x_6 &= \text{lb of cream that will go to cottage cheese in cheese machine} \\
+			x_7 &= \text{lb of high-fat milk that will go to cream} \\
+			x_8 &= \text{lb of low-fat milk that will go to cream.} 
+		\end{align*}
+		\begin{soln}
+			Assuming that nothing made is unused, we have the following constraints:
+			\begin{align*}
+				\frac{0.6x_1+0.3x_2}{x_1+x_2} \ge 0.5 \implies x_1-2x_2 &\ge 0 \\
+				\frac{0.6x_4+0.3x_5}{x_4+x_5} \ge 0.35 \implies 5x_4-x_5 &\ge 0 \\
+				\frac{x_3}{x_1+x_2+x_3} \ge 0.4 \implies -2x_1-2x_2+3x_3 &\ge 0 \\
+				\frac{x_6}{x_4+x_5+x_6} \ge 0.2 \implies -x_4-x_5+4x_6 &\ge 0 \\
+				x_3+x_6=0.6x_7+0.3x_8 \implies 10x_3+10x_6-6x_7-3x_8 &= 0 \\
+				x_1+x_2+x_3+x_4+x_5+x_6 &\le 3000 \\
+				x_7+x_8 &\le 2000 \\
+				x_1+x_2+x_3 &\ge 1000 \\
+				0.9(x_4+x_5+x_6) &\ge 1000 \\
+				x_1+x_2+x_3 &\le 1500 \\
+				0.9(x_4+x_5+x_6) &\le 2000
+			\end{align*} 
+			Then the amount of cottage cheese made is $0.9(x_4+x_5+x_6).$ Then assume that all the cream cheese and cottage cheese made is sold, then the cost of operations is given by \[0.4(x_1+x_2+x_3) + 0.4(0.9(x_4+x_5+x_6)) + 0.4x_7+0.4x_8+0.8(x_1+x_4+x_7) + 0.4(x_2+x_5+x_8)\] and the amount earned is \[1.5(x_1+x_2+x_3)+1.2(0.9(x_4+x_5+x_6))\] thus the profit is given by the amount earned minus the amount spent, which is \[0.3x_1+0.7x_2+1.1x_3 -0.08x_4+0.32x_5+0.72x_6-1.2x_7-0.8x_8\]
+
+			Rewriting the constraints in canonical form, we have
+			\begin{align*}
+				x_1-2x_2 &\ge 0 \\
+				5x_4-x_5 &\ge 0 \\
+				-2x_1-2x_2+3x_3 &\ge 0 \\
+				-x_4-x_5+4x_6 &\ge 0 \\
+				10x_3+10x_6-6x_7-3x_8 &\ge 0 \\
+				-10x_3-10x_6+6x_7+3x_8 &\ge 0 \\
+				-x_1-x_2-x_3-x_4-x_5-x_6 &\ge -3000 \\
+				-x_7-x_8 &\ge -2000 \\
+				x_1+x_2+x_3 &\ge 1000 \\
+				0.9x_4+0.9x_5+0.9x_6 &\ge 1000 \\
+				-x_1-x_2-x_3 &\ge -1500 \\
+				-0.9x_4-0.9x_5-0.9x_6 &\ge -2000
+			\end{align*}
+			so \[A=\begin{bmatrix}
+					1 & -2 & 0 & 0 & 0 & 0 & 0 & 0 \\
+					0 & 0 & 0 & 5 & -1 & 0 & 0 & 0 \\
+					-2 & -2 & 3 & 0 & 0 & 0 & 0 & 0 \\
+					0 & 0 & 0 & -1 & -1 & 4 & 0 & 0 \\
+					0 & 0 & 10 & 0 & 0 & 10 & -6 & -3 \\	
+					0 & 0 & -10 & 0 & 0 & -10 & 6 & 3 \\
+					-1 & -1 & -1 & -1 & -1 & -1 & 0 & 0 \\
+					0 & 0 & 0 & 0 & 0 & 0 & -1 & -1 \\
+					1 & 1 & 1 & 0 & 0 & 0 & 0 & 0 \\
+					0 & 0 & 0 & 0.9 & 0.9 & 0.9 & 0 & 0 \\
+					-1 & -1 & -1 & 0 & 0 & 0 & 0 & 0 \\
+					0 & 0 & 0 & -0.9 & -0.9 & -0.9 & 0 & 0
+			\end{bmatrix}, b=\begin{bmatrix}
+					0 \\ 0 \\ 0 \\ 0 \\ 0 \\ 0 \\ -3000 \\ -2000 \\ 1000 \\ 1000 \\ -1500 \\ -2000
+			\end{bmatrix}\] and the cost vector is \[c^T = \begin{bmatrix}
+					0.3 & 0.7 & 1.1 & -0.08 & 0.32 & 0.72 & -1.2 & -0.8
+			\end{bmatrix}\]
+		\end{soln}
+
+\end{enumerate}
+
+\end{document}

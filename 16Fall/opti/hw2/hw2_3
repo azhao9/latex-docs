@@ -1,0 +1,16 @@
+y0 = 2;
+z0 = logapprox(y0);
+z1 = logapprox(z0);
+
+while (abs(z1 - z0) > 1e-5)
+    z0 = z1;
+    z1 = logapprox(z1);
+end
+
+z1
+
+z1 =
+
+   4.496663166653833
+
+diary off

@@ -1,0 +1,350 @@
+\documentclass{article}
+\usepackage[sexy, hdr, fancy]{evan}
+\setlength{\droptitle}{-4em}
+
+\lhead{Homework 3}
+\rhead{Introduction to Optimization}
+\lfoot{}
+\cfoot{\thepage}
+
+\begin{document}
+\title{Homework 3}
+\maketitle
+\thispagestyle{fancy}
+
+\begin{enumerate}
+	\item Consider the linear program (LP) min $c^T x$ such that $Ax=b, x\ge0$ where \[A=\begin{bmatrix}
+				1 & 1 & 1 \\
+				2 & -1 & 1
+			\end{bmatrix}\quad b=\begin{bmatrix}
+				2 \\ 3
+			\end{bmatrix}\quad c=\begin{bmatrix}
+				3 & -4 & 5
+		\end{bmatrix}\]
+
+		\begin{enumerate}[a)]
+			\item Find all basic feasible solutions. (There are three possibilities, two of which are basic feasible solutions and one isn't. Be clear why the third possibility fails to be a BFS.)
+				\begin{soln}
+					Suppose $x_3=0,$ then 
+					\begin{align*}
+						B=\begin{bmatrix}
+							1 & 1 \\
+							2 & -1
+						\end{bmatrix}&\implies B^{-1} = -\frac{1}{3}\begin{bmatrix}
+							-1 & -1 \\
+							-2 & 1
+					\end{bmatrix} \\
+						x_B = B^{-1}b&=-\frac{1}{3}\begin{bmatrix}
+							-1 & -1 \\
+							-2 & 1
+						\end{bmatrix}\begin{bmatrix}
+							2 \\ 3
+						\end{bmatrix} = \begin{bmatrix}
+							5/3 \\ 1/3
+					\end{bmatrix} \\
+						x&=\begin{bmatrix}
+							5/3 \\ 1/3 \\ 0
+					\end{bmatrix}
+					\end{align*} is a BFS.
+
+					Now suppose $x_2=0,$ then 
+					\begin{align*}
+						B=\begin{bmatrix}
+							1 & 1 \\
+							2 & 1
+						\end{bmatrix}&\implies B^{-1} =\begin{bmatrix}
+							-1 & 1 \\
+							2 & -1
+					\end{bmatrix} \\
+						x_B=B^{-1} b&=\begin{bmatrix}
+							-1 & 1 \\
+							2 & -1
+						\end{bmatrix}\begin{bmatrix}
+							2 & 3
+						\end{bmatrix}=\begin{bmatrix}
+							1 \\ 1
+					\end{bmatrix} \\
+						x&=\begin{bmatrix}
+							1 \\ 0 \\ 1
+					\end{bmatrix}
+					\end{align*} is a BFS.
+
+					Now suppose $x_1=0,$ then
+					\begin{align*}
+						B=\begin{bmatrix}
+							1 & 1 \\
+							-1 & 1
+						\end{bmatrix}&\implies B^{-1} = \frac{1}{2}\begin{bmatrix}
+							1 & -1 \\
+							1 & 1
+					\end{bmatrix} \\
+						x_B=B^{-1}b&=\frac{1}{2}\begin{bmatrix}
+							1 & -1 \\
+							1 & 1
+						\end{bmatrix}\begin{bmatrix}
+							2 \\ 3
+						\end{bmatrix} = \begin{bmatrix}
+							-1/2 \\ 5/2
+					\end{bmatrix}
+					\end{align*} and this is not a BFS because $x_B\not\ge0.$
+
+				\end{soln}
+
+				\newpage
+			\item Evaluate $r_N$ for each of the two basic feasible solutions.
+				\begin{soln}
+					We have \[r_N^T=c_N^T - c_B^T B^{-1}N\] as the expression for $r_n^T.$
+
+					For $x_B=\begin{bmatrix}
+						5/3 \\ 1/3
+					\end{bmatrix},$ we have $c_N^T = [5]$ and $c_B^{T}=\begin{bmatrix}
+						3 & -4
+					\end{bmatrix}$ and $N=\begin{bmatrix}
+						1 \\ 1
+					\end{bmatrix},$ so 
+					\begin{align*}
+						r_N^T &= [5] - \begin{bmatrix}
+							3 & -4
+						\end{bmatrix}\left( -\frac{1}{3}\begin{bmatrix}
+							-1 & -1  \\
+							-2 & 1
+						\end{bmatrix}\right) \begin{bmatrix}
+							1 \\ 1
+						\end{bmatrix} \\ 
+						&= [5] - \begin{bmatrix}
+							3 & -4
+						\end{bmatrix}\begin{bmatrix}
+							2/3 \\ 1/3
+						\end{bmatrix} \\
+						&= [5]-[2/3]=[13/3]
+					\end{align*}
+
+					For $x_B=\begin{bmatrix}
+						1 \\ 1
+					\end{bmatrix},$ we have $c_N^T=[-4]$ and $c_B^T=\begin{bmatrix}
+						3 & 5
+					\end{bmatrix}$ and $N=\begin{bmatrix}
+						1 \\ -1
+					\end{bmatrix},$ so 
+					\begin{align*}
+						r_N^T &= [-4] - \begin{bmatrix}
+							3 & 5
+						\end{bmatrix}\begin{bmatrix}
+							-1 & 1 \\
+							2 & -1
+						\end{bmatrix}\begin{bmatrix}
+							1 \\ -1
+						\end{bmatrix} \\
+						&= [-4] - \begin{bmatrix}
+							3 & 5
+						\end{bmatrix}\begin{bmatrix}
+							-2 \\ 3
+						\end{bmatrix} \\
+						&= [-4] - [9] = [-13]
+					\end{align*}
+
+				\end{soln}
+
+			\item Identify the optimal solution to the (LP) and explain why it is the optimal solution.
+				\begin{soln}
+					Since we have \[c^T x = c_B^T x_B + r_N^T x_N, \] the optimal solution corresponds with the $r_N^T$ value that is non-negative, since any increases to $x_N$ will increase the objective function value. This occurs when $r_N^T=[13/3],$ and the solution that corresponds with that is \[x=\boxed{\begin{bmatrix}
+						5/3 \\ 1/3 \\ 0
+				\end{bmatrix}}\]
+
+				The corresponding objective value function at this solution is $c^Tx=\boxed{11/3}.$
+				\end{soln}
+				
+		\end{enumerate}
+
+	\item Consider the linear program (LP) min $c^T x$ such that $Ax=b, x\ge 0$ where \[A=\begin{bmatrix}
+				5 & 1 & 1 & 1 & 1 & 1 & 1 \\
+				1 & 5 & 1 & 1 & 1 & 1 & 1 \\
+				1 & 1 & 5 & 1 & 1 & 1 & 1
+			\end{bmatrix}\quad b=\begin{bmatrix}
+				1 & 1 & 1
+			\end{bmatrix}\quad c=\begin{bmatrix}
+				1 & 1 & 1 & 1 & 1 & 1 & 1
+		\end{bmatrix}^T\]
+
+		\begin{enumerate}[a)]
+			\item Compute the BFS that comes from using the second, third, and fourth columns of $A$ as the basis, and compute the associated vector $r_N.$
+				\begin{soln}
+					If we use the second, third, and fourth columns as a basis, we have 
+					\begin{align*}
+						B=\begin{bmatrix}
+							1 & 1 & 1 \\
+							5 & 1 & 1 \\
+							1 & 5 & 1
+						\end{bmatrix}&\implies B^{-1} = \frac{1}{4}\begin{bmatrix}
+							-1 & 1 & 0 \\
+							-1 & 0 & 1 \\
+							6 & -1 & -1
+						\end{bmatrix} \\
+						x_B = B^{-1}b &= \frac{1}{4}\begin{bmatrix}
+							-1 & 1 & 0 \\
+							-1 & 0 & 1 \\
+							6 & -1 & -1
+						\end{bmatrix} \begin{bmatrix}
+							1 \\ 1 \\ 1
+						\end{bmatrix} = \begin{bmatrix}
+							0 \\ 0 \\ 1
+						\end{bmatrix}
+					\end{align*} where the inverse $B^{-1}$ was calculated with MATLAB. 
+
+					Now, we have \[c_N^T = \begin{bmatrix}
+							1 & 1 & 1 & 1
+						\end{bmatrix}, \quad c_B^T = \begin{bmatrix}
+							1 & 1 & 1
+						\end{bmatrix}, \quad N=\begin{bmatrix}
+							5 & 1 & 1 & 1 \\
+							1 & 1 & 1 & 1 \\
+							1 & 1 & 1 & 1
+					\end{bmatrix}\] so the vector $r_N^T$ is given by
+					\begin{align*}
+						r_N^T &= \begin{bmatrix}
+							1 & 1 & 1 & 1
+						\end{bmatrix}-\begin{bmatrix}
+							1 & 1 & 1
+						\end{bmatrix}\left( \frac{1}{4}\begin{bmatrix}
+							-1 & 1 & 0 \\
+							-1 & 0 & 1 \\
+							6 & -1 & -1
+						\end{bmatrix}\right)\begin{bmatrix}
+							5 & 1 & 1 & 1 \\
+							1 & 1 & 1 & 1 \\
+							1 & 1 & 1 & 1
+						\end{bmatrix} \\
+						&= \begin{bmatrix}
+							1 & 1 & 1 & 1
+						\end{bmatrix}-\begin{bmatrix}
+							1 & 1 & 1
+						\end{bmatrix}\begin{bmatrix}
+							-1 & 0 & 0 &0 \\
+							-1 & 0 & 0 & 0 \\
+							7 & 1 & 1 & 1
+						\end{bmatrix} \\
+						&= \begin{bmatrix}
+							1 & 1 & 1 & 1
+						\end{bmatrix} - \begin{bmatrix}
+							5 & 1 & 1 & 1
+						\end{bmatrix} \\
+						&= \begin{bmatrix}
+							-4 & 0 & 0 & 0
+						\end{bmatrix}
+					\end{align*}
+
+				\end{soln}
+
+			\item By examining the vector $r_N$ from part a, explain how changing the different nonbasic variables will affect the objective function.
+				\begin{soln}
+					A unit increase of $x_1$ will decrease the objective function value by $4$ units (and increase by 4 if $x_1$ is decreased by 1 unit). Changing the other non-basic variables $x_5, x_6, x_7$ will not affect the objective function value.
+					
+				\end{soln}
+
+			\item Now compute the BFS that comes from using the first three columns of $A$ as the basis, and compute the associated vector $r_N.$
+				\begin{soln}
+					Now, we have 
+					\begin{align*}
+						B=\begin{bmatrix}
+							5 & 1 & 1 \\
+							1 & 5 & 1 \\
+							1 & 1 & 5
+						\end{bmatrix}&\implies B^{-1} = \frac{1}{28}\begin{bmatrix}
+							6 & -1 & -1 \\
+							-1 & 6 & -1 \\
+							-1 & -1 & 6
+						\end{bmatrix} \\
+						x_B =B^{-1}b &= \frac{1}{28}\begin{bmatrix}
+							6 & -1 & -1 \\
+							-1 & 6 & -1 \\
+							-1 & -1 & 6
+						\end{bmatrix} \begin{bmatrix}
+							1 \\ 1 \\ 1
+						\end{bmatrix} = \begin{bmatrix}
+							1/7 \\ 1/7 \\ 1/7
+						\end{bmatrix}
+					\end{align*} where the inverse $B^{-1}$ was calculated with MATLAB.
+
+					Now, we have \[c_N^T = \begin{bmatrix}
+							1 & 1 & 1 & 1
+						\end{bmatrix}, \quad c_B^T = \begin{bmatrix}
+							1 & 1 & 1
+						\end{bmatrix}, \quad N=\begin{bmatrix}
+							1 & 1 & 1 & 1 \\
+							1 & 1 & 1 & 1 \\
+							1 & 1 & 1 & 1
+					\end{bmatrix}\] so the vector $r_N^T$ is given by 
+					\begin{align*}
+						r_N^T &= \begin{bmatrix}
+							1 & 1 & 1 & 1	
+						\end{bmatrix} - \begin{bmatrix}
+							1 & 1 & 1
+						\end{bmatrix}\left( \frac{1}{28}\begin{bmatrix}
+							6 & -1 & -1 \\
+							-1 & 6 & -1 \\
+							-1 & -1 & 6
+						\end{bmatrix}\right)\begin{bmatrix}
+							1 & 1 & 1 & 1 \\
+							1 & 1 & 1 & 1 \\
+							1 & 1 & 1 & 1 
+						\end{bmatrix} \\
+						&=\begin{bmatrix}
+							1 & 1 & 1 & 1
+						\end{bmatrix} - \begin{bmatrix}
+							1 & 1 & 1
+						\end{bmatrix}\left( \frac{1}{7} \right)\begin{bmatrix}
+							1 & 1 & 1 & 1 \\
+							1 & 1 & 1 & 1 \\
+							1 & 1 & 1 & 1
+						\end{bmatrix} \\
+						&= \begin{bmatrix}
+							1 & 1 & 1 & 1
+						\end{bmatrix} - \frac{3}{7}\begin{bmatrix}
+							1 & 1 & 1 & 1
+						\end{bmatrix} \\
+						&= \begin{bmatrix}
+							4/7 & 4/7 & 4/7 & 4/7
+						\end{bmatrix}
+					\end{align*}
+
+				\end{soln}
+
+			\item Find the optimal solution for (LP).
+				\begin{soln}
+					Since $r_N^T$ corresponding to the basis being the first 3 columns is entirely non-negative, the optimal solution occurs when \[x_B=\begin{bmatrix}
+						1/7 \\ 1/7 \\ 1/7
+					\end{bmatrix} \implies x=\begin{bmatrix}
+					1/7 \\ 1/7 \\ 1/7 \\ 0 \\ 0 \\ 0 \\ 0
+			\end{bmatrix} \] and the objective function value is $3/7.$
+
+				\end{soln}
+				
+		\end{enumerate}
+
+	\item Suppose you are handed a linear program which is given to you in the form min $c^T x$ such that $Ax\le b, x\ge 0,$ and suppose that the vector $b$ happens to be non-negative. This linear program is currently not in standard form; explain how to then immediately identify a BFS once it is converted to standard form. Then explain what $r_N$ will be for this BFS.
+		\begin{soln}
+			We add a dummy variable $z,$ so that \[ [A\, |\, I] \begin{bmatrix}
+				x \\ z
+		\end{bmatrix} = b\] where $I$ is the identity matrix. Then if we simply let $I$ be the basis, we have $Iz=b$ so then $\begin{bmatrix}
+			\vec{0} \\ z
+		\end{bmatrix}$ will be a BFS. 
+
+		Then the objective function will be $\begin{bmatrix}
+			c^T \\ \vec{0}
+		\end{bmatrix}^T\begin{bmatrix}
+			x \\ z
+		\end{bmatrix}.$ Let the combined vector $\begin{bmatrix}
+			c^T \\ \vec{0}
+		\end{bmatrix}=d^T.$ Here, \[B=I\implies B^{-1}=I, \] and we have \[d_N^T = c^T, \quad d_B^T = \vec{0}, \quad N=A\]
+		so $r_N^T$ is given by 
+		\begin{align*}
+			r_N^T &= d_N^T - d_B^T B^{-1}N \\
+			&= c^T-\vec{0}IA \\
+			&= c^T.
+		\end{align*}
+
+		\end{soln}
+
+\end{enumerate}
+
+\end{document}

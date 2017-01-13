@@ -1,0 +1,225 @@
+\documentclass{article}
+\usepackage[sexy, hdr, fancy]{evan}
+\setlength{\droptitle}{-4em}
+
+\lhead{Homework 9}
+\rhead{Advanced Algebra I}
+\lfoot{}
+\cfoot{\thepage}
+
+\begin{document}
+\title{Homework 9}
+\maketitle
+\thispagestyle{fancy}
+
+\section*{Section 3.1: Examples and Basic Properties}
+
+\begin{itemize}
+	\item[1.] In each case explain why $R$ is not a ring.
+		\begin{enumerate}[(a)]
+			\item $R=\left\{ 0, 1, 2, 3, \cdots \right\},$ operations of $\ZZ.$
+				\begin{answer*}
+					$R$ does not contain the additive inverses.
+				\end{answer*}
+
+			\item $R=2\ZZ.$
+				\begin{answer*}
+					$R$ does not contain a multiplicative identity.
+				\end{answer*}
+
+			\item $R=$ the set of all mappings $f:\RR\to\RR;$ addition is point-wise but using composition as the multiplication.
+				\begin{answer*}
+					If $f, g, h\in R,$ the condition $f(g+h)=fg+fh$ does not hold. For example, if $f(x)=\sqrt{x}$ and $g(x)=h(x)=x,$ we have $f(g+h)=\sqrt{2x}$ but $fg+gh=2\sqrt{x},$ and the two are not equal.
+				\end{answer*}
+				
+		\end{enumerate}
+
+	\item[3.] (c) Show that $S=\left\{ \begin{bmatrix}
+		a & 0 & b \\ 0 & c & d \\ 0 & 0 & a
+	\end{bmatrix}\Bigg\vert a, b, c, d\in \RR\right\}$ is a subring of $R=M_3(\RR).$
+		\begin{proof}
+			We have \[0_R=\begin{bmatrix}
+					0 & 0 & 0 \\ 0 & 0 & 0 \\ 0 & 0 & 0
+			\end{bmatrix}\in S\] and \[1_R=\begin{bmatrix}
+					1 & 0 & 0 \\ 0 & 1 & 0 \\ 0 & 0 & 1
+			\end{bmatrix}\in S\] Now, let \[S=\begin{bmatrix}
+					a & 0 & b \\ 0 & c & d \\ 0 & 0 & a
+				\end{bmatrix}, \quad T =\begin{bmatrix}
+					w & 0 & x \\ 0 & y & z \\ 0 & 0 & w
+			\end{bmatrix}\] so then
+			\begin{align*}
+				S-T &= \begin{bmatrix}
+					a-w & 0 & b-x \\ 
+					0 & c-y & d-z \\
+					0 & 0 & a-w
+				\end{bmatrix}\in S \\
+				ST &= \begin{bmatrix}
+					aw & 0 & ax+bw \\
+					0 & cy & cz+dw \\
+					0 & 0 & aw
+				\end{bmatrix}\in S
+			\end{align*} 
+			Thus, $S$ is a subring of $R,$ as desired.
+			
+		\end{proof}
+		
+\end{itemize}
+
+\section*{Section 3.2: Integral Domains and Fields}
+
+\begin{itemize}
+	\item[1.] Find all the roots of $x^2+3x-4$ in
+		\begin{enumerate}[(a)]
+			\item $\ZZ$
+				\begin{soln}
+					This quadratic factors as \[x^2+3x-4=(x+4)(x-1)\] so the roots are $1, -4\in \ZZ.$
+				\end{soln}
+
+			\item $\ZZ_6$
+				\begin{soln}
+					We have $x+4=\bar{0}$ so $x=\bar{2}$ and $x-1=\bar{0}$ so $x=\bar{1}$ are solutions. 
+				\end{soln}
+
+			\item $\ZZ_4$
+				\begin{soln}
+					We have $x+4=\bar{0}$ so $x=\bar{0}$ and $x-1=\bar{0}$ so $x=\bar{1}$ are solutions. 
+				\end{soln}
+				
+		\end{enumerate}
+
+	\item[5.] Show that $M_n(R)$ is never a domain if $n\ge 2.$
+		\begin{proof}
+			Consider the element $A=\begin{bmatrix}
+				0 & \cdots & r \\
+				\vdots & \ddots & \vdots \\
+				0 & \cdots & 0
+			\end{bmatrix}\in M_n(R)$ where $0\neq r\in R.$ Then $A^2$ is a matrix of all 0's, but $A$ itself is not a matrix of all 0's. Thus, $M_n(R)$ is never a domain if $n\ge 2.$
+		\end{proof}
+
+	\item[10.] If $F=\left\{ 0, 1, a, b \right\}$ is a field, fill in the addition and multiplication tables for $F.$
+		\begin{soln}
+			We have $(1+1)\cdot(1+1)=1+1+1+1=0$ since $(F, +)$ has a group structure, and since we are in a field, we must have $1+1=0.$ Thus, $0=a\cdot(1+1)=a+a$ and $b+b=0$ as well. Now consider $a+1.$ This is not equal to $a$ or 1, and cannot be 0 because then $a=1,$ but $a$ is distinct from 1. Thus $a+1=b,$ and similarly $b+1=a.$ Then $a+b=a+(a+1)=(a+a)+1=1=b+a.$ Thus, the addition table is summarized as
+			\begin{center}
+				\begin{tabular}{c|cccc}
+					$+$ & 0 & 1 & $a$ & $b$ \\
+					\hline
+					0 & 0 & 1 & $a$ & $b$ \\
+					1 & 1 & 0 & $b$ & $a$ \\
+					$a$ & $a$ & $b$ & 0 & 1 \\
+					$b$ & $b$ & $a$ & 1 & 0
+				\end{tabular}
+			\end{center}
+
+			For multiplication, we obviously can't have $a\cdot a=0$ because then $a=0,$ but $a$ is distinct from 0, and we can't have $a\cdot a = a$ because otherwise $a(a-1)=0,$ so $a=0$ or $a-1=0$ since we're in a field, but we know that $a$ is distinct from 0 and 1. If $a\cdot a =1,$ then $(a-1)\cdot(a+1) = (a+1)\cdot(a+1)=b\cdot b=0,$ but we assumed that $b$ was distinct from 0. Thus, $a\cdot a=b,$ and similarly $b\cdot b = a.$ Then $a\cdot b = a\cdot(a+1)=a\cdot a+ a= b + a = 1.$ Similarly, $b\cdot a=1.$ Thus, the multiplication table is summarized as
+			\begin{center}
+				\begin{tabular}{c|cccc}
+					$\times$ & 0 & 1 & $a$ & $b$ \\
+					\hline 
+					0 & 0 & 0 & 0 & 0 \\
+					1 & 0 & 1 & $a$ & $b$ \\
+					$a$ & 0 & $a$ & $b$ & 1 \\
+					$b$ & 0 & $b$ & 1 & $a$
+				\end{tabular}
+			\end{center}	
+		\end{soln}
+		
+\end{itemize}
+
+\section*{Section 3.3: Ideals and Factor Rings}
+
+\begin{itemize}
+	\item[1.] (a) Decide whether $\ZZ$ is an ideal of $\CC.$ Support your answer.
+		\begin{soln}
+			$\ZZ$ is not an ideal of $\CC.$ Consider $z=1+i\in\CC.$ Then if $a=2\in \ZZ$ we have $az=2+i\not\in\ZZ.$
+		\end{soln}
+
+	\item[4.] (a) If $m$ is an integer, show that $mR=\Set{mr}{r\in R}$ and $A_m=\Set{r\in R}{mr=0}$ are ideals of $R.$
+		\begin{proof}
+			We first show that $mR$ is a subgroup. It clearly contains $0_R$ because $m\cdot 0_R=0_R.$ Now, for two elements $mp, mq\in mR,$ we have $mp+mq=m(p+q)$ by the distributive law, and since $p, q\in R,$ it follows that $p+q\in R,$ so $m(p+q)\in mR.$ Next, if $mp\in mR,$ its additive inverse $-mp=m(-p)$ is also in $mR.$ Thus $mR$ is an additive subgroup of $R.$ 
+
+			Now, consider some element $a\in R,$ so then $a(mR)=\Set{amr}{r\in R}.$ Consider $amr_0\in a(mR).$ Since $m$ is an integer, we have $amr_0= m(ar_0)$ and $ar_0\in R,$ thus $amr_0\in mR$ so $a(mR)\subset mR.$ Then consider some element $b\in R,$ so then $(mR)b=\Set{rmb}{r\in R}.$ Consider the element $mr_1b\in (mR)b.$ Clearly $r_1b\in R,$ so it follows that $m(r_1b)\in mR,$ and thus $(mR)b\subset mR.$ Thus, $mR$ is an ideal of $R,$ as desired.
+
+			Next, we first show that $A_m$ is a subgroup. Clearly $m\cdot 0_R=0_R$ so $0_R\in A_m.$ Then if two elements $r_0, r_1\in A_m$ such that $mr_0=mr_1=0_R,$ then $mr_0+mr_1=m(r_0+r_1)=0_R,$ so $r_0+r_1\in A_m.$ Finally, if $mr_0=0_R,$ then $-mr_0=m(-r_0)=0_R,$ so $-r_0\in A_m$ as well. Thus, $A_m$ is a subgroup of $R.$
+
+			Now, consider some element $s\in R,$ so then $sA_m=\Set{sr}{r\in R, mr=0}.$ Clearly if $mr=0_R,$ then $s(mr)=m(sr)=0_R,$ so it follows that $sr\in A_m$ and thus $sA_m\subset A_m.$ Now, consider some element $t\in R,$ so then $A_m t=\Set{rt}{r\in R, mr=0}.$ Similarly, if $mr=0_R,$ then $(mr)t=0_R=m(rt),$ so $rt\in A_m,$ and thus $A_m t\in A_m.$ Thus, $A_m$ is an ideal of $R,$ as desired.
+		\end{proof}
+
+	\item[6.] If $A$ is an ideal of $R,$ show that $M_2(A)$ is an ideal of $M_2(R).$
+		\begin{proof}
+			Let $a, b, c, d\in A$ and $p, q, r, s\in R.$ Then we have \[B=\begin{bmatrix}
+					a & b \\ c & d
+				\end{bmatrix}\in M_2(A), \quad\quad S=\begin{bmatrix}
+					p & q \\ r & s
+			\end{bmatrix}\in M_2(R)\] Then 
+			\begin{align*}
+				SB &= \begin{bmatrix}
+					p & q \\ r & s
+				\end{bmatrix}\begin{bmatrix}
+					a & b \\ c & d
+				\end{bmatrix} = \begin{bmatrix}
+					pa+qc & pb+qd \\
+					ra+sc & rb+sd
+				\end{bmatrix}
+			\end{align*}
+			Since $A$ is an ideal of $R,$ it follows that every term in this matrix is also an element of $A,$ so then since $A$ is also a subgroup of $R,$ the sum in each entry is also in $A.$ Thus, $SB\in M_2(A)$ so $SM_2(A)\subset M_2(A)$ for any $S\in M_2(R).$ Similarly,
+			\begin{align*}
+				BS &= \begin{bmatrix}
+					a & b \\ c & d
+				\end{bmatrix}\begin{bmatrix}
+					p & q \\ r & s
+				\end{bmatrix} = \begin{bmatrix}
+					ap+br & aq+bs \\
+					cp+dr & cq+ds
+				\end{bmatrix}
+			\end{align*}
+			so $M_2(A)S\subset M_2(A)$ for any $S\in M_2(R),$ so $M_2(A)$ is an ideal of $M_2(R),$ as desired.
+		\end{proof}
+		
+\end{itemize}
+
+\section*{Section 3.4: Homomorphisms}
+
+\begin{itemize}
+	\item[1.] In each case determine whether the map $\theta$ is a ring homomorphism. Support your answer.
+		\begin{enumerate}[(a)]
+			\item $\theta:\ZZ_3\to\ZZ_{12},$ where $\theta(r)=4r.$
+				\begin{answer*}
+					We have $\theta(\bar{1}_3)=\bar{4}_{12}\neq \bar{1}_{12},$ so $\theta$ does not preserve the unity, so it is not a homomorphism
+				\end{answer*}
+
+			\item $\theta:\ZZ_4\to\ZZ_{12},$ where $\theta(r)=3r.$
+				\begin{answer*}
+					Similarly to part (a), $\theta(\bar{1}_4)=\bar{3}_{12}\neq \bar{1}_{12},$ so $\theta$ does not preserve the unity, so it is not a homomorphism.
+				\end{answer*}
+
+			\item $\theta:R\times R\to R,$ where $\theta(r, s)=r+s.$
+				\begin{answer*}
+					We have \[\theta\left[ (a, b)\cdot (r, s) \right] = \theta(ar, bs) = ar+bs\neq \theta(a, b)\cdot \theta(r, s)=(a+b)(r+s)\] so $\theta$ is not a homomorphism.
+				\end{answer*}
+
+			\item $\theta:R\times R\to R,$ where $\theta(r, s)=rs.$
+				\begin{answer*}
+					We have \[\theta\left[ (a, b)+(r, s) \right]= \theta(a+b, r+s)=(a+b)(r+s)\neq \theta(a, b)+\theta(r, s)=ar+bs\] so $\theta$ is not a homomorphism.
+				\end{answer*}
+
+			\item $\theta:F(\RR, \RR)\to \RR,$ where $\theta(f)=f(1).$
+				\begin{soln}
+					Here, $f_0$ where $f_0(x)\equiv 1$ is the unity in $F(\RR, \RR)$ and $1\in \RR$ is the unity in $\RR.$ We have $\theta(f_0)=f_0(1)=1,$ so $\theta$ preserves the unity. For $f, g\in F(\RR, \RR),$ we have \[\theta(f+g)=(f+g)(1)=f(1)+g(1) = \theta(f)+\theta(g)\] and \[\theta(f\cdot g)= (f\cdot g)(1)=f(1)\cdot g(1) = \theta(f)\cdot \theta(g)\] so $\theta$ preserves addition and multiplication. Thus, $\theta$ is a homomorphism.
+				\end{soln}
+				
+		\end{enumerate}
+
+	\item[15.] If $\sigma:R\to S$ is a ring isomorphism, show that the same is true of the inverse map $\sigma\inv:S\to R.$
+		\begin{proof}
+			Since $\sigma$ is a bijective map, its inverse is also obviously bijective, since there is a bijection between each element $r\in R$ and $s\in S.$
+
+			Let $p, q\in S.$ Since $\sigma$ is bijective map it is surjective, so we may find $a, b\in R$ such that $\sigma(a)=p$ and $\sigma(b)=q.$ Then we have \[\sigma\inv(p+q)=\sigma\inv(\sigma(a)+\sigma(b))\] and since $\sigma$ is a ring homomorphism, we have $\sigma(a)+\sigma(b)=\sigma(a+b),$ so the above becomes \[\sigma\inv(p+q)=\sigma\inv(\sigma(a+b))=a+b=\sigma\inv(p)+\sigma\inv(q)\] so $\sigma\inv$ preserves addition.
+
+			Similarly, we have \[\sigma\inv(p\cdot q) = \sigma\inv(\sigma(a)\cdot \sigma(b))=\sigma\inv(\sigma(a\cdot b))=a\cdot b = \sigma\inv(p)\cdot \sigma\inv(q)\] so $\sigma\inv$ preserves multiplication.
+
+			Finally, since $\sigma$ is a ring homomorphism, we have $\sigma(1_R)=1_S,$ so $\sigma\inv(1_S)=\sigma\inv(\sigma(1_R))=1_R,$ so $\sigma\inv$ also preserves the unity. Thus, $\sigma\inv$ is a ring isomorphism, as desired.
+		\end{proof}
+		
+\end{itemize}
+
+\end{document}
