@@ -1,0 +1,80 @@
+\documentclass{article}
+\usepackage[sexy, hdr, fancy]{evan}
+\setlength{\droptitle}{-4em}
+
+\lhead{Homework 1}
+\rhead{Introduction to Stochastic Processes}
+\lfoot{}
+\cfoot{\thepage}
+
+\newcommand{\var}{\mathrm{Var}}
+\newcommand{\cov}{\mathrm{Cov}}
+
+\begin{document}
+\title{Homework 1}
+\maketitle
+\thispagestyle{fancy}
+
+\begin{enumerate}
+	\item In a simple symmetric random walk, show that $S_k$ and $S_n, k\neq n,$ are dependent random variables.
+		\begin{proof}
+			WLOG, $n>k.$ Consider the covariance between $S_k$ and $S_n:$
+			\begin{align*}
+				\cov(S_k, S_n) &= \cov\left( \sum_{i=1}^{k}X_i, \sum_{j=1}^{n} X_j \right) \\
+				&= \sum_{i=1}^{k} \sum_{j=1}^{n} \cov(X_i, X_j)
+			\end{align*}
+			Note that $\cov(X_i, X_j)=0$ for $i\neq j,$ otherwise it is
+			\[\cov(X_i, X_i)=\var(X_i)=E[X_i^2]-(E[X_i])^2 = 1 - 0^2 = 1\]
+			Thus, the value of the double summation is exactly $k\neq 0,$ so $S_k$ and $S_n$ are dependent, as desired.
+		\end{proof}
+
+	\item Consider a gambler who on each gamble is equally likely to either win or lose 1 unit. Starting with $i$ units, show that the expected time until the gambler's fortune reaches either $0$ or $k$ is $i(k-i), i=0, 1, 2, \cdots, k.$
+		\begin{proof}
+			Let $M_i$ denote this expected time, and let $X_i=\pm 1$ be the result of the $i-$th gamble, with probability 1/2 of either result. 
+		\end{proof}<++>
+
+	\item A particle moves on the set of integers 0 through $n$ so that at each step it is equally likely to move to any of its neighbors. If the particle starts at 0, show that the expected number of steps it takes to reach $n$ is $n^2.$
+		\begin{proof}
+			Let $T_i$ represent the number of steps it takes to get from position $i-1$ to $i.$ On the first step, we can either get to $i$ with probability 1/2, or get to $i-2$ with probability 1/2. If we are at $i-2,$ we have already used a step, and we will have to get back to $i-1,$ with an expected time of $E[T_{i-1}]$ steps, then get back to $i$ again with an expected time of $E[T_i]$ steps. Combining everything, we have
+			\begin{align*}
+				E[T_i] &= \frac{1}{2}(1) + \frac{1}{2}\left( 1+E[T_{i-1}] + E[T_i] \right) \\
+				\implies E[T_i] &= 2 + E[T_{i-1}]
+			\end{align*}
+			If we are at position 0, we are guaranteed to get to position 1, so $E[T_1]=1.$ Then $E[T_2]=3,$ and in general, $E[T_k] = 2k-1.$ The expected number of steps it takes to reach $n$ from 0 is the sum
+			\begin{align*}
+				\sum_{i=1}^{n}E[T_i] = \sum_{i=1}^{n} (2i-1) = n^2
+			\end{align*}
+			since we are summing the first $n$ odd integers.
+		\end{proof}
+
+	\item For a simple symmetric random walk, give a geometric proof that 
+		\[P[S_1\ge 0, S_2\ge 0, \cdots, S_{2n-1}\ge 0, S_{2n}=0] = 2f_{2n+2}\]
+		\begin{proof}
+			Consider a path that only touches the origin at 0 and $2n+2.$ The probability of this happening is $f_{2n+2},$ and it can either be strictly positive or strictly negative. The positive case is shown:
+			\begin{center}
+				\begin{asy}
+					import graph;
+					unitsize(0.7cm);
+					path xaxis = (-1, 0) -- (18, 0);
+					path yaxis = (0, -1) -- (0, 6);
+					path newx = (-1, 1) -- (18, 1);
+					path newy = (1, -1) -- (1, 6);
+					path p = (0, 0)--(3, 3)--(4, 2)--(5,3)--(7,1)--(8, 2)--(11, 5)--(16, 0);
+					draw(xaxis);
+					draw(yaxis);
+					draw(newx, dashed);
+					draw(newy, dashed);
+					draw(p);
+				\end{asy}
+			\end{center}
+			Since it is strictly positive, we may restrict the portion of the path we are considering to the points $S_1, \cdots, S_{2n+1},$ which when translated becomes a path such that $S_0= 0, S_1\ge 0, S_2\ge 0, \cdots, S_{2n}=0.$ Note that the case where the path is negative is nearly identical, we just have to reflect about the $t$ axis in addition to translating. Thus, for every 2 paths whose first return is $2n+2,$ there is 1 path that is nonnegative with $S_{2n}=0,$ so 
+			\[P[S_1\ge 0, S_2\ge 0, \cdots, S_{2n-1}\ge 0, S_{2n}=0] = 2f_{2n+2}\]
+			as desired.
+		\end{proof}
+
+	\item If $X$ is a nonnegative integer-value random variable, show that
+		\[E[X] = \sum_{n=1}^{\infty} P[X\ge n] = \sum_{n=0}^{\infty}P[X>n]\]
+		
+\end{enumerate}
+
+\end{document}

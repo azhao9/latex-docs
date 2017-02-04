@@ -12,6 +12,196 @@
 \maketitle
 \thispagestyle{fancy}
 
-\section*{Section 5.1: }
+\section*{Section 5.1: Irreducibles and Unique Factorization}
+
+\begin{itemize}
+	\item[2.] If $a\sim a'$ and $b\sim b'$ in $R,$ show that $a\mid b$ if and only if $a'\mid b'.$
+		\begin{proof}
+			We have $a=ua'$ and $b=vb'$ where $u, v\in R^\times.$ For the forward direction, if $a\mid b,$ then $b=ac$ for some $c\in R.$ Then
+			\begin{align*}
+				b &= vb'=ac=ua'c \\
+				\implies b'&=v\inv uc a'
+			\end{align*}
+			where $v\inv$ exists since it is a unit. Thus, $a'\mid b'$ as desired.
+
+			For the reverse direction, we have $a'=u\inv a$ and $b'=v\inv b$ and the result follows similarly.
+		\end{proof}
+
+	\item[8.] Find the units in $\ZZ[\sqrt{-3}].$
+		\begin{soln}
+			Suppose the element $a+b\sqrt{-3}$ is a unit, that is, it has a multiplicative inverse
+			\[\frac{1}{a+b\sqrt{-3}}=\frac{a-b\sqrt{-3}}{a^2+3b^2}=\frac{a}{a^2+3b^2}-\frac{b}{a^2+3b^2}\sqrt{-3}\] 
+			in $\ZZ[\sqrt{-3}].$ Thus, $a^2+3b^2$ must divide $a$ and $b.$ If $\abs{a}>1$ then $a<a^2+3b^2$ so it is impossible for $a^2+3b^2$ to divide $a.$ If $a=\pm1,$ then we must have $b=0.$ On the other hand, if $\abs{b}>0$ then it always holds that $b<a^2+3b^2$ so $a^2+3b^2\nmid b.$ Thus, the only units are $\boxed{1, -1}.$
+		\end{soln}
+
+	\item[11.] Let $p\in \ZZ$ be a prime and assume that $p\equiv3\pmod4.$ Show that $p$ is irreducible in $\ZZ[i].$ 
+		\begin{proof}
+			Suppose $p$ admits a factorization
+			\[p=(a+bi)(c+di)=(ac-bd)+(ad+bc)i, \quad\quad a, b, c, d\in\ZZ\]
+			If $ad+bc=0,$ then the two factors are complex conjugates up to multiple, so
+			\[p=n(a+bi)(a-bi)=n(a^2+b^2)\]
+			Since $p$ is prime, we must have either $n=1$ or $n=p.$ If $n=1,$ then 
+			\[a^2+b^2=p\equiv3\pmod 4\]
+			but since squares are 0 or 1 modulo 4, this is impossible.
+			
+			If $n=p,$ then $a^2+b^2=1$ so either $a=\pm 1, b=0$ or $a=0, b=\pm 1.$ In either case, one of the two factors must be a unit. Thus, $p$ is irreducible in $\ZZ[i],$ as desired.
+		\end{proof}
+
+	\item[13.] In each case show that $p$ is irreducible in $\ZZ[\sqrt{-5}]$ but is not a prime.
+
+		\begin{enumerate}[(a)]
+			\item $p=2+\sqrt{-5}$
+				\begin{proof}
+					We have $\abs{2+\sqrt{-5}}=2^2+5=9.$ Suppose $2+\sqrt{-5}=ab$ is a factorization. Since the norm is multiplicative, we must have either $\abs{a}=\abs{b}=3$ or $\abs{a}=1, \abs{b}=9$ or $\abs{a}=9, \abs{b}=1.$ Let $a=r+s\sqrt{-5}, b=t+u\sqrt{-5}.$ In the first case, we have
+					\[\abs{r+s\sqrt{-5}} = r^2+5s^2=3\]
+					which is impossible for $r, s\in\ZZ.$ The second and third cases are identical, so WLOG
+					\[\abs{r+s\sqrt{-5}} = r^2+5s^2=1\]
+					This is only possible if $r=\pm 1,$ in which case $a=\pm 1,$ which is a unit, so $p$ does not have any nontrivial factorization, so it is irreducible. 
+
+					On the other hand, we have $p\mid 9$ since
+					\[\left( 2+\sqrt{-5} \right)\left( 2-\sqrt{-5} \right) = 9\]
+					Since $9=3\cdot 3,$ if $p$ is prime it must divide 3. Suppose
+					\begin{align*}
+						3 &= \left( 2+\sqrt{-5} \right)\left( a+b\sqrt{-5} \right) \\
+						&= (2a-5b) + (a+2b)\sqrt{-5} \\
+						\implies a+2b&=0\implies a=-2b\implies 2(-2b)-5b=-9b=3
+					\end{align*}
+					This has no solution, so $p$ does not divide 3, so it is not prime, as desired.
+				\end{proof}
+
+			\item $p=1+2\sqrt{-5}$
+				\begin{proof}
+					We have $\abs{1+2\sqrt{-5}}=1^2+2^2\cdot 5 = 21.$ Suppose $1+2\sqrt{-5}=ab$ is a factorization. By a similar argument to part (a), WLOG $\abs{a}\le\abs{b},$ we must have either $\abs{a}=1, \abs{b}=21$ or $\abs{a}=3, \abs{b}=7.$ In the latter case, we have
+					\[\abs{a}=\abs{r+s\sqrt{-5}}=r^2+5s^2=3\]
+					which is impossible for $r, s\in\ZZ.$ Then if $\abs{a}=1,$ we must have $a=\pm 1,$ so $p$ does not have any nontrivial factorization, so it is irreducible.
+
+					To show that $p$ is not prime, use a similar argument to part (a). Since
+					\[\left( 1+2\sqrt{-5} \right)\left( 2-\sqrt{-5} \right) = 21 = 3\cdot7\]
+					suppose that $p$ divides 3, so that
+					\begin{align*}
+						3 &= \left( 1+2\sqrt{-5} \right)\left( a+b\sqrt{-5} \right) \\
+						&= (a-10b) + (2a+b)\sqrt{-5} \\
+						\implies 2a+b &= 0 \implies b=-2a \implies a-10(-2a) = 21a = 3
+					\end{align*}
+					This has no solution, so $p$ does not divide 3, so it is not prime, as desired.
+				\end{proof}
+				
+		\end{enumerate}
+
+	\item[16.] Let $p\sim q$ in the integral domain $R.$ 
+
+		\begin{enumerate}[(a)]
+			\item Show that $p$ is irreducible if and only if $q$ is irreducible.
+				\begin{proof}
+					We have $p=uq$ for $u\in R^\times.$ Suppose $q$ is not irreducible, that is, it has a nontrivial factorization $q=rs$ with $r, s\in R$ not units. Then $p=uq=(ur)s$ is a nontrivial factorization of $p$ since $s$ and $ur$ are both not units, so $p$ is not irreducible either. 
+					
+					Suppose $p$ is not irreducible, that is, it has a nontrivial factorization $p=tv$ with $t, v\in R$ not units. Then $p=tv=uq\implies q=(u\inv t)v$ which is a nontrivial factorization of $q,$ so $q$ is not irreducible either.
+				\end{proof}
+
+			\item Show that $p$ is a prime if and only if $q$ is a prime.
+				\begin{proof}
+					Suppose $p$ factorizes as $p=ab.$ Since $p$ is a prime, WLOG $p\mid a,$ so $a=rp$ for $r\in R.$ Substituting, we have
+					\[p=ab=rpb\implies 1=rb\implies r, b\in R^\times\]
+					Since $p=uq$ for $u\in R^\times,$ 
+				\end{proof}<++>
+
+		\end{enumerate}
+
+	\item[19.] A commutative ring is said to satisfy the descending chain condition on principal ideals (DCCP) if $\left< a_1\right>\supseteq\left< a_2\right>\supseteq\cdots$ in $R$ implies that $a_n\sim a_{n+1}\sim\cdots$ for some $n\ge 1.$ Show that an integral domain $R$ satisfies the DCCP if and only if $R$ is a field.
+		\begin{proof}
+			If $R$ is a field, then every nonzero element divides every other nonzero element, so $a_i\sim a_j$ for all $i, j,$ in fact all ideals are exactly $R$ or $\left\{ 0 \right\},$ so it satisfies DCCP trivially.
+
+			If $R$ is not a field, then there exists a nonunit $r\in R\setminus R^\times.$ Then consider the descending chain
+			\[\left< r\right>\supset \left< r^2\right> \supset \left< r^3\right> \supset \cdots\]
+			This is a strictly descending chain of principal ideals, since $r^{k+1}\neq ur^k$ for any $u\in R^\times.$ Thus, $R$ does not satisfy DCCP.
+		\end{proof}
+
+	\item[31.] Show that $\lcm(a_1, \cdots, a_n)$ exists in an integral domain $R$ if and only if the intersection $\left< a_1\right>\cap\cdots\cap \left< a_n\right>$ is a principal ideal.
+		
+	\item[33.] Prove Lemma 5. Let $R$ be a UFD and let $f\neq 0$ be a polynomial in $R[x].$ 
+
+		\begin{enumerate}[(a)]
+			\item $f$ can be written as $f=c(f)f_1$ where $f_1\in R[x]$ is primitive.
+				\begin{proof}
+					We can write
+					\[f=a_0+a_1x+\cdots+a_nx^n\]
+					Since $R$ is a UFD, let
+					\begin{align*}
+						a_0&=u_0p_1^{a_{01}}\cdots p_r^{a_{0r}} \\
+						a_1&=u_1p_1^{a_{11}}\cdots p_r^{a_{1r}} \\
+						\vdots& \\
+						a_n&=u_np_1^{a_{n1}}\cdots p_r^{a_{nr}}
+					\end{align*}
+					where $p_i$ are all the primes that appear in the factorizations of the coefficients, and $a_{jk}\ge 0, \forall j, k$ and $u_i\in R^\times.$ Then letting 
+					\[d_i:=\min\left\{ a_{0i}, a_{1i}, \cdots, a_{ni} \right\}, 1\le i\le r\]
+					we have
+					\[c(f) \sim p_1^{d_1}p_2^{d_2}\cdots p_r^{d_r}\]
+					Now, define
+					\begin{align*}
+						b_0 &:= p_1^{a_{01}-d_1} p_2^{a_{02}-d_2}\cdots p_r^{a_{0r}-d_r} \\
+						b_1 &:= p_1^{a_{11}-d_1}p_2^{a_{12}-d_2}\cdots p_r^{a_{1r}-d_n} \\
+						\vdots & \\
+						b_n &:= p_1^{a_{n1}-d_1} p_2^{a_{n2}-d_2}\cdots p_r^{a_{nr}-d_r}
+					\end{align*}
+					and let
+					\[f_1:=b_0+b_1x+\cdots +b_n x^n\]
+					Clearly, taking $c(f)\cdot b_i$ recovers $a_i$ for all $i,$ so $f = c(f)f_1.$ It remains to show that $f_1$ is primitive. Let
+					\[e_j := \min\left\{ a_{0j}-d_j, a_{1j}-d_j, \cdots, a_{nj}-d_j \right\}\]
+					so that
+					\[c(f_1) = p_1^{e_1}p_2^{e_2}\cdots p_r^{e_r}\]
+					Now, since $d_j=a_{kj}$ for some $k,$ it follows that $e_j=0$ for all $j.$ Thus, $c(f_1)\sim 1,$ as desired.
+				\end{proof}
+
+			\item If $0\neq a\in R,$ then $c(af)\sim ac(f).$
+				\begin{proof}
+					Let
+					\begin{align*}
+						f &= a_0 + a_1x + \cdots + a_n x^n \\
+						a &= up_1^{a_1} \cdots p_r^{a_r} \\
+						a_0 &= u_0 p_1^{a_{01}} \cdots p_r^{a_{0r}} \\
+						\vdots &\\
+						a_n &= u_n p_1^{a_{n1}} \cdots p_r^{a_{nr}}
+					\end{align*}
+					where $p_j$ are all the primes that appear in the factorizations of $a$ and the coefficients, and the exponents are all nonnegative. Then
+					\[af=aa_0+aa_1x+\cdots + aa_n x^n\]
+					where
+					\[aa_i = uu_i p_1^{a_1+a_{i1}}\cdots p_r^{a_r+a_{ir}}\]
+					Now, let
+					\begin{align*}
+						d_i &:= \min\left\{ a_{0i}, a_{1i}, \cdots, a_{ni} \right\} \\
+						e_i&:=\min\left\{ a_i+a_{0i}, a_i+a_{1i}, \cdots, a_i + a_{ni} \right\} = a_i + d_i
+					\end{align*}
+					for all $1\le i\le r.$ Then we have
+					\begin{align*}
+						c(af) &\sim p_1^{e_1}\cdots p_r^{e_r} \\
+						&= p_1^{a_1+d_1} \cdots p_r^{a_r+d_r} \\
+						&= \left( p_1^{a_1}\cdots p_r^{a_r} \right)( p_1^{d_1} \cdots p_r^{d_r}) \\
+						&\sim a c(f)
+					\end{align*}
+					as desired.
+				\end{proof}
+
+		\end{enumerate}
+
+	\item[34.] Let $R$ be a subring of an integral domain $S$ such that (1) $R^\times=S^\times,$ and (2) if $s\in S$ and $s\mid r, r\in R,$ then $s\in R.$ 
+
+		\begin{enumerate}[(a)]
+			\item Show that $p\in R$ is irreducible in $R$ if and only if it is irreducible in $S.$
+				\begin{proof}
+					If $p$ is irreducible in $S,$ then it only has trivial factorizations $p=uq$ for $u\in S^\times.$ Since $R^\times = S^\times,$ and $q=u\inv p,$ it follows from (2) that $q\in R,$ so $p$ has this same trivial factorization in $R,$ and none others (since elements of $R$ are all elements of $S$).
+
+					For the reverse direction, we prove the contrapositive. Suppose $p=ab$ is a nontrivial factorization in $S.$ By (2), since $p\in R$ and $a\mid p$ and $b\mid p,$ it follows that $a, b\in R,$ so $p$ has a nontrivial factorization in $R.$
+				\end{proof}
+
+			\item If $S$ is a UFD, show that $R$ is a UFD.
+				\begin{proof}
+					From part (a), we showed that the irreducibles in $R$ are exactly the irreducibles in $S.$ 
+				\end{proof}<++>
+
+			\item Prove that if $R[x]$ is a UFD, then $R$ is a UFD.
+				
+		\end{enumerate}
+		
+\end{itemize}
 
 \end{document}
