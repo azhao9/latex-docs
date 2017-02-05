@@ -30,7 +30,7 @@
 
 	\item Consider a gambler who on each gamble is equally likely to either win or lose 1 unit. Starting with $i$ units, show that the expected time until the gambler's fortune reaches either $0$ or $k$ is $i(k-i), i=0, 1, 2, \cdots, k.$
 		\begin{proof}
-			Let $M_i$ denote this expected time, and let $X_i=\pm 1$ be the result of the $i-$th gamble, with probability 1/2 of either result. 
+			Let $M_i$ denote this expected time, and let $X_i=\pm 1$ be the result of the $i-$th gamble, with probability 1/2 of either result
 		\end{proof}<++>
 
 	\item A particle moves on the set of integers 0 through $n$ so that at each step it is equally likely to move to any of its neighbors. If the particle starts at 0, show that the expected number of steps it takes to reach $n$ is $n^2.$
@@ -74,6 +74,20 @@
 
 	\item If $X$ is a nonnegative integer-value random variable, show that
 		\[E[X] = \sum_{n=1}^{\infty} P[X\ge n] = \sum_{n=0}^{\infty}P[X>n]\]
+		\begin{proof}
+			Let $I_n$ be an indicator variable, where
+			\[I_n=\begin{cases}
+					1, \quad X\ge n \\
+					0, \quad X < n
+			\end{cases}\]
+			Then we can express $X$ as
+			\[X=\sum_{j=1}^{\infty} I_j\]
+			since $X$ will be incremented for every $j\le n,$ for a total of $n$ times, and never again after that. Thus,
+			\[E[X] = E\left[ \sum_{j=1}^{\infty}I_j \right] = \sum_{j=1}^{\infty}E[I_j] = \sum_{j=1}^{\infty}P[X\ge n]\]
+			We also have
+			\[P[X\ge n] = P[X>n-1]\]
+			since $X$ takes on integer values, so the rightmost sum is the same.
+		\end{proof}
 		
 \end{enumerate}
 
