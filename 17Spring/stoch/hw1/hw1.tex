@@ -30,8 +30,29 @@
 
 	\item Consider a gambler who on each gamble is equally likely to either win or lose 1 unit. Starting with $i$ units, show that the expected time until the gambler's fortune reaches either $0$ or $k$ is $i(k-i), i=0, 1, 2, \cdots, k.$
 		\begin{proof}
-			Let $M_i$ denote this expected time, and let $X_i=\pm 1$ be the result of the $i-$th gamble, with probability 1/2 of either result
-		\end{proof}<++>
+			Let $M_i$ denote this expected time, and let $X_i=\pm 1$ be the result of the $i-$th gamble, with probability 1/2 of either result. Then we have the recurrence
+			\[M_i=1+\frac{1}{2}M_{i+1}+\frac{1}{2}M_{i-1}\]
+			since we will have taken a step already. Rearranging, we have
+			\begin{align*}
+				-2 &= M_{i+1}-2M_i+M_{i-1} \\
+				-2 &= M_{i+2}-2M_{i+1}+M_i \\
+				\implies 0 &= M_{i+1}-3M_{i+1}+3M_i-M_{i-1}
+			\end{align*}
+			This is a homogeneous linear recurrence with characteristic equation
+			\[x^3-3x^2+3x^2-3 = (x-1)^3\]
+			so the general form for $M_i$ is given by
+			\[M_i= ai^2+bi+c, \quad a, b, c\in \RR\]
+			We know that $M_0=0$ since we are already at 0, so
+			\[M_0=c=0\implies M_i=ai^2+bi\]
+			is the general form. Substituting into the recurrence relation, we have
+			\begin{align*}
+				-2 &= \left[ a(i+1)^2+b(i+1) \right] - 2\left( ai^2+bi \right) + \left[ a(i-1)^2+b(i-1) \right] = 2a \\
+				\implies -1 &= a
+			\end{align*}
+			Now, we also know that $M_k=0$ since we are already at $k,$ so
+			\[M_k=-k^2+bk=0\implies b=k\]
+			Thus, the closed form is given by $M_i=-i^2+ki=i(k-i),$ as desired.
+		\end{proof}
 
 	\item A particle moves on the set of integers 0 through $n$ so that at each step it is equally likely to move to any of its neighbors. If the particle starts at 0, show that the expected number of steps it takes to reach $n$ is $n^2.$
 		\begin{proof}
@@ -72,6 +93,7 @@
 			as desired.
 		\end{proof}
 
+		\newpage
 	\item If $X$ is a nonnegative integer-value random variable, show that
 		\[E[X] = \sum_{n=1}^{\infty} P[X\ge n] = \sum_{n=0}^{\infty}P[X>n]\]
 		\begin{proof}
