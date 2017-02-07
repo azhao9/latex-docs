@@ -30,7 +30,7 @@
 
 	\item Consider a gambler who on each gamble is equally likely to either win or lose 1 unit. Starting with $i$ units, show that the expected time until the gambler's fortune reaches either $0$ or $k$ is $i(k-i), i=0, 1, 2, \cdots, k.$
 		\begin{proof}
-			Let $M_i$ denote this expected time, and let $X_i=\pm 1$ be the result of the $i-$th gamble, with probability 1/2 of either result. Then we have the recurrence
+			Let $M_i$ denote this expected time the gambler reaches 0 or $k$ from $i.$ Conditioning on the result of the first flip, we have the recurrence
 			\[M_i=1+\frac{1}{2}M_{i+1}+\frac{1}{2}M_{i-1}\]
 			since we will have taken a step already. Rearranging, we have
 			\begin{align*}
