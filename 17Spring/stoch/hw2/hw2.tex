@@ -1,0 +1,62 @@
+\documentclass{article}
+\usepackage[sexy, hdr, fancy]{evan}
+\setlength{\droptitle}{-4em}
+
+\lhead{Homework 2}
+\rhead{Introduction to Stochastic Processes}
+\lfoot{}
+\cfoot{\thepage}
+
+\newcommand{\var}{\mathrm{Var}}
+\newcommand{\cov}{\mathrm{Cov}}
+
+\begin{document}
+\title{Homework 1}
+\maketitle
+\thispagestyle{fancy}
+
+\begin{enumerate}[(1)]
+	\item In a simple symmetric random walk, let $T$ denote the time of the first return to the origin. Use the tail probability representation of the expectation to show that $E[T]=+\infty.$
+
+	\item Let $X$ denote a random variable which has the arc sine distribution.
+
+		\begin{enumerate}[(a)]
+			\item Calculate $P\left[ \frac{1}{4}<X<\frac{3}{4} \right].$ 
+
+			\item Calculate $E[X].$
+
+			\item Calculate $\var(X).$
+				
+		\end{enumerate}
+
+	\item Consider a simple symmetric random walk of length 12. Let $L_{12}$ denote the amount of time that the random walk is positive.
+
+		\begin{enumerate}[(a)]
+			\item Use the formula given in class to calculate the values of the frequency function of $L_{12}$ to three decimal places.
+
+			\item To see how good the asymptotic approximation is, find the difference
+				\[\abs{P\left[ \frac{1}{4}<\frac{L_{12}}{12}<\frac{3}{4} \right]-P\left[ \frac{1}{4}<X<\frac{3}{4} \right]}\]
+				where the latter value was calculated in problem 2a.
+
+		\end{enumerate}
+
+	\item Find the conditional probability that a simple symmetric random walk of length $2n$ is always positive, given that it ends at 0.
+
+		\begin{enumerate}[(a)]
+			\item Write an expression in terms of $S_1, S_2, S_3, \cdots, S_{2n}$ for the desired conditional probability, as a ratio of two unconditional probabilities, using the definition of conditional probability.
+
+			\item Write an exact formula for the denominator of the fraction in (a).
+
+			\item To derive an expression for the numerator consider the (relative) complementary event that the random walk goes below the $x$-axis at some time but ends at 0.
+
+			\item Calculate an expression for the probability that a simple symmetric random walk of length $2n$ ends at height -2.
+
+			\item Use parts (b), (c), and (d) to calculate the desired numerator.
+
+			\item Calculate the answer to the original question.
+				
+		\end{enumerate}
+		
+\end{enumerate}
+
+\end{document}
