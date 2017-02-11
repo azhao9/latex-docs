@@ -2,7 +2,7 @@
 \usepackage[sexy, hdr, fancy]{evan}
 \setlength{\droptitle}{-4em}
 
-\lhead{Homework 1}
+\lhead{Homework 2}
 \rhead{Advanced Algebra II}
 \lfoot{}
 \cfoot{\thepage}
@@ -15,12 +15,49 @@
 \begin{enumerate}
 	\item Let $R$ be a commutative ring. Show that
 		\[p\in R\text{ is prime} \iff \left< p\right>\text{ is a nonzero prime ideal.}\]
+		\begin{proof}
+			$\implies: $ Suppose $ab\in\left< p\right>$ for $a, b\in R.$ This means $p\mid ab,$ and since $p$ is prime, either $p\mid a$ or $p\mid b.$ It then follows that either $a\in \left< p\right>$ or $b\in \left< p\right>,$ which shows that $\left< p\right>$ is a prime ideal.
+
+			$\impliedby: $ Suppose $p\mid ab,$ which means that $ab\in \left< p\right>.$ Since $\left< p\right>$ is a prime ideal, either $a\in \left< p\right>$ or $b\in\left< p\right>.$ This means that $p\mid a$ or $p\mid b,$ so $p$ is a prime element, as desired.
+		\end{proof}
 
 	\item Let $R$ be a UFD. Fill in the gap in the proof of $\S5.1$ Theorem 10 by showing that if $p\in R[x]$ is irreducible of degree 0, then $p$ is prime in $R[x].$
+		\begin{proof}
+			If $p$ is irreducible of degree 0, it is just an element in $R,$ and since $R$ is a UFD, we also know that $p$ is prime in $R.$ If $p\mid fg,$ where $f, g\in R[x],$ then let $fg=kp$ for $k\in R[x].$ Let
+			\begin{align*}
+				f &\sim c(f) f_1 \\
+				g &\sim c(g) g_1 \\
+				k &\sim c(k)k_1
+			\end{align*}
+			where $f_1, g_1, k_1\in R[x]$ are primitive. Then
+			\begin{align*}
+				c(f)f_1c(g)g_1 &\sim c(k) k_1 p \\
+			\end{align*}
+			and taking the content of both sides, we have
+			\[c(f)c(g) \sim c(k)p\]
+			so $p\mid c(f) c(g).$ Since $c(f), c(g)\in R$ and $p$ is prime in $R,$ it follows that either $p\mid c(f)$ or $p\mid c(g),$ so $p\mid f$ or $p\mid g,$ and thus $p$ is prime in $R[x],$ as desired.
+		\end{proof}
 
 	\item Let $R$ be an integral domain, and let $\delta:R\setminus\left\{ 0 \right\}\to\ZZ_{\ge0}$ be a function satisfying condition DA. For nonzero $a\in R,$ define
 		\[\tilde{\delta}(a):=\min_{x\in R\setminus\left\{ 0 \right\}} \delta(xa).\]
 		Show that $\tilde{\delta}$ satisfies conditions DA and E in the text.
+		\begin{proof}
+			E: Since $\delta$ takes values in $\ZZ_{\ge0},$ we have
+			\[\tilde\delta(ab)=\min_{x\in R\setminus\left\{ 0 \right\}}(xab) = \delta(x_0 ab)\]
+			for some $x_0\in R.$ Then we have
+			\[\tilde\delta(a) = \min_{x\in R\setminus\left\{ 0 \right\}} \delta(xa)\le \delta[(x_0b)a]\]
+			so
+			\[\tilde\delta(ab)=\delta(x_0ab)\ge \tilde\delta(a)\]
+			as desired.
+
+			DA: For any choice of $a, b\in R$ with $b\neq 0,$ we must show that we can write $a=qb+r$ such that $\tilde\delta(b)>\tilde\delta(r),$ or $r=0.$ We know that for the same choice of $a, b,$ we can also write $a=qb+r$ with $r=0$ or $\delta(b)>\delta(r).$ The case with $r=0$ is trivial, so it suffices to prove that $\tilde\delta(b)>\tilde\delta(r).$
+
+			Since $\tilde\delta$ satisfies E from above, we have
+			\[\delta(1\cdot r)\ge \tilde\delta(r) = \min_{x\in R\setminus\left\{ 0 \right\}} \delta(xr) = \delta(x_0 r)\ge \delta(r) \]
+			So $\tilde\delta(k) = \delta(k)$ for all $k\in R.$ Thus, since $\delta(b)>\delta(r),$ it holds that
+			\[\tilde\delta(b)=\delta(b)>\delta(r)=\tilde\delta(r)\]
+			as desired.
+		\end{proof}
 		
 \end{enumerate}
 
@@ -28,8 +65,18 @@
 
 \begin{itemize}
 	\item[35.] Let $R$ be a UFD and let $g\mid f$ in $R[x],$ where $f\neq 0.$ If $f$ is primitive, show that $g$ is also primitive.
+		\begin{proof}
+			Let $f=gh$ for $h\in R[x].$ Taking the content of both sides, by Gauss' Lemma, we have
+			\[c(f)\sim c(gh)\sim c(g)c(h)\]
+			Since $f$ is primitive, we have
+			\[1\sim c(g)c(h)\implies c(g)\in R^\times\]
+			so $c(g)\sim 1,$ which means that $g$ must also be primitive.
+		\end{proof}
 
-	\item[38.] Let $R$ be a UFD with field of quotients $F.$ if $p\in R[x]$ is primitive, and $p$ is irreducible in $F[x],$ show that $p$ is irreducible in $R[x].$
+	\item[38.] Let $R$ be a UFD with field of quotients $F.$ If $p\in R[x]$ is primitive, and $p$ is irreducible in $F[x],$ show that $p$ is irreducible in $R[x].$
+		\begin{proof}
+			This is trivial because $R[x]\subset F[x],$ so if $p$ does not have a non-trivial factorization in $F[x],$ it can't possibly have one in $R[x]$ either.
+		\end{proof}
 		
 \end{itemize}
 
@@ -37,10 +84,32 @@
 
 \begin{itemize}
 	\item[5.] If $R$ is a PID and $A\neq 0$ is an ideal of $R,$ show that $R/A$ has a finite number of ideals, all of which are principal.
+		\begin{proof}
+			Since $R$ is a PID, $A=\left< d\right>$ for some $d\in R.$ If $d$ is a unit, then $A=R,$ so $R/A$ is trivial. Otherwise, let $B\subset R$ be an ideal of $R,$ so $B/A\subset R/A$ is an ideal of $R/A.$ Let $B=\left< b\right>,$ so the quotient ring $B/A=\left< b\right>/\left< d\right>$ is only nontrivial if $b\mid d.$ Since $R$ is a PID, it is also a UFD, so $d$ has a unique factorization with finitely many irreducible factors, and $b$ is some finite product of them, so the possibilities for $b$ are also finite. It is also clear that all ideals of $R/A$ are principal, where $B/A=\left< b+A\right>$ for $b$ as above.
+		\end{proof}
 
 	\item[10.] Let $R$ be a ring such that $\ZZ\subseteq R\subseteq \QQ.$ Show that $R$ is a PID.
 
 	\item[31.] Show that every unit of $\ZZ[\sqrt{2}]$ has the form $\pm u^k,$ where $k\in\ZZ$ and $u=1+\sqrt{2}.$
+		\begin{proof}
+			We have 
+			\[N\left[ \pm(1+\sqrt{2})^k \right] = N\left[ \pm(1+\sqrt{2}) \right]^k = (1^2-2\cdot1^2)^k = \pm 1\]
+			so $\pm u^k$ is a unit for all $k\in\ZZ.$ On the other hand, if $v\in\ZZ[\sqrt{2}]$ is a unit not equal to $\pm u^k$ for some $k\in \ZZ,$ WLOG it is positive, and it must lie between two units
+			\[u^i<v<u^{i+1}\]
+			for some $i\in\ZZ.$ It follows that $1<vu^{-i}=w<u$ where $w$ is also a unit, so it suffices to consider $w.$ If $w$ is a unit, then $\abs{w}\abs{w^*}=1.$ Since $w>1,$ it follows that $\abs{w^*}<1.$ If $w=a+b\sqrt{2},$ then $w^*=a-b\sqrt{2},$ so we have the two inequalities
+			\begin{align*}
+				-1 < &a-b\sqrt{2} < 1 \\
+				1 < &a+b\sqrt{2} < 1+\sqrt{2}
+			\end{align*}
+			and adding them gives
+			\[0 < 2a < 2+\sqrt{2}\]
+			The only possibility is $a=1,$ so then
+			\begin{align*}
+				1 < 1+&b\sqrt{2} < 1+\sqrt{2} \\
+				0 < &b\sqrt{2} < \sqrt{2}
+			\end{align*}
+			which is impossible for $b\in\ZZ.$ Thus, it is impossible for $v$ to lie between $u^i$ and $u^{i+1}$ for any $i,$ so it must be that $v=\pm u^k$ are the only units.
+		\end{proof}
 		
 \end{itemize}
 
