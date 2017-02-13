@@ -11,21 +11,78 @@
 \newcommand{\cov}{\mathrm{Cov}}
 
 \begin{document}
-\title{Homework 1}
+\title{Homework 2}
 \maketitle
 \thispagestyle{fancy}
 
-\begin{enumerate}[(1)]
+\begin{enumerate}[(1)] 
 	\item In a simple symmetric random walk, let $T$ denote the time of the first return to the origin. Use the tail probability representation of the expectation to show that $E[T]=+\infty.$
+		\begin{proof}
+			From last time, we have
+			\[E[T] = \sum_{n=0}^{\infty}P[T>n]\]
+			Note that $P[T>2k] = P[T> 2k+1]$ for all $k,$ and $P[T>0]=P[T>1]=1,$ so
+			\begin{align*}
+				E[T]&=2\sum_{k=0}^{\infty}P[T> 2k]=2(1+1)+2\sum_{k=1}^{\infty}P[S_1\neq 0, S_2\neq 0, \cdots, S_{2k}\neq0] \\
+				&= 4+2\sum_{k=1}^{\infty}u_{2k} = 4+2\sum_{k=1}^{\infty} \binom{2k}{k}2^{-2k} = 4+2\sum_{k=1}^{\infty}\frac{(2k)!}{k!k!}2^{-2k}
+			\end{align*}
+			By Stirling's Formula, this is asymptotic to
+			\begin{align*}
+				4+2\sum_{k=1}^{\infty} \frac{\sqrt{2\pi (2k)}\left( \frac{2k}{e} \right)^{2k}}{2\pi k\left( \frac{k}{e} \right)^k}\cdot2^{-2k} = 4+2\sum_{k=1}^{\infty}\frac{1}{\sqrt{\pi k}}\to \infty
+			\end{align*}
+			as desired.
+		\end{proof}
 
 	\item Let $X$ denote a random variable which has the arc sine distribution.
 
 		\begin{enumerate}[(a)]
 			\item Calculate $P\left[ \frac{1}{4}<X<\frac{3}{4} \right].$ 
+				\begin{soln}
+					The CDF for a variable with the arc sine distribution is
+					\[F(x)=\frac{2}{\pi}\sin\inv(\sqrt{x})\]
+					so the desired probability is
+					\[F(3/4)-F(1/4) = \frac{2}{\pi}\left( \sin\inv\left( \frac{\sqrt{3}}{2} \right) - \sin\inv\left( \frac{1}{2} \right) \right) = \frac{2}{\pi} \left( \frac{\pi}{3} - \frac{\pi}{6} \right) = \frac{1}{3}\]
+				\end{soln}
 
 			\item Calculate $E[X].$
+				\begin{soln}
+					The distribution for $X$ is given by
+					\[f(x) = \frac{1}{\pi\sqrt{x(1-x)}}, \quad 0<x<1\]
+					so the expectation is
+					\begin{align*}
+						\int_0^1 x\cdot\frac{1}{\pi\sqrt{x(1-x)}}\, dx &= \frac{1}{2\pi}\int_0^1 \frac{2x}{\sqrt{x-x^2}}\, dx = \frac{1}{2\pi}\int_0^1 \left(\frac{2x-1}{\sqrt{x-x^2}}+\frac{1}{\sqrt{x(1-x)}}\right)\, dx \\
+						&= \frac{1}{2\pi}\int_0^1 \frac{2x-1}{\sqrt{x-x^2}}\, dx + \frac{1}{2}\int_0^1 \frac{1}{\pi\sqrt{x(1-x)}}\, dx \\
+						&= \frac{1}{2\pi}\int_0^1\frac{2x-1}{\sqrt{x-x^2}}\, dx + \frac{1}{2}
+					\end{align*}
+					Using the substitution
+					\[u=x-x^2\implies du=1-2x\, dx\implies -du=2x-1\, dx\]
+					the expectation becomes
+					\begin{align*}
+						\frac{1}{2\pi}\int_0^1 \frac{2x-1}{\sqrt{x-x^2}}\, dx + \frac{1}{2} = -\frac{1}{2\pi}\int_0^0 \frac{1}{\sqrt{u}}\, du + \frac{1}{2} = \boxed{\frac{1}{2}}
+					\end{align*}
+				\end{soln}
 
 			\item Calculate $\var(X).$
+				\begin{soln}
+					We have the relation $\var(X)=E[X^2]-(E[X])^2.$ For $E[X^2],$ we have
+					\begin{align*}
+						E[X^2] &= \int_0^1 x^2\cdot\frac{1}{\pi\sqrt{x(1-x)}}\, dx = \frac{1}{\pi}\int_0^1 \frac{x^2-x}{\sqrt{x-x^2}}\, dx + \int_0^1 \frac{x}{\pi\sqrt{x(1-x)}}\, dx \\
+						&= -\frac{1}{\pi}\int_0^1 \sqrt{x(1-x)}\, dx + \frac{1}{2}
+					\end{align*}
+					Completing the square, we have
+					\[\sqrt{x-x^2} = \sqrt{\frac{1}{4}-\left( x-\frac{1}{2} \right)^2}\]
+					so using the substitution
+					\[x-\frac{1}{2} = \frac{1}{2}\cos\theta\implies dx = -\frac{1}{2}\sin\theta\, d\theta\]
+					the integral becomes
+					\begin{align*}
+						-\frac{1}{\pi}\int_0^1 \sqrt{x(1-x)}\, dx &= -\frac{1}{\pi}\int_\pi^0 \frac{1}{2}\sin\theta \left( -\frac{1}{2}\sin\theta\, d\theta \right) = \frac{1}{4\pi}\int_\pi^0\sin^2\theta\, d\theta \\
+						&= \frac{1}{4\pi}\int_\pi^0\left(\frac{1}{2} - \frac{\cos2\theta}{2}\right)\, d\theta = \frac{1}{4\pi}\left( \frac{\theta}{2} - \frac{\sin2\theta}{4} \right)\bigg\vert^0_\pi \\
+						&= -\frac{1}{8}
+					\end{align*}
+					Thus, we have
+					\begin{align*}
+						\var(X) &= E[X^2]-(E[X])^2 = \left( \frac{1}{2}-\frac{1}{8} \right) - \left(\frac{1}{2}\right)^2 = \boxed{\frac{1}{8}}
+					\end{align*}
+				\end{soln}
 				
 		\end{enumerate}
 
@@ -33,10 +90,36 @@
 
 		\begin{enumerate}[(a)]
 			\item Use the formula given in class to calculate the values of the frequency function of $L_{12}$ to three decimal places.
+				\begin{soln}
+					We have
+					\begin{align*}
+						P[L_{2n}=2k] &= u_{2k}u_{2n-2k} = \binom{2k}{k}2^{-2k} \binom{2n-2k}{n-k}2^{-2n+2k} = \binom{2k}{k}\binom{2n-2k}{n-k}2^{-2n} \\
+						P[L_{12}=2k] &= \binom{2k}{k}\binom{12-2k}{6-k}2^{-12}
+					\end{align*}
+					Using $k=0, 1, \cdots, 6,$ we have
+					\begin{align*}
+						P[L_{12}=0] &= \binom{0}{0}\binom{12}{6}2^{-12} \approx 0.226 \\
+						P[L_{12}=2] &= \binom{2}{1}\binom{10}{5}2^{-12}\approx0.123 \\
+						P[L_{12}=4] &= \binom{4}{2}\binom{8}{4}2^{-12} \approx 0.103 \\
+						P[L_{12}=6] &= \binom{6}{3}\binom{6}{3}2^{-12} \approx 0.098 \\
+						P[L_{12}=8] &= \binom{8}{4}\binom{4}{2}2^{-12}\approx0.103 \\
+						P[L_{12}=10] &= \binom{10}{5}\binom{2}{1}2^{-12}\approx0.123 \\
+						P[L_{12}=12] &= \binom{12}{6}\binom{0}{0}2^{-12} \approx 0.226
+					\end{align*}
+				\end{soln}
 
 			\item To see how good the asymptotic approximation is, find the difference
 				\[\abs{P\left[ \frac{1}{4}<\frac{L_{12}}{12}<\frac{3}{4} \right]-P\left[ \frac{1}{4}<X<\frac{3}{4} \right]}\]
 				where the latter value was calculated in problem 2a.
+				\begin{soln}
+					We have
+					\begin{align*}
+						P\left[ \frac{1}{4}<\frac{L_{12}}{12}<\frac{3}{4} \right] &= P\left[ 3 < L_{12} < 9 \right] = P[L_{12}=4] + P[L_{12}=6] + P[L_{12}=8] \\
+						&\approx 0.103 + 0.098 + 0.103 = 0.304
+					\end{align*}
+					From part 2a, we have $P[\frac{1}{4}<X<\frac{3}{4}] = \frac{1}{3},$ so the difference is
+					\[\abs{0.304 - \frac{1}{3}} \approx \boxed{0.0293}\]
+				\end{soln}
 
 		\end{enumerate}
 
@@ -44,16 +127,65 @@
 
 		\begin{enumerate}[(a)]
 			\item Write an expression in terms of $S_1, S_2, S_3, \cdots, S_{2n}$ for the desired conditional probability, as a ratio of two unconditional probabilities, using the definition of conditional probability.
+				\begin{soln}
+					This probability is
+					\begin{align*}
+						P[S_1>0, S_2>0, \cdots, S_{2n-1}>0\mid S_{2n}=0] = \frac{P[S_1>0, S_2>0, \cdots, S_{2n-1}>0, S_{2n}=0]}{P[S_{2n}=0]}
+					\end{align*}
+				\end{soln}
 
 			\item Write an exact formula for the denominator of the fraction in (a).
+				\begin{soln}
+					We have
+					\[P[S_{2n}=0]=u_{2n}=\binom{2n}{n}2^{-2n}\]
+				\end{soln}
 
 			\item To derive an expression for the numerator consider the (relative) complementary event that the random walk goes below the $x$-axis at some time but ends at 0.
+				\begin{soln}
+					Consider a path that goes below the $x$-axis but ends at 0:
+					\begin{center}
+						\begin{asy}
+							import graph;
+							unitsize(0.7cm);
+							path xaxis = (-1, 0)--(17, 0);
+							path yaxis = (0, -4)--(0, 3);
+							path p = (0, 0)--(2, 2)--(7, -3)--(9, -1)--(10, -2)--(13, 1)--(15, -1)--(16, 0);
+							path newp = (5, -1)--(7, 1)--(9, -1)--(10, 0)--(13, -3)--(15, -1)--(16, -2);
+							path newx = (-1, -1)--(17, -1);
+
+							draw(xaxis);
+							draw(yaxis);
+							draw(newx, dashed);
+							draw(p);
+							draw(newp, dashed);
+						\end{asy}
+					\end{center}
+					If we reflect the path about $y=-1$ at the first time the path becomes negative, we get a path that ends at -2, which is guaranteed because the original path ended at 0. This is a 1-1 correspondence because anytime a path ends at -2, it must have passed through -1 at some point, so reflect the path after the first time that happened to get a path ending at 0.
+				\end{soln}
 
 			\item Calculate an expression for the probability that a simple symmetric random walk of length $2n$ ends at height -2.
+				\begin{soln}
+					If the path of length $2n$ ends at -2, it must have had $n-1$ positive and $n+1$ negative results. Thus, the probability is
+					\begin{align*}
+						P[S_{2n}=-2] &= \frac{(2n)!}{(n-1)!(n+1)!}2^{-2n}
+					\end{align*}
+				\end{soln}
 
 			\item Use parts (b), (c), and (d) to calculate the desired numerator.
+				\begin{soln}
+					The complement of the probability in the numerator is the sum of the probabilities that the path goes below the $x$-axis for all possible crossing times, while still ending at 0. We already showed that these paths have a 1-1 correspondence with paths that end at -2, so the numerator is
+					\[1-\frac{(2n)!}{(n-1)!(n+1)!}2^{-2n}\]
+				\end{soln}
 
 			\item Calculate the answer to the original question.
+				\begin{soln}
+					The answer to the original question is
+					\begin{align*}
+						P[S_1>0, S_2>0, \cdots, S_{2n-1}>0\mid S_{2n}=0] &= \frac{P[S_1>0, S_2>0, \cdots, S_{2n-1}>0, S_{2n}=0}{P[S_{2n}=0]} \\
+							&= \frac{1-\frac{(2n)!}{(n-1)!(n+1)!}2^{-2n}}{\frac{(2n)!}{n!n!}2^{-2n}} \\
+							&= \frac{2^{2n}}{\binom{2n}{n}}- \frac{n}{n+1}
+					\end{align*}
+				\end{soln}
 				
 		\end{enumerate}
 		
