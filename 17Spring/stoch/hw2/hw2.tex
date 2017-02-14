@@ -22,12 +22,12 @@
 			\[E[T] = \sum_{n=0}^{\infty}P[T>n]\]
 			Note that $P[T>2k] = P[T> 2k+1]$ for all $k,$ and $P[T>0]=P[T>1]=1,$ so
 			\begin{align*}
-				E[T]&=2\sum_{k=0}^{\infty}P[T> 2k]=2(1+1)+2\sum_{k=1}^{\infty}P[S_1\neq 0, S_2\neq 0, \cdots, S_{2k}\neq0] \\
-				&= 4+2\sum_{k=1}^{\infty}u_{2k} = 4+2\sum_{k=1}^{\infty} \binom{2k}{k}2^{-2k} = 4+2\sum_{k=1}^{\infty}\frac{(2k)!}{k!k!}2^{-2k}
+				E[T]&=2\sum_{k=0}^{\infty}P[T> 2k]=2(1)+2\sum_{k=1}^{\infty}P[S_1\neq 0, S_2\neq 0, \cdots, S_{2k}\neq0] \\
+				&= 2+2\sum_{k=1}^{\infty}u_{2k} = 2+2\sum_{k=1}^{\infty} \binom{2k}{k}2^{-2k} = 2+2\sum_{k=1}^{\infty}\frac{(2k)!}{k!k!}2^{-2k}
 			\end{align*}
 			By Stirling's Formula, this is asymptotic to
 			\begin{align*}
-				4+2\sum_{k=1}^{\infty} \frac{\sqrt{2\pi (2k)}\left( \frac{2k}{e} \right)^{2k}}{2\pi k\left( \frac{k}{e} \right)^k}\cdot2^{-2k} = 4+2\sum_{k=1}^{\infty}\frac{1}{\sqrt{\pi k}}\to \infty
+				2+2\sum_{k=1}^{\infty} \frac{\sqrt{2\pi (2k)}\left( \frac{2k}{e} \right)^{2k}}{2\pi k\left( \frac{k}{e} \right)^k}\cdot2^{-2k} = 2+2\sum_{k=1}^{\infty}\frac{1}{\sqrt{\pi k}}\to \infty
 			\end{align*}
 			as desired.
 		\end{proof}
@@ -37,7 +37,7 @@
 		\begin{enumerate}[(a)]
 			\item Calculate $P\left[ \frac{1}{4}<X<\frac{3}{4} \right].$ 
 				\begin{soln}
-					The CDF for a variable with the arc sine distribution is
+					The CDF for a $X$ is given by
 					\[F(x)=\frac{2}{\pi}\sin\inv(\sqrt{x})\]
 					so the desired probability is
 					\[F(3/4)-F(1/4) = \frac{2}{\pi}\left( \sin\inv\left( \frac{\sqrt{3}}{2} \right) - \sin\inv\left( \frac{1}{2} \right) \right) = \frac{2}{\pi} \left( \frac{\pi}{3} - \frac{\pi}{6} \right) = \frac{1}{3}\]
@@ -123,14 +123,15 @@
 
 		\end{enumerate}
 
-	\item Find the conditional probability that a simple symmetric random walk of length $2n$ is always positive, given that it ends at 0.
+		\newpage
+	\item Find the conditional probability that a simple symmetric random walk of length $2n$ is always nonnegative, given that it ends at 0.
 
 		\begin{enumerate}[(a)]
 			\item Write an expression in terms of $S_1, S_2, S_3, \cdots, S_{2n}$ for the desired conditional probability, as a ratio of two unconditional probabilities, using the definition of conditional probability.
 				\begin{soln}
 					This probability is
 					\begin{align*}
-						P[S_1>0, S_2>0, \cdots, S_{2n-1}>0\mid S_{2n}=0] = \frac{P[S_1>0, S_2>0, \cdots, S_{2n-1}>0, S_{2n}=0]}{P[S_{2n}=0]}
+						P[S_1\ge0, S_2\ge0, \cdots, S_{2n-1}\ge0\mid S_{2n}=0] = \frac{P[S_1\ge0, S_2\ge0, \cdots, S_{2n-1}\ge0, S_{2n}=0]}{P[S_{2n}=0]}
 					\end{align*}
 				\end{soln}
 
@@ -167,23 +168,24 @@
 				\begin{soln}
 					If the path of length $2n$ ends at -2, it must have had $n-1$ positive and $n+1$ negative results. Thus, the probability is
 					\begin{align*}
-						P[S_{2n}=-2] &= \frac{(2n)!}{(n-1)!(n+1)!}2^{-2n}
+						P[S_{2n}=-2] &= \binom{2n}{n+1}2^{-2n}
 					\end{align*}
 				\end{soln}
 
+				\newpage
 			\item Use parts (b), (c), and (d) to calculate the desired numerator.
 				\begin{soln}
-					The complement of the probability in the numerator is the sum of the probabilities that the path goes below the $x$-axis for all possible crossing times, while still ending at 0. We already showed that these paths have a 1-1 correspondence with paths that end at -2, so the numerator is
-					\[1-\frac{(2n)!}{(n-1)!(n+1)!}2^{-2n}\]
+					Of all paths that end at 0, either the path is nonnegative, or it crosses the $x$-axis and goes negative at some point. The probability a path ends at 0 is $\binom{2n}{n}2^{-2n}.$ We just showed that there is a 1-1 correspondence between paths that cross the $x$-axis and paths that end at -2, so the numerator is
+					\[\binom{2n}{n}2^{-2n}-\binom{2n}{n+1}2^{-2n}\]
 				\end{soln}
 
 			\item Calculate the answer to the original question.
 				\begin{soln}
 					The answer to the original question is
 					\begin{align*}
-						P[S_1>0, S_2>0, \cdots, S_{2n-1}>0\mid S_{2n}=0] &= \frac{P[S_1>0, S_2>0, \cdots, S_{2n-1}>0, S_{2n}=0}{P[S_{2n}=0]} \\
-							&= \frac{1-\frac{(2n)!}{(n-1)!(n+1)!}2^{-2n}}{\frac{(2n)!}{n!n!}2^{-2n}} \\
-							&= \frac{2^{2n}}{\binom{2n}{n}}- \frac{n}{n+1}
+						P[S_1\ge0, S_2\ge0, \cdots, S_{2n-1}\ge0\mid S_{2n}=0] &= \frac{P[S_1\ge0, S_2\ge0, \cdots, S_{2n-1}\ge0, S_{2n}=0}{P[S_{2n}=0]} \\
+						&= \frac{\frac{(2n)!}{n!n!}2^{-2n}-\frac{(2n)!}{(n-1)!(n+1)!}2^{-2n}}{\frac{(2n)!}{n!n!}2^{-2n}} \\
+						&= 1- \frac{n}{n+1} = \boxed{\frac{1}{n+1}}
 					\end{align*}
 				\end{soln}
 				
