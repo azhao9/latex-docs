@@ -1,0 +1,210 @@
+\documentclass{article}
+\usepackage[sexy, hdr, fancy]{evan}
+\setlength{\droptitle}{-4em}
+
+\lhead{Homework 2}
+\rhead{Discrete Math}
+\lfoot{}
+\cfoot{\thepage}
+
+\newcommand{\var}{\mathrm{Var}}
+\newcommand{\cov}{\mathrm{Cov}}
+
+\begin{document}
+\title{Homework 2}
+\maketitle
+\thispagestyle{fancy}
+
+\begin{enumerate}
+	\item Consider the statement you are asked to prove in Scheinerman Problem 5.21.
+		\begin{enumerate}[(a)]
+			\item Rewrite the statement in if-then format.
+				\begin{answer*}
+					Prove that if $a, b$ are distinct, nonconsecutive perfect squares, then their difference is composite.
+				\end{answer*}
+
+			\item Explain how the term "without loss of generality" could be used in the proof of this statement. 
+				\begin{answer*}
+					There is nothing special about $a$ or $b,$ so WLOG we can assume $a>b.$
+				\end{answer*}
+
+			\item Use direct proof to prove the statement.
+				\begin{proof}
+					WLOG, $a>b.$ Let $a=n^2$ and $b=m^2,$ so
+					\begin{align*}
+						a-b &= n^2-m^2=(n-m)(n+m)
+					\end{align*}
+					By assumption, $a$ and $b$ are not consecutive squares, so $n-m\neq 1.$ Clearly $n+m\neq 1,$ so $a-b$ is the product of two factors, neither of which is 1, so it is composite, as desired.
+				\end{proof}
+				
+		\end{enumerate}
+
+	\item Let $a, b$ be nonequal positive integers.
+		\begin{enumerate}[(a)]
+			\item Explain why $(a-b)^2>0.$
+				\begin{answer*}
+					Since $a\neq b,$ we have $a-b\neq 0.$ If $a>b,$ then $a-b>0\implies (a-b)^2>0.$ On the other hand, if $a<b,$ then $a-b<0\implies (a-b)^2>0.$
+				\end{answer*}
+
+			\item Use direct proof to show that $\frac{a}{b}+\frac{b}{a} > 2.$
+				\begin{proof}
+					We wish to show that
+					\[\frac{a}{b}+\frac{b}{a} = \frac{a^2+b^2}{ab} > 2\]
+					Since $a, b$ are positive, we can multiply by $ab$ on both sides of the inequality.
+					\begin{align*}
+						\frac{a^2+b^2}{ab} &> 2 \\
+						\implies a^2+b^2 &>2ab \\
+						\implies a^2-2ab+b^2&=(a-b)^2>0
+					\end{align*}
+					This is true by part (a), so the statement is proven.
+				\end{proof}
+				
+		\end{enumerate}
+
+	\item Prove/Disprove the following statement: Let $x, y\in\ZZ.$ Let $n$ be a positive integers. If $x\mid y^n,$ then $x\mid y.$
+		\begin{proof}
+			This is false. Let $x=4, y=6, n=2.$ Then $4\mid 6^2,$ but $4\nmid 6.$
+		\end{proof}
+
+		\newpage
+	\item Suppose $a, b, c\in\ZZ.$ Prove the following
+		\begin{enumerate}[(a)]
+			\item If $a\mid b$ and $b\neq 0,$ then $a=\pm b$ or $\abs{a}<\abs{b}.$
+				\begin{proof}
+					If $a\mid b,$ then $b=na$ for some $n\in\ZZ.$ If $n=\pm 1,$ then $a=\pm b.$ Otherwise, $\abs{n}>1,$ so
+					\[b=na\implies\abs{b}=\abs{na}=\abs{n}\abs{a} > \abs{a}\]
+					as desired.
+				\end{proof}
+
+			\item If $a\mid b$ and $b\mid a$ then $\abs{a}=\abs{b}.$
+				\begin{proof}
+					If $a\mid b,$ then $b=na$ for some $n\in \ZZ.$ Dividing by $n,$ we have $a=\frac{1}{n}b.$ Since $b\mid a,$ we must also have $\frac{1}{n}\in\ZZ,$ so it must be that either $n=1$ or $n=-1.$ If $n=1,$ then $a=b\implies \abs{a}=\abs{b},$ and if $n=-1,$ then $a=-b\implies \abs{a}=\abs{b},$ as desired.
+				\end{proof}
+
+			\item If $a\mid b$ and $a\mid c$ then for any $x, y\in\ZZ, a\mid(bx+cy).$
+				\begin{proof}
+					If $a\mid b$ and $a\mid c,$ then $b=na$ and $c=ma$ for some $n, m\in\ZZ.$ Then
+					\[bx+cy=(na)x+(ma)y = a(nx+my)\]
+					so $a\mid (bx+cy),$ as desired.
+				\end{proof}
+				
+		\end{enumerate}
+
+	\item[8.12] A U.S. Social Security number is a nine-digit number. The first digit(s) may be 0.
+		\begin{enumerate}[a.]
+			\item How many Social Security numbers are available?
+				\begin{answer*}
+					There are 10 possibilities for each digit, so there are $10^9$ possible numbers.
+				\end{answer*}
+
+			\item How many of these are even?
+				\begin{answer*}
+					For the last digit, there are only 5 even possibilities, and there are 10 possibilities for each of the other 8, so there are $5\cdot10^8$ even numbers.
+				\end{answer*}
+
+			\item How many have all of their digits even?
+				\begin{answer*}
+					There are 5 even digits, so there are $5^9$ numbers with all even digits.
+				\end{answer*}
+
+			\item How many read the same backward and forward?
+				\begin{answer*}
+					There are 10 choices for the first, second, third, fourth, and fifth digits. After that, the sixth, seventh, eighth, and ninth digits are already determined by the first four. Thus, there are $10^5$ palindromic numbers.
+				\end{answer*}
+
+			\item How many have none of their digits equal to 8?
+				\begin{answer*}
+					Now there are only 9 choices for each digit, so there are $9^9$ such numbers.
+				\end{answer*}
+
+			\item How many have at least one digit equal to 8?
+				\begin{answer*}
+					There are $10^9$ total numbers, and $9^9$ numbers without any digit equal to 8, so there are $10^9-9^9$ numbers with at least one digit equal to 8 since these two events partition the set of numbers.
+				\end{answer*}
+
+			\item How many have exactly one 8?
+				\begin{answer*}
+					There are 9 positions for the 8. For the remaining 8 digits, there are 9 possibilities for each since they can't be equal to 8, so there are $9\cdot9^8=9^9$ numbers with exactly one 8.	
+				\end{answer*}
+
+		\end{enumerate}
+
+		\newpage
+	\item[8.15] How many five-digit numbers are there that do not have two consecutive digits the same? Note: the first digit may not be 0.
+		\begin{soln}
+			There are 9 choices for the first digit, then 9 choices for the second since it can't be the same as the first (but can include 0 now), and likewise 9 choices for the third since it can't be the same as the second, and 9 for the fourth and fifth for the same reason. Thus, there are $9^5=54049$ such numbers.
+		\end{soln}
+
+	\item[9.9] Please calculate the following:
+		\begin{enumerate}[a.]
+			\item $1\times 1!=1$
+
+			\item $1\times 1!+2\times 2!=5$
+
+			\item $1\times 1!+2\times2!+3\times3!=23$
+
+			\item $1\times1!+2\times2!+3\times3!+4\times4!=119$
+
+			\item $1\times1!+2\times2!+3\times3!+4\times4!+5\times5! = 719$
+		
+		\end{enumerate}
+		Now make a conjecture. That is, guess the value of $\displaystyle\sum_{k=1}^{n} k\cdot k!$
+		\begin{answer*}
+			This sum evaluates to $(n+1)!-1.$
+		\end{answer*}
+
+	\item[9.15] The double factorial $n!!$ is defined for odd positive integers $n;$ it is the product of all the odd numbers from 1 to $n$ inclusive.
+		\begin{enumerate}[a.]
+			\item Evaluate $9!!.$
+				\begin{answer*}
+					$9!!=9\cdot7\cdot5\cdot3\cdot1=945$
+				\end{answer*}
+
+			\item For an odd integer $n,$ are $n!!$ and $(n!)!$ equal?
+				\begin{answer*}
+					No. For $n=3,$ we have $3!!=3\cdot1=3,$ but $(3!)!=6!=720.$
+				\end{answer*}
+
+			\item Write an expression for $n!!$ using product notation.
+				\begin{answer*}
+					$\displaystyle\sum_{i=1}^{(n+1)/2}(2i-1)$
+				\end{answer*}
+
+			\item Explain why this formula works:
+				\[(2k-1)!!=\frac{(2k)!}{k!2^k}\]
+				\begin{soln}
+					For $k=1,$ we have $(2k-1)!!=1=\frac{2!}{1!\cdot2}.$ Now suppose the formula holds for arbitrary $k=n,$ that is
+					\[(2n-1)!!=\frac{(2n)!}{n!2^n}\]
+					Multiplying both sides by $2n+1,$ we have
+					\begin{align*}
+						(2n+1)(2n-1)!! &= (2n+1)!! = (2(n+1)-1)!! \\
+						&= \frac{(2n)!}{n!2^n} \cdot(2n+1) = \frac{(2n+1)!}{n!(2^n)}\cdot\frac{2n+2}{2(n+1)} = \frac{(2n+2)!}{(n+1)!2^{n+1}} \\
+						&= \frac{(2(n+1))!}{(n+1)!2^{n+1}}
+					\end{align*}
+					Thus, the formula holds for $k=n+1,$ so by induction the formula holds for all $k\ge 1.$
+				\end{soln}
+				
+		\end{enumerate}
+
+		\newpage
+	\item[10.1] Write out the following sets by listing their elements between curly braces.
+		\begin{enumerate}[(a)]
+			\item $\Set{x\in\NN}{x\le 10\text{ and } 3\mid x}=\left\{ 0, 3, 6, 9 \right\}$
+
+			\item $\Set{x\in\ZZ}{x\text{ is prime and } 2\mid x}=\left\{ 2 \right\}$
+
+			\item $\Set{x\in\ZZ}{x^2=4}\left\{ 2, -2 \right\}$
+
+			\item $\Set{x\in\ZZ}{x^2=5}=\left\{  \right\}$
+
+			\item $2^{\varnothing}=\left\{ \varnothing \right\}$
+
+			\item $\Set{x\in\ZZ}{10\mid x\text{ and } x\mid 100 }=\left\{ -100, -50, -20, -10, 10, 20, 50, 100 \right\}$
+
+			\item $\Set{x}{x\subseteq\left\{ 1, 2, 3, 4, 5 \right\}\text{ and }\abs{x}\le 1}=\left\{ \varnothing, \left\{ 1 \right\}, \left\{ 2 \right\}, \left\{ 3 \right\}, \left\{ 4 \right\}, \left\{ 5 \right\} \right\}$
+
+		\end{enumerate}
+		
+\end{enumerate}
+
+\end{document}
