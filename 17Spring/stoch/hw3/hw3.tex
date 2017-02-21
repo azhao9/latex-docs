@@ -111,16 +111,31 @@
 		\end{proof}
 
 	\item[13.] Let $P$ be the transition probability matrix of a Markov chain. Argue that if for some positive integer $r, P^r$ has all positive entries, then so does $P^n,$ for all integers $n\ge r.$
+		\begin{proof}
+			Let $P_{ij}^k$ denote the $(i, j)$ entry in $P^k$ for $k\in\ZZ.$ Then we have the relation
+			\[P^{k+1}_{ij} = \sum_{n=0}^{\infty}P^{k}_{in}P_{nj}\]
+			If $P$ has a column of all 0s, then it is impossible for $P^r$ to have all positive entries for any integer $r.$ Suppose column $j$ in $P$ was all 0, then $P_{ij}^k=0$ for any $k.$ Thus, $P$ does not have a column of all 0s.
+
+			Now we proceed by induction. The base case is $n=r,$ which is true by assumption. Now suppose for arbitrary $n=m\ge r,$ it holds that $P^m$ has all positive entries. Then we have
+			\[P^{m+1}_{ij} = \sum_{n=0}^{\infty}P^m_{in}P_{nj}\]
+			Since $P^m_{in}>0, \forall i, n$ and not all of $P_{nj}$ is 0 for any $n,$ this summation must be positive. Thus, the entries of $P^{m+1}$ are all positive, so we are done by induction.
+		\end{proof}
 
 	\item[14.] Specify the classes of the following Markov chains, and determine whether they are transient or recurrent:
 		\begin{enumerate}[(a)]
 			\item $P_1=\begin{bmatrix}
 					0 & 1/2 & 1/2 \\ 1/2 & 0 & 1/2 \\ 1/2 & 1/2 & 0
 				\end{bmatrix}$
+				\begin{soln}
+					This Markov chain is irreducible so there is only one class, since all states communicate. To illustrate, we may go from $0\to1\to2\to0.$ Since this is a finite chain and all states communicate, all states must be recurrent.
+				\end{soln}
 
 			\item $P_2=\begin{bmatrix}
 					0 & 0 & 0 & 1 \\ 0 & 0 & 0 & 1 \\ 1/2 & 1/2 & 0 & 0 \\ 0 & 0 & 1 & 0
 				\end{bmatrix}$
+				\begin{soln}
+					This Markov chain is irreducible so there is only one class, since all states communicate. To illustrate, we may go from $0\to3\to2\to1\to3\to0.$ Since this is a finite chain and all states communicate, all states must be recurrent.
+				\end{soln}
 
 			\item $P_3=\begin{bmatrix}
 					1/2 & 0 & 1/2 & 0 & 0 \\
@@ -129,6 +144,9 @@
 					0 & 0 & 0 & 1/2 & 1/2 \\
 					0 & 0 & 0 & 1/2 & 1/2 \\
 				\end{bmatrix}$
+				\begin{soln}
+					The classes in this Markov chain are $\left\{ 0, 2 \right\}$ and $\left\{ 3, 4 \right\}$ and $\left\{ 2 \right\}.$ The first and second are recurrent, and the third is transient. We may go from $0\to2\to0$ and $3\to4\to3,$ but once we leave 1, it is impossible to return. 
+				\end{soln}
 
 			\item $P_4=\begin{bmatrix}
 					1/4 & 3/4 & 0 & 0 & 0 \\
@@ -137,11 +155,58 @@
 					0 & 0 & 1/3 & 2/3 & 0 \\
 					1 & 0 & 0 & 0 & 0
 				\end{bmatrix}$
+				\begin{soln}
+					The classes in this Markov chain are $\left\{ 0, 1 \right\}$ and $\left\{ 2 \right\}$ and $\left\{ 3 \right\}$ and $\left\{ 4 \right\}.$ The first and second are recurrent, and the other two are transient. We may go from $0\to1\to 0$ and state 2 is absorbing. If we are at 3, it is impossible to stay forever, and once we leave, we can't go back. If we are at 4, then we leave for 1, and never return.
+				\end{soln}
 				
 		\end{enumerate}
 		
 	\item[15.] Prove that if the number of states in a Markov chain is $M,$ and if state $j$ can be reached from state $i,$ then it can be reached in $M$ steps or less.
+		\begin{proof}
+			If $j$ can be reached from $i,$ then there exists a path from $i$ to $j.$ Suppose on this path, some state was reached twice. Then the sub-path between these two states is a loop, and we can remove it. Thus, on any path from $i$ to $j,$ it is possible to modify it so that no state appears twice. Since there are only a total of $M$ states, it follows that such a path can be modified to be $M$ steps or less.
+		\end{proof}
 		
 \end{itemize}
+
+\section*{Exploration}
+
+\begin{enumerate}[(a)]
+	\item For $n\ge 1$ and $k\ge 1,$ write the event $\left\{ T_1=2n, T_2=2k \right\}$ in terms of the partial sums of the random walk.
+		\begin{answer*}
+			\[\left\{ S_1\neq 0, S_2\neq 0, \cdots, S_{2n-1}\neq 0, S_{2n}=0, S_{2n+1}\neq 0, \cdots, S_{2k-1}\neq 0, S_{2k}=0 \right\}\]
+		\end{answer*}
+
+	\item Rewrite the event in terms of the steps $\left\{ X_i \right\}_{i=1}^\infty$ of the random walk.
+		\begin{answer*}
+			\begin{align*}
+				\{ &X_1\neq 0, \cdots, X_1+\cdots+X_{2n-1}\neq 0, X_1+\cdots+X_{2n}=0, \\
+				&X_1+\cdots + X_{2n}+X_{2n+1}\neq 0, \cdots, X_1+\cdots+X_{2k-1}\neq 0, X_1+\cdots + X_{2k}=0 \}
+			\end{align*}
+		\end{answer*}
+
+	\item Show that the event can be written as the intersection of two independent events.
+		\begin{soln}
+			Since $X_1+\cdots+X_{2n}=0,$ the second line of the event may be written as
+			\[\{X_{2n+1}\neq 0, \cdots, X_{2n+1}+\cdots+X_{2k-1}\neq 0, X_{2n+1}+\cdots+X_{2k}=0\}\]
+			The first part of the event is independent from this, because none of the $X_i's$ show up in both events. Thus, the event is the intersection
+			\begin{align*}
+				\{ &X_1\neq 0, \cdots, X_1+\cdots+X_{2n-1}\neq 0, X_1+\cdots+X_{2n}=0\} \cap \\
+				\{&X_{2n+1}\neq 0, \cdots, X_{2n+1}+\cdots+X_{2k-1}\neq 0, X_{2n+1}+\cdots + X_{2k}=0 \}
+			\end{align*}
+		\end{soln}
+
+	\item Write the probability of the event $\left\{ T_1=2n, T_2=2k \right\}$ in terms of the quantities $\left\{ u_{2n} \right\}_{n=1}^\infty$ and $\left\{ f_{2n} \right\}_{n=1}^\infty$ studied in the proof that a first return to the origin is certain.
+
+	\item Calculate $P[T_2=2k]$ for $k\ge1.$
+
+	\item Conclude that $T_2$ is independent of $T_1$ and that they have the same distribution.
+
+	\item Conclude that the probability that a simple symmetric random walk returns to the origin twice is one.
+
+	\item Could the same reasoning be used to show that the random walk returns to the origin three times with probability one?
+
+	\item Suppose we defined $T_3$ to be the additional time after the first return to the origin until the random walk first hits height $m$ for some $m>1.$ Could the same reasoning be used to show that $T_1$ and $T_3$ are independent?
+		
+\end{enumerate}
 
 \end{document}

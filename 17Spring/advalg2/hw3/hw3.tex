@@ -15,13 +15,61 @@
 \maketitle
 \thispagestyle{fancy}
 
+\begin{itemize}
+	\item[1.] Let $A$ be a commutative ring containing a field $F$ as a subring. For each $a\in A,$ we define the multiplication by $a$ map
+		\begin{align*}
+			m_a: A &\to A \\
+			x &\mapsto ax.
+		\end{align*}
+		\begin{enumerate}[(a)]
+			\item Regarding $A$ as an $F$-vector space in the natural way, show that $m_a$ is a linear transformation over $F.$
+				\begin{proof}
+					Let $b\in F$ and $u, v\in A.$ Then we have
+					\begin{align*}
+						m_a(u+v) &= a(u+v) = au + av = m_a(u) + m_a(v) \\
+						m_a(bu) &= a(bu) = b(au) = bm_a(u)
+					\end{align*}
+					The second equality comes from the fact that $A$ is a commutative ring. Thus, $m_a$ is a linear transformation over $F,$ as desired.
+				\end{proof}
+
+			\item Suppose that $A$ is an integral domain which is finite dimensional as an $F$-vector space. Show that $A$ is a field.
+				\begin{proof}
+					If $a\neq 0,$ then 
+					\[\ker m_a=\Set{x\in A}{ax=0}=\left\{ 0 \right\}\]
+					since we are in an integral domain. Thus, $\dim(\ker m_a)=0,$ so by the result of Exercise 31, we have $\dim A = \dim (\ima m_a).$ By the result of Exercise 32, if both $A$ and $\ima m_a$ have dimension $n,$ they are both isomorphic to $F^n,$ so they are isomorphic to each other. Thus, $m_a$ is a bijective map, and in particular surjective. Since $1\in A,$ there must exist $x\in A$ such that $ax=1,$ and since $a$ was arbitrary, it follows that every possible choice for nonzero $a$ was invertible, so $F$ is a field, as desired.
+				\end{proof}
+				
+		\end{enumerate}
+\end{itemize}
+
 \section*{Section 5.2: Principal Ideal Domains}
 
 \begin{itemize}
 	\item[13.] \begin{enumerate}[(a)]
 			\item Show that $\ZZ[\sqrt{-2}]$ is euclidean with $\delta(a)=\abs{N(a}.$
+				\begin{proof}
+					Here, $\omega=\sqrt{-2}\implies\omega^2=-2.$ We claim that $\ZZ[\omega]$ satisfies the condition of Lemma 1. For any $r, s\in\QQ,$ let $m$ and $n$ be the nearest integers to $r$ and $s,$ respectively. Then,
+					\begin{align*}
+						\abs{(r-m)^2-\omega^2(s-n)^2} &\le \abs{\left( \frac{1}{2} \right)^2 + 2\left( \frac{1}{2} \right)^2} = \abs{\frac{3}{4}} < 1
+					\end{align*}
+					Thus, $\ZZ[\omega]$ is euclidean by Lemma 1.
+				\end{proof}
 
+				\newpage
 			\item If $a=4+3\sqrt{-2}$ and $b=3-\sqrt{-2},$ write $a=qb+r,$ where $r=0$ or $\delta(r)<\delta(b).$
+				\begin{soln}
+					Consider a division in $\CC,$ where
+					\begin{align*}
+						\frac{a}{b} = \frac{4+3\sqrt{-2}}{3-\sqrt{-2}} = \frac{(4+3\sqrt{-2})(3+\sqrt{-2})}{11} = \frac{6}{11} + \frac{13}{11}\sqrt{-2}
+					\end{align*}
+					So we may estimate $q=1+\sqrt{-2}.$ Then
+					\begin{align*}
+						qb &= (1+\sqrt{-2})(3-\sqrt{-2}) = 5+2\sqrt{-2} \\
+						\implies r &= -1+\sqrt{-2}
+					\end{align*}
+					This is a legitimate factorization because
+					\[\delta(r)=\abs{N(r)}=\abs{(-1)^2+2}=3 < 11 = \delta(b)\]
+				\end{soln}
 				
 		\end{enumerate}
 		
@@ -31,24 +79,163 @@
 
 \begin{itemize}
 	\item[21.] If $u=a_1v_1+a_2v_2+\cdots+a_nv_n$ in a vector space $V,$ and if $a_1\neq 0,$ show that $\spn\left\{ v_1, v_2, \cdots, v_n \right\}=\spn\left\{ u, v_2, \cdots, v_n \right\}.$
+		\begin{proof}
+			Let $w=b_1v_1+b_2v_2+\cdots+b_nv_n$ be an element in $\spn\left\{ v_1, v_2, \cdots, v_n \right\}.$ Since $a_1\neq 0,$ it has an inverse, so
+			\begin{align*}
+				u &= a_1v_1 + a_2v_2 + \cdots + a_nv_n \\
+				\implies v_1 &= a_1\inv u-a_1\inv a_2v_2 - a_1\inv a_3 v_3 - \cdots - a_1\inv a_n v_n
+			\end{align*}
+			Substituting, we have
+			\begin{align*}
+				w &= b_1(a_1\inv u-a_1\inv a_2v_2 - \cdots - a_1\inv a_n v_n) + a_2v_2 + \cdots + a_nv_n \\
+				&= a_1\inv b_1 u + (a_2-a_1\inv a_2 b_1)v_2 + \cdots + (a_n-a_1\inv a_n b_1) v_n
+			\end{align*}
+			so $w\in\spn\left\{ u, v_2, \cdots, v_n \right\}.$
 
-	\item[23.] \begin{enumerate}[(a)]
-			\item Show that an independent set $\left\{ v_1, \cdots, v_n \right\}$ in $_F V$ with $n$ maximal basis is a basis. 
+			For the reverse inclusion, let $x=c_1u+c_2v_2+\cdots+c_nv_n$ be an element in $\spn\left\{ u, v_2, \cdots, v_n \right\}.$ Substituting the expression for $u,$ we have
+			\begin{align*}
+				x &= c_1(a_1v_1+a_2v_2+\cdots+a_nv_n) + c_2v_2 + \cdots + c_nv_n \\
+				&= a_1c_1 v_1 + (a_2c_1+c_2) v_2 + \cdots + (a_nc_1+c_n)v_n
+			\end{align*}
+			so $x\in \spn\left\{ v_1, \cdots, v_n \right\}.$ Thus, the two spanning sets are equal, as desired.
+		\end{proof}
 
-			\item Show that a spanning set $\left\{ v_1, \cdots, v_n \right\}$ of $_F V$ with $n$ minimal basis is a basis.
+	\item[23.] 
+		\begin{enumerate}[(a)]
+			\item Show that an independent set $\left\{ v_1, \cdots, v_n \right\}$ in $_F V$ with $n$ maximal is a basis. 
+				\begin{proof}
+					If $n$ is maximal, then for any $v\in V,$ the set $\left\{ v, v_1, \cdots, v_n \right\}$ is linearly dependent, so we may write
+					\begin{align*}
+						0 &= av + a_1v_1+\cdots+a_nv_n
+					\end{align*}
+					for where not all of $a, a_i$ are nonzero. WLOG, $a\neq 0,$ so it has an inverse, and
+					\[v = -a\inv a_1v_1 - \cdots - a\inv a_n v_n\]
+					so $v$ is a linear combination of the $v_i.$ Since $v$ was arbitrary, it follows that the set $\left\{ v_1, \cdots, v_n \right\}$ spans $V,$ and if they are linearly independent, this set is a basis, as desired.
+				\end{proof}
+
+			\item Show that a spanning set $\left\{ v_1, \cdots, v_n \right\}$ of $_F V$ with $n$ minimal is a basis.
+				\begin{proof}
+					Let $v\in V,$ so since $\left\{ v_1, \cdots, v_n \right\}$ is spanning, we may write
+					\[v = a_1v_1 + \cdots + a_nv_n\]
+					for $a_i\in F, \forall i.$ If $n$ is minimal, then it must be that removing any of the $v_i$ from the set will cause it to not span $V.$ WLOG, remove $a_1.$ 
+				\end{proof}<++>
 				
 		\end{enumerate}
+
+	\item[30.] If $U$ is a subspace of a vector space $_F V,$ define a scalar multiplication on the (additive) factor group $V/U$ by $a(v+U)=av+U.$ Show that $V/U$ is a vector space and that if $V$ is finite dimensional, then $V/U$ is finite dimensional and $\dim V/U=\dim V-\dim U.$
+		\begin{proof} Let $a, b\in F$ and $v+U, w+U\in V/U.$
+			\begin{enumerate}[V1]
+				\item
+					\[a\left[ (v+U)+(w+U) \right] = a(v+w+U) = (av+aw) + U\]
+					
+				\item 
+					\[(a+b)(v+U) = a(v+U) + b(v+U) = (av+U)+(bv+U) = (av+bv) + U\]
+
+				\item 
+					\[a(b(v+U)) = a(bv + U) = abv + U = (ab)(v+U)\]
+
+				\item
+					\[1(v+U) = v+U\]
+					
+			\end{enumerate}
+			Thus the four vector space axioms are satisfied, so $V/U$ is a vector space.
+
+			Suppose $\dim V=n,$ and let $\left\{ v_1, \cdots, v_n \right\}$ be a basis. Then I claim that the set $\left\{ v_1+U, \cdots, v_n+U \right\}$ spans $V/U.$ For any coset $v+U\in V/U,$ since $v\in V,$ we may write
+			\begin{align*}
+				v &= a_1v_1+\cdots+a_nv_n \\
+				v+U &= (a_1v_1+\cdots+a_nv_n) + U \\
+				&= a_1(v_1+U) + \cdots + a_n(v_n+U) \\
+				&\in \spn\left\{ v_1+U, \cdots, v_n+U \right\}
+			\end{align*}
+			Thus, $\left\{ v_1+U, \cdots, v_n+U \right\}$ spans $V/U,$ and any spanning set contains a basis, so $\dim V/U\le n,$ so it is finite, as desired.
+		\end{proof}
 
 	\item[31.] A linear transformation $\varphi:{} _F V\to {}_F W$ is a map such that $\varphi(v+w)=\varphi(v)+\varphi(w)$ and $\varphi(av)=a\varphi(v)$ for all $a\in F$ and all $v, w\in V.$ 
 		\begin{enumerate}[(a)]
 			\item Show that $\ker\varphi$ and $\ima\varphi$ are subspaces of $V$ and $W,$ respectively.
+				\begin{proof}
+					$\ker\varphi:$ We have
+					\[\varphi(0)+\varphi(0)=\varphi(0+0)=\varphi(0)\implies \varphi(0)=0\]
+					so $0\in\ker\varphi.$ Let $v, w\in\ker\varphi$ and $a\in F.$ Then
+					\[\varphi(v)+\varphi(w)=0+0=0=\varphi(v+w)\implies v+w\in\ker\varphi\]
+					and
+					\[\varphi(av) = a\varphi(v)=a\cdot 0 = 0\implies av\in \ker\varphi\]
+					Thus, $\ker\varphi$ is a subgroup of $V$ that is closed under addition and scalar multiplication, so it is a subspace, as desired.
+
+					$\ima\varphi:$ From above, we know that $0\in\ima\varphi$ since $\varphi(0)=0.$ Let $\varphi(x), \varphi(y)\in\ima\varphi$ and $b\in F.$ Then 
+					\[\varphi(x)+\varphi(y) = \varphi(x+y)\in \ima\varphi\]
+					since $x+y\in V$ because $V$ is a vector space. We also have
+					\[b\varphi(x)=\varphi(bx) \in\ima\varphi\]
+					since $bx\in V.$ Thus, $\ima\varphi$ is a subgroup of $W$ that is closed under addition and scalar multiplication, so it is a subspace, as desired.
+				\end{proof}
 
 			\item If $V$ is finite dimensional, show that $\ima \varphi$ is also finite dimensional. 
+				\begin{proof}
+					Suppose $\dim V=n,$ and let $\left\{ v_1, \cdots, v_n \right\}$ be a basis for $V.$ Then I claim that $\left\{ \varphi(v_1), \cdots, \varphi(v_n) \right\}$ spans $\ima \varphi.$ Consider $\varphi(v)\in\ima \varphi,$ where $v\in V.$ Then we may write
+					\begin{align*}
+						v &= a_1v_1+\cdots+a_nv_n \\
+						\varphi(v) &= \varphi(a_1v_1+\cdots+a_nv_n) \\
+						&= a_1\varphi(v_1)+\cdots+a_n\varphi(v_n) \\
+						&\in \spn\left\{ \varphi(v_1), \cdots, \varphi(v_n) \right\}
+					\end{align*}
+					Since every spanning set contains a basis, it follows that $\dim (\ima \varphi)\le n,$ so it is finite, as desired.
+				\end{proof}
 
 			\item If $V$ is finite dimensional, show that $\dim V=\dim(\ker \varphi)+\dim(\ima \varphi).$ 
+				\begin{proof}
+					If $\dim V=\dim(\ker \varphi),$ then $\ker \varphi=V,$ so then $\dim(\ima \varphi)=\dim \left\{ 0 \right\} = 0,$ and the relation is satisfied.
+
+					Otherwise, since $\ker\varphi\subsetneq V,$ we have $\dim(\ker \varphi)<n.$ Let $\dim (\ker \varphi)=m,$ so that $\left\{ u_1, \cdots, u_m \right\}$ is a basis for $\ker \varphi.$ Then there exists some $v_1\in V$ such that $v_1\notin \ker\varphi.$
+				\end{proof}<++>
 		\end{enumerate}
 
 	\item[32.] Vector spaces $_F V$ and $_F W$ are called isomorphic if a one-to-one, onto linear transformation $V\to W$ exists. If $_F V$ has dimension $n,$ show that $V\cong F^n.$
+		\begin{proof}
+			Since $\dim V=n,$ its basis has $n$ elements, say $\left\{ v_1, \cdots, v_n \right\}.$ Let $\left\{ e_1, \cdots, e_n \right\}$ represent the standard basis for $F^n.$ For any $u\in V,$ we can represent it as
+			\[u = a_1v_1+\cdots+a_nv_n, \quad\quad a_i\in F, \forall i\]
+			Define the map
+			\begin{align*}
+				T:V&\to F^n \\
+				a_1v_1+\cdots+a_nv_n &\mapsto a_1e_1+\cdots+a_ne_n
+			\end{align*}
+			I claim that this is a one-to-one, onto linear transformation. 
+
+			To prove it is linear, let $a\in F$ and $u, v\in V$ such that 
+			\begin{align*}
+				u &= a_1v_1 + \cdots + a_nv_n \\
+				v &= b_1v_1 + \cdots + b_nv_n
+			\end{align*}
+			where $a_i, b_i\in F, \forall i.$ Then we have
+			\begin{align*}
+				T(u+v) &= T\left[ (a_1v_1+\cdots+a_nv_n) + (b_1v_1+\cdots+b_nv_n) \right] \\
+				&= T\left[ (a_1+b_1)v_1 + \cdots + (a_n+b_n)v_n \right] \\
+				&= (a_1+b_1)e_1 + \cdots + (a_n+b_n)e_n \\
+				&= \left( a_1e_1 + \cdots + a_ne_n \right) + \left( b_1e_1+\cdots+b_ne_n \right) \\
+				&= T(u) + T(v) \\
+				T(au) &= T\left[ a(a_1v_1+\cdots+a_nv_n) \right] \\
+				&= T(aa_1v_1 + \cdots + aa_nv_n) \\
+				&= aa_1e_1 + \cdots + aa_nv_n \\
+				&= a(a_1e_1 + \cdots + a_nv_n) \\
+				&= aT(u)
+			\end{align*}
+			Thus $T$ is a linear transformation.
+
+			To prove it is injective, suppose
+			\begin{align*}
+				T(u) &= T(v) \\
+				\implies T(a_1v_1 + \cdots +a_nv_n) &= T(b_1v_1 + \cdots + b_nv_n) \\
+				\implies a_1e_1 + \cdots + a_ne_n &= b_1e_1 + \cdots + b_ne_n
+			\end{align*}
+			Since the $e_i$ form a basis for $F^n,$ necessarily we must have $a_i=b_i, \forall i,$ so then
+			\[a_1v_n + \cdots + a_nv_n = b_1v_1 + \cdots + b_nv_n\implies u=v\]
+			so $T$ is injective.
+
+			To prove it is surjective, take any $w\in F^n,$ which can be written as a unique linear combination
+			\[w = c_1e_1+\cdots+c_ne_n\]
+			From here, we can recover $x\in V$ such that $T(x)=w$ by taking the coefficients of the $e_i,$ so that
+			\[x=c_1v_1+\cdots+c_nv_n\]
+			Thus, $T$ is surjective, so we have $V\cong F^n,$ as desired.
+		\end{proof}
 		
 \end{itemize}
 
