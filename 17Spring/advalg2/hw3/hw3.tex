@@ -115,10 +115,14 @@
 
 			\item Show that a spanning set $\left\{ v_1, \cdots, v_n \right\}$ of $_F V$ with $n$ minimal is a basis.
 				\begin{proof}
-					Let $v\in V,$ so since $\left\{ v_1, \cdots, v_n \right\}$ is spanning, we may write
-					\[v = a_1v_1 + \cdots + a_nv_n\]
-					for $a_i\in F, \forall i.$ If $n$ is minimal, then it must be that removing any of the $v_i$ from the set will cause it to not span $V.$ WLOG, remove $a_1.$ 
-				\end{proof}<++>
+					Suppose $\left\{ v_1, \cdots, v_n \right\}$ is not a basis. Then there exists a nontrivial linear combination
+					\[a_1v_1+\cdots+a_nv_n=0\]
+					WLOG $a_n\neq 0,$ so we have
+					\begin{align*}
+						v_n &= -a_n\inv a_1v_1 - \cdots - a_n\inv a_{n-1}v_{n-1}
+					\end{align*}
+					Thus, the set $\left\{ v_1, \cdots, v_{n-1} \right\}$ spans $V,$ which contradicts the minimality of $n.$ Thus, $\left\{ v_1, \cdots, v_n \right\}$ is a basis, as desired.
+				\end{proof}
 				
 		\end{enumerate}
 
@@ -185,10 +189,23 @@
 				\begin{proof}
 					If $\dim V=\dim(\ker \varphi),$ then $\ker \varphi=V,$ so then $\dim(\ima \varphi)=\dim \left\{ 0 \right\} = 0,$ and the relation is satisfied.
 
-					Otherwise, since $\ker\varphi\subsetneq V,$ we have $\dim(\ker \varphi)<n.$ Let $\dim (\ker \varphi)=m,$ so that $\left\{ u_1, \cdots, u_m \right\}$ is a basis for $\ker \varphi.$ Then there exists some $v_1\in V$ such that $v_1\notin \ker\varphi.$
-				\end{proof}<++>
+					Otherwise, since $\ker\varphi\subsetneq V,$ we have $\dim(\ker \varphi)<n.$ Let $\dim (\ker \varphi)=m,$ so that $\left\{ u_1, \cdots, u_m \right\}$ is a basis for $\ker \varphi.$ Then there exists some $v_1\in V$ such that $v_1\notin \ker\varphi.$ Thus, $\left\{ u_1, \cdots, u_m, v_1 \right\}$ is a linearly independent set in $V.$ We may continue extending this set, but this process must eventually stop since $V$ is finite dimensional, and the resulting set will be a basis. 
+					
+					Suppose the final basis for $V$ is $\left\{ u_1, \cdots, u_m, v_1, \cdots, v_n \right\}.$ I claim that $\left\{ \varphi(v_1), \cdots, \varphi(v_n) \right\}$ forms a basis for $\ima \varphi.$ From part (b), we know that it spans $\ima \varphi,$ so it suffices to prove that it is linearly independent. Suppose we have a linear combination
+					\begin{align*}
+						0&= a_1\varphi(v_1)+\cdots+a_n \varphi(v_n) \\
+						&= \varphi(a_1v_1+\cdots+a_nv_n)
+					\end{align*}
+					If $a_1v_1+\cdots+a_nv_n=0,$ then we must have $a_1=\cdots=a_n=0$ since the $v_i$ are linearly independent. Otherwise,
+					\begin{align*}
+						a_1v_1+\cdots+a_nv_n&\in\ker\varphi \\
+						\implies a_1v_1+\cdots+a_nv_n&\in\spn\left\{ u_1, \cdots, u_m \right\}
+					\end{align*}
+					which contradicts the linear independence of $\left\{ u_1, \cdots, u_m, v_1, \cdots, v_n \right\}.$ Thus, $a_1=\cdots=a_n=0,$ so $\left\{ \varphi(v_1), \cdots, \varphi(v_n) \right\}$ is a linearly independent set, and spans $\ima \varphi,$ so it is a basis for $\ima \varphi.$ Now, we have $\dim(\ker\varphi)=m$ and $\dim(\ima \varphi)=n,$ and $\dim V=m+n,$ so the relation is proven.
+				\end{proof}
 		\end{enumerate}
 
+		\newpage
 	\item[32.] Vector spaces $_F V$ and $_F W$ are called isomorphic if a one-to-one, onto linear transformation $V\to W$ exists. If $_F V$ has dimension $n,$ show that $V\cong F^n.$
 		\begin{proof}
 			Since $\dim V=n,$ its basis has $n$ elements, say $\left\{ v_1, \cdots, v_n \right\}.$ Let $\left\{ e_1, \cdots, e_n \right\}$ represent the standard basis for $F^n.$ For any $u\in V,$ we can represent it as
