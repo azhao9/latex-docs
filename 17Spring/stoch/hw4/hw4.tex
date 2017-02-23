@@ -1,0 +1,68 @@
+\documentclass{article}
+\usepackage[sexy, hdr, fancy]{evan}
+\setlength{\droptitle}{-4em}
+
+\lhead{Homework 4}
+\rhead{Introduction to Stochastic Processes}
+\lfoot{}
+\cfoot{\thepage}
+
+\newcommand{\var}{\mathrm{Var}}
+\newcommand{\cov}{\mathrm{Cov}}
+
+\begin{document}
+\title{Homework 4}
+\maketitle
+\thispagestyle{fancy}
+
+\begin{enumerate}
+	\item Consider a Markov chain with state space $\left\{ 1, 2, 3, 4, 5 \right\}$ having transition matrix
+		\[P=\begin{bmatrix}
+				0 & 1/3 & 2/3 & 0 & 0 \\
+				0 & 0 & 0 & 1/4 & 3/4 \\
+				0 & 0 & 0 & 1/4 & 3/4 \\
+				1 & 0 & 0 & 0 & 0 \\
+				1 & 0 & 0 & 0 & 0
+		\end{bmatrix}\]
+
+		\begin{enumerate}[(a)]
+			\item Is the chain irreducible?
+
+			\item Is the chain periodic? If so, what is the period?
+
+			\item Does the chain have an invariant distribution? If so, find it.
+				
+		\end{enumerate}
+
+	\item Let $\left\{ X_n \right\}$ be a Markov chain with state space $E=\left\{ 1, 2, 3, 4, 5 \right\}$ and transition matrix
+		\[P=\begin{bmatrix}
+				0.4 & 0.5 & 0.1 & 0 & 0 \\
+				0 & 0.3 & 0.2 & 0.5 & 0 \\
+				0 & 1 & 0 & 0 & 0 \\
+				1 & 0 & 0 & 0 & 0 \\
+				0.3 & 0.7 & 0 & 0 & 0
+		\end{bmatrix}\]
+
+		\begin{enumerate}[(a)]
+			\item Classify the states and identify all closed sets and irreducible sets.
+
+			\item Calculate the potential matrix $R$ and the hitting matrix $F.$
+
+			\item What can you say about the asymptotic behavior of the chain?
+				
+		\end{enumerate}
+
+	\item Prove, or give an explicit counterexample to refute, the following assertion: If $\left\{ X_n \right\}_{n\ge0}$ is a Markov chain, then $\left\{ X_n^2 \right\}_{n\ge0}$ is also a Markov chain.
+
+	\item A transition probability matrix $P$ is said to be doubly stochastic if $\displaystyle\sum_{i\in E}^{} P_{i, j}= 1$ for all $j\in E.$ That is, the column sums all equal 1. If a doubly stochastic chain has $n$ states and is irreducible and aperiodic, calculate its limiting probabilities.
+
+	\item Let $Y_n$ denote the sum of $n$ independent rolls of a fair die. Find
+		\[\lim_{n\to\infty} P[Y_n\text{ is a multiple of 13}].\]
+
+	\item Every time the Houston Eulers team wins a game, it wins its next game with probability 0.7. Every time it loses a game, it wins its next game with probability 0.4. If the team wins a game, then it has dinner together with probability 0.8, whereas if the team loses then it has dinner together with probability 0.2. In the long run, what proportion of games result in a team dinner?
+
+	\item A professor continually gives exams to her students. She can give three possible types of exams, and her class is graded as having done well or badly. Let $p_i$ denote the probability that the class does well on a type $i$ exam, and suppose that $p_1=0.3, p_2=0.6, p_3=0.9.$ If the class does well on an exam, then the next exam is equally likely to be any of the three types. If the class does badly, then the next exam is always type 1. What proportion of exams are type $i,$ for $i=1, 2, 3?$
+		
+\end{enumerate}
+
+\end{document}

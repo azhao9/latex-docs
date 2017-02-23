@@ -1,0 +1,272 @@
+\documentclass{article}
+\usepackage[sexy, hdr, fancy]{evan}
+\setlength{\droptitle}{-4em}
+
+\lhead{Homework 3}
+\rhead{Discrete Math}
+\lfoot{}
+\cfoot{\thepage}
+
+\newcommand{\var}{\mathrm{Var}}
+\newcommand{\cov}{\mathrm{Cov}}
+
+\begin{document}
+\title{Homework 3}
+\maketitle
+\thispagestyle{fancy}
+
+\begin{itemize}
+	\item[1.] Let $S=\Set{s\in \NN}{999<s<10000}.$ Calculate the following
+		\begin{enumerate}[(a)]
+			\item $\abs{S}$
+				\begin{soln}
+					$S$ consists of all elements from 1000 to 9999, inclusive, which is in bijection with the set obtained by subtracting 999 from every element, which is $\left\{ 1, 2, \cdots, 9000 \right\},$ which has 9000 elements, so $\abs{S}=\boxed{9000.}$
+				\end{soln}
+
+			\item $\abs{A},$ where $A=\Set{a\in S}{10\mid a}$
+				\begin{soln}
+					The elements of $A$ are $\left\{ 1000, 1010, 1020, \cdots, 9980, 9990 \right\},$ which are in bijection with the set obtained by dividing each element by 10, then subtracting 99, which is $\left\{ 1, 2, 3, \cdots, 899, 900 \right\}$ which has 900 elements, so $\abs{A}=\boxed{900.}$
+				\end{soln}
+
+			\item $\abs{B}$ where $B=\Set{b\in S}{\text{each of the digits in } b\text{ are distinct.}}$
+				\begin{soln}
+					There are 9 choices for the first digit of $b$ since it can't be 0, then 9 for the second since it can't be the same as the first, then 8 for the third, and 7 for the fourth, for a total of $9\cdot9\cdot8\cdot7=4536$ numbers with distinct digits, so $\abs{B}=\boxed{4536.}$
+				\end{soln}
+
+			\item $\abs{C}$ where $C=\Set{c\in B}{5\mid c}$
+				\begin{soln}
+					If $5\mid c,$ then $c$ must end in either 0 or 5.
+
+					Case 1: $c$ ends in 0. Then there are 9 possibilities for the first digit since it can't be 0 anyway, then 8 for the second, and 7 for the third, for a total of $9\cdot8\cdot7=504$ possible numbers.
+
+					Case 2: $c$ ends in 5. Then there are 8 possibilities for the first digit since it can't be 0 or 5, then 8 for the second, and 7 for the third, for a total of $8\cdot8\cdot7=448$ possible numbers.
+
+					Thus, there are $504+448=952$ possibilities for $c,$ so $\abs{C}=\boxed{952.}$
+				\end{soln}
+				
+		\end{enumerate}
+
+	\item[2.] In how many ways can 8 people be seated around a round table if
+		\begin{enumerate}[(a)]
+			\item there are no additional restrictions.
+				\begin{soln}
+					There are $8!$ ways to arrange the 8 people, but since rotations give rise to the same seating and there are 8 possible rotations, there are $8!/8=\boxed{5040}$ distinct ways to seat the people.
+				\end{soln}
+
+			\item Xena and Ares must sit next to each other.
+				\begin{soln}
+					If we group Xena and Ares together as a single "person" there are only 7 people to seat, with $7!/7$ ways to arrange them. Since the positions of Xena and Ares can be switched to give rise to a new arrangement, the total is $2\cdot 7!/7=\boxed{1440}$ distinct ways to seat the people.
+				\end{soln}
+				
+		\end{enumerate}
+
+		\newpage
+	\item[3.] Let $U=\Set{x\in\NN}{1\le x\le 9}$ be the universal set. Let
+		\begin{align*}
+			&A=\Set{x\in U}{x\le 5}& &B=\Set{x\in U}{x\ge5}& &C=\Set{x\in U}{2\mid x} \\
+			&D=\Set{x\in U}{x\text{ is odd}} & &E=\Set{x\in U}{3<x\le 7} & &F=\Set{x\in D}{x\neq 3, x\neq 7}
+		\end{align*}
+		Explicitly write out the elements for
+		\begin{enumerate}[(a)]
+			\item Each of the sets $U, A, B, C, D, E, F.$
+				\begin{answer*}
+					\begin{align*}
+						& & & U = \left\{ 1, 2, 3, 4, 5, 6, 7, 8, 9 \right\} & & \\
+						&A = \left\{ 1, 2, 3, 4, 5 \right\} & & B = \left\{ 5, 6, 7, 8, 9 \right\} & & C = \left\{ 2, 4, 6, 8 \right\} \\
+						& D = \left\{ 1, 3, 5, 7, 9 \right\} & & E = \left\{ 4, 5, 6, 7 \right\} & & F = \left\{ 1, 5, 9 \right\}
+					\end{align*}
+				\end{answer*}
+
+			\item $2^E$
+				\begin{answer*}
+					$\{ \varnothing, \left\{ 4 \right\}, \left\{ 5 \right\}, \left\{ 6 \right\}, \left\{ 7 \right\}, \left\{ 4, 5 \right\}, \left\{ 4, 6 \right\}, \left\{ 4, 7 \right\}, \left\{ 5, 6 \right\}, \left\{ 5, 7 \right\}, \left\{ 6, 7 \right\}, $
+					
+					$\left\{ 4, 5, 6 \right\}, \left\{ 4, 5, 7 \right\}, \left\{ 4, 6, 7 \right\}, \left\{ 5, 6, 7 \right\}, \left\{ 4, 5, 6, 7 \right\} \}$
+				\end{answer*}
+
+			\item $A-D, D-A$ and $A\Delta D.$
+				\begin{answer*}
+					\begin{align*}
+						& A-D = \left\{ 2, 4 \right\} & & D-A = \left\{ 7, 9 \right\} & & A\Delta D=(A-D)\cup(D-A)=\left\{ 2, 4, 7, 9 \right\}
+					\end{align*}
+				\end{answer*}
+
+			\item $\overline{C\cap E}$
+				\begin{answer*}
+					\begin{align*}
+						C\cap E &= \left\{ 4, 5, 6 \right\} \\
+						\implies \overline{C\cap E} &= \left\{ 1, 2, 3, 7, 8, 9 \right\}
+					\end{align*}
+				\end{answer*}
+
+			\item $F\times B$
+				\begin{answer*}
+					\begin{align*}
+						F\times B &= \Set{(f, b)}{f\in F, b\in B} \\
+						&= \left\{ (1, 5), (1, 6), (1, 7), (1, 8), (1, 9), (5, 5), (5, 6), (5, 7), (5, 8), (5, 9), (9, 5), (9, 6), (9, 7), (9, 8), (9, 9) \right\}
+					\end{align*}
+				\end{answer*}
+				
+		\end{enumerate}
+
+	\item[4.] Let $A$ and $B$ be sets and suppose $A\subseteq B.$ Prove the following.
+		\begin{enumerate}[(a)]
+			\item $A\cap B=A.$
+				\begin{proof}
+					Consider $x\in A.$ Then since $A\subseteq B,$ it follows that $x\in B,$ so $x\in A\cap B,$ and thus $A\subset A\cap B.$ For the reverse inclusion, consider $y\in A\cap B,$ which means $y\in A.$ Thus, $A\cap B\subset A,$ so $A\cap B=A,$ as desired.
+				\end{proof}
+
+			\item $A\cup B= B.$
+				\begin{proof}
+					Consider $x\in B.$ Then trivially it must be contained in $A\cup B,$ so $B\subset A\cup B.$ For the reverse inclusion, consider $y\in A\cup B,$ which means either $y\in A$ or $y\in B.$ Since $A\subset B,$ it follows that either $y\in B,$ so $A\cup B\subset B,$ so $A\cup B=B,$ as desired.
+				\end{proof}
+				
+		\end{enumerate}
+
+		\newpage
+	\item[5.] Consider the following data for 120 AMS students:
+		\begin{itemize}
+			\ii 65 study Spanish
+			\ii 45 study French
+			\ii 42 study German
+			\ii 20 study Spanish and French
+			\ii 25 study Spanish and German
+			\ii 15 study French and German
+			\ii 8 study Spanish, French, and German
+		\end{itemize}
+		Let $S, F, G$ denote the sets of AMS students studying Spanish, French, and German respectively.
+		\begin{enumerate}[(a)]
+			\item How many AMS students are studying at least one of these three languages?
+				\begin{soln}
+					Since 8 are studying all three, there are 12, 17, and 7 studying only Spanish and French, Spanish and German, and French and German, respectively. Then there are 28, 18, and 10 studying only Spanish, French, and German, respectively. Thus, in total there are \boxed{100} students studying at least one of these three languages.
+				\end{soln}
+
+			\item How many AMS students are studying none of these three languages?
+				\begin{soln}
+					Since there are 100 studying at least one, and 120 students total, there are \boxed{20} studying none of these three languages.
+				\end{soln}
+
+			\item How many AMS students are studying exactly one of these three languages?
+				\begin{soln}
+					From part (a), there are $28+18+10=\boxed{56}$ students studying exactly one of these three languages.
+				\end{soln}
+
+			\item How many AMS students are studying exactly two of these three languages?
+				\begin{soln}
+					From part (a), there are $12+17+7=\boxed{36}$ students studying exactly two of these three languages.
+				\end{soln}
+				
+		\end{enumerate}
+
+	\item[11.7] Which of the following statements are true?
+		\begin{enumerate}[a.]
+			\item $\exists! x\in \NN, x^2=4$
+				\begin{answer*}
+					This is true. The only value of $x$ is 2.
+				\end{answer*}
+
+			\item $\exists! x\in\ZZ, x^2=4$
+				\begin{answer*}
+					This is false. $x$ can be either 2 or $-2.$
+				\end{answer*}
+
+			\item $\exists! x\in\NN, x^2=3$
+				\begin{answer*}
+					This is false. There is no $x\in\NN$ such that $x^2=3$ since $\sqrt{3}$ is irrational.
+				\end{answer*}
+
+			\item $\exists! x\in\ZZ, \forall y\in Z, xy=x$
+				\begin{answer*}
+					This is true. The only value of $x$ is 0.
+				\end{answer*}
+
+			\item $\exists! x\in\ZZ, \forall y\in \ZZ, xy=y$
+				\begin{answer*}
+					This is true. The only value of $x$ is 1.
+				\end{answer*}
+				
+		\end{enumerate}
+
+		\newpage
+	\item[12.21] True or False (prove)
+		\begin{enumerate}[a.]
+			\item $A-(B-C)=(A-B)-C$
+				\begin{soln}
+					This is false. Consider $A=\left\{ 1, 2, 3 \right\}, B=\left\{ 2, 3, 4 \right\}, C=\left\{ 3, 4, 5 \right\}.$ Then
+					\begin{align*}
+						A-(B-C) &= \left\{ 1, 2, 3 \right\}-\left\{ 2 \right\} = \left\{ 1, 3 \right\} \\
+						(A-B)-C &= \left\{ 1 \right\} - \left\{ 3, 4, 5 \right\} = \left\{ 1 \right\}
+					\end{align*}
+					and the two sets are not equal.
+				\end{soln}
+
+			\item $(A-B)-C=(A-C)-B$
+				\begin{soln}
+					This is true. Consider $x\in (A-B)-C,$ so $x\notin C$ and $x\in (A-B)\implies x\in A, x\notin B.$ Since $x\in A$ and $x\notin C,$ it follows that $x\in (A-C),$ and since $x\notin B,$ we have $x\in (A-C)-B.$ For the reverse inclusion, consider $y\in (A-C)-B,$ so $y\notin B$ and $y\in(A-C)\implies y\in A, y\notin C.$ Since $y\in A$ and $y\notin B,$ it follows that $y\in (A-B),$ and since $y\notin C,$ we have $y\in(A-B)-C.$ Thus the two sets are equal.
+				\end{soln}
+
+			\item $(A\cup B)-C=(A-C)\cap (B-C)$
+				\begin{soln}
+					This is false. Consider $A=\left\{ 1, 2, 3 \right\}, B=\left\{ 2, 3, 4 \right\}, C=\left\{ 3, 4, 5 \right\}.$ Then
+					\begin{align*}
+						(A\cup B)-C &= \left\{ 1, 2, 3, 4 \right\} - \left\{ 3, 4, 5 \right\} = \left\{ 1, 2 \right\} \\
+						(A-C)\cap (B-C) &= \left\{ 1, 2 \right\}\cap \left\{ 2 \right\} = \left\{ 2 \right\}
+					\end{align*}
+					and the two sets are not equal.
+				\end{soln}
+
+			\item If $A=B-C,$ then $B=A\cup C.$
+				\begin{soln}
+					This is false. Consider $B=\left\{ 1, 2, 3 \right\}, C=\left\{ 2, 3, 4 \right\},$ so $A=\left\{ 1 \right\}.$ Then 
+					\[A\cup C=\left\{ 1, 2, 3, 4 \right\}\neq \left\{ 1, 2, 3 \right\} = B.\]
+				\end{soln}
+
+			\item If $B=A\cup C,$ then $A=B-C.$
+				\begin{soln}
+					This is false. Consider $A=\left\{ 1, 2, 3 \right\}, C=\left\{ 2, 3, 4 \right\},$ so $B=\left\{ 1, 2, 3, 4 \right\},$ then 
+				\[B-C=\left\{ 1 \right\}\neq \left\{ 1, 2, 3 \right\} = A.\]
+				\end{soln}
+
+			\item $\abs{A-B}=\abs{A}-\abs{B}$
+				\begin{soln}
+					This is false. Consider $A=\left\{ 1, 2, 3 \right\}, B=\left\{ 2, 3, 4 \right\}.$ Then
+					\begin{align*}
+						\abs{A-B} &= \abs{\left\{ 1 \right\}} = 1 \\
+						\abs{A}-\abs{B} &= 3 - 3 = 0
+					\end{align*}
+				\end{soln}
+
+			\item $(A-B)\cup B=A$
+				\begin{soln}
+					This is false. Consider $A=\left\{ 1, 2, 3 \right\}, B=\left\{ 2, 3, 4 \right\}.$ Then
+					\begin{align*}
+						(A-B) \cup B &= \left\{ 1 \right\}\cup \left\{ 2, 3, 4 \right\} = \left\{ 1, 2, 3, 4 \right\} \neq \left\{ 1, 2, 3 \right\} = A
+					\end{align*}
+					so the two sets are not equal.
+				\end{soln}
+
+			\item $(A\cup B)-B=A$
+				\begin{soln}
+					This is false. Consider $A=\left\{ 1, 2, 3 \right\}, B=\left\{ 2, 3, 4 \right\}.$ Then
+					\begin{align*}
+						(A\cup B)-B &= \left\{ 1, 2, 3, 4 \right\} - \left\{ 2, 3, 4 \right\} = \left\{ 1 \right\} \neq \left\{ 1, 2, 3 \right\} = A
+					\end{align*}
+					so the two sets are not equal.
+				\end{soln}
+				
+		\end{enumerate}
+
+	\item[12.26] Prove that the symmetric difference is a commutative operation: that is, for sets $A$ and $B,$ we have $A\Delta B=B\Delta A.$
+		\begin{proof}
+			We have 
+			\begin{align*}
+				A\Delta B &= (A-B)\cup (B-A) \\
+				&= (B-A)\cup (A-B) \\
+				&= B\Delta A
+			\end{align*}
+			since unions are commutative. Thus, the symmetric difference is commutative, as desired.
+		\end{proof}
+		
+\end{itemize}
+
+\end{document}

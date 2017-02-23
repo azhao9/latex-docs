@@ -1,0 +1,86 @@
+\documentclass{article}
+\usepackage[sexy, hdr, fancy]{evan}
+\setlength{\droptitle}{-4em}
+
+\lhead{Homework 4}
+\rhead{Advanced Algebra II}
+\lfoot{}
+\cfoot{\thepage}
+
+\begin{document}
+\title{Homework 4}
+\maketitle
+\thispagestyle{fancy}
+
+\begin{itemize}
+	\item[1.] Let $R$ be a ring, assumed commutative for simplicity, and let $f\in R[x]$ be a polynomial of degree $n\ge 1$ whose leading coefficient is a unit in $R.$ show that $R[x]/\left< f\right>,$ regarded as an $R$-module via the composite ring homomorphism $R\to R[x]\surjto R[x]/\left< f\right>,$ is a free $R$-module containing a basis with $n$ elements.
+		
+\end{itemize}
+
+\section*{Section 7.1: Modules}
+
+\begin{itemize}
+	\item[8.] Let $R$ be an integral domain. Given $_R M$ let $T(M)=\Set{t\in M}{t\text{ is torsion}}.$
+		\begin{enumerate}[(a)]
+			\item Show that $T(M)$ is a submodule of $M$ - called the torsion submodule.
+				\begin{proof}
+					Clearly, $0$ is torsion since it annihilates with every ring element, so $0\in T(M).$ Now, if $s, t\in T(M),$ then they are both torsion, so suppose $sx=ty=0$ for $x, y\in R$ nonzero. Now, we have
+					\[(s+t)(xy) = sxy+txy=(sx)y+(ty)x = 0\]
+					and since $R$ is an integral domain, $xy\neq 0,$ so $s+t$ is also torsion. Then $-s$ is also torsion because $(-s)x=-(sx)=0.$ Thus, $T(M)$ is a subgroup of $M.$
+
+					Now, for any $r\in R,$ we have $(rs)x=r(sx)=0,$ so $rs\in T(M),$ and thus $T(M)$ is a submodule of $M,$ as desired.
+				\end{proof}
+
+			\item Show that $T[M/T(M)]=0.$ We say $M/T(M)$ is torsion-free.
+				
+		\end{enumerate}
+
+	\item[11.] Let $M=\ZZ\oplus\ZZ,$ and $K=\Set{(k, k)}{k\in\ZZ}.$ Determine if $M=K\oplus X$ in case:
+		\begin{enumerate}[(a)]
+			\item $X=\Set{(k, 0)}{k\in\ZZ}$
+				\begin{soln}
+					If $y\in K\cap X,$ then $y=(k, k)=(i, 0)$ for some $k, i$ so $k=0\implies y=(0, 0).$ Now consider $(m, n)\in M,$ which has a unique decomposition $(m, n)=(n, n) + (m-n, 0),$ where $(n, n)\in K$ and $(m-n, 0)\in X.$ Thus, $M=K\oplus X.$
+				\end{soln}
+
+			\item $X=\Set{(0, k)}{k\in\ZZ}$
+				\begin{soln}
+					If $y\in K\cap X,$ then $y=(k, k)=(0, i)$ for some $k, i$ so $k=0\implies y=(0, 0).$ Now consider $(m, n)\in M,$ which has a unique decomposition $(m, n)=(m, m) + (0, n-m),$ where $(m, m)\in K$ and $(0, n-m)\in X.$ Thus, $M=K\oplus X.$
+				\end{soln}
+
+			\item $X=\Set{(2k, 3k)}{k\in\ZZ}$
+				\begin{soln}
+					If $y\in K\cap X,$ then $y=(k, k)=(2i, 3i)$ for some $k, i,$ so $2i=3i\implies i=0\implies y=(0, 0).$ Now consider $(m, n)\in M,$ which has a unique decomposition
+					\[(m, n) = (3m-2n, 3m-2n)+(2(n-m), 3(n-m))\]
+					where $(3m-2n, 3m-2n)\in K$ and $(2(n-m), 3(n-m))\in X.$ Thus, $M=K\oplus X.$
+				\end{soln}
+
+			\item $X=\Set{(k, -k)}{k\in\ZZ}$
+				\begin{soln}
+					Suppose $(m, n)\in M$ had a decomposition $(m, n) = (k, k) + (i, -i) = (k+i, k-i)$ for some $k, i.$ Now, $m+n=(k+i)+(k-i)=2k,$ so the only elements that have this decomposition are the ones where $m+n$ is even. Thus, $M\neq K\oplus X.$
+				\end{soln}
+
+		\end{enumerate}
+
+	\item[16.] Given $_R M,$ an $R$-linear map $\pi:M\to M$ is called a projection if $\pi^2=\pi.$
+		\begin{enumerate}[(a)]
+			\item If $\pi$ is a projection, show that $M=\pi(M)\oplus \ker \pi.$
+
+			\item If $M=N\oplus K,$ find a projection $\pi$ such that $N=\pi(M)$ and $K=\ker \pi.$
+				
+		\end{enumerate}
+
+	\item[23.] If $_R M$ and $_R N$ are simple, prove Schur's Lemma: If $\alpha:M\to N$ is $R$-linear, then either $\alpha\equiv0$ or $\alpha$ is an isomorphism.
+
+	\item[24.] Show that the following conditions on a finitely generated module $P$ are equivalent:
+		\begin{enumerate}[(1)]
+			\ii $P$ is projective
+			\ii $P$ is isomorphic to a direct summand of a free module.
+			\ii If $\alpha, \beta$ are $R$-linear and $\alpha$ is onto in the diagram, then $\gamma$ exists such that $\alpha\gamma=\beta.$
+			\ii If $\alpha:M\to P$ is onto and $R$-linear, there exists $\gamma:P\to M$ such that $a\gamma=1_P.$
+		\end{enumerate}
+
+	\item[25.] Show that $\QQ$ is a torsion-free $\ZZ$-module that is not free. 
+		
+\end{itemize}
+
+\end{document}
