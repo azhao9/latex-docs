@@ -14,7 +14,24 @@
 
 \begin{itemize}
 	\item[1.] Let $R$ be a ring, assumed commutative for simplicity, and let $f\in R[x]$ be a polynomial of degree $n\ge 1$ whose leading coefficient is a unit in $R.$ show that $R[x]/\left< f\right>,$ regarded as an $R$-module via the composite ring homomorphism $R\to R[x]\surjto R[x]/\left< f\right>,$ is a free $R$-module containing a basis with $n$ elements.
-		
+		\begin{proof}
+			The elements in $R[x]/\left< f\right>$ are the cosets $g+\left< f\right>$ where $g\in R[x].$ I claim that 
+			\[\left\{ 1+\left< f\right>, x+\left< f\right>, x^2+\left< f\right>, \cdots, x^{n-1}+\left< f\right> \right\}\]
+			is a basis for $R[x]/\left< f\right>.$ Consider any $g\in R[x].$ Since the leading coefficient of $f$ is a unit, we may write $g=qf+r,$ where $q, r\in R[x]$ and $\deg r<\deg f=n.$ Then in $R[x]/\left< f\right>,$ we have
+			\[\overline{g}=\overline{qf+r}=\overline{r}\]
+			since $f$ gets sent to 0. Since $\deg r<n,$ we may write
+			\begin{align*}
+				\overline{g}&=a_0+a_1x+\cdots+a_{n-1}x^{n-1} \\
+				\overline{g}+\left< f\right> &= (a_0+a_1x+\cdots+a_{n-1}x^{n-1}) + \left< f\right> \\ 
+				&= a_0(1+\left< f\right>) + a_1(x+\left< f\right>) + \cdots + a_{n-1} (x^{n-1}+\left< f\right>)
+			\end{align*}
+			so
+			\[R[x]/\left< f\right> = R(1+\left< f\right>) + R(x+\left< f\right>) + \cdots + R(x^{n-1}+\left< f\right>)\]
+			Clearly, all of these submodules are disjoint because if $h+\left< f\right>\in R(x^{k}+\left< f\right>)$ then $\deg h = k,$ and the degrees of all the $x^k$ are different. Thus, 
+			\[R[x]/\left< f\right> = R(1+\left< f\right>) \oplus R(x+\left< f\right>) \oplus \cdots \oplus R(x^{n-1}+\left< f\right>)\]
+			so these cosets are a basis with $n$ elements, as desired.
+		\end{proof}
+
 \end{itemize}
 
 \section*{Section 7.1: Modules}
@@ -26,13 +43,17 @@
 				\begin{proof}
 					Clearly, $0$ is torsion since it annihilates with every ring element, so $0\in T(M).$ Now, if $s, t\in T(M),$ then they are both torsion, so suppose $sx=ty=0$ for $x, y\in R$ nonzero. Now, we have
 					\[(s+t)(xy) = sxy+txy=(sx)y+(ty)x = 0\]
-					and since $R$ is an integral domain, $xy\neq 0,$ so $s+t$ is also torsion. Then $-s$ is also torsion because $(-s)x=-(sx)=0.$ Thus, $T(M)$ is a subgroup of $M.$
-
-					Now, for any $r\in R,$ we have $(rs)x=r(sx)=0,$ so $rs\in T(M),$ and thus $T(M)$ is a submodule of $M,$ as desired.
+					and since $R$ is an integral domain, $xy\neq 0,$ so $s+t$ is also torsion. Then $-s$ is also torsion because $(-s)x=-(sx)=0.$ Thus, $T(M)$ is a subgroup of $M.$ Now, for any $r\in R,$ we have $(rs)x=r(sx)=0,$ so $rs\in T(M),$ and thus $T(M)$ is a submodule of $M,$ as desired.
 				\end{proof}
 
+				\newpage
 			\item Show that $T[M/T(M)]=0.$ We say $M/T(M)$ is torsion-free.
-				
+				\begin{proof}
+					Consider a coset $m+T(M)$ in $M/T(M),$ where $m\in M.$ Suppose $m+T(M)$ is torsion, so that
+					\[r(m+T(M))=rm+T(M)=0+T(M)\implies rm\in T(M)\]
+					For some $r\in R.$ Then $rm$ is torsion in $M,$ so suppose $p(rm)=0$ for some $p\in R$ which means $(pr)m=0$ so $m$ is torsion. Thus, $m\in T(M)\implies m+T(M)=T(M),$ so the only coset that is torsion in $M/T/(M)$ is 0, as desired.
+				\end{proof}
+
 		\end{enumerate}
 
 	\item[11.] Let $M=\ZZ\oplus\ZZ,$ and $K=\Set{(k, k)}{k\in\ZZ}.$ Determine if $M=K\oplus X$ in case:
@@ -64,23 +85,72 @@
 	\item[16.] Given $_R M,$ an $R$-linear map $\pi:M\to M$ is called a projection if $\pi^2=\pi.$
 		\begin{enumerate}[(a)]
 			\item If $\pi$ is a projection, show that $M=\pi(M)\oplus \ker \pi.$
+				\begin{proof}
+					Suppose $x\in \pi(M)\cap \ker\pi.$ Then $\pi(x)=0$ and $x=\pi(y)$ for some $y\in M.$ Then $\pi^2(y)=0=\pi(y)$ since $\pi$ is a projection, so $x=0,$ and the intersection is trivial. Now, for the term $x-\pi(x),$
+					\[\pi(x-\pi(x))=\pi(x)-\pi^2(x)=0\implies (x-\pi(x))\in\ker\pi\]
+					Then since $\pi(x)\in \pi(M),$ we have
+					\[x=(x-\pi(x))+\pi(x)\]
+					and thus $M=\pi(M)\oplus \ker\pi$ as desired.
+				\end{proof}
 
 			\item If $M=N\oplus K,$ find a projection $\pi$ such that $N=\pi(M)$ and $K=\ker \pi.$
-				
+				\begin{soln}
+					Let $\pi(x)=x$ for all $x\in M.$ Then $N=\pi(M)\cong M$ and $K=\ker\pi=\left\{ 0 \right\},$ so this is indeed a direct sum.
+				\end{soln}
+
 		\end{enumerate}
 
+		\newpage
 	\item[23.] If $_R M$ and $_R N$ are simple, prove Schur's Lemma: If $\alpha:M\to N$ is $R$-linear, then either $\alpha\equiv0$ or $\alpha$ is an isomorphism.
+		\begin{proof}
+			Since $\ker\alpha$ is a submodule of $M,$ it is either $0$ or $M$ since $M$ is simple. By the Module Isomorphism Theorem, we have $M/\ker\alpha\cong \alpha(M).$ If $\ker\alpha=0,$ then $M/0\cong M\cong \alpha(M),$ which means $\alpha$ is an isomorphism. If $\ker\alpha=M,$ then $M/M\cong 0\cong \alpha(M),$ so $\alpha\equiv0,$ as desired.	
+		\end{proof}
 
 	\item[24.] Show that the following conditions on a finitely generated module $P$ are equivalent:
 		\begin{enumerate}[(1)]
-			\ii $P$ is projective
-			\ii $P$ is isomorphic to a direct summand of a free module.
-			\ii If $\alpha, \beta$ are $R$-linear and $\alpha$ is onto in the diagram, then $\gamma$ exists such that $\alpha\gamma=\beta.$
-			\ii If $\alpha:M\to P$ is onto and $R$-linear, there exists $\gamma:P\to M$ such that $a\gamma=1_P.$
+				\ii $P$ is projective
+				\ii $P$ is isomorphic to a direct summand of a free module.
+				\ii If $\alpha, \beta$ are $R$-linear and $\alpha$ is onto in the diagram, then $\gamma$ exists such that $\alpha\gamma=\beta.$
+				\ii If $\alpha:M\to P$ is onto and $R$-linear, there exists $\gamma:P\to M$ such that $\alpha\gamma=1_P.$
 		\end{enumerate}
+		\begin{proof}
+			$(1)\implies (2)$
+			Since $P$ is finitely generated, suppose by $p_1, \cdots, p_n,$ then there exists a surjective, $R$-linear map $\varphi:R^n\surjto P$ where $\varphi(e_i)=p_i, \forall i.$ Then since $P$ is projective, we have $R^n=\ker\varphi\oplus P_1.$ Since $R^n$ is a free module, and $P_1\cong P,$ it follows that $P$ is isomorphic to a direct summand of a free module.
+
+			$(2)\implies (3)$	
+			Suppose $F=P\oplus Q$ is free for some module $Q.$ Then define $\pi:F\to P$ by $\pi(p+q)=p$ for all $p\in P$ and $q\in Q.$ If $\left\{ x_1, \cdots, x_n \right\}$ is a basis of $F$ choose $m_i\in M$ such that $\alpha(m_i)=\beta\pi(x_i)$ for each $i,$ and the $m_i$ exists because $\alpha$ is surjective. Since $x_i$ are a basis for $F,$ there exists a map $\theta:F\to M$ such that $\theta(x_i)=m_i$ for each $i.$ Thus,
+			\[\beta\pi(x_i)=\alpha(m_i)=\alpha\theta(x_i)\]
+			and since $x_i$ form a basis for $F,$ we must have $\beta\pi=\alpha\theta.$ Now, let $\gamma:P\to M$ be the restriction of $\theta$ to $P,$ so that $\gamma(p)=\theta(p)$ for $p\in P.$ This is the existence we require, since
+			\[\beta\pi(p)=\beta(p)=\alpha\gamma(p)\]
+			for all $p\in P,$ and the statement is proven.
+
+			$(3)\implies (4)$
+			Let $N=P$ and $\beta=1_P,$ which trivially proves the statement. 
+
+			$(4)\implies (1)$
+			It suffices to show that $M=\ker\alpha\oplus P_1$ where $P_1\cong P.$ Let $x\in\ker\alpha\cap \gamma(P),$ so $\alpha(x)=0$ and $x=\gamma(y)$ for some $y\in P.$ Then $\alpha(\gamma(y))=y=0,$ so $x=\gamma(y)=\gamma(0)=0,$ and the intersection is trivial. Now, for the term $x-\gamma\alpha(x),$ we have
+			\[\alpha(x-\gamma\alpha(x))=\alpha(x)-\alpha\gamma\alpha(x)=\alpha(x)-\alpha(x)=0\implies (x-\gamma\alpha(x))\in\ker\alpha\]
+			Then since $\gamma\alpha(x)\in \gamma(P),$ we have
+			\[x=(x-\gamma\alpha(x))+\gamma\alpha(x)\]
+			and thus $M=\ker\alpha\oplus\gamma(P),$ so $P$ is projective, as desired.
+		\end{proof}
 
 	\item[25.] Show that $\QQ$ is a torsion-free $\ZZ$-module that is not free. 
-		
+		\begin{proof}
+			Call an additive group $Q$ divisible if for all $0<n\in\ZZ$ and all $q\in Q,$ the equation $nx=q$ has a solution $x\in Q.$ 
+
+			Clearly $\QQ$ is divisible because for any $n\in\ZZ$ and $q=a/b\in\QQ,$ we have
+			\[nx=q\implies x=q\frac{a}{bn}\in\QQ\]
+
+			Now, suppose $Q=P\oplus R$ where $Q$ is divisible. Let $nx=p$ where $p\in P\subset Q$ and since $Q$ is divisible, $x\in Q.$ Then write $x=y+z$ where $y\in P$ and $z\in R,$ so $nx=ny+nz=p.$ Since $ny\in P$ and $nz\in Q,$ we must have $nz=0\implies nx=ny.$ Thus, this $y\in P$ exists such that $ny=p$ so $P$ is divisible. 
+
+			$\ZZ$ is not divisible. Consider $2x=3,$ then there is no solution $x\in\ZZ.$ 
+
+			To show that $\QQ$ is torsion free, let $q\in \QQ$ and $n\in\ZZ$ such that $nq=0$ where $n\neq 0.$ Then we have $q=\frac{1}{n}(nq)=0,$ so the only torsion element in $\QQ$ is 0. Now, suppose $\QQ$ has a finite basis $\left\{ x_1, \cdots, x_n \right\}.$ Then $\QQ$ decomposes as
+			\[\QQ=\ZZ x_1 \oplus \cdots \oplus \ZZ x_n\]
+			We know $\QQ$ is divisible, so each of the $\ZZ x_i$ is divisible, but this is a contradiction since $\ZZ$ is not divisible, and $\ZZ\cong \ZZ x_i,$ so such a basis cannot exist, and $\QQ$ is not free, as desired.
+		\end{proof}
+
 \end{itemize}
 
 \end{document}
