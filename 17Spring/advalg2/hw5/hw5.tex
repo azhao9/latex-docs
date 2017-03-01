@@ -1,0 +1,39 @@
+\documentclass{article}
+\usepackage[sexy, hdr, fancy]{evan}
+\setlength{\droptitle}{-4em}
+
+\lhead{Homework 5}
+\rhead{Advanced Algebra II}
+\lfoot{}
+\cfoot{\thepage}
+
+\DeclareMathOperator{\ann}{ann}
+
+\begin{document}
+\title{Homework 5}
+\maketitle
+\thispagestyle{fancy}
+
+\begin{enumerate}
+	\item Suppose that $R=\prod_{i=1}^{m}R_i$ is a product of rings. If $M_i$ is an $R_i$ module for each $i,$ then $\bigoplus_{i=1}^m M_i$ is naturally an $R$-module, via the rule
+		\[(r_1, \cdots, r_m)\cdot(x_1, \cdots, x_m)=(r_1x_1, \cdots, r_m x_m)\]
+		For $i=1, \cdots, m,$ let $e_i\in R$ be the tuple whose $i$th entry is $1_R,$ and whose other entries are all 0. Define the submodule $M_i:=e_iM.$ Show that $M_i$ is naturally an $R_i$-module, and that $M=\bigoplus_{i=1}^m M_i.$
+
+	\item Let $R$ be a PID, let $d\in R$ be a nonzero nonunit, and let $d\sim p_1^{k_1} \cdots p_m^{k_m}$ be a prime factorization of $d,$ where $p_1, \cdots, p_k$ are pairwise non-associated prime elements and $k_i>0$ for all $i.$ Show that the canonical homomorphism
+		\begin{align*}
+			R &\to \prod_{i=1}^{m} R/\left< p_i^{k_i}\right> \\
+			r &\mapsto \left(r+\left< p_1^{k_1}\right>, \cdots, r+\left< p_m^{k_m}\right>\right)
+		\end{align*}
+		induces an isomorphism $R/\left< d\right>\cong \prod_{i=1}^{m} R/\left< p_i^{k_i}\right>.$ 
+
+	\item Keep the notation of Problem 2. Let $M$ be an $R$-module such that $dM=0.$ By the paragraph preceding Theorem 7, Section 7.1, $M/dM\cong M$ is naturally an $R/\left< d\right>$-module. Hence by Problem 2, $M$ is naturally an $R/\left< p_1^{k_1}\right>\times\cdots\times R/\left< p_m^{k_m}\right>$-module. Let $M=\bigoplus_{i=1}^m M_i$ be the corresponding direct sum decomposition obtained from Problem 1.
+		\begin{enumerate}[(a)]
+			\item Show that $M_i=p_i M$ as submodules of $M$ for all $i.$
+
+			\item Show that if $\left< d\right>=\ann(M),$ then $p_i M\neq 0$ for all $i.$
+				
+		\end{enumerate}
+
+\end{enumerate}
+
+\end{document}
