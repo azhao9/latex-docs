@@ -17,7 +17,24 @@
 \begin{enumerate}
 	\item Suppose that $R=\prod_{i=1}^{m}R_i$ is a product of rings. If $M_i$ is an $R_i$ module for each $i,$ then $\bigoplus_{i=1}^m M_i$ is naturally an $R$-module, via the rule
 		\[(r_1, \cdots, r_m)\cdot(x_1, \cdots, x_m)=(r_1x_1, \cdots, r_m x_m)\]
-		For $i=1, \cdots, m,$ let $e_i\in R$ be the tuple whose $i$th entry is $1_R,$ and whose other entries are all 0. Define the submodule $M_i:=e_iM.$ Show that $M_i$ is naturally an $R_i$-module, and that $M=\bigoplus_{i=1}^m M_i.$
+		For $i=1, \cdots, m,$ let $e_i\in R$ be the tuple whose $i$th entry is $1_{R_i},$ and whose other entries are all 0. Let $M$ be an $R$-module and define the submodule $M_i:=e_iM.$ Show that $M_i$ is naturally an $R_i$-module, and that $M=\bigoplus_{i=1}^m M_i.$
+		\begin{proof}
+			WLOG, let $i=1.$ The argument is the same for any $i.$ Then we have
+			\[e_1M=\Set{(1_{R_1}, 0, \cdots, 0)\cdot x}{x\in M}\]
+			so if $r_1\in R_1,$ we can write
+			\[r_1\left[(1_{R_1}, 0, \cdots, 0)\cdot x\right] = (r_1, 0, \cdots, 0)\cdot x\]
+			so $e_1 M$ is naturally an $R_1$-module. By extension, $e_iM$ is an $R_i$-module for all $i.$
+
+			For any $x\in M,$ since $(1_{R_1}, \cdots, 1_{R_m})$ is the identity element in $R$ and since $M$ is an $R$-module, we have
+			\[(1_{R_1}, \cdots, 1_{R_m})\cdot x = (e_1+\cdots+e_m)\cdot x = e_1x + \cdots + e_mx = x\]
+			where $e_ix\in M_i$ for all $i,$ so $M=M_1+\cdots+ M_m.$ Suppose $y\in M_i\cap M_j.$ Then
+			\begin{align*}
+				y = e_ix_i&=e_jx_j \\
+				\implies e_i(e_ix_i) &= (e_ie_i)x_i = e_ix_i \\
+				&= e_i(e_jx_j) = (e_ie_j)x_j = 0
+			\end{align*}
+			so $y=e_ix_i=0,$ and thus the intersection between $M_i$ and $M_j$ is trivial, so this is a direct sum.
+		\end{proof}
 
 	\item Let $R$ be a PID, let $d\in R$ be a nonzero nonunit, and let $d\sim p_1^{k_1} \cdots p_m^{k_m}$ be a prime factorization of $d,$ where $p_1, \cdots, p_k$ are pairwise non-associated prime elements and $k_i>0$ for all $i.$ Show that the canonical homomorphism
 		\begin{align*}
@@ -25,15 +42,124 @@
 			r &\mapsto \left(r+\left< p_1^{k_1}\right>, \cdots, r+\left< p_m^{k_m}\right>\right)
 		\end{align*}
 		induces an isomorphism $R/\left< d\right>\cong \prod_{i=1}^{m} R/\left< p_i^{k_i}\right>.$ 
+		\begin{proof}
+			By the Chinese Remainder Theorem, we have
+			\[R/\left< p_1^{k_1}\right>\times R/\left< p_2^{k_2}\right>\cong R/\left< p_1^{k_1} p_2^{k_2}\right>\]
+			since $\gcd\left(p_1^{k_1}, p_2^{k_2}\right)\sim 1.$ Then since $\gcd\left( p_1^{k_1}p_2^{k_2}, p_3^{k_3} \right)\sim 1,$ we can continue by induction to get
+			\[R/\left< p_1^{k_1}\right>\times\cdots\times R/\left< p_m^{k_m}\right>\cong R/\left< p_1^{k_1}\cdots p_m^{k_m}\right>\cong R/\left< d\right>\]
+			as desired.
+		\end{proof}
 
 	\item Keep the notation of Problem 2. Let $M$ be an $R$-module such that $dM=0.$ By the paragraph preceding Theorem 7, Section 7.1, $M/dM\cong M$ is naturally an $R/\left< d\right>$-module. Hence by Problem 2, $M$ is naturally an $R/\left< p_1^{k_1}\right>\times\cdots\times R/\left< p_m^{k_m}\right>$-module. Let $M=\bigoplus_{i=1}^m M_i$ be the corresponding direct sum decomposition obtained from Problem 1.
 		\begin{enumerate}[(a)]
-			\item Show that $M_i=p_i M$ as submodules of $M$ for all $i.$
+			\item Show that $M_i=M(p_i)$ as submodules of $M$ for all $i.$
+				\begin{proof}
+					Since $M$ has the direct sum decomposition, we can write
+					\[M\ni x=x_1+\cdots+x_m\]
+					where $x_i\in M_i.$ Then WLOG take $i=1,$ and the argument is the same for all $i.$ Then we have
+					\begin{align*}
+						M(p_1) &= \Set{x_1+\cdots+x_m}{p_1^n(x_1+\cdots+x_m)=0\text{ for some }n}
+					\end{align*}
+					Define $P_i:=\left< p_i^{k_i}\right>$ for all $i.$ Then $M=\bigoplus_{i=1}^m M_i$ is an $R/P_1\times\cdots\times R/P_m$-module by the action
+					\[(r_1+P_1, \cdots, r_m+P_m)\cdot(x_1+\cdots+x_m) = r_1x_1+\cdots+r_mx_m\]
+					so the condition in $M_i$ is
+					\begin{align*}
+						p_1^n(x_1+\cdots+x_m) &= p_1^nx_1+\cdots+p_1^n x_m \\
+						&= (p_1^n+P_1, p_1^n+P_2, \cdots, p_1^n+P_m)\cdot(x_1+\cdots+x_m) \\
+						&= (0+P_1, p_1^n+P_2, \cdots, p_1^n+P_m)\cdot(x_1+\cdots+x_m) \\
+						&= p_1^nx_2+\cdots+p_1^nx_m \\
+						&= p_1^n(x_2+\cdots+x_m) \\
+						\implies p_1^n x_1 &= 0 \\
+						\implies p_1^n(x_2+\cdots+x_m) &= 0 \\
+						\implies x_2=\cdots=x_m&=0
+					\end{align*}
+					Thus, we have
+					\begin{align*}
+						M(p_1) &= \Set{x_1+\cdots+x_m}{p_1^nx_1=0, x_2=\cdots=x_m=0} \\
+						&= \Set{x_1\in M_1}{p_1^n x_1=0}
+					\end{align*}
+					However, for all $x_1\in M_1,$ we have
+					\[p_1^nx_1=(p_1^n + P_1)\cdot x_1 = (0+P_1)\cdot x_1=0\]
+					so it follows that
+					\[M(p_1)=M_1\]
+					and by extension, $M(p_i)=M_i$ for all $i.$
+				\end{proof}
 
-			\item Show that if $\left< d\right>=\ann(M),$ then $p_i M\neq 0$ for all $i.$
+			\item Show that if $\left< d\right>=\ann(M),$ then $M(p_i)\neq 0$ for all $i.$
+				\begin{proof}
+					We have $d\sim p_1^{k_1}\cdots p_m^{k_m}\in\ann(M)$ so
+					\[(p_1^{k_1}\cdots p_m^{k_m})\cdot x = p_1^{k_1}\left[ (p_2^{k_2}\cdots p_m^{k_m})\cdot x \right] = 0\]
+					for all $x\in M.$ However, since
+					\[(p_2^{k_2}\cdots p_m^{k_m})\notin \left< p_1^{k_1}p_2^{k_2}\cdots p_m^{k_m}\right> = \left< d\right> = \ann(M)\]
+					it follows that
+					\[(p_2^{k_2}\cdots p_m^{k_m})\cdot x_1\neq 0\]
+					for some $x_1\in M.$ Then since $(p_2^{k_2}\cdots p_m^{k_m})\cdot x_1$ is annihilated by $p_1^{k_1}$ and is nonzero, we must have $M(p_1)\neq 0,$ and by a similar argument, $M(p_i)\neq 0$ for all $i.$
+				\end{proof}
 				
 		\end{enumerate}
 
 \end{enumerate}
+
+\section*{Section 7.2: Modules Over a PID}
+
+\begin{itemize}
+	\item[2.] If $p$ is a prime, determine all abelian groups of order:
+		\begin{enumerate}[(a)]
+			\item $p^4$
+				\begin{soln}
+					The abelian groups (up to isomorphism) are
+					\begin{align*}
+						\ZZ_{p^4} & \quad\quad \ZZ_{p^3}\oplus \ZZ_{p} \\
+					 	\ZZ_{p^2}\oplus\ZZ_p\oplus\ZZ_{p} &\quad\quad \ZZ_p\oplus\ZZ_p\oplus\ZZ_p\oplus\ZZ_p \\
+						\ZZ_{p^2}\oplus\ZZ_{p^2}
+					\end{align*}
+				\end{soln}
+
+			\item $p^6$
+				\begin{soln}
+					The abelian groups (up to isomorphism) are
+					\begin{align*}
+						\ZZ_{p^6} & \quad\quad \ZZ_{p^5}\oplus \ZZ_{p} \\
+						\ZZ_{p^4}\oplus\ZZ_p\oplus \ZZ_{p} &\quad\quad \ZZ_{p^3}\oplus\ZZ_p\oplus\ZZ_p\oplus\ZZ_{p} \\
+						\ZZ_{p^2}\oplus\ZZ_p\oplus\ZZ_p\oplus\ZZ_p\oplus\ZZ_{p} &\quad\quad \ZZ_p\oplus\ZZ_p\oplus \ZZ_p\oplus \ZZ_p\oplus \ZZ_p\oplus \ZZ_p\\
+						\ZZ_{p^2}\oplus\ZZ_{p^2}\oplus\ZZ_{p}\oplus\ZZ_{p} &\quad\quad \ZZ_{p^3}\oplus\ZZ_{p^2}\oplus\ZZ_{p} \\
+						\ZZ_{p^4}\oplus\ZZ_{p^2} &\quad\quad \ZZ_{p^2}\oplus\ZZ_{p^2}\oplus\ZZ_{p^2} \\
+						\ZZ_{p^3}\oplus\ZZ_{p^3}
+					\end{align*}
+				\end{soln}
+				
+		\end{enumerate}
+
+	\item[13.] If $K\subseteq M$ are modules, show that $M$ is torsion if and only if both $K$ and $M/K$ are torsion.
+		\begin{proof}
+			$(\implies):$ If $M$ is torsion, then since $K\subseteq M,$ it follows that $K$ must also be torsion. Then for $m+K\in M/K,$ where $m\in M,$ suppose $m$ is annihilated by nonzero $x\in R,$ so that $xm=0.$ Then we have
+			\[x(m+K)=xm+K=0+K\]
+			so $m+K$ is torsion since it is annihilated by a nonzero $x.$
+
+			$(\impliedby):$ Let $m+K\in M/K$ be torsion and annihilated by nonzero $x\in R,$ so
+			\[x(m+K)=xm+K=K\implies xm\in K\]
+			Since $K$ is torsion, it follows that $xm$ is also torsion, which means that $m$ is torsion. Thus, since $m\in M$ was arbitrary, $M$ is also torsion.
+		\end{proof}
+
+	\item[15.] If $M=M_1\oplus \cdots \oplus M_n$ are modules, show that $T(M)=T(M_1)\oplus\cdots\oplus T(M_n).$
+		\begin{proof}
+			All elements in $M$ are of the form $(m_1, \cdots, m_n)$ where $m_i\in M_i.$ Then if such an element is torsion suppose it is annihilated by nonzero $x\in R,$ we have
+			\[x(m_1, \cdots, m_n)=(xm_1, \cdots, xm_n)=(0, \cdots, 0)\]
+			so $xm_i=0$ for all $i.$ Thus, $m_i$ is torsion for all $i,$ so 
+			\[T(M)\subset T(M_1)\oplus\cdots\oplus T(M_n)\]
+
+			Let $m_i\in M_i$ be torsion and annihilated by nonzero $x_i\in R$ for all $i.$ Then if $d=x_1\cdots x_n,$ it follows that
+			\[d(m_1, \cdots, m_n)=(0, \cdots, 0)\]
+			so $(m_1, \cdots, m_n)\in M$ is also torsion, and thus
+			\[T(M_1)\oplus\cdots\oplus T(M_n)\subset T(M)\]
+			so the two are equal.
+		\end{proof}
+
+	\item[24.] Show that every submodule of a finitely generated module over a PID is again finitely generated.
+		\begin{proof}
+			Let $M$ be finitely generated over a PID $R$ by $x_1, \cdots, x_m.$ Then there exists a surjective map $\varphi:R^m\surjto M$ where $\varphi(e_i)=x_i$ for $i=1, \cdots, m.$ Then if $N$ is a submodule of $M,$ since $\varphi$ is surjective, we can find the inverse image of $N$ in $R^m,$ say it is $K\subset R^m,$ which is a submodule of $R^m.$ By the Submodule Theorem, since $R^m$ is a free module, $K$ has rank at most $m,$ so it is finitely generated. Then we can write a surjective map $\theta: K\surjto N$ and since $K$ is finitely generated, it follows that $N$ must be as well.
+		\end{proof}
+		
+\end{itemize}
 
 \end{document}
