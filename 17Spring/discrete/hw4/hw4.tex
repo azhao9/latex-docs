@@ -1,0 +1,186 @@
+\documentclass{article}
+\usepackage[sexy, hdr, fancy]{evan}
+\setlength{\droptitle}{-4em}
+
+\lhead{Homework 4}
+\rhead{Discrete Math (Section 05)}
+\lfoot{}
+\cfoot{\thepage}
+
+\newcommand{\var}{\mathrm{Var}}
+\newcommand{\cov}{\mathrm{Cov}}
+
+\begin{document}
+\title{Homework 4}
+\maketitle
+\thispagestyle{fancy}
+
+\begin{itemize}
+	\item[14.15] Prove: A relation $R$ on a set is antisymmetric if and only if
+		\[R\cap R\inv \subseteq \Set{(a, a)}{a\in A}\]
+		\begin{proof}
+			$(\implies):$ Suppose $(x, y)\in R\cap R\inv.$ Then $(x, y)\in R$ and $(x, y)\in R\inv\implies (y, x)\in R.$ Since $R$ is antisymmetric, it follows that $x=y,$ so 
+			\[R\cap R\inv\subseteq \Set{(a, a)}{a\in A}\]
+
+			$(\impliedby):$ Thus, if $(x, y)\in R\cap R\inv,$ we have $(x, y)\in R$ and $(x, y)\in R\inv\implies (y, x)\in R.$ Since $R\cap R\inv \subseteq \Set{(a, a)}{a\in A},$ that means all elements in $R\cap R\inv$ are of the form $(z, z)$ for $z\in A,$ so that means $x=y,$ and thus $R$ is antisymmetric.
+		\end{proof}
+
+	\item[2.] A relation $R$ on a nonempty set $A$ is said to be circular if whenever $(a, b)\in R$ and $(b, c)\in R,$ then $(c, a)\in R.$ 
+		\begin{enumerate}[(a)]
+			\item Is circular just another name for transitive?
+				\begin{answer*}
+					No. Circular also implies symmetric. If $(a, b)\in R$ and $(a, b)\in R,$ then $(b, a)\in R$ which is the requirement for symmetry. 
+				\end{answer*}
+
+			\item Prove that a relation $R$ on a nonempty set $A$ is an equivalence relation if and only if $R$ is reflexive and circular.
+				\begin{proof}
+					$(\implies):$ If $R$ is an equivalence relation, it is reflexive by definition. It is also transitive, so $(a, b), (b, c)\in R\implies (a, c)\in R.$ Since equivalence relations are also symmetric, we have $(a, c)= (c, a)\in R,$ so $R$ is circular as well.
+
+					$(\impliedby):$ If $R$ is circular, it is symmetric by above. Then since $(a, b), (b, c)\in R\implies (c, a)=(a, c)\in R,$ it follows that $R$ is also transitive, so since $R$ is also reflexive, it is an equivalence relation.
+				\end{proof}
+				
+		\end{enumerate}
+
+	\item[3.] Let $A=\Set{x\in\NN}{1\le x\le 5}$ and let $R$ be a relation on $A$ defined as follows: $(x, y)\in R$ if $3\mid(x-y).$
+		\begin{enumerate}[(a)]
+			\item Which of the five main properties of relations does $R$ have?
+				\begin{soln}
+					We have $(x, x)\in R$ since $x-x=0$ and $3\mid 0,$ so $R$ is reflexive. Obviously then $R$ is not irreflexive. If $(x, y)\in R$ then $3\mid (x-y),$ so let $x-y=3k$ for some $k\in\ZZ.$ Then $y-x=3(-k),$ so $3\mid (y-x),$ and thus $(y, x)\in R,$ so $R$ is symmetric. If $x=2$ and $y=5,$ then $(2, 5)\in R$ and $(5, 2)\in R$ since $3\mid (2-5)$ and $3\mid (5-2),$ but $2\neq 5,$ so $R$ is not antisymmetric. If $(x, y), (y, z)\in R,$ then $3\mid (x-y)$ and $3\mid (y-z).$ Suppose $x-y=3k$ and $y-z=3m$ for some $k, m\in\ZZ.$ Then adding the two equations, we have $(x-y)+(y-z)=x-z=3k+3m=3(k+m),$ so $3\mid (x-z)$ and thus $(x, z)\in R,$ so $R$ is transitive.
+				\end{soln}
+
+			\item Is $R$ an equivalence relation?
+				\begin{answer*}
+					Since $R$ is reflexive, symmetric, and transitive, it is an equivalence relation.
+				\end{answer*}
+
+			\item Is $R$ a partial order relation?
+				\begin{answer*}
+					Since $R$ is not antisymmetric, it is not a partial order relation.
+				\end{answer*}
+				
+		\end{enumerate}
+
+	\item[4.] Let $R$ be a relation on a set $A.$ We say that $R$ is complete if for every $x$ and $y$ in $A$ either $(x, y)\in R$ or $(y, x)\in R$ (or both).
+
+		Let $S=\left\{ a, b, c \right\}$ and let $A=2^S.$ Let $R$ be a relation on $A$ defined as follows: $(x, y)\in R$ if $x\subseteq y.$
+		\begin{enumerate}[(a)]
+			\item Is $R$ a partial order relation?
+				\begin{soln}
+					Reflexive: clearly $x\subseteq x$ so $(x, x)\in R.$
+
+					Antisymmetric: If $(x, y)\in R$ and $(y, x)\in R,$ then $x\subseteq y$ and $y\subseteq x,$ so $x=y$ as sets.
+
+					Transitive: If $(x, y), (y, z)\in R,$ then $x\subseteq y$ and $y\subseteq z,$ so clearly $x\subseteq z,$ and thus $(x, z)\in R.$
+
+					$R$ is indeed a partial order relation.
+				\end{soln}
+
+			\item Is $R$ an equivalence relation?
+				\begin{soln}
+					No, since $R$ is not symmetric. Let $x=\left\{ a \right\}$ and $y=\left\{ a, b \right\},$ then $(x, y)\in R$ since $\left\{ a \right\}\subseteq \left\{ a, b \right\},$ but $(y, x)\notin R$ since $\left\{ a, b \right\}\nsubseteq \left\{ a \right\}.$
+				\end{soln}
+
+			\item Is $R$ complete?
+				\begin{soln}
+					No. Let $x=\left\{ a \right\}$ and $y=\left\{ b \right\}.$ Then $x\nsubseteq y$ and $y\nsubseteq z,$ so $(x, y)\notin R$ and $(y, x)\notin R.$
+				\end{soln}
+				
+		\end{enumerate}
+
+	\item[5.] Let $S=\left\{ 1, 2, 3, 4, 5 \right\}$ and let $A=2^S.$ Let $R$ be a relation on $A$ defined as follows: $(x, y)\in R$ if $x\cup \left\{ 3, 4 \right\}=y\cup\left\{ 3, 4 \right\}.$
+		\begin{enumerate}[(a)]
+			\item Prove $R$ is an equivalence relation.
+				\begin{proof}
+					Reflexive: Since
+					\[x\cup\left\{ 3, 4 \right\}=x\cup \left\{ 3, 4 \right\}\]
+					trivially, we have $(x, x)\in R$ and $R$ is reflexive.
+
+					Symmetric: If $(x, y)\in R,$ then
+					\[x\cup \left\{ 3, 4 \right\}=y\cup \left\{ 3, 4 \right\} = x\cup \left\{ 3, 4 \right\}\]
+					so $(y, x)\in R$ and $R$ is symmetric.
+
+					Transitive: If $(x, y), (y, z)\in R,$ then
+					\begin{align*}
+						x\cup \left\{ 3, 4 \right\} &= y\cup \left\{ 3, 4 \right\} \\
+						y\cup \left\{ 3, 4 \right\} &= z\cup \left\{ 3, 4 \right\} \\
+						\implies x\cup \left\{ 3, 4 \right\} &= z\cup \left\{ 3, 4 \right\}
+					\end{align*}
+					so $(x, z)\in R$ and $R$ is transitive.
+
+					Thus, $R$ is indeed an equivalence relation.
+				\end{proof}
+
+			\item What is the equivalence class of $\left\{ 1, 3 \right\}?$
+				\begin{soln}
+					We have $\left\{ 1, 3 \right\}\cup \left\{ 3, 4 \right\}=\left\{ 1, 3, 4 \right\}$ so if $x\in\left[ \left\{ 1, 3 \right\} \right]$ we must have $x\cup \left\{ 3, 4 \right\} = \left\{ 1, 3, 4 \right\}.$ Thus, the class is explicitly
+					\[ \left[ \left\{ 1, 3 \right\} \right]=\left\{ \left\{ 1, 3, 4 \right\}, \left\{ 1, 3 \right\}, \left\{ 1, 4 \right\}, \left\{ 1 \right\} \right\}\]
+				\end{soln}
+
+				\newpage
+			\item List all the distinct equivalence classes resulting from this relation.
+				\begin{soln}
+					We have
+					\begin{align*}
+						\varnothing\cup \left\{ 3, 4 \right\} = \left\{ 3, 4 \right\} &\implies \left[ \varnothing \right] = \left\{ \varnothing, \left\{ 3 \right\}, \left\{ 4 \right\}, \left\{ 3, 4 \right\} \right\} \\
+						\left\{ 1 \right\}\cup \left\{ 3, 4 \right\} = \left\{ 1, 3, 4 \right\} &\implies \left[ \left\{ 1 \right\} \right] = \left\{ \left\{ 1 \right\}, \left\{ 1, 3 \right\}, \left\{ 1, 4 \right\}, \left\{ 1, 3, 4 \right\} \right\} \\
+						\left\{ 2 \right\}\cup \left\{ 3, 4 \right\} = \left\{ 2, 3, 4 \right\} &\implies \left[ \left\{ 2 \right\} \right] = \left\{ \left\{ 2 \right\}, \left\{ 2, 3 \right\}, \left\{ 2, 4 \right\}, \left\{ 2, 3, 4 \right\} \right\} \\
+						\left\{ 5 \right\}\cup \left\{ 3, 4 \right\} = \left\{ 3, 4, 5 \right\} &\implies \left[ \left\{ 5 \right\} \right] = \left\{ \left\{ 5 \right\}, \left\{ 3, 5 \right\}, \left\{ 4, 5 \right\}, \left\{ 3, 4, 5 \right\} \right\} \\
+						\left\{ 1, 2 \right\}\cup \left\{ 3, 4 \right\} = \left\{ 1, 2, 3, 4 \right\} &\implies \left[ \left\{ 1, 2 \right\} \right] = \left\{ \left\{ 1, 2 \right\}, \left\{ 1, 2, 3 \right\}, \left\{ 1, 2, 4 \right\}, \left\{ 1, 2, 3, 4 \right\} \right\} \\
+						\left\{ 1, 5 \right\}\cup\left\{ 3, 4 \right\} = \left\{ 1, 3, 4, 5 \right\} &\implies \left[ \left\{ 1, 5 \right\} \right] = \left\{ \left\{ 1, 5 \right\}, \left\{ 1, 3, 5 \right\}, \left\{ 1, 4, 5 \right\}, \left\{ 1, 3, 4, 5 \right\} \right\} \\
+						\left\{ 2, 5 \right\}\cup \left\{ 3, 4 \right\} = \left\{ 2, 3, 4, 5 \right\} &\implies \left[ \left\{ 2, 5 \right\} \right] = \left\{ \left\{ 2, 5 \right\}, \left\{ 2, 3, 5 \right\}, \left\{ 2, 4, 5 \right\}, \left\{ 2, 3, 4, 5 \right\} \right\} \\
+						\left\{ 1, 2, 5 \right\} \cup \left\{ 3, 4 \right\} = \left\{ 1, 2, 3, 4, 5 \right\} &\implies \left[ \left\{ 1, 2, 5 \right\} \right] = \left\{ \left\{ 1, 2, 5 \right\}, \left\{ 1, 2, 3, 5 \right\}, \left\{ 1, 2, 4, 5 \right\}, \left\{ 1, 2, 3, 4, 5 \right\} \right\}
+					\end{align*}
+				\end{soln}
+				
+		\end{enumerate}
+
+	\item[16.2] How many anagrams can be made from each of the following?
+		\begin{enumerate}[(a)]
+			\item staple
+				\begin{soln}
+					There are 6 distinct letters, so there are $6!=\boxed{720}$ anagrams.
+				\end{soln}
+
+			\item discrete
+				\begin{soln}
+					There are 8 total letters, but E appears twice, so their relative ordering doesn't matter. Thus, there are $8!/2!=\boxed{20160}$ anagrams.
+				\end{soln}
+
+			\item mathematics
+				\begin{soln}
+					There are 11 total letters, but M, A, and T each appear twice, and within a letter, the relative ordering doesn't matter. Thus, there are $\boxed{\frac{11!}{2!2!2!}}$ anagrams.
+				\end{soln}
+
+			\item success
+				\begin{soln}
+					There are 7 total letters, but C appears twice, and S appears 3 times, and for each letter, the relative ordering doesn't matter. Thus, there are $\frac{7!}{2!3!}=\boxed{420}$ anagrams.
+				\end{soln}
+
+			\item Mississippi
+				\begin{soln}
+					There are 11 total letters, but I appears 4 times, S appears 4 times, and P appears 2 times, and for each letter, the relative ordering doesn't matter. Thus, there are $\boxed{\frac{11!}{4!4!2!}}$ anagrams
+				\end{soln}
+				
+		\end{enumerate}
+
+	\item[16.4] How many different anagrams can be made from FACETIOUSLY if we require that all six vowels must remain in alphabetical order?
+		\begin{soln}
+			There are 11 distinct letters, so without restriction, there are $11!$ ways to order them. However, for any given ordering, only $1/6!$ are valid and have the six vowels in alphabetical order, so the number of anagrams is $\boxed{11!/6!.}$
+		\end{soln}
+
+		\newpage
+	\item[8.] List all the partitions of $\Set{x\in\NN}{1\le x\le 4}$ that have 3 parts. Now generalize: let $A$ be a set with $\abs{A}>1.$ Explain why the number of partitions of $A$ into $\abs{A}-1$ parts must equal the number of 2-element subsets of $A.$
+		\begin{soln}
+			We have $A=\left\{ 1, 2, 3, 4 \right\},$ so the partitions with 3 parts are:
+			\begin{align*}
+				\left\{ 1, 2 \right\}\cup \left\{ 3 \right\}\cup \left\{ 4 \right\} & & \left\{ 1, 3 \right\}\cup \left\{ 2 \right\}\cup \left\{ 4 \right\} \\
+				\left\{ 1, 4 \right\}\cup \left\{ 2 \right\}\cup\left\{ 3 \right\} & &\left\{ 2, 3 \right\}\cup \left\{ 1 \right\}\cup\left\{ 4 \right\} \\
+				\left\{ 2, 4 \right\}\cup \left\{ 1 \right\}\cup \left\{ 3 \right\} & &\left\{ 3, 4 \right\}\cup \left\{ 1 \right\}\cup\left\{ 2 \right\}
+			\end{align*}
+
+			If we want to partition $A$ into $\abs{A}-1$ parts, then there must be $\abs{A}-2$ parts with 1 element each, and 1 part with 2 elements. Thus, the partition is uniquely determined by what this 2-element part is, so the number of partitions is equal to the number of 2-element subsets of $A.$
+		\end{soln}
+
+\end{itemize}
+
+\end{document}
