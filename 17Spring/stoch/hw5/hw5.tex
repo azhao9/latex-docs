@@ -1,0 +1,112 @@
+\documentclass{article}
+\usepackage[sexy, hdr, fancy]{evan}
+\setlength{\droptitle}{-4em}
+
+\lhead{Homework 5}
+\rhead{Introduction to Stochastic Processes}
+\lfoot{}
+\cfoot{\thepage}
+
+\newcommand{\var}{\mathrm{Var}}
+\newcommand{\cov}{\mathrm{Cov}}
+
+\begin{document}
+\title{Homework 5}
+\maketitle
+\thispagestyle{fancy}
+
+\begin{enumerate}
+	\item Let $X_1, X_2, X_3, \cdots$ be iid random variables. Let $M(t)=E\left[ e^{tX_1} \right]$ be the MGF of $X_1$ (and thus of each $X_i$). Fix $t$ and assume that $M(t)<\infty.$ Define the partial sum process by letting $S_0=0$ and for $n>0,$
+		\[S_n=X_1+\cdots+X_n.\]
+		Let
+		\[Z_n=\frac{e^{tS_n}}{M(t)^n}\]
+		Show that $\left\{ Z_n \right\}_{n=0}^\infty$ is a martingale with respect to $\left\{ X_n \right\}_{n=0}^\infty.$
+
+	\item Consider a Markov chain $\left\{ X_n, n\ge 0 \right\}$ with state space consisting of $N+1$ states which are real numbers $x_0<x_1<x_2<\cdots<x_N,$ and with transition matrix $P(i, j)=P[X_{n+1}=x_j\mid X_n=x_i]$ for $0\le i, j\le N.$ Suppose that $\left\{ X_n, n\ge0 \right\}$ is also a martingale. Show that the states $x_0$ and $x_N$ are absorbing states.
+
+	\item Calculate the PGF for a random variable $X$ which has
+		\begin{enumerate}[(a)]
+			\item a Geometric($\frac{1}{2}$) distribution.
+
+			\item a Poisson($\lambda$) distribution.
+				
+		\end{enumerate}
+
+	\item Let $\left\{ X_1, X_2, X_3, \cdots \right\}$ be a sequence of iid random variables with mean $\mu$ and variance $\sigma^2.$ Let $S_n=X_1+X_2+\cdots+X_n$ for each integer $n\ge1.$ Let $N$ be a positive integer random variable which is independent of the $\left\{ X_i \right\}_{i\ge1},$ and has mean $\nu$ and variance $\tau^2.$ Calculate the variance of $S_N.$
+		\begin{soln}
+			We have
+			\begin{align*}
+				\var(S_N) &= E[S_N^2]-(E[S_N])^2
+			\end{align*}
+			Using the law of total probability, we have
+			\begin{align*}
+				E[S_N] &= E\left[ E[S_N\mid N] \right] = \sum_{n=1}^{\infty}E[S_N\mid N=n]P[N=n] \\
+				&= \sum_{n=1}^{\infty}E\left[ \sum_{i=1}^{N} X_i \mid N=n\right]P[N=n] = \sum_{n=1}^{\infty}E\left[ \sum_{i=1}^{n} X_i\mid N=n \right] P[N=n] \\
+				&= \sum_{n=1}^{\infty}\left(\sum_{i=1}^{n} E[X_i]\right) P[N=n] = \sum_{n=1}^{\infty} (n\mu)P[N=n] \\
+				&= \mu \sum_{n=1}^{\infty}nP[N=n] = \mu\nu
+			\end{align*}
+			and 
+			\begin{align*}
+				E[S_N^2] &= E\left[ E[S_N^2\mid N] \right] = \sum_{n=1}^{\infty} E[S_N^2\mid N=n] P[N=n] \\
+				&= \sum_{n=1}^{\infty}E\left[ \left( \sum_{i=1}^{N} X_i \right)^2\mid N=n \right]P[N=n] = \sum_{n=1}^{\infty}E\left[ \left( \sum_{i=1}^{n} X_i \right)^2\mid N=n \right]P[N=n] \\
+				&= \sum_{n=1}^{\infty} E\left[ \left( \sum_{i=1}^{n} X_i \right)^2 \right] P[N=n] \\
+				&= \sum_{n=1}^{\infty} E\left[ \left( \sum_{i=1}^{n} X_i^2 \right) + \left( \sum_{j\neq k}^{} X_j X_k \right) \right] P[N=n] \\
+				&= \sum_{n=1}^{\infty} \left( \sum_{i=1}^{n} E[X_i^2] + \sum_{j\neq k}^{} E[X_j X_k] \right) P[N=n] \\
+				&= \sum_{n=1}^{\infty} \left[ \sum_{i=1}^{n} \left( E[X_i^2]-(E[X_i])^2 + (E[X_i])^2 \right) + \sum_{j\neq k}^{}E[X_j]E[X_k] \right]P[N=n] \\
+				&= \sum_{n=1}^{\infty} \left[ \sum_{i=1}^{n} (\sigma^2+\mu^2) + \sum_{j\neq k}^{} \mu^2 \right]P[N=n] \\
+				&= \sum_{n=1}^{\infty} \left[ n\sigma^2+n\mu^2 + (n^2-n)\mu^2 \right]P[N=n] \\
+				&= \sum_{n=1}^{\infty} (n^2\mu^2 + n\sigma^2)P[N=n] = \mu^2\sum_{n=1}^{\infty} n^2P[N=n] + \sigma^2\sum_{n=1}^{\infty} nP[N=n] \\
+				&= \mu^2 E[N^2] + \sigma^2 \nu = \mu^2\left( E[N^2]-(E[N])^2 + (E[N^2])^2 \right) + \sigma^2 \nu \\
+				&= \mu^2(\tau^2+\nu^2) + \sigma^2\nu = \mu^2\tau^2 + \mu^2\nu^2 + \sigma^2\nu
+			\end{align*}
+			Combining these two, we have
+			\[\var(S_N) = (\mu^2\tau^2+\mu^2\nu^2+\sigma^2\nu) - (\mu\nu)^2 = \mu^2\tau^2+\sigma^2\nu\]
+		\end{soln}
+
+	\item Consider a branching process with offspring distribution given by the frequency function $f,$ where $f(2)=a, f(1)=b,$ and $f(0)=c,$ with $a+b+c=1.$ Assume that the probability of extinction is $d, 0<d<1.$ Express $d$ in terms of $a, b, c.$
+		\begin{soln}
+			The generating function for the offspring distribution is
+			\[G(s)=as^2+bs+c\]
+			and the extinction probability satisfies $d=G(d),$ so we have
+			\begin{align*}
+				d &= G(d)=ad^2+bd+c \\
+				0 &= ad^2+(b-1)d+c
+			\end{align*}
+			and solving for $d$ we have
+			\[d=\frac{-(b-1)\pm\sqrt{(b-1)^2-4ac}}{2a}\]
+			Since $0<d<1$ but 1 is a root of the quadratic, we must have the greater root be 1, so thus
+			\[d=\frac{1-b-\sqrt{(b-1)^2-4ac}}{2a}\]
+		\end{soln}
+
+	\item Verify that if $\left\{ Z_n \right\}$ is a branching process, then $\left\{ \frac{Z_n}{\mu^n} \right\}$ is a martingale, where $\mu$ denotes the mean of the offspring distribution.
+		\begin{proof}
+			We have
+			\begin{align*}
+				E\left[ \abs{\frac{Z_n}{\mu^n}} \right] = \frac{1}{\mu^n} E[Z_n] = \frac{1}{\mu^n} \left(\mu^n E[Z_0]\right) = E[Z_0] < \infty
+			\end{align*}
+			and
+			\begin{align*}
+				E\left[ \frac{Z_{n+1}}{\mu^{n+1}}\mid \frac{Z_0}{\mu^0}, \frac{Z_1}{\mu}, \cdots, \frac{Z_n}{\mu^n} \right] &= \frac{1}{\mu^{n+1}} E[Z_{n+1}\mid Z_0, Z_1, \cdots, Z_n] \\
+				&= \frac{1}{\mu^{n+1}} E[Z_{n+1}\mid Z_n] \\
+				&= \frac{1}{\mu^{n+1}}(\mu Z_n) = \frac{Z_n}{\mu^n}
+			\end{align*}
+			so this is indeed a martingale.
+		\end{proof}
+
+	\item A particle moves according to a Markov chain on $\left\{ 1, 2, \cdots, c+d \right\}$ where $c$ and $d$ are positive integers. Starting from any one of the first $c$ states, the particle jumps in one transition to a state chosen uniformly from the last $d$ states. Starting from any of the last $d$ states, the particle jumps in one transition to a state chosen uniformly from the first $c$ states.
+		\begin{enumerate}[(a)]
+			\item Show that the chain is irreducible.
+				\begin{proof}
+					Let $C$ and $D$ are sets of the first $c$ and last $d$ states, respectively. Then if $i\in C$ and $j\in D,$ then $i$ and $j$ communicate because they can directly transition between themselves. If $i, j\in C,$ then if $n\in D,$ we can have $i\to n\to j,$ so $i$ and $j$ communicate. By a similar argument, if $i, j\in D,$ then $i$ and $j$ communicate. Thus, all states communicate, so the chain is irreducible.
+				\end{proof}
+
+			\item Find the invariant distribution.
+				\begin{soln}
+					The chain is periodic, half the time we are in $C$ and half the time we are in $D.$ Since the transition probabilities of the 
+				\end{soln}<++>
+				
+		\end{enumerate}
+
+\end{enumerate}
+
+\end{document}
