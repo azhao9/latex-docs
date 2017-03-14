@@ -21,14 +21,67 @@
 		Let
 		\[Z_n=\frac{e^{tS_n}}{M(t)^n}\]
 		Show that $\left\{ Z_n \right\}_{n=0}^\infty$ is a martingale with respect to $\left\{ X_n \right\}_{n=0}^\infty.$
+		\begin{proof}
+			We have
+			\begin{align*}
+				E\left[ \abs{Z_n} \right] &= E\left[ \abs{\frac{e^{tS_n}}{M(t)^n}}\right] = \frac{1}{M(t)^n} E[e^{t(X_1+\cdots+X_n)}] = \frac{1}{M(t)^n} \prod_{i=1}^{n} E[e^{tX_i}] \\
+				&= \frac{1}{M(t)^n} \prod_{i=1}^{n} M(t) =  1 < \infty
+			\end{align*}
+			and
+			\begin{align*}
+				E[Z_{n+1}\mid Z_1, \cdots, Z_n] &= E[Z_{n+1}\mid X_1, \cdots, X_n] \\
+				&= E\left[ \frac{e^{tS_{n+1}}}{M(t)^{n+1}} \mid X_1, \cdots, X_n \right] \\
+				&= \frac{1}{M(t)^{n+1}} E\left[ e^{tS_n}\cdot e^{tX_{n+1}}\mid X_1, \cdots, X_n \right] \\
+				&= \frac{1}{M(t)^{n+1}} E[e^{tS_n}\mid X_1, \cdots, X_n] E[e^{tX_{n+1}}\mid X_1, \cdots, X_n] \\
+				&= \frac{1}{M(t)^{n+1}}\cdot e^{tS_n} E[e^{tX_{n+1}}] \\
+				&= \frac{1}{M(t)^{n+1}} e^{tS_n} M(t) = \frac{e^{tS_n}}{M(t)^n} = Z_n
+			\end{align*}
+			so this is indeed a martingale.
+		\end{proof}
 
 	\item Consider a Markov chain $\left\{ X_n, n\ge 0 \right\}$ with state space consisting of $N+1$ states which are real numbers $x_0<x_1<x_2<\cdots<x_N,$ and with transition matrix $P(i, j)=P[X_{n+1}=x_j\mid X_n=x_i]$ for $0\le i, j\le N.$ Suppose that $\left\{ X_n, n\ge0 \right\}$ is also a martingale. Show that the states $x_0$ and $x_N$ are absorbing states.
+		\begin{proof}
+			Since this is a martingale, we have $E[X_{n+1}\mid X_n=x_0] = x_0.$ This expectation is also
+			\begin{align*}
+				E[X_{n+1}\mid X_n=x_0] &= \sum_{j=0}^{N}x_j P(0, j) \\
+				&= x_0 P(0, 0) + \sum_{j=1}^{N} x_j P(0, j)
+			\end{align*}
+			If $\exists j>0$ such that $P(0, j)>0,$ then since $x_j>x_0$ for all $j>0,$ we have the strict inequality
+			\[x_0P(0, 0) + \sum_{j=1}^{N} x_j P(0, j)>x_0P(0, 0) + \sum_{j=1}^{N} x_0 P(0, j) = x_0 \left( P(0, 0) + \sum_{j=1}^{N} P(0, j) \right) = x_0\]
+			This is a contradiction, since the expectation is exactly equal to $x_0,$ so it follows that $P(0, j)=0$ for all $j>0,$ so $x_0$ is an absorbing state.
+
+			Similarly, we have
+			\begin{align*}
+				x_N = E[X_{n+1}\mid X_n=x_N] &= \sum_{j=0}^{N} x_j P(0, j) \\
+				&= x_N P(0, N) + \sum_{j=0}^{N-1} x_j P(0, j)
+			\end{align*}
+			and if $\exists j<N$ such that $P(0, j)>0,$ then we have the strict inequality
+			\[x_NP(0, N) + \sum_{j=0}^{N-1} x_j P(0, j) < x_N P(0, N) + \sum_{j=0}^{N-1} x_N P(0, j) = x_N\left(P(0, N) + \sum_{j=0}^{N-1} P(0, j)\right) = x_N\]
+			which is a contradiction, so $P(0, j)=0$ for all $j<N,$ so $x_N$ is absorbing, as desired.
+		\end{proof}
 
 	\item Calculate the PGF for a random variable $X$ which has
 		\begin{enumerate}[(a)]
 			\item a Geometric($\frac{1}{2}$) distribution.
+				\begin{soln}
+					We have
+					\begin{align*}
+						G(s) &= E[s^X] = \sum_{i=1}^{\infty} P[X=i] s^i \\
+						&= \sum_{i=1}^{\infty} \left( \frac{1}{2} \right)^i s^i = \sum_{i=1}^{\infty} \left( \frac{s}{2} \right)^i \\
+						&= \frac{\frac{s}{2}}{1-\frac{s}{2}} = \frac{s}{2-s}
+					\end{align*}
+				\end{soln}
 
 			\item a Poisson($\lambda$) distribution.
+				\begin{soln}
+					We have
+					\begin{align*}
+						G(s) &= E[s^X] = \sum_{i=0}^{\infty} P[X=i] s^i \\
+						&= \sum_{i=0}^{\infty} \frac{\lambda^i e^{-\lambda}}{i!}\cdot s^i \\
+						&= e^{-\lambda}\sum_{i=0}^{\infty} \frac{(\lambda s)^i}{i!} \\
+						&= e^{-\lambda} \cdot e^{\lambda s} = e^{\lambda(s-1)}
+					\end{align*}
+				\end{soln}
 				
 		\end{enumerate}
 
@@ -49,8 +102,7 @@
 			\begin{align*}
 				E[S_N^2] &= E\left[ E[S_N^2\mid N] \right] = \sum_{n=1}^{\infty} E[S_N^2\mid N=n] P[N=n] \\
 				&= \sum_{n=1}^{\infty}E\left[ \left( \sum_{i=1}^{N} X_i \right)^2\mid N=n \right]P[N=n] = \sum_{n=1}^{\infty}E\left[ \left( \sum_{i=1}^{n} X_i \right)^2\mid N=n \right]P[N=n] \\
-				&= \sum_{n=1}^{\infty} E\left[ \left( \sum_{i=1}^{n} X_i \right)^2 \right] P[N=n] \\
-				&= \sum_{n=1}^{\infty} E\left[ \left( \sum_{i=1}^{n} X_i^2 \right) + \left( \sum_{j\neq k}^{} X_j X_k \right) \right] P[N=n] \\
+				&= \sum_{n=1}^{\infty} E\left[ \left( \sum_{i=1}^{n} X_i \right)^2 \right] P[N=n] = \sum_{n=1}^{\infty} E\left[ \left( \sum_{i=1}^{n} X_i^2 \right) + \left( \sum_{j\neq k}^{} X_j X_k \right) \right] P[N=n] \\
 				&= \sum_{n=1}^{\infty} \left( \sum_{i=1}^{n} E[X_i^2] + \sum_{j\neq k}^{} E[X_j X_k] \right) P[N=n] \\
 				&= \sum_{n=1}^{\infty} \left[ \sum_{i=1}^{n} \left( E[X_i^2]-(E[X_i])^2 + (E[X_i])^2 \right) + \sum_{j\neq k}^{}E[X_j]E[X_k] \right]P[N=n] \\
 				&= \sum_{n=1}^{\infty} \left[ \sum_{i=1}^{n} (\sigma^2+\mu^2) + \sum_{j\neq k}^{} \mu^2 \right]P[N=n] \\
@@ -102,8 +154,8 @@
 
 			\item Find the invariant distribution.
 				\begin{soln}
-					The chain is periodic, half the time we are in $C$ and half the time we are in $D.$ Since the transition probabilities of the 
-				\end{soln}<++>
+					The chain is periodic, half the time we are in $C$ and half the time we are in $D.$ Since the individual states within $C$ and $D$ are indistinguishable in terms of their transition probabilities, they all have the same distribution. Thus, since there are $c$ states in $C$ and $d$ states in $D,$ the invariant distribution is $\frac{1}{2c}$ for the first $c$ states, and $\frac{1}{2d}$ for the last $d$ states.
+				\end{soln}
 				
 		\end{enumerate}
 
