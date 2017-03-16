@@ -1,0 +1,85 @@
+\documentclass{article}
+\usepackage[sexy, hdr, fancy]{evan}
+\setlength{\droptitle}{-4em}
+
+\lhead{Homework 6}
+\rhead{Advanced Algebra II}
+\lfoot{}
+\cfoot{\thepage}
+
+\begin{document}
+\title{Homework 6}
+\maketitle
+\thispagestyle{fancy}
+
+\begin{enumerate}
+	\item
+		\begin{enumerate}[(a)]
+			\item Let $F\to \overline{F}$ be an algebraic closure of $F$ and let $F\to E$ be a finite field extension. Show that there exists an $F$-embedding of $E$ into $\overline{F}.$ 
+
+			\item It can be shown that (a) continues to hold when $E$ is only assumed to be algebraic over $F.$ Assuming this fact, show that any two algebraic closures of $F$ are isomorphic as $F$-algebras.
+				
+		\end{enumerate}
+
+	\item Let $F$ be a field and let $F\to \overline{F}$ an algebraic closure. As a continuation of 6.3 Ex. 21, show that a finite field extension $F\to E$ is normal $\iff$ all $F$-embeddings of $E$ into $\overline{F}$ have the same image.
+		
+\end{enumerate}
+
+\section*{Section 6.2: Algebraic Extensions}
+
+\begin{itemize}
+	\item[7.] Find the minimal polynomial of $u=\sqrt{3}-i$
+		\begin{enumerate}[(a)]
+			\item over $\RR.$
+				\begin{soln}
+					We have $\overline{u}=\sqrt{3}+i,$ where
+					\begin{align*}
+						u+\overline{u} &= 2\sqrt{3} \\
+						u\overline{u} &= 4
+					\end{align*}
+					so the minimal polynomial over $\RR$ is given by
+					\[m=x^2-2\sqrt{3} x + 4\]
+				\end{soln}
+
+			\item over $\QQ.$
+				
+		\end{enumerate}
+
+	\item[19.] Let $\CC\supseteq E\supseteq \QQ,$ where $E$ is a field, and assume that $[E:\QQ]=2.$ Show that $E=\QQ(\sqrt{m}),$ where $m$ is a square-free integer.
+
+	\item[21.] Let $E\supseteq F$ be fields, and let $u, v\in E$ be algebraic over $F$ of degrees $m, n.$
+		\begin{enumerate}[(a)]
+			\item Show that $[F(u, v):F]\le mn.$
+
+			\item If $m$ and $n$ are relatively prime, show that $[F(u, v):F]=mn.$
+
+			\item Is the converse to (b) true?
+				
+		\end{enumerate}
+
+	\item[32.] Let $p$ and $q$ in $\QQ$ satisfy $\sqrt{p}\notin \QQ$ and $\sqrt{q}\notin \QQ(\sqrt{p}).$
+		\begin{enumerate}[(a)]
+			\item Show that $\QQ(\sqrt{p}, \sqrt{q})=\QQ(\sqrt{p}+\sqrt{q}).$
+
+			\item Use Theorem 5 to find a basis of $\QQ(\sqrt{p}, \sqrt{q})$ over $\QQ.$
+
+			\item Deduce that $x^4-2(p+q)x^2+(p-q)^2$ is the minimal polynomial of $\sqrt{p}+\sqrt{q}$ over $\QQ.$
+				
+		\end{enumerate}
+		
+\end{itemize}
+
+\section*{Section 6.3: Splitting Fields}
+
+\begin{itemize}
+	\item[3.] If $2\neq 0$ in the field $F,$ show that the splitting field $E$ of $x^4+1$ over $F$ is a simple extension of $F$ and factors $x^4+1$ completely in $E[x].$ What happens if $2=0$ in $F?$
+
+	\item[21.] Show that the following conditions are equivalent for fields $E\supseteq F:$
+		\begin{enumerate}[1.]
+				\ii $E$ is the splitting field of a polynomial in $F[x].$
+				\ii $[E:F]$ is finite and every irreducible polynomial in $F[x]$ with a root in $E$ splits completely in $E[x].$ 
+		\end{enumerate}
+		
+\end{itemize}
+
+\end{document}

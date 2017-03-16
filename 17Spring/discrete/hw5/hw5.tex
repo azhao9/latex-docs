@@ -1,0 +1,200 @@
+\documentclass{article}
+\usepackage[sexy, hdr, fancy]{evan}
+\setlength{\droptitle}{-4em}
+
+\lhead{Homework 5}
+\rhead{Discrete Math (Section 05)}
+\lfoot{}
+\cfoot{\thepage}
+
+\newcommand{\var}{\mathrm{Var}}
+\newcommand{\cov}{\mathrm{Cov}}
+
+\begin{document}
+\title{Homework 5}
+\maketitle
+\thispagestyle{fancy}
+
+\begin{itemize}
+	\item[17.16] Consider the following formula:
+		\[k\binom{n}{k}=n\binom{n-1}{k-1}\]
+		Give two different proofs. One proof should use the factorial formula. The other proof should be combinatorial.
+		\begin{proof}
+			We have
+			\begin{align*}
+				k\binom{n}{k} &= k\cdot \frac{n!}{k!(n-k)!} \\
+				&= k\cdot\frac{n(n-1)!}{k(k-1)!\left[ (n-1)-(k-1) \right]!} \\
+				&= n\cdot \frac{(n-1)!}{(k-1)!\left[ (n-1)-(k-1) \right]!} \\
+				&= n\binom{n-1}{k-1}
+			\end{align*}
+
+			Consider the LHS as a group of $n$ people, and we are choosing a subgroup of $k$ people, in $\binom{n}{k}$ ways. Then among the $k$ people chosen, one person is the leader, in $k$ ways, for a total of $k\binom{n}{k}$ possible choices. The RHS is the same group of $n$ people, but we choose the leader immediately, in $n$ ways. Then among the remaining $n-1$ people, choose $k-1$ people to be the rest of the subgroup, in $\binom{n-1}{k-1}$ ways, for a total of $n\binom{n-1}{k-1}$ choices. These two methods produce the same subgroups and leaders, so the number of possible combinations is the same.
+		\end{proof}
+
+	\item[17.17] Let $n\ge k\ge m\ge 0$ be integers. Consider the following formula:
+		\[\binom{n}{k}\binom{k}{m}=\binom{n}{m}\binom{n-m}{k-m}\]
+		Give two different proofs. One proof should use the factorial formula. The other proof should be combinatorial.
+		\begin{proof}
+			We have
+			\begin{align*}
+				\binom{n}{k}\binom{k}{m} &= \frac{n!}{k!(n-k)!}\cdot \frac{k!}{m!(k-m)!} \\
+				&= \frac{n!}{m!(n-k)!(k-m)!} \\
+				&= \frac{n!(n-m)!}{m!(n-k)!(k-m)!(n-m)!} \\
+				&= \frac{n!}{m!(n-m)!}\cdot \frac{(n-m)!}{\left[ (n-m)-(k-m) \right]!!(k-m)!} \\
+				&= \binom{n}{m}\binom{n-m}{k-m}
+			\end{align*}
+
+			Consider the LHS as a group of $n$ people, and we are choosing a subgroup of $k$ people, in $\binom{n}{k}$ ways, then among those $k$ people, we choose $m$ leaders, in $\binom{k}{m}$ ways, for a total of $\binom{n}{k}\binom{k}{m}$ choices. The RHS is the same group of $n$ people, but we choose the $m$ leaders immediately, in $\binom{n}{m}$ ways. Then among the remaining $n-m$ people, choose $k-m$ people to be the rest of the subgroup, in $\binom{n-m}{k-m}$ ways, for a total of $\binom{n}{m}\binom{n-m}{k-m}$ choices. These two methods produce the same subgroups and leaders, so the number of possible combinations is the same.
+		\end{proof}
+
+	\item[17.33] For each of the following types of hands, count the number of hands that have that type.
+		\begin{enumerate}[a.]
+			\item Four of a kind
+				\begin{soln}
+					There are 13 possible values for the four-of-a-kind. Then the last card can be any of the remaining 48 cards in the deck. The total number of hands is $13\cdot 48=\boxed{624.}$
+				\end{soln}
+
+			\item Three of a kind
+				\begin{soln}
+					There are 13 possible values for the three-of-a-kind, and $\binom{4}{3}$ possible combinations of the three cards. Then the fourth card has 48 possibilities, since it is not the same value as the first three. The final card has 44 possibilities, since it is not the same value as either of the first three or the fourth. Since the order of the final two cards does not matter, we divide by 2. The total number of hands is $13\binom{4}{3}\cdot 48\cdot 44/2=\boxed{54912.}$
+				\end{soln}
+
+			\item Flush
+				\begin{soln}
+					There are 4 possible suits, and within each suit, there are $\binom{13}{5}$ ways to choose 5 cards from that suit. The total number of hands is $4\binom{13}{5}=\boxed{5148.}$	
+				\end{soln}
+
+			\item Full house
+				\begin{soln}
+					There are 13 possible values for the three-of-a-kind, and $\binom{4}{3}$ possible combinations of the three cards. Then there are 12 possible values for the two-of-a-kind, and $\binom{4}{2}$ possible combinations of the two cards. The total number of hands is $13\binom{4}{3}\cdot 12\binom{4}{2} = \boxed{3744.}$
+				\end{soln}
+
+			\item Straight
+				\begin{soln}
+					There are 9 possibilities for the highest card (6, 7, 8, 9, 10, J, Q, K, A). For each card, they can be any suit, so there are $4^{5}$ possibilities for the suits. The total number of hands is $9\cdot 4^5=\boxed{9216.}$
+				\end{soln}
+
+			\item Straight flush
+				\begin{soln}
+					There are 9 possibilities for the highest card (6, 7, 8, 9, 10, J, Q, K, A). Every card must be the same suit, with 4 possibilities for the suit. The total number of hands is $9\cdot 4=\boxed{36.}$
+				\end{soln}
+				
+		\end{enumerate}
+
+	\item[20.7] Prove by contradiction: If the sum of two primes is prime, then one of the primes must be 2.
+		\begin{proof}
+			Suppose neither of the primes is 2. Then since all primes other than 2 are odd, their sum must be an even number greater than 2. However, all even numbers greater than 2 are divisible by 2, with a nontrivial quotient, so this sum is not prime. This is a contradiction, since the sum of the two primes is prime. Therefore, the assumption that neither of the primes was 2 is incorrect, so one of them must be 2.
+		\end{proof}
+
+		\newpage
+	\item[20.14] Let $A$ and $B$ be sets. Prove $A\cap B=\varnothing$ if and only if $(A\times B)\cap (B\times A)=\varnothing.$
+		\begin{proof}
+			$(\implies):$ Suppose $(x, y)\in (A\times B)\cap (B\times A).$ Then we have $(x, y)\in A\times B$ and $(x, y)\in B\times A.$ The first implies that $x\in A, y\in B$ and the second implies that $x\in B, y\in A,$ so $x$ and $y$ are both in $A$ and $B,$ but this is a contradiction because $A\cap B=\varnothing.$ Thus, such an element cannot exist, so $(A\times B)\cap (B\times A)=\varnothing,$ as desired.
+
+			$(\impliedby):$ Suppose $x\in A\cap B.$ Then $x\in A$ and $x\in B,$ so $(x, x)\in A\times B$ and $(x, x)\in B\times A,$ but this is a contradiction since $(A\times B)\cap (B\times A)=\varnothing.$ Thus, such an element cannot exist, so $A\cap B=\varnothing,$ as desired.
+		\end{proof}
+
+	\item[6.] Prove the following using contradiction: Let $A_1, A_2,$ and $A_3$ be finite sets. If $\abs{A_1\cup A_2\cup A_3}=\abs{A_1}+\abs{A_2}+\abs{A_3}$ then $A_i\cap A_j=\varnothing$ whenever $i\neq j.$
+		\begin{proof}
+			WLOG, suppose $A_1\cap A_2\neq\varnothing,$ so $\abs{A_1\cap A_2}>0.$ By a formula, we have
+			\begin{align*}
+				\abs{A_1\cup A_2\cup A_3} &= \abs{A_1}+\abs{A_2}+\abs{A_3}-\abs{A_1\cap A_2}-\abs{A_1\cap A_3}-\abs{A_2\cap A_3}+\abs{A_1\cap A_2\cap A_3} \\
+				&= \abs{A_1}+\abs{A_2}+\abs{A_3} \\
+				\implies \abs{A_1\cap A_2\cap A_3} &= \abs{A_1\cap A_2}+\abs{A_1\cap A_3}+\abs{A_2\cap A_3}
+			\end{align*}
+			Since $\abs{A_1\cap A_2}>0,$ we must have $\abs{A_1\cap A_2\cap A_3}>0,$ so there exists $a\in A_1\cap A_2\cap A_3.$ Then $a\in A_1\cap A_3$ and $a\in A_2\cap A_3,$ so $\abs{A_1\cap A_2\cap A_3}\le \abs{A_1\cap A_3}$ and $\abs{A_1\cap A_2\cap A_3}\le \abs{A_2\cap A_3}.$ Thus,
+			\begin{align*}
+				\abs{A_1\cap A_2\cap A_3} &= \abs{A_1\cap A_2}+\abs{A_1\cap A_3}+\abs{A_2\cap A_3} \\
+				&\ge \abs{A_1\cap A_2} + 2\abs{A_1\cap A_2\cap A_3} \\
+				&> 2\abs{A_1\cap A_2\cap A_3}
+			\end{align*}
+			which is a contradiction. Thus, we must have $A_1\cap A_2=\varnothing,$ so since 1 and 2 were arbitrary, we have $A_i\cap A_j=\varnothing$ whenever $i\neq j,$ as desired.
+		\end{proof}
+
+	\item[22.4] Prove the following equations by induction. In each case, $n$ is a positive integer.
+		\begin{itemize}
+			\item[(a)] $1+4+7+\cdots+(3n-2)=\frac{n(3n-1)}{2}$
+				\begin{proof}
+					$n=1:$ The base case is satisfied because
+					\[1=\frac{1(3\cdot 1-1)}{2} = 1\]
+					Now suppose the statement holds for arbitrary $k.$ Then we have
+					\begin{align*}
+						\left[1+\cdots+(3k-2)\right] + \left[ 3(k+1)-2 \right] &= \frac{k(3k-1)}{2} + (3k+1) \\
+						&= \frac{(3k^2-k)+2(3k+1)}{2} = \frac{3k^2+5k+2}{2} \\
+						&= \frac{(k+1)(3k+2)}{2} = \frac{(k+1)\left[ 3(k+1)-1 \right]}{2}
+					\end{align*}
+					so the statement holds for $k+1,$ and the statement is proven by induction.
+				\end{proof}
+
+				\newpage
+			\item[(b)] $1^3+2^3+\cdots+n^3=\frac{n^2(n+1)^2}{4}$
+				\begin{proof}
+					$n=1:$ The base case is satisfied because
+					\[1=1^3=\frac{1^2\cdot 2^2}{4}=1\]
+					Now suppose the statement holds for arbitrary $k.$ Then we have
+					\begin{align*}
+						(1^3+\cdots+k^3) + (k+1)^3 &= \frac{k^2(k+1)^2}{4} + (k+1)^3 \\
+						&= (k+1)^2\left( \frac{k^2}{4} + (k+1) \right) \\
+						&= (k+1)^2\cdot \frac{k^2+4k+4}{4} = \frac{(k+1)^2(k+2)^2}{4} \\
+						&= \frac{(k+1)^2\left[ (k+1)+1) \right]^2}{4}
+					\end{align*}
+					so the statement holds for $k+1,$ and the statement is proven by induction.
+				\end{proof}
+
+			\item[(d)] $\frac{1}{1\cdot2}+\frac{1}{2\cdot 3} + \cdots + \frac{1}{n(n+1)}=1-\frac{1}{n+1}$
+				\begin{proof}
+					$n=1:$ The base case is satisfied because
+					\[\frac{1}{2} = \frac{1}{1\cdot 2} = 1-\frac{1}{2}\]
+					Now suppose the statement holds for arbitrary $k.$ Then we have
+					\begin{align*}
+						\left(\frac{1}{1\cdot 2} + \cdots + \frac{1}{k(k+1)}\right) + \frac{1}{(k+1)(k+2)} &= 1-\frac{1}{k+1} + \frac{1}{(k+1)(k+2)} \\
+						&= 1-\left( \frac{(k+2)-1}{(k+1)(k+2)} \right) \\
+						&= 1-\frac{k+1}{(k+1)\left[ (k+1)+1 \right]} \\
+						&= 1-\frac{1}{\left[ (k+1)+1 \right]}
+					\end{align*}
+					so the statement holds for $k+1,$ and the statement is proven by induction.
+				\end{proof}
+
+			\item[(f)]
+				\[\lim_{x\to\infty} \frac{x^n}{e^x}=0\]
+				\begin{proof}
+					$n=1:$ Using l'Hopital's rule, the base case is satisfied because
+					\[\lim_{x\to \infty} \frac{x}{e^x} = \lim_{x\to \infty} \frac{1}{e^x} \to 0\]
+					Now suppose the statement holds for arbitrary $k.$ Then we have
+					\begin{align*}
+						\lim_{x\to\infty} \frac{x^{k+1}}{e^x} = \lim_{x\to\infty}\frac{(k+1)x^k}{e^x} = (k+1)\lim_{x\to\infty} \frac{x^k}{e^x} = (k+1)\cdot 0 = 0
+					\end{align*}
+					so the statement holds for $k+1,$ and the statement is proven by induction.
+				\end{proof}
+				
+		\end{itemize}
+
+		\newpage
+	\item[22.5] Prove the following inequalities by induction. In each case, $n$ is a positive integer.
+		\begin{itemize}
+			\item[(d)] $\binom{2n}{n}<4^n$
+				\begin{proof}
+					$n=1:$ The base case is satisfied because 
+					\[2=\binom{2\cdot 1}{1} < 4^1 = 4\]
+					Now suppose $\binom{2k}{k}=\frac{(2k)!}{k!k!}<4^k$ for arbitrary $k.$ Then we have
+					\begin{align*}
+						\frac{\left[ 2(k+1) \right]!}{(k+1)!(k+1)!} = \frac{(2k+2)(2k+1)}{(k+1)(k+1)}\cdot \frac{(2k)!}{k!k!} &< \frac{(2k+2)(2k+1)}{(k+1)(k+1)}\cdot 4^k \\
+						&< 2\cdot 4^k\cdot \frac{2k+1}{k+1} < 2\cdot 2\cdot 4^k = 4^{k+1}
+					\end{align*}
+					so the statement holds for $k+1,$ and the statement is proven by induction.
+				\end{proof}
+
+			\item[(e)] $n!\le n^n$
+				\begin{proof}
+					$n=1:$ The base case is satisfied because
+					\[1=1!\le 1^1=1\]
+					Now suppose $k!\le k^k$ for arbitrary $k.$ Then have
+					\[(k+1)k!=(k+1)!\le (k+1) k^k \le (k+1)(k+1)^{k} = (k+1)^{k+1}\]
+					so the statement holds for $k+1,$ and the statement is proven by induction.
+				\end{proof}
+				
+		\end{itemize}
+
+\end{itemize}
+
+\end{document}
