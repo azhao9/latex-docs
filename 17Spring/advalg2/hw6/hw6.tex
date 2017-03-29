@@ -16,6 +16,11 @@
 	\item
 		\begin{enumerate}[(a)]
 			\item Let $F\to \overline{F}$ be an algebraic closure of $F$ and let $F\to E$ be a finite field extension. Show that there exists an $F$-embedding of $E$ into $\overline{F}.$ 
+				\begin{proof}
+					Since $E$ and $\overline{F}$ are fields, any homomorphism from $E$ to $\overline{F}$ is injective, so $E$ embeds into $\overline{F},$ as desired.
+
+					(this was too easy, I think I did something wrong)
+				\end{proof}
 
 			\item It can be shown that (a) continues to hold when $E$ is only assumed to be algebraic over $F.$ Assuming this fact, show that any two algebraic closures of $F$ are isomorphic as $F$-algebras.
 				
@@ -42,28 +47,111 @@
 				\end{soln}
 
 			\item over $\QQ.$
+				\begin{soln}
+					We have
+					\begin{align*}
+						u^2 &= (\sqrt{3}-i)^2 = 2-2\sqrt{3}i \\
+						\implies u^2-2 &= -2\sqrt{3} i \\
+						\implies (u^2-2)^2 &= -12 \\
+						\implies u^4-4u^2+16 &= 0
+					\end{align*}
+					which is irreducible over $\QQ$ by the Rational Root Theorem, so the minimal polynomial over $\QQ$ is given by
+					\[m=x^4-4x^2+16\]
+				\end{soln}
 				
 		\end{enumerate}
 
 	\item[19.] Let $\CC\supseteq E\supseteq \QQ,$ where $E$ is a field, and assume that $[E:\QQ]=2.$ Show that $E=\QQ(\sqrt{m}),$ where $m$ is a square-free integer.
+		\begin{proof}
+			Consider an element $u\in E\setminus\QQ.$ Since $[E:\QQ]=2,$ a polynomial $f\in \QQ[x]$ exists of degree 1 or 2 such that $f(u)=0.$ If $\deg f=1,$ then $f=x-u,$ but $u\notin\QQ,$ so $f$ would not be in $\QQ[x],$ so $f$ must have degree 2.
+
+			Suppose $f=ax^2+bx+c$ for $a, b, c\in\QQ.$ Then $u$ is algebraic over $\QQ$ with degree 2, so $[\QQ(u):\QQ]=2,$ and since $\QQ\subseteq E$ and $u\in E,$ it follows that $\QQ(u)\subseteq E,$ and since $[\QQ(u):\QQ]=[E:\QQ]=2,$ we must have $\QQ(u)=E.$ Now, solving for $u,$ we have
+			\[u=\frac{-b\pm \sqrt{b^2-4ac}}{2a}\]
+			so
+			\begin{align*}
+				\QQ(u) &= \QQ\left( \frac{-b\pm \sqrt{b^2-4ac}}{2a} \right) \\
+				&= \QQ(\sqrt{b^2-4ac})
+			\end{align*}
+			if $b^2-4ac$ is not square-free, then suppose $b^2-4ac=n^2m$ where $n$ is as large as possible and $m$ is square-free. Then
+			\[\QQ(\sqrt{b^2-4ac}) = \QQ(\sqrt{n^2m}) = \QQ(n\sqrt{m}) = \QQ(\sqrt{m})\]
+			as desired.
+		\end{proof}
 
 	\item[21.] Let $E\supseteq F$ be fields, and let $u, v\in E$ be algebraic over $F$ of degrees $m, n.$
 		\begin{enumerate}[(a)]
 			\item Show that $[F(u, v):F]\le mn.$
+				\begin{proof}
+					We have
+					\begin{align*}
+						[F(u, v):F] &= [F(u, v):F(v)][F(v):F]
+					\end{align*}
+					Since $[F(u):F]=m,$ that means the minimal polynomial $f\in F[x]$ of $u$ has degree $m.$ Then consider the minimal polynomial of $u$ in $F(v)[x].$ Obviously since this field contains $F[x],$ the minimal polynomial must have degree at most $m,$ so $[F(u, v):F(v)]\le m.$ Thus, 
+					\begin{align*}
+						[F(u, v):F] &= [F(u, v):F(v)][F(v):F] \le mn
+					\end{align*}
+					as desired.
+				\end{proof}
 
 			\item If $m$ and $n$ are relatively prime, show that $[F(u, v):F]=mn.$
+				\begin{proof}
+					Since
+					\begin{align*}
+						[F(u, v):F] &= [F(u, v):F(v)][F(v):F] = n\cdot [F(u, v):F(v)] \\
+						[F(u, v):F] &= [F(u, v):F(u)][F(u):F] = m\cdot [F(u, v):F(u)]
+					\end{align*}
+					it follows that $m$ and $n$ both divide $[F(u, v):F],$ and since they are relatively prime, we must have $[F(u, v):F]\ge mn.$ This and the result of part (a) show that $[F(u, v):F]=mn,$ as desired.
+				\end{proof}
 
 			\item Is the converse to (b) true?
+				\begin{soln}
+					No. Let $E=\CC, F=\QQ, u=\sqrt{2}, v=\sqrt{3}.$ Then $m=n=2$ are not relatively prime, but $[\QQ(\sqrt{2}, \sqrt{3}:\QQ]=4=2\cdot 2$ but 2 is not relatively prime with 2.
+				\end{soln}
 				
 		\end{enumerate}
 
+		\newpage
 	\item[32.] Let $p$ and $q$ in $\QQ$ satisfy $\sqrt{p}\notin \QQ$ and $\sqrt{q}\notin \QQ(\sqrt{p}).$
 		\begin{enumerate}[(a)]
 			\item Show that $\QQ(\sqrt{p}, \sqrt{q})=\QQ(\sqrt{p}+\sqrt{q}).$
+				\begin{proof}
+					Let $u=\sqrt{p}+\sqrt{q}.$ Then
+					\[u^3=(p+3q)\sqrt{p}+(q+3p)\sqrt{q}\in\QQ(u)\subseteq \QQ(\sqrt{p}, \sqrt{q})\]
+					Now, we have
+					\begin{align*}
+						u\inv &= \frac{1}{\sqrt{p}+\sqrt{q}} = \frac{\sqrt{p}-\sqrt{q}}{p-q} \\
+						\implies (p-q)u\inv &= \sqrt{p}-\sqrt{q} \\	
+					\end{align*}
+					so
+					\begin{align*}
+						u+(p-q)u\inv &= 2\sqrt{p} \implies \sqrt{p}\in \QQ(u) \\
+						u-(p-q)u\inv &= 2\sqrt{q} \implies \sqrt{q}\in \QQ(u)
+					\end{align*}
+					Thus, $\QQ(\sqrt{p}, \sqrt{q})\subseteq \QQ(u),$ so in fact
+					\[\QQ(u)=\QQ(\sqrt{p}+\sqrt{q}) = \QQ(\sqrt{p}, \sqrt{q})\]
+					as desired.
+				\end{proof}
 
 			\item Use Theorem 5 to find a basis of $\QQ(\sqrt{p}, \sqrt{q})$ over $\QQ.$
+				\begin{soln}
+					Let $K=\QQ(\sqrt{p})$ and $L=\QQ(\sqrt{p}, \sqrt{q}) = K(\sqrt{q}).$ Since $\sqrt{p}\notin\QQ,$ the minimal polynomial of $\sqrt{p}$ in $\QQ$ has degree 2, and is $x^2-p,$ so a $\QQ$-basis for $K$ is $\left\{ 1, \sqrt{p} \right\}.$ 
+
+					Now, we claim that $x^2-q$ is the minimal polynomial of $\sqrt{q}$ over $K.$ Clearly $\sqrt{q}$ is a root of this polynomial. If $\sqrt{q}$ was the root of the degree 1 polynomial $x-\sqrt{q},$ then we must have $\sqrt{q}\in K=\QQ(\sqrt{p}),$ but this is a contradiction since we know $\sqrt{q}\notin\QQ(\sqrt{p}).$ Thus, $\left\{ 1, \sqrt{q} \right\}$ is a $K$-basis for $L.$ 
+
+					Thus by Theorem 5,
+					\[[\QQ(\sqrt{p}, \sqrt{q}):\QQ] = [K(\sqrt{q}):K][K:\QQ]=4\]
+					and a $\QQ$ basis for $\QQ(\sqrt{p}, \sqrt{q})$ is $\left\{ 1, \sqrt{p}, \sqrt{q}, \sqrt{pq} \right\}.$
+				\end{soln}
 
 			\item Deduce that $x^4-2(p+q)x^2+(p-q)^2$ is the minimal polynomial of $\sqrt{p}+\sqrt{q}$ over $\QQ.$
+				\begin{soln}
+					Since $[\QQ(\sqrt{p}+\sqrt{q}):\QQ]=4,$ the minimal polynomial has degree 4. It remains to verify that $\sqrt{p}+\sqrt{q}$ is actually a root. We have
+					\begin{align*}
+						(\sqrt{p}+\sqrt{q})^4 &= p^2+4p\sqrt{pq}+6pq+4q\sqrt{pq}+q^2 \\
+						-2(p+q)(\sqrt{p}+\sqrt{q})^2 &= -2p^2-2q^2-4pq-4(p+q)\sqrt{pq} \\
+						(p-q)^2 &= p^2-2pq+q^2
+					\end{align*}
+					and summing these equations yields 0 on the RHS, as desired.
+				\end{soln}
 				
 		\end{enumerate}
 		
@@ -73,12 +161,35 @@
 
 \begin{itemize}
 	\item[3.] If $2\neq 0$ in the field $F,$ show that the splitting field $E$ of $x^4+1$ over $F$ is a simple extension of $F$ and factors $x^4+1$ completely in $E[x].$ What happens if $2=0$ in $F?$
+		\begin{proof}
+			If $E$ is a splitting field of $x^4+1,$ then 
+			\begin{align*}
+				x^4+1&=(x-u_1)(x-u_2)(x-u_3)(x-u_4) \\
+			\end{align*}
+			for $u_1, u_2, u_3, u_4\in E.$ Expanding the RHS, the coefficient of $x^3$ is $-(u_1+u_2+u_3+u_4)$ which must be 0 by comparing coefficients. 
+
+			If $2=0$ in $F,$ then $x^4+1=x^4+4x^3+6x^2+4x+1=(x+1)^4$ splits entirely in $F.$
+		\end{proof}
 
 	\item[21.] Show that the following conditions are equivalent for fields $E\supseteq F:$
 		\begin{enumerate}[1.]
 				\ii $E$ is the splitting field of a polynomial in $F[x].$
 				\ii $[E:F]$ is finite and every irreducible polynomial in $F[x]$ with a root in $E$ splits completely in $E[x].$ 
 		\end{enumerate}
+		\begin{proof}
+			$1\implies 2:$ Suppose $E$ is the splitting field of $f\in F[x]$ where $\deg f=n.$ Then $f$ factors into $n$ linear factors:
+			\[f=a(x-u_1)\cdots(x-u_n)\]
+			where $u_i\in E$ and since $E=F(u_1, \cdots, u_n),$ this is a finite extension so $[E:F]$ is finite. If $p\in F[x]$ is irreducible over $F$ with a root $u\in E,$ and let $v$ be a root of $p$ in a field $K\supseteq E.$ Then since $p$ is the minimal polynomial of both $u$ and $v$ so $F(u)\cong F(v).$ Let $\sigma:F(u)\to F(v)$ be an isomorphism. Since $E$ is the splitting field of $f$ over $F(u)$ and $E(v)$ is the splitting field of $f$ over $F(v),$ it follows from Theorem 3 that $E\cong E(v)$ by extending $\sigma.$ Thus
+			\begin{align*}
+				[E:F(u)] &= [E(v):F(v)] \\
+				\implies [E:F] &= [E:F(u)][F(u):F] \\
+				&= [E(v):F(v)][F(v):F] \\
+				&= [E(v):F]
+			\end{align*}
+			so since $E$ is a vector space over $F$ contained in $E(v),$ we must have $E=E(v),$ so $v\in E.$ Thus, $p$ splits completely in $E[x],$ as desired.
+
+			$2\implies 1:$ Since $[E:F]$ is finite, $E$ is a finite extension of $F,$ so by Theorem 6, we have $E=F(u_1, \cdots, u_n)$ for $u_i\in E$ algebraic over $F.$ Let $f_1, \cdots, f_n$ be the minimal polynomials of $u_1, \cdots, u_n,$ respectively, in $F[x].$ Since each of the $f_i$ has a root in $E,$ it splits entirely in $E[x],$ so does the product $f=f_1\cdots f_n,$ and $E$ is the splitting field of $f\in F[x].$ 
+		\end{proof}
 		
 \end{itemize}
 
