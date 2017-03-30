@@ -17,6 +17,18 @@
 
 \begin{enumerate}
 	\item Let $R$ be a ring, and let $\sigma$ be an automorphism of $R.$ Show that $\Set{a\in R}{\sigma(a)=a}$ is a subring of $R,$ and a subfield if $R$ is a field.
+		\begin{proof}
+			Call the subset $S.$ Any automorphism must fix 1, so $1\in S.$ Now if $a, b\in S,$ we have
+			\begin{align*}
+				\sigma(a+b) &= \sigma(a)+\sigma(b) = a+b \\
+				\sigma(ab) &= \sigma(a)\sigma(b)=ab
+			\end{align*}
+			so $a+b, ab\in S,$ so $S$ is indeed a subring. Now, if $R$ is a field, then for all nonzero $a\in R,$
+			\[1=\sigma(1)=\sigma\left( a\cdot \frac{1}{a} \right) = \sigma(a) \sigma\left( \frac{1}{a} \right)\]
+			Now, if $a\in S,$ then $\sigma(a)=a,$ so
+			\[\sigma\left( \frac{1}{a} \right) = \frac{1}{\sigma(a)}=\frac{1}{a}\]
+			so $\frac{1}{a}\in S$ as well, and thus $S$ is a field.
+		\end{proof}
 
 	\item Let $F$ be a finite field with $p^n$ elements for $p$ a prime. Show that each element $a\in F$ has a $p$th root in $F,$ i.e. there exists $b\in F$ such that $b^p=a.$ Is $b$ unique? By contrast, for $K:=F(x)$ the fraction field of the polynomial ring $F[x],$ show that $x$ has no $p$th root in $K.$
 		
@@ -57,8 +69,42 @@ tin
 	\item[14.] Given $\sigma\in S_n,$ define $\theta_\sigma: R[x_1, \cdots, x_n]\to R[x_1, \cdots, x_n]$ by $\theta_\sigma\left[ f(x_1, \cdots, x_n) \right]=f(x_{\sigma 1}, \cdots, x_{\sigma n}).$
 		\begin{enumerate}[(a)]
 			\item Show that $\theta_\sigma$ is a ring automorphism of $R[x_1, \cdots, x_n].$
+				\begin{proof}
+					First we show this is a ring homomorphism. Clearly $\theta_\sigma(1)=1.$ Now, for $f, g\in R[x_1, \cdots, x_n],$
+					\begin{align*}
+						\theta_\sigma\left[f(x_1, \cdots, x_n)+g(x_1, \cdots, x_n)\right] &= \theta_\sigma\left[ (f+g)(x_1, \cdots, x_n) \right] \\
+						&= (f+g)(x_{\sigma1}, \cdots, x_{\sigma n}) \\
+						&= f(x_{\sigma1}, \cdots, x_{\sigma n}) + g(x_{\sigma1}, \cdots, x_{\sigma n}) \\
+						&= \theta_\sigma(f) + \theta_\sigma(g) \\
+						\theta_\sigma\left[f(x_1, \cdots, x_n)\cdot g(x_1, \cdots, x_n)\right] &= \theta_\sigma\left[ (fg)(x_1, \cdots, x_n) \right] \\
+						&= (fg)(x_{\sigma1}, \cdots, x_{\sigma n}) \\
+						&= f(x_{\sigma1}, \cdots, x_{\sigma n}) \cdot g(x_{\sigma 1}, \cdots, x_{\sigma n}) \\
+						&= \theta_\sigma(f)\cdot \theta_\sigma(g)
+					\end{align*}
 
-			\item Show that $\sigma\mapsto \theta_s$ is a group homomorphism $S_n\to \aut R[X_1, \cdots, x_n],$ which is injective.
+					Now if 
+					\[\theta_\sigma(f)=f(x_{\sigma1}, \cdots, x_{\sigma n}) = g(x_{\sigma 1}, \cdots, x_{\sigma n}) = \theta_\sigma(g)\]
+					then consider $\sigma\inv$ and its associated $\theta_{\sigma\inv}.$ Then applying $\theta_{\sigma\inv}$ to both of these polynomials, 
+					\begin{align*}
+						&\theta_{\sigma\inv} \left[ f(x_{\sigma1}, \cdots, x_{\sigma n}) \right] = f(x_{\sigma\inv\sigma1}, \cdots, x_{\sigma\inv\sigma n}) = f(x_1, \cdots, x_n) \\
+						=&\theta_{\sigma\inv} \left[ g(x_{\sigma1}, \cdots, x_{\sigma n}) \right] = g(x_{\sigma\inv\sigma 1}, \cdots, x_{\sigma\inv\sigma n}) = g(x_1, \cdots, x_n) 
+					\end{align*}
+					so $\theta_\sigma$ is injective. Now, for any $f(x_1, \cdots, x_n),$ we have
+					\[\theta_\sigma\left[ f(x_{\sigma\inv 1}, \cdots, x_{\sigma\inv n}) \right] = f(x_1, \cdots, x_n)\]
+					so $\theta_\sigma$ is surjective. Thus, $\theta_\sigma$ is a bijective ring homomorphism from $R[x_1, \cdots, x_n]$ to itself, so it is a ring automorphism.
+				\end{proof}
+
+			\item Show that $\sigma\mapsto \theta_\sigma$ is a group homomorphism $S_n\to \aut R[X_1, \cdots, x_n],$ which is injective.
+				\begin{proof}
+					Let $\sigma, \tau\in S_n.$ Then consider $\theta_{\sigma\tau}.$ For some $f(x_1, \cdots, x_n)\in R[x_1, \cdots, x_n],$ we have
+					\begin{align*}
+						\theta_{\sigma\tau}\left[ f(x_1, \cdots, x_n) \right] &= f(x_{\sigma\tau 1}, \cdots, x_{\sigma\tau n}) \\
+						&= \theta_\sigma\left[ f(x_{\tau1}, \cdots, x_{\tau n}) \right] \\
+						&= \theta_\sigma(\theta_\tau\left[ f(x_1, \cdots, x_n) \right]) \\
+						&= (\theta_\sigma \circ \theta_\tau)\left[ f(x_1, \cdots, x_n) \right]
+					\end{align*}
+					so $(\sigma\tau)\mapsto \theta_{\sigma\tau} = \theta_\sigma\circ\theta_\tau$ and this is indeed a group homomorphism. Suppose $\theta_\sigma=\theta_\tau$ for some $\sigma, \tau\in S_n.$ 
+				\end{proof}<++>
 
 			\item If $G\subseteq \aut R[x_1, \cdots, x_n]$ is a subgroup, show that $S_G=\Set{f}{\theta(f)=f, \forall \theta\in G}$ is a subring of $R[x_1, \cdots, x_n].$
 				
