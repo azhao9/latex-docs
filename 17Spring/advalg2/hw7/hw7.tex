@@ -1,0 +1,69 @@
+\documentclass{article}
+\usepackage[sexy, hdr, fancy]{evan}
+\setlength{\droptitle}{-4em}
+
+\lhead{Homework 7}
+\rhead{Advanced Algebra II}
+\lfoot{}
+\cfoot{\thepage}
+
+\DeclareMathOperator{\cha}{char}
+\DeclareMathOperator{\aut}{aut}
+
+\begin{document}
+\title{Homework 7}
+\maketitle
+\thispagestyle{fancy}
+
+\begin{enumerate}
+	\item Let $R$ be a ring, and let $\sigma$ be an automorphism of $R.$ Show that $\Set{a\in R}{\sigma(a)=a}$ is a subring of $R,$ and a subfield if $R$ is a field.
+
+	\item Let $F$ be a finite field with $p^n$ elements for $p$ a prime. Show that each element $a\in F$ has a $p$th root in $F,$ i.e. there exists $b\in F$ such that $b^p=a.$ Is $b$ unique? By contrast, for $K:=F(x)$ the fraction field of the polynomial ring $F[x],$ show that $x$ has no $p$th root in $K.$
+		
+\end{enumerate}
+
+\section*{Section 6.4: Finite Fields}
+
+\begin{itemize}
+	\item[8.] Find $[\FF_{p^n}:\FF_{p^m}]$ where $m\mid n.$
+
+	\item[18.]
+		\begin{enumerate}[(a)]
+			\item Show that a monic irreducible polynomial $f\in F[x]$ has no repeated root in any splitting field over $F$ if and only if $f\ncong 0$ in $F[x].$ 
+
+			\item If $\cha F=0,$ show that no irreducible polynomial has a repeated root in any splitting field over $F.$
+				
+		\end{enumerate}
+
+	\item[19.] If $\cha F=p,$ show that a monic irreducible polynomial $f\in F[x]$ has a repeated root in some splitting field if and only if $f=g(x^p$ for some $g\in F[x].$ (Hint: Ex 18)
+
+	\item[21.] Let $p$ be a prime and write $f=x^p-x-1.$ Show that the splitting field of $f$ over $\FF_p$ is $\FF_p(u),$ where $u$ is any root of $f.$ (Hint: Compute $f(u+a), a\in\FF_p$)
+tin
+	\item[22.]
+		\begin{enumerate}[(a)]
+			\item Let $f$ be a monic irreducible polynomial of degree $n$ in $\FF_p[x].$ Show that $f$ divides $x^{p^n}-x$ in $\FF_p[x].$ (Hint: First work over $\FF_p(u), f(u)=0.$ Use the uniqueness in Theorem 4 $\S$ 4.1.)
+
+			\item Show that the degree of each monic irreducible divisor $f$ of $x^{p^n}-x$ is a divisor of $n.$ (Hint: Theorem 5)
+
+			\item Factor $x^8-x$ into irreducibles in $\FF_2[x].$
+
+		\end{enumerate}
+		
+\end{itemize}
+
+\section*{Section 4.5: Symmetric Polynomials}
+
+\begin{itemize}
+	\item[14.] Given $\sigma\in S_n,$ define $\theta_\sigma: R[x_1, \cdots, x_n]\to R[x_1, \cdots, x_n]$ by $\theta_\sigma\left[ f(x_1, \cdots, x_n) \right]=f(x_{\sigma 1}, \cdots, x_{\sigma n}).$
+		\begin{enumerate}[(a)]
+			\item Show that $\theta_\sigma$ is a ring automorphism of $R[x_1, \cdots, x_n].$
+
+			\item Show that $\sigma\mapsto \theta_s$ is a group homomorphism $S_n\to \aut R[X_1, \cdots, x_n],$ which is injective.
+
+			\item If $G\subseteq \aut R[x_1, \cdots, x_n]$ is a subgroup, show that $S_G=\Set{f}{\theta(f)=f, \forall \theta\in G}$ is a subring of $R[x_1, \cdots, x_n].$
+				
+		\end{enumerate}
+		
+\end{itemize}
+
+\end{document}

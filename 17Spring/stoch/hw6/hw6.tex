@@ -1,0 +1,93 @@
+\documentclass{article}
+\usepackage[sexy, hdr, fancy]{evan}
+\setlength{\droptitle}{-4em}
+
+\lhead{Homework 6}
+\rhead{Introduction to Stochastic Processes}
+\lfoot{}
+\cfoot{\thepage}
+
+\newcommand{\var}{\mathrm{Var}}
+\newcommand{\cov}{\mathrm{Cov}}
+
+\begin{document}
+\title{Homework 6}
+\maketitle
+\thispagestyle{fancy}
+
+\section*{Chapter 5: The Exponential Distribution and the Poisson Process}
+
+\begin{itemize}
+	\item[2.] Suppose that you arrive at a single-teller bank to find five other customers in the bank, one being served and the other four waiting in line. You join the end of the line. If the service times are all exponential with rate $\mu,$ what is the expected amount of time you will spend in the bank?
+
+	\item[3.] Let $X$ be an exponential random variable. Without any computations, tell which of the following is correct. Explain.
+		\begin{enumerate}[(a)]
+			\ii $E[X^2\mid X>1]=E[(X+1)^2]$ 
+			\ii $E[X^2\mid X>1]=E[X^2]+1$
+			\ii $E[X^2\mid X>1]=(1+E[X])^2$
+		\end{enumerate}
+
+	\item[12.] If $X_i, i=1, 2, 3$ are independent exponential random variables with rates $\lambda_i, i=1, 2, 3,$ find
+		\begin{enumerate}[(a)]
+			\item $P[X_1<X_2<X_3]$
+
+			\item $P[X_1<X_2\mid \max\left\{ X_1, X_2, X_3 \right\}=X_3]$
+
+			\item $E[\max X_i\mid X_1<X_2<X_3]$
+
+			\item $E[\max X_i]$
+				
+		\end{enumerate}
+
+	\item[31.] A doctor has scheduled two appointments, one at 1pm and the other at 1:30pm. The amounts of time that appointments last are independent exponential random variables with mean 30 mins. Assuming that both patients are on time, find the expected amount of time that the 1:30 appointment spends at the doctor's office.
+
+	\item[32.] Let $X$ be a uniform random variable on $(0, 1),$ and consider a counting process where events occur at times $X_i,$ for $i=0, 1, 2, \cdots.$ 
+		\begin{enumerate}[(a)]
+			\item Does this counting process have independent increments?
+
+			\item Does this counting process have stationary increments?
+				
+		\end{enumerate}
+
+	\item[78.] A store opens at 8am. From 8 until 10am customers arrive at a Poisson process rate of 4 an hour. Between 10am and 12pm they arrive at a Poisson rate of 8 an hour. From 12pm to 2pm, the arrival rate increases steadily from eight per hour at 12pm to 10 per hour at 2pm; and from 2 to 5pm, the arrival rate drops steadily from 10 per hour at 2pm to 4 per hour at 5pm. Determine the probability distribution of the number of customers that enter the store on a given day.
+
+	\item[85.] An insurance company pays out claims on its life insurance policies in accordance with a Poisson process having rate $\lambda=5$ per week. If the amount of money paid on each policy is exponentially distributed with mean \$2009, what is the mean and variance of the amount of money paid by the insurance company in a four-week span?
+
+	\item[87.] Determine
+		\[\cov\left[ X(t), X(t+s) \right]\]
+		when $\left\{ X(t), t\ge0 \right\}$ is a compound Poisson process.
+
+	\item[88.] Customers arrive at the automatic teller machine in accordance with a Poisson process with rate 12 per hour. The amount of money withdrawn on each transaction is a random variable with mean \$30 and standard deviation \$50. (A negative withdrawal means that money was deposited.) The machine is in use for 15 hours daily. Approximate the probability that the total daily withdrawal is less than \$6000.
+		
+\end{itemize}
+
+\subsection*{Extra Credit}
+
+\begin{itemize}
+	\item[38.] Let $\left\{ M_i(t), t\ge 0 \right\}, i=1, 2, 3$ be independent Poisson processes with respective rates $\lambda_i, i=1, 2, 3$ and
+		\[N_1(t)=M_1(t)+M_2(t), \quad\quad N_2(t)=M_2(t)+M_3(t)\]
+		\begin{enumerate}[(a)]
+			\item Find $P[N_1(t)=n, N_2(t)=m].$
+
+			\item Find $\cov(N_1(t), N_2(t)).$
+				
+		\end{enumerate}
+
+	\item[52.] Teams 1 and 2 are playing a match. The teams score points according to independent Poisson processes with respective rates $\lambda_1$ and $\lambda_2.$ If the match ends when one of the teams has scored $k$ more points than the other, find the probability that team 1 wins.
+
+	\item[94.] A two-dimensional Poisson process is a process of randomly occurring events in the plane such that
+		\begin{enumerate}[(i)]
+			\ii for any region of area $A$ the number of events in that region has a Poisson distribution with mean $\lambda A$
+			\ii the number of events in non-overlapping regions are independent
+		\end{enumerate}
+		For such a process, consider an arbitrary point in the plane and let $X$ denote its distance from its nearest event. Show that
+		\begin{enumerate}[(a)]
+			\item $P[X>t]=e^{-\lambda \pi t^2}$
+
+			\item $E[X]=\frac{1}{2\sqrt{\lambda}}$
+				
+		\end{enumerate}
+		
+\end{itemize}
+
+\end{document}
