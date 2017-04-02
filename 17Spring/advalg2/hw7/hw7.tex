@@ -34,7 +34,7 @@
 		\begin{proof}
 			Since $F=\FF_{p^n}$ is the splitting field of $x^{p^n}-x$ over $\FF_p,$ we have $a^{p^n}=a$ for all $a\in \FF_{p^n}.$ Thus, if $b=a^{p^{n-1}},$ we have
 			\[b^p=(a^{p^{n-1}})^p = a^{p^n}=a\]
-			so $b$ is a $p$th root of $a.$ If $b^p=c^p=a,$ then $\left( \frac{b}{c} \right)^p=1.$ Since the nonzero elements of $F$ form a cyclic group of order $p^n-1,$ so since $b/c\in F^\times,$ it must be the case that $b/c=1\implies b=c$ so the $p$th root is unique.
+			so $b$ is a $p$th root of $a.$ If $b^p=c^p=a,$ then $\left( \frac{b}{c} \right)^p=1.$ The nonzero elements of $F$ form a cyclic group of order $p^n-1,$ so since $\gcd(p, p^n-1)=1,$ it must be the case that $b/c=1\implies b=c$ so the $p$th root is unique.
 
 			Suppose $x$ had a $p$th root in $K,$ so that for some $f, g\in F[x],$ we have $x=\left( \frac{f}{g} \right)^p.$ Then $g^px=f^p.$ Note that $a^p\neq 0$ for any $0\neq a\in F$ since $F$ is a field and therefore an integral domain. Thus, if $\deg f = m, \deg g=n,$ we have $\deg (g^px)=pn+1=pm=\deg f^p$ which is clearly impossible. Thus, there is no $p$th root of $x,$ as desired.
 		\end{proof}
@@ -45,26 +45,77 @@
 
 \begin{itemize}
 	\item[8.] Find $[\FF_{p^n}:\FF_{p^m}]$ where $m\mid n.$
+		\begin{soln}
+			We have
+			\begin{align*}
+				[\FF_{p^n}:\FF_p] &= [\FF_{p^n}:\FF_{p^m}][\FF_{p^m}:\FF_p] \\
+				\implies n &= [\FF_{p^n}:\FF_{p^m}] \cdot m \\
+				\implies \frac{n}{m} &= [\FF_{p^n}:\FF_{p^m}]
+			\end{align*}
+		\end{soln}
 
 	\item[18.]
 		\begin{enumerate}[(a)]
-			\item Show that a monic irreducible polynomial $f\in F[x]$ has no repeated root in any splitting field over $F$ if and only if $f\ncong 0$ in $F[x].$ 
+			\item Show that a monic irreducible polynomial $f\in F[x]$ has no repeated root in any splitting field over $F$ if and only if $f'\not\equiv 0$ in $F[x].$  
+				\begin{proof}
+					$(\implies):$ Suppose $f$ has no repeated roots in $E$ a splitting field of $f$ over $F,$ but that $f'\equiv0.$ Then if $a\in E$ where $(x-a)\mid f,$ since $(x-a)\mid 0\equiv f',$ so $a$ is a repeated root of $f$ in $E,$ contradiction.
+
+					$(\impliedby):$ Now if $f'\not\equiv 0,$ let $F[x]\ni g=\gcd(f, f').$ Then since $f$ is irreducible, we must have either $g\equiv1$ or $g=f.$ The case $g=f$ is impossible because $g\mid f'$ so $f\mid f',$ but since $\deg f\ge \deg f',$ it must be that $f=f'\equiv0,$ which is contrary to assumption. Then $g\equiv1,$ so $f$ and $f',$ don't share any common factors. Thus, by Theorem 3, it can't have any repeated roots in any splitting field over $F.$
+				\end{proof}
 
 			\item If $\cha F=0,$ show that no irreducible polynomial has a repeated root in any splitting field over $F.$
+				\begin{proof}
+					Let $f\in F[x]$ be irreducible. If $\cha F=0,$ we have $f'\equiv0\iff \deg f = 0,$ which obviously has no repeated roots in any splitting field. Otherwise, $f'\not\equiv0$ for any $f$ with degree at least 1. Then by the result of (a), it follows that $f$ has no repeated root in any splitting field over $F.$ Since $f$ was arbitrary, no irreducible polynomial has a repeated root in any splitting field over $F.$
+				\end{proof}
 				
 		\end{enumerate}
 
-	\item[19.] If $\cha F=p,$ show that a monic irreducible polynomial $f\in F[x]$ has a repeated root in some splitting field if and only if $f=g(x^p$ for some $g\in F[x].$ (Hint: Ex 18)
+	\item[19.] If $\cha F=p,$ show that a monic irreducible polynomial $f\in F[x]$ has a repeated root in some splitting field if and only if $f=g(x^p)$ for some $g\in F[x].$ (Hint: Ex 18)
+		\begin{proof}
+			$(\implies):$ From Ex 18(a), if $f$ has a repeated root in some splitting field, then we must have $f'\equiv0$ in $F[x].$ Let
+			\begin{align*}
+				f &= a_0+a_1x+\cdots+a_{n-1}x^{n-1} + x^n \\
+				f' &= a_1 + 2a_2x + \cdots + (n-1)a_{n-1} x^{n-2} + nx^{n-1}
+			\end{align*}
+			If $f'\equiv0,$ then we must have $p\mid ka_k$ for all $1\le k\le n-1.$ Thus, if $p\nmid k,$ we must have $a_k=0,$ which is exactly to say that all exponents of $f$ are divisible by $p,$ and all other coefficients are 0. Thus, $f=g(x^p),$ as desired.
+
+			$(\impliedby):$ If $f=g(x^p),$ then $f'=px^{p-1} g'(x^p) \equiv 0$ in $F.$ Thus, if $f$ has a root $a$ in a splitting field $E$ over $F,$ then $(x-a)\mid f$ and $(x-a)\mid 0\equiv f',$ so $(x-a)^2\mid f$ by Theorem 3, so $f$ has a repeated root in some splitting field of $F.$
+		\end{proof}
 
 	\item[21.] Let $p$ be a prime and write $f=x^p-x-1.$ Show that the splitting field of $f$ over $\FF_p$ is $\FF_p(u),$ where $u$ is any root of $f.$ (Hint: Compute $f(u+a), a\in\FF_p$)
-tin
+		\begin{proof}
+			Let $a\in\FF_p.$ Now consider $f(u+a):$
+			\begin{align*}
+				f(u+a) &= (u+a)^p-(u+a)-1 \\
+				&= u^p+a^p-u-a-1 = (u^p-u-1) + a^p - a 
+			\end{align*}
+			Now, $u$ is a root of $f$ so the first term vanishes. Since $\abs{\FF_p^\times}=p-1$ as a multiplicative group, it follows that $a^p-a=0.$ Thus, $u+a$ is a root of $f$ for all $a\in \FF_p.$ Since $\deg f=p,$ we must have $f$ splits into $p$ linear factors $\left[ x-(u+a) \right]$ for each $a\in\FF_p.$ Then the splitting field is produced by adjoining each of $u+a$ to $\FF_p,$ but since $a\in\FF_p,$ this is just $\FF_p(u),$ as desired.
+		\end{proof}
+
+		\newpage
 	\item[22.]
 		\begin{enumerate}[(a)]
 			\item Let $f$ be a monic irreducible polynomial of degree $n$ in $\FF_p[x].$ Show that $f$ divides $x^{p^n}-x$ in $\FF_p[x].$ (Hint: First work over $\FF_p(u), f(u)=0.$ Use the uniqueness in Theorem 4 $\S$ 4.1.)
+				\begin{proof}
+					Since $f$ is irreducible in $\FF_p[x],$ it can't have any root in $\FF_p$ since otherwise $f$ would have a linear factor. Let $u$ be a root of $f$ in some extension $E$ over $\FF_p.$ Then since $f$ is irreducible and monic, it is the minimal polynomial of $u,$ so $[E:\FF_p] = n\implies \abs{E}=p^n \implies E\cong \FF_{p^n}.$ Since $u\in E=\FF_{p^n},$ it is a root of $x^{p^n}-x.$ Now, let $x^{p^n}-x=fg+h$ where $g, h\in \FF_p[x]$ and $0\le \deg h < n.$ Now, letting $x=u$ (via the evaluation homomorphism), we have $u^{p^n}-u=0=f(u)g(u) + h(u) = h(u),$ so $u$ is a root of $h.$ However, since $f$ was the minimal polynomial of $u,$ it must be that $h\equiv0,$ so $f\mid (x^{p^n}-x),$ as desired.
+				\end{proof}
 
 			\item Show that the degree of each monic irreducible divisor $f$ of $x^{p^n}-x$ is a divisor of $n.$ (Hint: Theorem 5)
+				\begin{proof}
+					Let $f$ be a monic irreducible divisor of $x^{p^n}-x,$ and let $u$ be a root of $f$ in some extension $E.$ From above, we had $E=\FF_{p^n},$ and since $E$ is a field extension of $\FF_p(u),$ we must have $\FF_p(u)\cong \FF_{p^m}$ for some $m\mid n.$ Thus, $[\FF_p(u):\FF_p]= m=\deg f$ since $f$ is monic and irreducible and therefore the minimal polynomial, so $(\deg f)\mid n,$ as desired.
+				\end{proof}
 
 			\item Factor $x^8-x$ into irreducibles in $\FF_2[x].$
+				\begin{soln}
+					We have $f=x^8-x=x^{2^3} - x,$ so the degree of each irreducible divisor of $f$ has degree either 1 or 3. We have
+					\begin{align*}
+						x^8-x &= x(x^7-1) = x(x-1)(x^6+x^5+x^4+x^3+x^2+x+1)
+					\end{align*}
+					By inspection, the degree 6 polynomial has no roots in $\FF_p,$ so it must split into two irreducible degree 3 polynomials. Suppose one of them is $g=x^3+ax^2+bx+1.$ If $a=b=0$ then $g(1)=0$ and likewise if $a=b=1.$ Thus, either $a=1$ and $b=0$ or $a=0$ and $b=1,$ so the factorization is given by
+					\begin{align*}
+						x^8-x &= x(x-1)(x^3+x^2+1)(x^3+x+1)
+					\end{align*}
+				\end{soln}
 
 		\end{enumerate}
 		

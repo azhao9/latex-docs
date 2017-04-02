@@ -19,43 +19,141 @@
 
 \begin{itemize}
 	\item[2.] Suppose that you arrive at a single-teller bank to find five other customers in the bank, one being served and the other four waiting in line. You join the end of the line. If the service times are all exponential with rate $\mu,$ what is the expected amount of time you will spend in the bank?
+		\begin{soln}
+			Let $X_1, X_2, X_3, X_4, X_5$ denote service times of the first five customers, and $Y$ denote own service time. In particular, since exponential distribution is memory-less, $X_1$ has the same distribution as every other of the random variables. The expected amount of time spent in the bank is
+			\begin{align*}
+				E[X_1+X_2+X_3+X_4+X_5+Y] &= 6E[X_1] = \frac{6}{\mu}
+			\end{align*}
+		\end{soln}
 
-	\item[3.] Let $X$ be an exponential random variable. Without any computations, tell which of the following is correct. Explain.
+	\item[3.] Let $X$ be an exponential random variable. Without any computations, which is right?
 		\begin{enumerate}[(a)]
 			\ii $E[X^2\mid X>1]=E[(X+1)^2]$ 
 			\ii $E[X^2\mid X>1]=E[X^2]+1$
 			\ii $E[X^2\mid X>1]=(1+E[X])^2$
 		\end{enumerate}
+		\begin{answer*}
+			The exponential distribution is memory-less, so we translate upwards by 1, so (b) is right.
+		\end{answer*}
 
 	\item[12.] If $X_i, i=1, 2, 3$ are independent exponential random variables with rates $\lambda_i, i=1, 2, 3,$ find
 		\begin{enumerate}[(a)]
 			\item $P[X_1<X_2<X_3]$
+				\begin{soln}
+					Consider this as a triple integral of the 3D space of the joint density. Since $X_1, X_2, X_3$ are independent, the joint density is just the product of the individual densities. Thus, we hae
+					\begin{align*}
+						P[X_1<X_2<X_3] &= \int_0^\infty \int_{x_1}^\infty \int_{x_2}^\infty \lambda_1 \lambda_2 \lambda_3 e^{-\lambda_1x_1-\lambda_2x_2-\lambda_3x_3}\, dx_3\,dx_2\,dx_1 \\
+						&= \lambda_1\lambda_2\lambda_3 \int_0^\infty \int_{x_1}^\infty e^{-\lambda_1x_1-\lambda_2x_2}\int_{x_2}^\infty e^{-\lambda_3x_3}\, dx_3\, dx_2\, dx_1 \\
+						&= \lambda_1\lambda_2\lambda_3\int_0^\infty\int_{x_1}^\infty e^{-\lambda_1x_1-\lambda_2x_2}\left( -\frac{1}{\lambda_3} \right) e^{-\lambda_3x_3}\bigg\vert^\infty_{x_2}\, dx_2\, dx_1 \\
+						&= \lambda_1\lambda_2 \int_0^\infty e^{-\lambda_1x_1} \int_{x_1}^\infty e^{-(\lambda_2+\lambda_3)x_2}\, dx_2\, dx_1 \\
+						&= \lambda_1\lambda_2 \int_0^\infty e^{-\lambda_1x_1} \left( -\frac{1}{\lambda_2+\lambda_3} \right)e^{-(\lambda_2+\lambda_3)x_2}\bigg\vert^{\infty}_{x_1}\, dx_1 \\
+						&= \frac{\lambda_1\lambda_2}{\lambda_2+\lambda_3}\int_0^\infty e^{-(\lambda_1+\lambda_2+\lambda_3)x_1}\, dx_1 \\
+						&= \frac{\lambda_1\lambda_2}{\lambda_2+\lambda_3}\left( -\frac{1}{\lambda_1+\lambda_2+\lambda_3} \right)e^{-(\lambda_1+\lambda_2+\lambda_3)x_1} \bigg\vert^{\infty}_0 \\
+						&= \boxed{\frac{\lambda_1\lambda_2}{(\lambda_2+\lambda_3)(\lambda_1+\lambda_2+\lambda_3)}}
+					\end{align*}
+				\end{soln}
 
 			\item $P[X_1<X_2\mid \max\left\{ X_1, X_2, X_3 \right\}=X_3]$
+				\begin{soln}
+					This is equivalent to
+					\[\frac{P[X_1<X_2, \max\left\{ X_1, X_2, X_3 \right\}=X_3]}{P[\max\left\{ X_1, X_2, X_3 \right\}=X_3]}=\frac{P[X_1<X_2< X_3]}{P[X_1<X_2<X_3] + P[X_2<X_1<X_3]}\]
+					Using the result from part (a), This is
+					\begin{align*}
+						\frac{\frac{\lambda_1\lambda_2}{(\lambda_2+\lambda_3)(\lambda_1+\lambda_2+\lambda_3)}}{\frac{\lambda_1\lambda_2}{(\lambda_2+\lambda_3)(\lambda_1+\lambda_2+\lambda_3)}+\frac{\lambda_2\lambda_1}{(\lambda_1+\lambda_3)(\lambda_1+\lambda_2+\lambda_3)}} &= \frac{\frac{1}{\lambda_2+\lambda_3}}{\frac{1}{\lambda_2+\lambda_3} + \frac{1}{\lambda_1+\lambda_3}} = \boxed{\frac{\lambda_1+\lambda_3}{\lambda_1+\lambda_2+2\lambda_3}}
+					\end{align*}
+				\end{soln}
 
 			\item $E[\max X_i\mid X_1<X_2<X_3]$
+				\begin{soln}
+					We have
+					\begin{align*}
+						&E[\max X_i\mid X_1<X_2<X_3] = E[X_1+(X_2-X_1)+(X_3-X_2)\mid X_1<X_2<X_3] \\
+						&\quad= E[X_1\mid X_1<X_2<X_3] + E[(X_2-X_1)\mid X_1<X_2<X_3] + E[(X_3-X_2)\mid X_1<X_2<X_3]
+					\end{align*}
+					For the first expectation, $X_1$ is conditionally exponential with rate $\lambda_1+\lambda_2+\lambda_3,$ and for the second, $X_2-X_1$ is conditionally exponential with rate $\lambda_2+\lambda_3,$ and for the third, $X_3-X_2$ is conditionally exponential with rate $\lambda_3.$ Thus, the expectation is just
+					\[\frac{1}{\lambda_1+\lambda_2+\lambda_3} + \frac{1}{\lambda_2+\lambda_3} + \frac{1}{\lambda_3}\]
+				\end{soln}
 
 			\item $E[\max X_i]$
+				\begin{soln}
+					Using the law of total probability, and results from parts (a) and (c), this expectation is
+					\begin{align*}
+						E[\max X_i] &= \sum_{i\neq j\neq k}^{}\frac{\lambda_i\lambda_j}{(\lambda_1+\lambda_2+\lambda_3)(\lambda_i+\lambda_j)}\left( \frac{1}{\lambda_1+\lambda_2+\lambda_3} + \frac{1}{\lambda_j+\lambda_k} + \frac{1}{\lambda_k} \right)
+					\end{align*}
+					where $i, j, k$ are just a permutation of $1, 2, 3,$ and this sum runs over all permutations.
+				\end{soln}
 				
 		\end{enumerate}
 
 	\item[31.] A doctor has scheduled two appointments, one at 1pm and the other at 1:30pm. The amounts of time that appointments last are independent exponential random variables with mean 30 mins. Assuming that both patients are on time, find the expected amount of time that the 1:30 appointment spends at the doctor's office.
+		\begin{soln}
+			The first patient is expected to spend 30 minutes, so the 1:30 patient is expected to start just upon arrival. Then since this appointment is independent from the first, it will be expected to last 30 minutes, so the 1:30 appointment is expected to spend \boxed{30 \text{ minutes}} at the doctor's office.
+		\end{soln}
 
 	\item[32.] Let $X$ be a uniform random variable on $(0, 1),$ and consider a counting process where events occur at times $X_i,$ for $i=0, 1, 2, \cdots.$ 
 		\begin{enumerate}[(a)]
 			\item Does this counting process have independent increments?
+				\begin{soln}
+					
+				\end{soln}
 
 			\item Does this counting process have stationary increments?
 				
 		\end{enumerate}
 
 	\item[78.] A store opens at 8am. From 8 until 10am customers arrive at a Poisson process rate of 4 an hour. Between 10am and 12pm they arrive at a Poisson rate of 8 an hour. From 12pm to 2pm, the arrival rate increases steadily from eight per hour at 12pm to 10 per hour at 2pm; and from 2 to 5pm, the arrival rate drops steadily from 10 per hour at 2pm to 4 per hour at 5pm. Determine the probability distribution of the number of customers that enter the store on a given day.
+		\begin{soln}
+			Let 8am represent time $t=0$ and 5pm represent time $t=9.$ Then the graph of $\lambda(t)$ is
+					\begin{center}
+						\begin{asy}
+							unitsize(3cm);
+							import graph;
+							path xaxis = (-1, 0) -- (20, 0);
+							path yaxis = (0, -1) -- (0, 5.5);
+							path lambda = (0, 0) -- (0, 2) -- (4, 2) -- (4, 4) -- (8, 4) -- (12, 5) -- (18, 2) -- (18, 0);
+							Label xlabel = Label('$t$', position=EndPoint);
+							Label ylabel = Label('$\lambda$', position=EndPoint);
+
+							draw(xaxis, L=xlabel);
+							draw(yaxis, L=ylabel);
+							draw(lambda);
+						\end{asy}
+					\end{center}
+					This is a non-homogeneous Poisson process, and the distribution of $N(t+s)-N(t)$ is Poisson $(m(t+s)-m(t)).$ We want the distribution over the entire day, so that is $N(9)-N(0)$ which has a Poisson distribution with rate
+					\[m(9)-m(0) = m(9) = \int_0^9 \lambda(t)\, dt = 2(4) + 2(8) + 2(8+10)/2 + 3(10+4)/2 = 56\]
+		\end{soln}
 
 	\item[85.] An insurance company pays out claims on its life insurance policies in accordance with a Poisson process having rate $\lambda=5$ per week. If the amount of money paid on each policy is exponentially distributed with mean \$2009, what is the mean and variance of the amount of money paid by the insurance company in a four-week span?
 
 	\item[87.] Determine
 		\[\cov\left[ X(t), X(t+s) \right]\]
 		when $\left\{ X(t), t\ge0 \right\}$ is a compound Poisson process.
+		\begin{soln}
+			We have
+			\begin{align*}
+				\cov\left[ X(t), X(t+s) \right] &= E\left[ X(t) X(t+s) \right] - E\left[ X(t) \right]E\left[ X(t+s) \right] \\
+				&= E\left[ X(t) \left( X(t+s)-X(t) \right) \right] + E\left[ X^2(t) \right] - E[X(t)]E[X(t+s)] \\
+				&= E[X(t)] E[X(t+s)-X(t)] + E[X^2(t)] - E[X(t)]E[X(t+s)] \\
+				&= E[X(t)] \left( E[X(t+s)] - E[X(t)] \right) + E[X^2(t)] - E[X(t)]E[X(t+s)] \\
+				&= E[X^2(t)] - \left( E[X(t)] \right)^2
+			\end{align*}
+			where we have used the fact that $X$ has independent increments. Suppose $E[Y_i] = \mu$ and $\var(Y_i)=\sigma^2.$ Then for $E[X^2(t)],$ we have
+			\begin{align*}
+				E[X^2(t)] &= E\left[ \left( \sum_{i=1}^{N(t)} Y_i \right)^2 \right] = E\left[ E\left[ \left( \sum_{i=1}^{N(t)} Y_i\right)^2\bigg\vert N(t) \right] \right] \\
+				&= \sum_{n=1}^{\infty} E\left[ \left(\sum_{i=1}^{n} Y_i\right)^2 \right] P[N(t)=n] \\
+				&= \sum_{n=1}^{\infty} E\left[ \sum_{i=1}^{n} Y_i^2 + \sum_{j\neq k}^{} Y_j Y_k \right] P[N(t)=n] \\
+				&= \sum_{n=1}^{\infty} \left( \sum_{i=1}^{n} \left[E[Y_i^2] - (E[Y_i])^2 + (E[Y_i])^2\right] + \sum_{j\neq k}^{} E[Y_j Y_k] \right) P[N(t)=n] \\
+				&= \sum_{n=1}^{\infty} \left( n\sigma^2 + n\mu^2 + (n^2-n)\mu^2 \right) P[N(t)=n] \\
+				&= \sigma^2 \sum_{n=1}^{\infty} nP[N(t)=n] + \mu^2\sum_{n=1}^{\infty} n^2 P[N(t)=n] \\
+				&= \sigma^2 E[N(t)] + \mu^2 E[N^2(t)] \\
+				&= \sigma^2\lambda t+ \mu^2(\lambda^2t^2+\lambda t)
+			\end{align*}
+			Now, use the fact that $E[X(t)] = \lambda \mu t,$ so
+			\begin{align*}
+				\cov[X(t), X(t+s)] &= E[X^2(t)] - \left( E[X(t)] \right)^2 = (\sigma^2\lambda t + \mu^2\lambda^2t^2+\mu^2\lambda t) - \lambda^2\mu^2t^2 \\
+				&= \boxed{(\sigma^2+\mu^2) \lambda t}
+			\end{align*}
+		\end{soln}
 
 	\item[88.] Customers arrive at the automatic teller machine in accordance with a Poisson process with rate 12 per hour. The amount of money withdrawn on each transaction is a random variable with mean \$30 and standard deviation \$50. (A negative withdrawal means that money was deposited.) The machine is in use for 15 hours daily. Approximate the probability that the total daily withdrawal is less than \$6000.
 		
