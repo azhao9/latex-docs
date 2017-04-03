@@ -87,7 +87,7 @@
 
 	\item[31.] A doctor has scheduled two appointments, one at 1pm and the other at 1:30pm. The amounts of time that appointments last are independent exponential random variables with mean 30 mins. Assuming that both patients are on time, find the expected amount of time that the 1:30 appointment spends at the doctor's office.
 		\begin{soln}
-			The first patient is expected to spend 30 minutes, so the 1:30 patient is expected to start just upon arrival. Then since this appointment is independent from the first, it will be expected to last 30 minutes, so the 1:30 appointment is expected to spend \boxed{30 \text{ minutes}} at the doctor's office.
+			Condition on whether the first patient is done within 30 minutes. The probability they are is the complement of the probability they are not, which is $1-e^{-30/30} = 1-e\inv.$ In this case, the second patient spends 30 minutes. If they are not done, by the time the second patient arrives, because of the memory-less property, the second patient will expect the first patient to take 30 minutes, and then the second patient is expected to take 30 minutes. Thus, the expected amount of time is $30(1-e\inv) + 60e\inv = \boxed{30+30e\inv}$ minutes.
 		\end{soln}
 
 	\item[32.] Let $X$ be a uniform random variable on $(0, 1),$ and consider a counting process where events occur at times $X+i,$ for $i=0, 1, 2, \cdots.$ 
@@ -124,7 +124,7 @@
 				\end{asy}
 			\end{center}
 			This is a non-homogeneous Poisson process, and the distribution of $N(t+s)-N(t)$ is Poisson $(m(t+s)-m(t)).$ We want the distribution over the entire day, so that is $N(9)-N(0)$ which has a Poisson distribution with rate
-			\[m(9)-m(0) = m(9) = \int_0^9 \lambda(t)\, dt = 2(4) + 2(8) + 2(8+10)/2 + 3(10+4)/2 = 56\]
+			\[m(9)-m(0) = m(9) = \int_0^9 \lambda(t)\, dt = 2(4) + 2(8) + 2(8+10)/2 + 3(10+4)/2 = 63\]
 		\end{soln}
 
 	\item[85.] An insurance company pays out claims on its life insurance policies in accordance with a Poisson process having rate $\lambda=5$ per week. If the amount of money paid on each policy is exponentially distributed with mean \$2000, what is the mean and variance of the amount of money paid by the insurance company in a four-week span?
@@ -140,7 +140,7 @@
 		\[\cov\left[ X(t), X(t+s) \right]\]
 		when $\left\{ X(t), t\ge0 \right\}$ is a compound Poisson process.
 		\begin{soln}
-			We have
+			Using the property of independent increments, we have
 			\begin{align*}
 				\cov\left[ X(t), X(t+s) \right] &= E\left[ X(t) X(t+s) \right] - E\left[ X(t) \right]E\left[ X(t+s) \right] \\
 				&= E\left[ X(t) \left( X(t+s)-X(t) \right) \right] + E\left[ X^2(t) \right] - E[X(t)]E[X(t+s)] \\
