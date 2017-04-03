@@ -28,9 +28,9 @@
 
 	\item[3.] Let $X$ be an exponential random variable. Without any computations, which is right?
 		\begin{enumerate}[(a)]
-			\ii $E[X^2\mid X>1]=E[(X+1)^2]$ 
-			\ii $E[X^2\mid X>1]=E[X^2]+1$
-			\ii $E[X^2\mid X>1]=(1+E[X])^2$
+				\ii $E[X^2\mid X>1]=E[(X+1)^2]$ 
+				\ii $E[X^2\mid X>1]=E[X^2]+1$
+				\ii $E[X^2\mid X>1]=(1+E[X])^2$
 		\end{enumerate}
 		\begin{answer*}
 			The exponential distribution is memory-less, so we translate upwards by 1, so (b) is right.
@@ -82,7 +82,7 @@
 					\end{align*}
 					where $i, j, k$ are just a permutation of $1, 2, 3,$ and this sum runs over all permutations.
 				\end{soln}
-				
+
 		\end{enumerate}
 
 	\item[31.] A doctor has scheduled two appointments, one at 1pm and the other at 1:30pm. The amounts of time that appointments last are independent exponential random variables with mean 30 mins. Assuming that both patients are on time, find the expected amount of time that the 1:30 appointment spends at the doctor's office.
@@ -90,40 +90,51 @@
 			The first patient is expected to spend 30 minutes, so the 1:30 patient is expected to start just upon arrival. Then since this appointment is independent from the first, it will be expected to last 30 minutes, so the 1:30 appointment is expected to spend \boxed{30 \text{ minutes}} at the doctor's office.
 		\end{soln}
 
-	\item[32.] Let $X$ be a uniform random variable on $(0, 1),$ and consider a counting process where events occur at times $X_i,$ for $i=0, 1, 2, \cdots.$ 
+	\item[32.] Let $X$ be a uniform random variable on $(0, 1),$ and consider a counting process where events occur at times $X+i,$ for $i=0, 1, 2, \cdots.$ 
 		\begin{enumerate}[(a)]
 			\item Does this counting process have independent increments?
-				\begin{soln}
-					
-				\end{soln}
+				\begin{answer*}
+					No. Consider the intervals $(0, 0.5)$ and $(1, 1.5).$ These intervals are disjoint, but they have the same number of events. Either $1$ if $0<X<0.5$ or $0$ otherwise.
+				\end{answer*}
 
+				\newpage
 			\item Does this counting process have stationary increments?
-				
+				\begin{answer*}
+					No. If $X=0.2,$ then the number of events in $(0, 0+0.5)$ is 1, but the number of events in $(0.3, 0.3+0.5)$ is 0.
+				\end{answer*}
+
 		\end{enumerate}
 
 	\item[78.] A store opens at 8am. From 8 until 10am customers arrive at a Poisson process rate of 4 an hour. Between 10am and 12pm they arrive at a Poisson rate of 8 an hour. From 12pm to 2pm, the arrival rate increases steadily from eight per hour at 12pm to 10 per hour at 2pm; and from 2 to 5pm, the arrival rate drops steadily from 10 per hour at 2pm to 4 per hour at 5pm. Determine the probability distribution of the number of customers that enter the store on a given day.
 		\begin{soln}
 			Let 8am represent time $t=0$ and 5pm represent time $t=9.$ Then the graph of $\lambda(t)$ is
-					\begin{center}
-						\begin{asy}
-							unitsize(3cm);
-							import graph;
-							path xaxis = (-1, 0) -- (20, 0);
-							path yaxis = (0, -1) -- (0, 5.5);
-							path lambda = (0, 0) -- (0, 2) -- (4, 2) -- (4, 4) -- (8, 4) -- (12, 5) -- (18, 2) -- (18, 0);
-							Label xlabel = Label('$t$', position=EndPoint);
-							Label ylabel = Label('$\lambda$', position=EndPoint);
+			\begin{center}
+				\begin{asy}
+					unitsize(3cm);
+					import graph;
+					path xaxis = (-1, 0) -- (20, 0);
+					path yaxis = (0, -1) -- (0, 5.5);
+					path lambda = (0, 0) -- (0, 2) -- (4, 2) -- (4, 4) -- (8, 4) -- (12, 5) -- (18, 2) -- (18, 0);
+					Label xlabel = Label('$t$', position=EndPoint);
+					Label ylabel = Label('$\lambda$', position=EndPoint);
 
-							draw(xaxis, L=xlabel);
-							draw(yaxis, L=ylabel);
-							draw(lambda);
-						\end{asy}
-					\end{center}
-					This is a non-homogeneous Poisson process, and the distribution of $N(t+s)-N(t)$ is Poisson $(m(t+s)-m(t)).$ We want the distribution over the entire day, so that is $N(9)-N(0)$ which has a Poisson distribution with rate
-					\[m(9)-m(0) = m(9) = \int_0^9 \lambda(t)\, dt = 2(4) + 2(8) + 2(8+10)/2 + 3(10+4)/2 = 56\]
+					draw(xaxis, L=xlabel);
+					draw(yaxis, L=ylabel);
+					draw(lambda);
+				\end{asy}
+			\end{center}
+			This is a non-homogeneous Poisson process, and the distribution of $N(t+s)-N(t)$ is Poisson $(m(t+s)-m(t)).$ We want the distribution over the entire day, so that is $N(9)-N(0)$ which has a Poisson distribution with rate
+			\[m(9)-m(0) = m(9) = \int_0^9 \lambda(t)\, dt = 2(4) + 2(8) + 2(8+10)/2 + 3(10+4)/2 = 56\]
 		\end{soln}
 
-	\item[85.] An insurance company pays out claims on its life insurance policies in accordance with a Poisson process having rate $\lambda=5$ per week. If the amount of money paid on each policy is exponentially distributed with mean \$2009, what is the mean and variance of the amount of money paid by the insurance company in a four-week span?
+	\item[85.] An insurance company pays out claims on its life insurance policies in accordance with a Poisson process having rate $\lambda=5$ per week. If the amount of money paid on each policy is exponentially distributed with mean \$2000, what is the mean and variance of the amount of money paid by the insurance company in a four-week span?
+		\begin{soln}
+			Let $X_i$ be the amount of money paid per claim, and let $Y(t)$ be the compound Poisson process with underlying Poisson process $N(t)$ with rate $\lambda=5.$ Then after four weeks, we have
+			\begin{align*}
+				E[Y(4)] &= 4\lambda \cdot E[X_i] = (4\cdot 5)(2000) = \boxed{4\times 10^4} \\
+				\var\left[ Y(4) \right] &= 4\lambda \cdot E[X_i^2] = (4\cdot 5)(2000^2+2000^2) = \boxed{1.6\times 10^8}
+			\end{align*}
+		\end{soln}
 
 	\item[87.] Determine
 		\[\cov\left[ X(t), X(t+s) \right]\]
@@ -135,28 +146,24 @@
 				&= E\left[ X(t) \left( X(t+s)-X(t) \right) \right] + E\left[ X^2(t) \right] - E[X(t)]E[X(t+s)] \\
 				&= E[X(t)] E[X(t+s)-X(t)] + E[X^2(t)] - E[X(t)]E[X(t+s)] \\
 				&= E[X(t)] \left( E[X(t+s)] - E[X(t)] \right) + E[X^2(t)] - E[X(t)]E[X(t+s)] \\
-				&= E[X^2(t)] - \left( E[X(t)] \right)^2
-			\end{align*}
-			where we have used the fact that $X$ has independent increments. Suppose $E[Y_i] = \mu$ and $\var(Y_i)=\sigma^2.$ Then for $E[X^2(t)],$ we have
-			\begin{align*}
-				E[X^2(t)] &= E\left[ \left( \sum_{i=1}^{N(t)} Y_i \right)^2 \right] = E\left[ E\left[ \left( \sum_{i=1}^{N(t)} Y_i\right)^2\bigg\vert N(t) \right] \right] \\
-				&= \sum_{n=1}^{\infty} E\left[ \left(\sum_{i=1}^{n} Y_i\right)^2 \right] P[N(t)=n] \\
-				&= \sum_{n=1}^{\infty} E\left[ \sum_{i=1}^{n} Y_i^2 + \sum_{j\neq k}^{} Y_j Y_k \right] P[N(t)=n] \\
-				&= \sum_{n=1}^{\infty} \left( \sum_{i=1}^{n} \left[E[Y_i^2] - (E[Y_i])^2 + (E[Y_i])^2\right] + \sum_{j\neq k}^{} E[Y_j Y_k] \right) P[N(t)=n] \\
-				&= \sum_{n=1}^{\infty} \left( n\sigma^2 + n\mu^2 + (n^2-n)\mu^2 \right) P[N(t)=n] \\
-				&= \sigma^2 \sum_{n=1}^{\infty} nP[N(t)=n] + \mu^2\sum_{n=1}^{\infty} n^2 P[N(t)=n] \\
-				&= \sigma^2 E[N(t)] + \mu^2 E[N^2(t)] \\
-				&= \sigma^2\lambda t+ \mu^2(\lambda^2t^2+\lambda t)
-			\end{align*}
-			Now, use the fact that $E[X(t)] = \lambda \mu t,$ so
-			\begin{align*}
-				\cov[X(t), X(t+s)] &= E[X^2(t)] - \left( E[X(t)] \right)^2 = (\sigma^2\lambda t + \mu^2\lambda^2t^2+\mu^2\lambda t) - \lambda^2\mu^2t^2 \\
-				&= \boxed{(\sigma^2+\mu^2) \lambda t}
+				&= E[X^2(t)] - \left( E[X(t)] \right)^2 = \var\left[ X(t) \right] = \lambda t E[Y_i^2] \\
+				&= \boxed{\lambda t\left( \var(Y_i)+(E[Y_i])^2 \right)}
 			\end{align*}
 		\end{soln}
 
 	\item[88.] Customers arrive at the automatic teller machine in accordance with a Poisson process with rate 12 per hour. The amount of money withdrawn on each transaction is a random variable with mean \$30 and standard deviation \$50. (A negative withdrawal means that money was deposited.) The machine is in use for 15 hours daily. Approximate the probability that the total daily withdrawal is less than \$6000.
-		
+		\begin{soln}
+			Let $X_i$ be the amount of money per transaction, and let $Y(t)$ be the compound Poisson process with underlying Poisson process $N(t)$ with rate $\lambda=12.$ Then after 15 hours, we have
+			\begin{align*}
+				E[Y(15)] &= 12\cdot 15 \cdot E[X_i] = 5400 \\
+				\var\left[ Y(15) \right] &= 12\cdot 15\cdot E[X_i^2] = 12\cdot 15(50^2+30^2)
+			\end{align*}
+			Now, using the fact that $Y(15)$ is approximately normal, we have
+			\begin{align*}
+				P\left[ Y(15)<6000 \right] &\approx P\left[ Z < \frac{6000-5400}{\sqrt{12\cdot 15(50^2+30^2)}} \right] \approx P\left[ Z<0.767 \right] \approx \boxed{0.778}
+			\end{align*}
+		\end{soln}
+
 \end{itemize}
 
 \subsection*{Extra Credit}
@@ -166,26 +173,75 @@
 		\[N_1(t)=M_1(t)+M_2(t), \quad\quad N_2(t)=M_2(t)+M_3(t)\]
 		\begin{enumerate}[(a)]
 			\item Find $P[N_1(t)=n, N_2(t)=m].$
+				\begin{soln}
+					Let $k=\min\left\{ n, m \right\}$ and condition on $M_2(t).$ Then we have
+					\begin{align*}
+						P[N_1(t)=n, N_2(t)=m] &= \sum_{i=1}^{k} P[N_1(t)=n, N_2(t)=m\mid M_2(t)=i] P[M_2(t)=i] \\
+						&= \sum_{i=1}^{k} P[M_1(t) = n-i, M_3(t)=m-i] P[M_2(t)=i] \\
+						&= \sum_{i=1}^{k} P[M_1(t)=n-i]P[M_3(t)=m-i] P[M_2(t)=i] \\
+						&= \sum_{i=1}^{k} \left[ e^{-\lambda_1 t} \frac{(\lambda_1 t)^{n-i}}{(n-i)!} \right]\left[ e^{-\lambda_3 t} \frac{(\lambda_3 t)^{m-i}}{(m-i)!}\right]\left[ e^{-\lambda_2 t} \frac{(\lambda_2 t)^i}{i!} \right]
+					\end{align*}
+					I can't really find any way to non-trivially simplify this further.
+				\end{soln}
 
 			\item Find $\cov(N_1(t), N_2(t)).$
-				
+				\begin{soln}
+					This is
+					\begin{align*}
+						&\cov\left[ N_1(t), N_2(t) \right] = \cov\left[ M_1(t)+M_2(t), M_2(t)+M_3(t) \right] \\
+						&\quad= \cov\left[ M_1(t), M_2(t) \right] + \cov\left[ M_1(t), M_3(t) \right] + \cov\left[ M_2(t), M_3(t) \right] + \cov\left[ M_2(t), M_2(t) \right] \\
+						&\quad= \var\left[ M_2(t) \right] \\
+						&\quad= \lambda_2 t
+					\end{align*}
+				\end{soln}
+
 		\end{enumerate}
 
 	\item[52.] Teams 1 and 2 are playing a match. The teams score points according to independent Poisson processes with respective rates $\lambda_1$ and $\lambda_2.$ If the match ends when one of the teams has scored $k$ more points than the other, find the probability that team 1 wins.
+		\begin{soln}
+			Let $N_1(t)$ and $N_2(t)$ represent the Poisson processes for teams 1 and 2, respectively, and define $N(t):=N_1(t)+N_2(t).$ This is a Poisson process with rate $\lambda_1+\lambda_2.$ Now define the indicator 
+			\[I_n = \begin{cases}
+					1 &\quad\quad\text{if team 1 scores point }n \\
+					-1 &\quad\quad\text{if team 2 scores point }n
+			\end{cases}\]
+			Then after the $(n-1)$th point, by the memory-less property, we have
+			\[P[I_n=1] = \frac{\lambda_2}{\lambda_1+\lambda_2}\]
+			Now, this is the gambler's ruin problem, where team 1 starts with $k$ points, and is trying to get to $2k$ points before hitting 0, and each round has $\frac{\lambda_1}{\lambda_1+\lambda_2}$ probability of winning and $\frac{\lambda_2}{\lambda_1+\lambda_2}$ probability of losing. The ratio is $\lambda_2/\lambda_1,$ so, the probability team 1 wins is
+			\[P[\text{team 1 wins}] = 
+				\begin{cases}
+					\frac{1}{2} &\quad\quad \lambda_1=\lambda_2 \\
+					\frac{1-\left( \frac{\lambda_2}{\lambda_1} \right)^k}{1-\left( \frac{\lambda_2}{\lambda_1} \right)^{2k}} &\quad\quad \lambda_1\neq \lambda_2
+			\end{cases}\]
+		\end{soln}
 
 	\item[94.] A two-dimensional Poisson process is a process of randomly occurring events in the plane such that
 		\begin{enumerate}[(i)]
-			\ii for any region of area $A$ the number of events in that region has a Poisson distribution with mean $\lambda A$
-			\ii the number of events in non-overlapping regions are independent
+				\ii for any region of area $A$ the number of events in that region has a Poisson distribution with mean $\lambda A$
+				\ii the number of events in non-overlapping regions are independent
 		\end{enumerate}
 		For such a process, consider an arbitrary point in the plane and let $X$ denote its distance from its nearest event. Show that
 		\begin{enumerate}[(a)]
 			\item $P[X>t]=e^{-\lambda \pi t^2}$
+				\begin{proof}
+					Let the point be $p,$ and let $N(r)$ be the number of events in the circle centered at $p$ with radius $r.$ Then $P[X>t]$ is the probability that there are no events in this circle, so $N(t)=0.$ Since $N(t)$ is a Poisson process with mean $\lambda A = \lambda \pi t^2,$ we have $P[N(t)=0] = e^{-\lambda \pi t^2}.$
+				\end{proof}
 
 			\item $E[X]=\frac{1}{2\sqrt{\lambda}}$
-				
+				\begin{proof}
+					We may write the expectation as an integral of tail probabilities:
+					\begin{align*}
+						E[X] &= \int_0^\infty P[X>t] \, dt \\
+						&= \int_0^\infty e^{-\lambda\pi t^2}\, dt
+					\end{align*}
+					Let $\sigma^2=\frac{1}{2\pi\lambda}$ for convenience, so this is
+					\begin{align*}
+						E[X] &= \int_0^\infty e^{-\frac{t^2}{2\sigma^2}}\, dt = \frac{1}{2} \sigma\sqrt{2\pi} \int_{-\infty}^\infty \frac{1}{\sigma\sqrt{2\pi}} e^{-\frac{t^2}{2\sigma^2}}\, dt \\
+						&= \frac{1}{2} \sqrt{\frac{1}{2\lambda\pi}}\sqrt{2\pi} = \frac{1}{2\sqrt{\lambda}}
+					\end{align*}
+				\end{proof}
+
 		\end{enumerate}
-		
+
 \end{itemize}
 
 \end{document}
