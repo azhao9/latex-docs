@@ -205,7 +205,7 @@
 					-1 &\quad\quad\text{if team 2 scores point }n
 			\end{cases}\]
 			Then after the $(n-1)$th point, by the memory-less property, we have
-			\[P[I_n=1] = \frac{\lambda_2}{\lambda_1+\lambda_2}\]
+			\[P[I_n=1] = \frac{\lambda_1}{\lambda_1+\lambda_2}\]
 			Now, this is the gambler's ruin problem, where team 1 starts with $k$ points, and is trying to get to $2k$ points before hitting 0, and each round has $\frac{\lambda_1}{\lambda_1+\lambda_2}$ probability of winning and $\frac{\lambda_2}{\lambda_1+\lambda_2}$ probability of losing. The ratio is $\lambda_2/\lambda_1,$ so, the probability team 1 wins is
 			\[P[\text{team 1 wins}] = 
 				\begin{cases}
