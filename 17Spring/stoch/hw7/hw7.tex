@@ -1,0 +1,47 @@
+\documentclass{article}
+\usepackage[sexy, hdr, fancy]{evan}
+\setlength{\droptitle}{-4em}
+
+\lhead{Homework 7}
+\rhead{Introduction to Stochastic Processes}
+\lfoot{}
+\cfoot{\thepage}
+
+\newcommand{\var}{\mathrm{Var}}
+\newcommand{\cov}{\mathrm{Cov}}
+
+\begin{document}
+\title{Homework 7}
+\maketitle
+\thispagestyle{fancy}
+
+\section*{Chapter 6: Continuous-Time Markov Chains}
+
+\begin{itemize}
+	\item[2.] Suppose that a one-celled organism can be in one of two states - either $A$ or $B.$ An individual in state $A$ will change to state $B$ at an exponential rate $\alpha;$ an individual in state $B$ divides into two new individuals of type $A$ at an exponential rate $\beta.$ Define an appropriate continuous-tine Markov chain for a population of such organisms and determine the appropriate parameters for this model.
+
+	\item[5.] There are $N$ individuals in a population, some of whom have a certain infection that spreads as follows. Contacts between two members of this population occur in accordance with a Poisson process having rate $\lambda.$ When a contact occurs, it is equally likely to involve any of the $\binom{N}{2}$ pairs of individuals in the population. If a contact involves an infected and non-infected individual, then with probability  $p$ the non-infected individual becomes infected. Once infected, an individual remains infected throughout. Let $X(t)$ denote the number of infected members of the population at time $t.$
+		\begin{enumerate}[(a)]
+			\item Is $\left\{ X(t), t\ge0 \right\}$ a continuous-time Markov chain?
+
+			\item Specify its type.
+
+			\item Starting with a single infected individual, what is the expected time until all members are infected?
+				
+		\end{enumerate}
+
+	\item[6.] Consider a birth and death process with birth rates $\lambda_i=(i+1)\lambda, i\ge0,$ and death rates $\mu_i=i\mu, i\ge0.$
+		\begin{enumerate}[(a)]
+			\item Determine the expected time to go from state 0 to state 4.
+
+			\item Determine the expected time to go from state 2 to state 5.
+
+			\item Determine the variances in parts (a) and (b).
+				
+		\end{enumerate}
+
+	\item[9.] The birth and death process with parameters $\lambda_n=0$ and $\mu_n=\mu, n<0$ is called a pure death process. Find $P_{ij}(t).$
+		
+\end{itemize}
+
+\end{document}
