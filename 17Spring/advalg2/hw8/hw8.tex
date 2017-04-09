@@ -7,6 +7,8 @@
 \lfoot{}
 \cfoot{\thepage}
 
+\DeclareMathOperator{\core}{core}
+
 \begin{document}
 \title{Homework 8}
 \maketitle
@@ -18,8 +20,31 @@
 			\item Let $z=a+bi\in\CC$ with $a, b\in\RR.$ Explain why the quantities
 				\[\frac{a+\sqrt{a^2+b^2}}{2}\quad\text{and}\quad\frac{-a+\sqrt{a^2+b^2}}{2}\]
 				are non-negative, and hence have real square roots. Then use these square roots to produce a square root of $z$ in $\CC,$ i.e. a $w\in\CC$ such that $w^2=z.$ (Be careful about signs)
+				\begin{soln}
+					Since $a, b\in \RR,$ we have
+					\begin{align*}
+						\frac{a+\sqrt{a^2+b^2}}{2} &\ge \frac{a+\sqrt{a^2}}{2} = \frac{a+\abs{a}}{2} \ge 0 \\
+						\frac{a-\sqrt{a^2+b^2}}{2} &\ge \frac{-a+\sqrt{a^2}}{2} = \frac{-a+\abs{a}}{2} \ge 0
+					\end{align*}
+
+					Since these quantities are non-negative, their square roots are real. Now, the square root of $z$ is
+					\begin{align*}
+						w&=\sqrt{\frac{a+\sqrt{a^2+b^2}}{2}} + \frac{b}{\abs{b}}\sqrt{\frac{-a+\sqrt{a^2+b^2}}{2}}i \\
+						\implies w^2 &= \frac{b^2}{\abs{b}^2}\left(\frac{a+\sqrt{a^2+b^2}}{2} - \frac{-a+\sqrt{a^2+b^2}}{2}\right) + 2\frac{b}{\abs{b}}\sqrt{\frac{(a+\sqrt{a^2+b^2})(-a+\sqrt{a^2+b^2})}{4}}i \\
+						&= \frac{2a}{2} + 2\frac{b}{\abs{b}}\sqrt{\frac{-a^2+(a^2+b^2)}{4}}i \\
+						&= a+\frac{b}{\abs{b}}\cdot\abs{b} i = a+bi
+					\end{align*}
+				\end{soln}
 
 			\item Let $f(x)=x^2+\alpha x+\beta\in\CC[x],$ with $\alpha, \beta\in\CC.$ Use the quadratic formula to show directly that $f$ splits into linear factors over $\CC,$ and hence the roots of $f$ lie in $\CC.$
+				\begin{proof}
+					By the quadratic formula, the roots of $f$ are
+					\begin{align*}
+						u &= \frac{-\alpha + \sqrt{\alpha^2-4\beta}}{2} \\
+						v &= \frac{-a-\sqrt{\alpha^2-4\beta}}{2}
+					\end{align*}
+					Since $\alpha, \beta\in\CC,$ it follows that $(\alpha^2-4\beta)\in\CC,$ and from (a), the square root exists in $\CC,$ so $u, v\in\CC$ and thus the roots of $f$ lie in $\CC,$ so $f$ splits into linear factors over $\CC.$
+				\end{proof}
 				
 		\end{enumerate}
 		
@@ -28,12 +53,155 @@
 \section*{Section 4.5: Symmetric Polynomials}
 
 \begin{itemize}
-	\item[6.] Show that $f(x_1, \cdots, x_n)$ is homogeneous of degree $m$ in $R[x_1, \cdots, x_n]$ if an only if $f(tx_1, \cdots, tx_n)=t^m \cdot f(x_1, \cdots, x_n)$ in $R[t, x_1, \cdots, x_n], t$ another indeterminate.
+	\item[6.] Show that $f(x_1, \cdots, x_n)$ is homogeneous of degree $m$ in $R[x_1, \cdots, x_n]$ if and only if $f(tx_1, \cdots, tx_n)=t^m \cdot f(x_1, \cdots, x_n)$ in $R[t, x_1, \cdots, x_n], t$ another indeterminate.
+		\begin{proof}
+			$(\implies):$ If $f$ is homogeneous of degree $m,$ then each term is of the form $ax_1^{e_1}\cdots x_n^{e_n}$ where $a\in R$ and $0\le e_i\le m$ for each $i$ and $\sum_{}^{} e_i=m.$ Then in $f(tx_1, \cdots, tx_n),$ this term becomes
+			\begin{align*}
+				a(tx_1)^{e_1}\cdots (tx_n)^{e_n} &= a t^{e_1} x_1^{t_1} \cdots t^{e_n} x_n^{e_n} \\
+				&= a t^{\sum_{}^{}e_i} x_1^{e_1}\cdots x_n^{e_n} \\
+				&= t^m \cdot (a x_1^{e_1} \cdots x_n^{e_n})
+			\end{align*}
+			so $f(tx_1, \cdots, tx_n) = t^m \cdot f(x_1, \cdots, x_n)$ as desired.
 
-	\item[9.] Show that the number of terms in $s_k(x_1, \cdots, x_n)$ is $nk.$
+			$(\impliedby):$ If $ax_1^{e_1}\cdots x_n^{e_n}$ is a term of $f(x_1, \cdots, x_n)$ where $a\in R$ and $0\le e_i,$ then since $f(tx_1, \cdots, tx_n)=t^m\cdot f(x_1, \cdots, x_n),$ the corresponding term of $f(tx_1, \cdots, tx_n)$ is $t^m\cdot (ax_1^{e_1}\cdots x_n^{e_n}).$ We also have
+			\[a(tx_1)^{e_1} \cdots (tx_n)^{e_n} = a t^{e_1} x^{e_1} \cdots  t^{e_n} x^{e_n} = t^{\sum_{}^{} e_i} \cdot (ax_1^{e_1}\cdots x_n^{e_n}) = t^m\cdot (ax_1^{e_1}\cdots x_n^{e_n})\implies \sum_{}^{} e_i = m\]
+			Thus, the degree of every term of $f$ is $m,$ so $f$ is homogeneous of degree $m.$
+		\end{proof}
+
+	\item[9.] Show that the number of terms in $s_k(x_1, \cdots, x_n)$ is $\binom{n}{k}.$
+		\begin{proof}
+			Every term in $s_k$ is of the form $x_{i_1}\cdots x_{i_k}$ where each of the subscripts is distinct. There are $n$ possible subscripts, and we are choosing $k$ to be in the term, so the number of terms is $\binom{n}{k}.$
+		\end{proof}
 
 	\item[10.] Show that the number of monomials of degree $m$ in $R[x_1, \cdots, x_n]$ is $\binom{m+n-1}{m}.$
+		\begin{proof}
+			Every monomial of degree $m$ is of the form
+			\[x_1^{e_1}\cdots x_n^{e_n}\]
+			where $0\le e_i\le m$ for each $i.$ Consider a combinatorial argument: suppose we have $m$ 1's in a row, corresponding to the $m$ degree of the monomial. We wish to place $n-1$ "dividers" among these 1's that separate these 1's into $n$ parts, where there may be zero 1's between two dividers. The number of 1's in the $i$th part corresponds to $e_i.$ There are $\binom{m+n-1}{m}$ ways to order these 1's and dividers, which is the number of monomials of degree $m.$
+		\end{proof}
 
+		
+\end{itemize}
+
+\section*{Section 8.3: Group Actions}
+
+\begin{itemize}
+	\item[7.] If $H$ and $K$ are subgroups of $G,$ show that $\core(H\cap K)=\core H\cap \core K.$
+		\begin{proof}
+			$(\subseteq):$ Let $x\in \core(H\cap K).$ Then $x\in g(H\cap K)g\inv$ for every $g\in G,$ which is to say that $x=gyg\inv$ for some $y\in (H\cap K)$ for each $g\in G.$ Now, since $y\in H$ and $y\in K,$ it follows that $x=gyg\inv\implies x\in gHg\inv$ and $x\in gKg\inv$ for each $g\in G,$ and thus $x\in \core H\cap \core K.$
+
+			$(\supseteq):$ Let $x\in \core H\cap \core K.$ Then $x\in gHg\inv$ for each $g\in G,$ so $x= gyg\inv$ for some $y\in H.$ However, since $x\in gKg\inv$ as well, we must have $x=gzg\inv$ for some $z\in K.$ Obviously then $y=z,$ so $y\in H\cap K,$ and thus $x\in g(H\cap K)g\inv$ for each $g\in G,$ so $x\in \core(H\cap K).$
+		\end{proof}
+
+		\newpage
+	\item[12.] Given $m>1,$ show that a finitely generated group $G$ has at most a finite number of subgroups of index $m.$
+		\begin{proof}	
+			Let $C=\Set{\core H}{\abs{G:H}=m}.$ Now, since $H$ has finite index $m$ in $G,$ there is a homomorphism $\theta:G\to S_m$ with $\ker \theta = \core H.$ Since $G$ is finitely generated, say by $\left\{ g_1, \cdots, g_n \right\},$ this homomorphism is determined exactly by where these generators are mapped to. Since $S_m$ is a finite set, there are finitely many different homomorphisms, and thus finitely many different possibilities for $\ker \theta = \core H.$ Thus, $C$ is a finite set. 
+
+			Now, for any $K\in C,$ suppose $K=\core H$ for some subgroup $H$ of $G$ with index $m.$ Since $\core H\unlhd G,$ by the correspondence theorem, we have
+			\begin{align*}
+				\Theta:\Set{H}{K\subseteq H\subseteq G} \to \Set{M}{M\subseteq G/K}
+			\end{align*}
+			is a bijection, where $H$ is a subgroup of $G$ and $M$ is a subgroup of $G/K.$ Since $G$ is finitely generated, it follows that $G/K$ is also finitely generated, say by $g_1K, \cdots, g_n K.$ Then if $M$ is a subgroup of $G/K,$ it must contain some subset of these generators. Since there are only finitely many of them, there are a finite number of subgroups of $G/K,$ and since $\Theta$ is a bijection, there are finitely many subgroups $H$ of $G.$ Thus, the total number of subgroups of index $m$ is finite.
+		\end{proof}
+
+	\item[23.] Let $X$ be a $G$-set and let $x$ and $y$ denote elements of $X.$ 
+		\begin{enumerate}[(a)]
+			\item Show that $S(x)$ is a subgroup of $G.$
+				\begin{proof}
+					By definition, $1_G\cdot x=x$ so $1_G\in S(x).$ If $a, b\in S(x),$ then
+					\begin{align*}
+						(ab)\cdot x &= a\cdot (b\cdot x) = a\cdot x = x \implies ab\in S(x) \\
+						(a\inv)\cdot x &= (a\inv)\cdot (a\cdot x) = (a\inv a)\cdot x = 1\cdot x = x\implies a\inv\in S(x)
+					\end{align*}
+					Thus $S(x)$ is a subgroup of $G.$
+				\end{proof}
+
+			\item If $x\in X$ and $b\in G,$ show that $S(b\cdot x)=b S(x)b\inv.$
+				\begin{proof}
+					$(\subseteq):$ Let $g\in S(b\cdot x),$ so $g\cdot (b\cdot x) = (gb)\cdot x = b\cdot x.$ Then by Lemma 2, we have $(b\inv gb)\cdot x = x,$ so $b\inv gb\in S(x),$ and thus $bS(x)b\inv \ni b(b\inv gb)b\inv = g.$
+
+					$(\supseteq):$ Let $g\in bS(x)b\inv,$ so $g=bhb\inv$ for some $h\in S(x).$ Then
+					\begin{align*}
+						g\cdot (b\cdot x) &= (bhb\inv)\cdot(b\cdot x) = (bhb\inv b)\cdot x = (bh)\cdot x \\
+						&= b\cdot (h\cdot x) = b\cdot x
+					\end{align*}
+					so $g\in S(b\cdot x).$
+				\end{proof}
+
+			\item If $S(x)$ and $S(y)$ are conjugate subgroups, show that $\abs{G\cdot x}=\abs{G\cdot y}.$
+				\begin{proof}
+					Suppose $S(x)=aS(y)a\inv\implies a\inv S(x)a=S(y)$ for some $a\in G.$ Then define the map
+					\begin{align*}
+						\varphi: G\cdot x &\to G\cdot y \\
+						g\cdot x &\mapsto (ga)\cdot y
+					\end{align*}
+					Now, this map is well-defined and injective because
+					\begin{align*}
+						g\cdot x = h\cdot x &\iff (h\inv g)\cdot x = x \iff h\inv g \in S(x) \\
+						&\iff a\inv h\inv ga \in a\inv S(x)a = S(y) \\
+						&\iff (a\inv h\inv ga)\cdot y = y \\
+						&\iff (ga)\cdot y = (ha)\cdot y
+					\end{align*}
+					This map is also surjective because for any $b\cdot y\in G\cdot y,$ we can recover $(ba\inv)\cdot x$ that maps to it. Thus, $\varphi$ is a bijection, so $\abs{G\cdot x}=\abs{G\cdot y}.$
+				\end{proof}
+				
+		\end{enumerate}
+
+	\item[32.] Let $H$ and $K$ be subgroups of a group $G$ and let $H\times K$ act on $G$ by $(h, k)\cdot x = hxk\inv$ for all $x\in G$ and $(h, k)\in H\times K.$ Show
+		\begin{enumerate}[(a)]
+			\item This is an action and the orbit of $x\in G$ is $HxK.$
+				\begin{proof}
+					We have
+					\begin{align*}
+						(1_H, 1_K) \cdot x &= 1_Gx1_k=x \\
+						(h, k)\cdot \left[ (a, b)\cdot x \right] &= (h, k) \cdot (axb\inv) = haxb\inv k\inv = (ha)x(kb)\inv \\
+						&= (ha, kb)\cdot x = \left[ (h, k)(a, b) \right]\cdot x
+					\end{align*}
+					so this an action. 
+
+					$(\subseteq):$ If $y\in (H\times K)\cdot x,$ then $y=hxk\inv\in HxK$ trivially.
+
+					$(\supseteq):$ If $y\in HxK,$ then $y=hxk$ for some $h\in H$ and $k\in K\implies k\inv\in K.$ Then 
+					\[y=hx(k\inv)\inv = (h, k\inv)\cdot x\implies y\in (H\times K)\cdot x.\]
+				\end{proof}
+
+			\item If $x\in G,$ then $\abs{S(x)}=\abs{H\cap xKx\inv} =  \abs{x\inv Hx\cap K}.$
+				\begin{proof}
+					If $(h, k)\in S(x),$ then $hxk\inv = x\implies k=x\inv hx.$ Now define the map
+					\begin{align*}
+						\varphi:S(x) &\to H\cap xKx\inv \\
+						(h, x\inv hx) &\mapsto h
+					\end{align*}
+					Now, this map is well-defined and injective because
+					\begin{align*}
+						(h, x\inv hx) = (g, x\inv gx) &\iff h = g
+					\end{align*}
+					This map is also surjective because if $h\in (H\cap xKx\inv),$ then $h=xkx\inv\implies k=x\inv hx$ for some $k\in k,$ so we can recover $(h, x\inv hx)$ that maps to $h.$ Thus, $\varphi$ is a bijection, so $\abs{S(x)} = \abs{H\cap xKx\inv}.$
+
+					Similarly, if $(h, k)\in S(x),$ then $hxk\inv=x\implies h=xkx\inv,$ Now define the map
+					\begin{align*}
+						\sigma:S(x)&\to x\inv Hx\cap K \\
+						(xkx\inv, k) &\mapsto k
+					\end{align*}
+					Now, this map is well defined and injective because
+					\begin{align*}
+						(xkx\inv, k) = (xgx\inv, g) \iff k=g
+					\end{align*}
+					This map is also surjective because if $k\in (x\inv Hx\cap K),$ then $k=x\inv hx\implies h=xkx\inv$ for some $h\in H,$ so we can recover $(xkx\inv, k)$ that maps to $k.$ Thus, $\sigma$ is a bijection, so $\abs{S(x)}=\abs{x\inv Hx \cap K}.$
+				\end{proof}
+
+			\item Frobenius' theorem: If $Hx_1K, Hx_2K, \cdots, Hx_nK$ are the distinct double cosets, then
+				\[\abs{G}=\sum_{i=1}^{n} \frac{\abs{H}\abs{K}}{\abs{x_i\inv Hx_i\cap K}}\]
+				\begin{proof}
+					From the orbit decomposition theorem, and the result of (b), we have
+					\begin{align*}
+						\abs{G} &= \sum_{i=1}^{n} \abs{(H\times K)\cdot x_i} = \sum_{i=1}^{n} \abs{(H\times K):S(x_i)} \\
+						&= \sum_{i=1}^{n} \frac{\abs{H\times K}}{\abs{S(x_i)}} = \sum_{i=1}^{n} \frac{\abs{H}\abs{K}}{\abs{x_i\inv Hx_i\cap K}}
+					\end{align*}	
+				\end{proof}
+				
+		\end{enumerate}
 		
 \end{itemize}
 
