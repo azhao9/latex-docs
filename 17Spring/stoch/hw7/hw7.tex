@@ -19,29 +19,106 @@
 
 \begin{itemize}
 	\item[2.] Suppose that a one-celled organism can be in one of two states - either $A$ or $B.$ An individual in state $A$ will change to state $B$ at an exponential rate $\alpha;$ an individual in state $B$ divides into two new individuals of type $A$ at an exponential rate $\beta.$ Define an appropriate continuous-tine Markov chain for a population of such organisms and determine the appropriate parameters for this model.
+		\begin{soln}
+			Let $N_A(t)$ and $N_B(t)$ represent the number of individuals in states $A$ and $B,$ respectively. Then $\left\{ (N_A(t), N_B(t)) \right\}$ is a Markov process. If there are $a$ in state $A$ and $b$ in state $B,$ then the total transition rate is $v_{(a, b)}=a\alpha + b\beta.$ The individual transition probabilities are
+			\begin{align*}
+				P_{(a, b), (a-1, b+1)} &= \frac{a\alpha}{a\alpha+b\beta} \\
+				P_{(a, b), (a+2, b-1)} &= \frac{b\beta}{a\alpha+b\beta}
+			\end{align*}
+		\end{soln}
 
 	\item[5.] There are $N$ individuals in a population, some of whom have a certain infection that spreads as follows. Contacts between two members of this population occur in accordance with a Poisson process having rate $\lambda.$ When a contact occurs, it is equally likely to involve any of the $\binom{N}{2}$ pairs of individuals in the population. If a contact involves an infected and non-infected individual, then with probability  $p$ the non-infected individual becomes infected. Once infected, an individual remains infected throughout. Let $X(t)$ denote the number of infected members of the population at time $t.$
 		\begin{enumerate}[(a)]
 			\item Is $\left\{ X(t), t\ge0 \right\}$ a continuous-time Markov chain?
+				\begin{answer*}
+					If the states are $\left\{ 0, 1, \cdots, N \right\}$ representing the number of infected people, then since contacts are a Poisson process, it follows that the transition rates are exponentially distributed, so the process is memory-less. Thus, it is a Markov process.
+				\end{answer*}
 
 			\item Specify its type.
+				\begin{answer*}
+					This is a pure birth process, since individuals cannot become non-infected.
+				\end{answer*}
 
 			\item Starting with a single infected individual, what is the expected time until all members are infected?
-				
+				\begin{soln}
+					If there are $i$ infected individuals, there are $N-i$ non-infected individuals, so $i(N-i)$ contacts between them. There are a total of $\binom{N}{2}$ possible contacts, so the probability of a contact between infected and non-infected is $i(N-i)/\binom{N}{2},$ and the probability of infection is $pi(N-i)/\binom{N}{2},$ so the birth rates are
+					\begin{align*}
+						\lambda_i &= \frac{\lambda p i(N-i)}{\binom{N}{2}}, \quad i=1, 2, \cdots, N-1
+					\end{align*}
+					If $T_i$ represents the time to transition from $i$ infected individuals to $i+1,$ then we seek
+					\begin{align*}
+						E\left[ \sum_{i=1}^{N-1} T_i \right] = \sum_{i=1}^{N-1} E[T_i] = \sum_{i=1}^{N-1} \frac{1}{\lambda_i} = \sum_{i=1}^{N-1} \frac{\binom{N}{2}}{\lambda pi(N-i)} = \frac{N(N-1)}{2\lambda p}\sum_{i=1}^{N-1} \frac{1}{i(N-i)}
+					\end{align*}
+				\end{soln}
+
 		\end{enumerate}
 
 	\item[6.] Consider a birth and death process with birth rates $\lambda_i=(i+1)\lambda, i\ge0,$ and death rates $\mu_i=i\mu, i\ge0.$
 		\begin{enumerate}[(a)]
 			\item Determine the expected time to go from state 0 to state 4.
+				\begin{soln}
+					We use the recursive formula
+					\begin{align*}
+						E[T_i] &= \frac{1}{\lambda_i} + \frac{\mu_i}{\lambda_i}E[T_{i-1}] = \frac{1}{(i+1)\lambda} \left( 1 + i\mu E[T_{i-1}] \right)
+					\end{align*}
+					Starting with $E[T_0]=1/\lambda_0 = 1/\lambda,$ we have
+					\begin{align*}
+						E[T_1] &= \frac{1}{2\lambda}\left( 1+\mu\cdot \frac{1}{\lambda} \right) = \frac{\lambda+\mu}{2\lambda^2} \\
+						E[T_2] &= \frac{1}{3\lambda} \left( 1+2\mu\cdot \frac{\lambda+\mu}{2\lambda^2} \right) = \frac{\lambda^2+\lambda\mu+\mu^2}{3\lambda^3} \\
+						E[T_3] &= \frac{1}{4\lambda} \left( 1+3\mu\cdot \frac{\lambda^2+\mu(\lambda+\mu)}{3\lambda^3} \right) = \frac{\lambda^3+\lambda^2\mu + \lambda\mu^2 + \mu^3}{4\lambda^4}
+					\end{align*}
+					The expected time to go from state 0 to state 4 is thus
+					\begin{align*}
+						E[T_0+T_1+T_2+T_3] &= E[T_0] + E[T_1] + E[T_2] + E[T_3] \\
+						&= \frac{1}{\lambda} + \frac{\lambda+\mu}{2\lambda^2} + \frac{\lambda^2+\lambda\mu + \mu^2}{3\lambda^3} + \frac{\lambda^3+\lambda^2\mu+\lambda\mu^2+\mu^3}{4\lambda^4}
+					\end{align*}
+				\end{soln}
 
 			\item Determine the expected time to go from state 2 to state 5.
+				\begin{soln}
+					Using the same recursive formula, we have
+					\begin{align*}
+						E[T_4] &= \frac{1}{5\lambda}\left( 1+4\mu\cdot \frac{\lambda^3+\lambda^2\mu+\lambda\mu^2+\mu^3}{4\lambda^4} \right) = \frac{\lambda^4+\lambda^3\mu+\lambda^2\mu^2+\lambda\mu^3+\mu^4}{5\lambda^5}
+					\end{align*}
+					so the expected time to go from state 2 to state 5 is
+					\begin{align*}
+						E[T_2+T_3+T_4] &= E[T_2] + E[T_3] + E[T_4] \\
+						&= \frac{\lambda^2+\lambda\mu+\mu^2}{3\lambda^3} + \frac{\lambda^3+\lambda^2\mu+\lambda\mu^2+\mu^3}{4\lambda^4} + \frac{\lambda^4+\lambda^3\mu+\lambda^2\mu^2+\lambda\mu^3+\mu^4}{5\lambda^5}
+					\end{align*}
+				\end{soln}
 
 			\item Determine the variances in parts (a) and (b).
-				
+				\begin{soln}
+					We use the recursive formula
+					\begin{align*}
+						\var(T_i) &= \frac{1}{\lambda_i(\lambda_i+\mu_i)} + \frac{\mu_i}{\lambda_i}\var(T_{i-1}) + \frac{\mu_i}{\lambda_i+\mu_i}\left( E[T_{i-1}] + E[T_i] \right)^2 \\
+						&= \frac{1}{(i+1)\lambda\left[ (i+1)\lambda+i\mu \right]} + \frac{i\mu}{(i+1)\lambda} \var(T_{i-1}) + \frac{i\mu}{(i+1)\lambda+i\mu}\left( E[T_{i-1}] + E[T_i] \right)^2
+					\end{align*}
+					Starting with $\var(T_0) = 1/\lambda_0^2 = 1/\lambda^2,$ we have
+					\begin{align*}
+						\var(T_1) &= \frac{1}{2\lambda(2\lambda+\mu)} + \frac{\mu}{2\lambda}\cdot \frac{1}{\lambda^2} + \frac{\mu}{2\lambda+\mu} \left( \frac{1}{\lambda} + \frac{\lambda+\mu}{2\lambda^2} \right)^2
+					\end{align*}
+					and etc\ldots The algebra is pretty ugly and I think unnecessary, but the variances of parts (a) and (b), respectively, are
+					\begin{align*}
+						\var(T_0+T_1+T_2+T_3) &= \var(T_0) + \var(T_1) + \var(T_2) + \var(T_3) \\
+						\var(T_2+T_3+T_4) &= \var(T_2) + \var(T_3) + \var(T_4)
+					\end{align*}
+				\end{soln}
+
 		\end{enumerate}
 
-	\item[9.] The birth and death process with parameters $\lambda_n=0$ and $\mu_n=\mu, n<0$ is called a pure death process. Find $P_{ij}(t).$
-		
+	\item[9.] The birth and death process with parameters $\lambda_n=0$ and $\mu_n=\mu, n>0$ is called a pure death process. Find $P_{ij}(t).$
+		\begin{soln}
+			The death rate is constant, so since the deaths arrive according to a Poisson process with rate $\mu,$ in any interval of length $t,$ the probability we go from state $i$ to state $j>0$ ($i-j$ death arrivals) is
+			\begin{align*}
+				P_{ij}(t) &= e^{-\mu t} \frac{(\mu t)^{i-j}}{(i-j)!}, \quad 0<j\le i
+			\end{align*}
+			Then for $P_{i0}(t),$ there must have been at least $i$ arrivals during the interval of length $t.$ There could have also been more than $i$ arrivals, but each subsequent one past $i$ would not change the population. Thus
+			\begin{align*}
+				P_{i0}(t) = \sum_{j=i}^{\infty} e^{-\mu t} \frac{(\mu t)^j}{j!}
+			\end{align*}
+		\end{soln}
+
 \end{itemize}
 
 \end{document}
