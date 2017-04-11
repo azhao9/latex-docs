@@ -113,9 +113,9 @@
 			\begin{align*}
 				P_{ij}(t) &= e^{-\mu t} \frac{(\mu t)^{i-j}}{(i-j)!}, \quad 0<j\le i
 			\end{align*}
-			Then for $P_{i0}(t),$ there must have been at least $i$ arrivals during the interval of length $t.$ There could have also been more than $i$ arrivals, but each subsequent one past $i$ would not change the population. Thus
+			Then for $P_{i0}(t),$ this is the complement of the probability that there is still some positive number of individuals remaining in the population (i.e. there are fewer than $i$ arrivals in a period of time $t$). Thus
 			\begin{align*}
-				P_{i0}(t) = \sum_{j=i}^{\infty} e^{-\mu t} \frac{(\mu t)^j}{j!}
+				P_{i0}(t) = 1-\sum_{k=0}^{i-1} e^{-\mu t} \frac{(\mu t)^k}{k!} = \sum_{k=i}^{\infty} e^{-\mu t} \frac{(\mu t)^k}{k!}
 			\end{align*}
 		\end{soln}
 
