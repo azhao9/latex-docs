@@ -1,0 +1,62 @@
+\documentclass{article}
+\usepackage[sexy, hdr, fancy]{evan}
+\setlength{\droptitle}{-4em}
+
+\lhead{Homework 9}
+\rhead{Advanced Algebra II}
+\lfoot{}
+\cfoot{\thepage}
+
+\newcommand{\PP}{\mathbb P}
+\DeclareMathOperator{\cha}{char}
+\DeclareMathOperator{\Aut}{Aut}
+
+\begin{document}
+\title{Homework 9}
+\maketitle
+\thispagestyle{fancy}
+
+\begin{itemize}
+	\item Let $F$ be a field, and define projective $n$-space $\PP^n(F)$ to be the set of 1-dimensional $F$-subspaces in $F^{n+1}.$ Give a group $G$ and a $G$-set $X$ such that the set of orbits for the action is in natural bijection with $\PP^n(F).$ When $F$ is a finite field with $q$ elements, deduce from this that
+		\[\# \PP^n(F)=\frac{q^{n+1}-1}{q-1}\] 
+		
+\end{itemize}
+
+\section*{Section 10.1: Galois Groups and Separability}
+
+\begin{itemize}
+	\item[2.] Prove: If $E\supseteq F$ are fields, $G=\Aut_F(E), u\in E,$ and $\sigma\in G,$ then
+		\begin{enumerate}[(1)]
+			\item $\sigma[f(u)] = f[\sigma(u)]$ for all $f\in F[x].$
+				
+			\item In particular, if $u$ is a root of $f,$ then $\sigma(u)$ is also a root of $f.$
+
+			\item If $u$ is algebraic over $F,$ and $\sigma, \tau\in \Aut_F\left( F(u) \right),$ then $\sigma=\tau$ if an only if $\sigma(u)=\tau(u).$
+				
+		\end{enumerate}
+
+	\item[13.] If $E=\QQ(\sqrt[4]{2}, i),$ show that $\Aut_{\QQ}(E)\cong D_4.$
+
+	\item[20.] Let $F=K(t)$ denote the field of rational forms over a field $K$ in an indeterminate $t.$ Show that $x^2-t$ is irreducible over $F$ but is not separable if $\cha K=2.$
+
+	\item[22.] \begin{enumerate}[(a)]
+			\item Show that the following are equivalent for a polynomial $f\in F[x;].$ 
+				\begin{enumerate}[(1)]
+					\ii $f$ has no repeated root in any extension field of $f.$
+					\ii $f$ has no repeated root in some splitting field over $F.$
+					\ii $f$ and $f'$ are relatively prime in $F[x].$
+				\end{enumerate}
+
+			\item If $f$ is as in (a), show that $f$ is separable, but not conversely.
+				
+		\end{enumerate}
+
+	\item[25.] If $E\supseteq F$ and $f\in F[x]$ is separable over $F,$ show that $f$ is separable over $E.$
+
+	\item[26.] If $E\supseteq K\supseteq F$ and $E\supseteq F$ is a separable extension, show that both $E\supseteq K$ and $E\supseteq F$ are separable extensions.
+
+	\item[27.] Let $F$ have characteristic $p.$ If $f=x^p-a$ where $a\in F,$ show that $f$ is irreducible or a power of a linear polynomial. (Hint: Lemma 5 and Theorem 4)
+		
+\end{itemize}
+
+\end{document}p
