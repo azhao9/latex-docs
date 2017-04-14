@@ -1,0 +1,291 @@
+\documentclass{article}
+\usepackage[sexy, hdr, fancy]{evan}
+\setlength{\droptitle}{-4em}
+
+\lhead{Homework 7}
+\rhead{Discrete Math (Section 05)}
+\lfoot{}
+\cfoot{\thepage}
+
+\newcommand{\var}{\mathrm{Var}}
+\newcommand{\cov}{\mathrm{Cov}}
+
+\begin{document}
+\title{Homework 7}
+\maketitle
+\thispagestyle{fancy}
+
+\begin{itemize}
+	\item[15.1] For each of the following congruences, find all integers $N,$ with $N>1,$ that make the congruence true.
+		\begin{enumerate}[(a)]
+			\item $23\equiv 13\pmod N$
+				\begin{soln}
+					We have $N\mid(23-13)\implies N\mid 10.$ Thus the possibilities are $N\in \left\{ 2, 5, 10 \right\}.$
+				\end{soln}
+
+			\item $10\equiv 5\pmod N$
+				\begin{soln}
+					We have $N\mid (10-5)\implies N\mid 5.$ Thus the only possibility is $N=5.$
+				\end{soln}
+
+			\item $6\equiv 60\pmod N$
+				\begin{soln}
+					We have $N\mid (6-60)\implies N\mid -54.$ Thus the possibilities are $N\in\left\{ 2, 3, 6, 9, 18, 27 \right\}.$
+				\end{soln}
+
+			\item $23\equiv 22\pmod N$
+				\begin{soln}
+					We have $N\mid (23-22)\implies N\mid 1.$ For $N>1,$ this is impossible.
+				\end{soln}
+
+		\end{enumerate}
+
+	\item[2.] Let $a, b, c, n\in\ZZ$ with $n>1.$ Suppose $a\equiv b\pmod n.$ Prove
+		\begin{enumerate}[(a)]
+			\item $a+c\equiv b+c\pmod n$
+				\begin{proof}
+					\[a\equiv b\pmod n \iff n\mid(a-b)\iff n\mid \left[ (a+n)-(b+n) \right]\iff a+c\equiv b+c\pmod n\]
+				\end{proof}
+
+			\item $ac\equiv bc\pmod n$
+				\begin{proof}
+					\[a\equiv b\pmod n \iff n\mid(a-b)\implies n\mid c(a-b)\iff n\mid(ac-bc)\iff ac\equiv bc\pmod n\]
+				\end{proof}
+				
+		\end{enumerate}
+
+	\item[3.] Let $a, b$ be positive integers. Use the Division Algorithm Theorem to prove
+		\[(a+b)\mod n = \left[ (a\mod n) + (b\mod n) \right]\mod n\]
+		\begin{proof}
+			By the Division Algorithm Theorem, we write $a=nq_1+r_1$ and $b=nq_1+r_2$ for $q_1, q_2, r_1, r_2\in\NN$ with $0\le r_1, r_2< n$ and $q_1, q_2, r_1, r_2$ are unique. Then $a\pmod n = r_1$ and $b\pmod n=r_2.$
+
+			Now, we have
+			\begin{align*}
+				a+b &= (nq_1+r_1) + (nq_2+r_2) = n(q_1+q_2) + (r_1+r_2)
+			\end{align*}
+			Then we may apply the Division Algorithm Theorem to $r_1+r_2 = (a\mod n) + (b\mod n):$
+			\begin{align*}
+				r_1+r_2 &= nq_3 + r_3
+			\end{align*}
+			for $q_3, r_3\in\NN$ and $0\le r_3<n$ so $r_3=\left[ (a\mod n) + (b\mod n) \right]\mod n.$ Substituting, we have
+			\begin{align*}
+				a+b &= n(q_1+q_2) + (r_1+r_2) = n(q_1+q_2) + (nq_3 + r_3) = n(q_1+q_2+q_3) + r_3
+			\end{align*}
+			However, applying the Division Algorithm Theorem directly to $a+b,$ we have
+			\begin{align*}
+				a+b &= nq+r \implies a+b\equiv r\pmod n
+			\end{align*}
+			for $q, r\in\NN$ and $0\le r<n.$ Since this is unique for $a+b,$ it follows that $r=r_3,$ as desired.
+		\end{proof}
+
+	\item[4.] Use Euclid's GCD Algorithm to find $\gcd(a, b)$ for the numbers $a$ and $b$ listed below. Then, for each $a$ and $b,$ find integers $x$ and $y$ such that $ax+by=\gcd(a, b).$
+		\begin{enumerate}[(a)]
+			\item $a=57, b=21$
+				\begin{soln}
+					\begin{align*}
+						57\pmod{21} \equiv 15&\implies \gcd(57, 21) = \gcd(21, 15) \\
+						21 \pmod {15}\equiv 6&\implies \gcd(21, 15) = \gcd(15, 6) \\
+						15\pmod6\equiv 3 &\implies \gcd(15, 6) = \gcd(6, 3) \\
+						6\pmod 3 \equiv 0 &\implies \gcd(57, 21) = \boxed3
+					\end{align*}
+					Now, we have
+					\begin{align*}
+						57 &= 2\cdot 21 + 15 \\
+						21 &= 1\cdot 15 + 6 \\
+						15 & 2\cdot 6 + 3 \\
+					\end{align*}
+					so substituting backwards, we have
+					\begin{align*}
+						3 &= 15-2\cdot 6 \\
+						&= 15 - 2\cdot(21-1\cdot 15) = 3\cdot 15 - 2\cdot 21 \\
+						&= 3\cdot(57-2\cdot 21) - 2\cdot 21 = 3\cdot 57 - 8\cdot 21
+					\end{align*}
+					so $(x, y) = (3, -8).$
+				\end{soln}
+
+			\item $a=4321, b=9876$
+				\begin{soln}
+					We may reverse the order of $a$ and $b,$ because $\gcd(a, b) = \gcd(b, a).$ 
+					\begin{align*}
+						9876 \pmod{4321} \equiv 1234 &\implies \gcd(9876, 4321) = \gcd(4321, 1234) \\
+						4321 \pmod{1234} \equiv 619 &\implies \gcd(4321, 1234) = \gcd(1234, 619) \\
+						1234\pmod{619} \equiv 615 &\implies \gcd(1234, 619) = \gcd(619, 615) \\
+						619 \pmod{615} \equiv 4 &\implies \gcd(619, 615) = \gcd(615, 4) \\
+						615 \pmod 4 \equiv 3 &\implies \gcd(615, 4) = \gcd(4, 3) \\
+						4 \pmod 3 \equiv 1 &\implies \gcd(4, 3) = \gcd(3, 1) \\
+						3 \pmod 1 \equiv 0&\implies \gcd(9876, 4321) = \boxed1
+					\end{align*}
+					Now, we have
+					\begin{align*}
+						9876 &= 2\cdot 4321 + 1234 \\
+						4321 &= 3\cdot 1234 + 619 \\
+						1234 &= 1\cdot 619 + 615 \\
+						619 &= 1\cdot 615 + 4 \\
+						615 &= 153\cdot 4 + 3 \\
+						4 &= 1\cdot3 + 1
+					\end{align*}
+					so substituting backwards, we have
+					\begin{align*}
+						1 &= 4-1\cdot 3 \\
+						&= 4-1\cdot(615 - 153\cdot 4) = 154\cdot 4 - 1\cdot 615 \\
+						&= 154\cdot(619-1\cdot 615) - 1\cdot 615 = 154\cdot 619 - 155\cdot 615 \\
+						&= 154\cdot619 - 155\cdot(1234-1\cdot 619) = 309\cdot 619 - 155\cdot 1234 \\
+						&= 309\cdot(4321-3\cdot 1234) - 155\cdot 1234 = 309\cdot 4321 - 1082\cdot 1234 \\
+						&= 309\cdot 4321 - 1082\cdot(9876 - 2\cdot 4321) = 2473\cdot 4321 - 1082\cdot 9876
+					\end{align*}
+					so $(x, y) = (-1082, 2473).$
+				\end{soln}
+
+			\item $a=67890, b=12345$
+				\begin{soln}
+					\begin{align*}
+						67890 \pmod {12345} \equiv 6165 &\implies \gcd(67890, 12345) = \gcd(12345, 6165) \\
+						12345 \pmod{6165} \equiv 15 &\implies \gcd(12345, 6155) = \gcd(6165, 15) \\
+						6165 \pmod{15} \equiv 0 &\implies \gcd(67890, 12345) = \boxed{15}
+					\end{align*}
+					Now, we have
+					\begin{align*}
+						67890 &= 5\cdot 12345 + 6165 \\
+						12345 &= 2\cdot 6165 + 15 \\
+					\end{align*}
+					so substituting backwards, we have
+					\begin{align*}
+						15 &= 12345 - 2\cdot 6165 \\
+						&= 12345 - 2\cdot(67890-5\cdot 12345) = 11\cdot 12345 - 2\cdot 67890
+					\end{align*}
+					so $(x, y) = (11, -2).$
+				\end{soln}
+				
+		\end{enumerate}
+
+	\item[5.] Let $a$ and $b$ be positive integers. Explain why $\gcd(a, b)=\gcd(a, a+b).$ 
+		\begin{soln}
+			We have $ax+by = a(x-y) + (a+b)y.$ If we minimize $ax+by$ over the positive integers then we obtain $\gcd(a, b),$ but minimizing $a(x-y) + (a+b)y$ gives $\gcd(a, a+b).$ Obviously these two minimums must be the same, so $\gcd(a, b) = \gcd(a, a+b).$
+		\end{soln}
+
+	\item[36.15] Suppose that $a$ and $b$ are relatively prime integers and that $a\mid c$ and $b\mid c.$ Prove that $(ab)\mid c.$
+		\begin{proof}
+			Let $m, n\in \ZZ$ such that $c=am=bn.$ Then since $\gcd(a, b)=1,$ there exist $x, y\in\ZZ$ such that $ax+by=1.$ Then
+			\begin{align*}
+				c(ax+by) &= acx + bcy = a(bn)x + b(am)y = (ab)(nx + by) \\
+				c(ax+by) &= c
+			\end{align*}
+			Thus, $c=(ab)(nx+by)$ so $(ab)\mid c$ as desired.
+		\end{proof}
+
+		\newpage
+
+	\item[7.] Please find all solutions in $\ZZ/n\ZZ$ for the following expressions. 
+		\begin{itemize}
+			\item[37.2] 
+				\begin{itemize}
+					\item[(d)] $342\otimes x\oplus 448 = 73$ in $\ZZ/1003\ZZ.$
+						\begin{soln}
+							We can subtract the constant term from both sides:
+							\begin{align*}
+								342\otimes x\oplus 448 \equiv 73\implies 342\otimes x \equiv 73\ominus 448 \equiv 628 \pmod {1003}
+							\end{align*}
+							Now, we have
+							\begin{align*}
+								1003 &= 2\cdot342 + 319 \\
+								342 &= 1\cdot319 + 23 \\
+								319 &= 13\cdot23 + 20 \\
+								23 &= 1\cdot20 + 3 \\
+								20 &= 6\cdot 3 + 2 \\
+								3 &= 1\cdot 2 + 1 \\
+							\end{align*}
+							so substituting backwards, we have
+							\begin{align*}
+								1 &= 3-1\cdot 2 \\
+								&= 3-1\cdot(20-6\cdot 3) = 7\cdot 3 - 1\cdot 20 \\
+								&= 7\cdot(23-1\cdot 20) - 1\cdot 20 = 7\cdot 23 - 8\cdot 20 \\
+								&= 7\cdot23 - 8\cdot(319 - 13\cdot 23) = 111\cdot 23 - 8\cdot 319 \\
+								&= 111\cdot (341 - 1\cdot 319) - 8\cdot 319 = 111\cdot 341 - 119\cdot 319 \\
+								&= 111\cdot 342 - 119\cdot(1003-2\cdot 342) = 349\cdot 342 - 119\cdot 1003
+							\end{align*}
+							Thus $349\cdot 342 = 1 + 119\cdot 1003 \equiv 1\pmod {1003},$ so $342\inv=349,$ and finally
+							\begin{align*}
+								x \equiv 628\otimes 342\inv\equiv 628\otimes 349 \equiv \boxed{518}\pmod{1003}
+							\end{align*}
+						\end{soln}
+						
+				\end{itemize}
+
+			\item[37.3]
+				\begin{itemize}
+					\item[(c)] $9\otimes x=4$ in $\ZZ/12\ZZ.$
+						\begin{soln}
+							Since $\gcd(12, 9)=3\neq 1,$ the inverse of 9 does not exist in $\ZZ/12\ZZ,$ so there is no solution for $x.$
+						\end{soln}
+						
+				\end{itemize}
+
+			\item[37.4]
+				\begin{itemize}
+					\item[(b)] $x\otimes x=11$ in $\ZZ/13\ZZ.$
+						\begin{soln}
+							This is easy to check:
+							\begin{align*}
+								1\otimes 1 &\equiv 1 \\
+								2\otimes 2 &\equiv 4 \\
+								3\otimes 3 &\equiv 9 \\
+								4\otimes 4 &\equiv 3 \\
+								5\otimes 5 &\equiv 12 \\
+								6\otimes 6 &\equiv 10 \\
+								7\otimes 7 &\equiv 10 \\
+								8\otimes 8 &\equiv 12 \\
+								9\otimes 9 &\equiv 3 \\
+								10\otimes 10 &\equiv 9 \\
+								11 \otimes 11 &\equiv 4 \\
+								12\otimes 12 &\equiv 1
+							\end{align*}
+							Thus there are no solutions for $x$ since the above are all possibilities, and none are 11.
+						\end{soln}
+						
+				\end{itemize}
+				
+		\end{itemize}
+
+	\item[37.14]
+		\begin{enumerate}[(a)]
+			\item In the context of $\ZZ/n\ZZ,$ prove or disprove: $a^b=a^{b\mod n}.$
+				\begin{proof}
+					This is not true. Let $n=5, a=2, b=7.$ Then
+					\begin{align*}
+						a^b &= 2^7 = 128 \equiv 3\pmod 5 \\
+						a^{b\mod n} &= 2^{7\mod 5} \equiv 2^2 \equiv 4\pmod 5
+					\end{align*}
+				\end{proof}
+
+			\item Find the value of $3^{64}$ in $\ZZ/100\ZZ.$ 
+				\begin{soln}
+					We have
+					\begin{align*}
+						3^2 &= 3\cdot 3 \equiv 9\pmod {100} \\
+						3^4 &= 3^2\cdot 3^2 \equiv 9\cdot 9\pmod{100} = 81\pmod{100}\\
+						3^8 &= 3^4\cdot 3^4 \equiv 81\cdot 81\pmod{100} = 6561\pmod{100}\equiv 61\pmod{100} \\
+						3^{16} &= 3^8\cdot 3^8 \equiv 61\cdot 61\pmod{100} = 3721 \pmod{100}\equiv 21\pmod{100} \\
+						3^{32} &= 3^{16}\cdot 3^{16} \equiv 21\cdot 21\pmod{100} = 441\pmod{100} \equiv 41 \pmod{100} \\
+						3^{64} &= 3^{32}\cdot 3^{32}\equiv 41\cdot 41\pmod{100} = 1681 \pmod{100}\equiv81\pmod{100}
+					\end{align*}
+				\end{soln}
+
+			\item Estimate how many multiplications you need to do to calculate $a^b$ in $\ZZ/n\ZZ.$
+				\begin{answer*}
+					Since we can replicate the above method, we would need roughly $\log_2 b$ multiplications.
+				\end{answer*}
+
+			\item Give a sensible definition for $a^0$ in $\ZZ/n\ZZ.$
+				\begin{answer*}
+					We define $a^0:=1.$ This is the same as in $\ZZ.$
+				\end{answer*}
+
+			\item Give a sensible definition for $a^b$ in $\ZZ/n\ZZ$ when $b<0.$ 
+				\begin{answer*}
+					Since $b<0,$ there is already a definition for $a^{-b}.$ Then since $a^b\cdot a^{-b}=1,$ we define $a^b$ to be the multiplicative inverse of $a^{-b},$ if it exists.
+				\end{answer*}
+				
+		\end{enumerate}
+\end{itemize}
+
+\end{document}
