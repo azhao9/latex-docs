@@ -26,6 +26,23 @@
 					1 & 1 & -3 & 1 \\
 					0 & 0 & 1 & -1
 				\end{bmatrix}$
+				\begin{soln}
+					The transition matrix for the embedded Markov chain is
+					\[\begin{bmatrix}
+							0 & 1/2 & 1/2 & 0 \\
+							0 & 0 & 1 & 0 \\
+							1/3 & 1/3 & 0 & 1/3 \\
+							0 & 0 & 1 & 0
+					\end{bmatrix}\]
+					For notational convenience, let $E_i$ represent the expected time to reach state 4 starting from state $i,$ and let $T_i$ represent the expected holding time at state $i,$ which is just $-1/v_{ii}$ in the infinitesimal generator. Then we have
+					\begin{align*}
+						E_1 &= T_1 + \frac{1}{2} \left( E_2 + E_3 \right) = \frac{1}{2} + \frac{1}{2} \left( E_2 + E_3 \right) \\
+						E_2 &= T_2 + E_3 = 1+E_3 \\
+						E_3 &= T_3 + \frac{1}{3}\left( E_1+E_2 + E_4 \right) = \frac{1}{3} + \frac{1}{3} \left( E_1+E_2+E_4 \right) \\
+						E_4 &= 0
+					\end{align*}
+					and solving, we find that $E_1=4.$
+				\end{soln}
 
 			\item $\begin{bmatrix}
 					-3 & 1 & 1 & 1 \\
@@ -33,6 +50,23 @@
 					1 & 2 & -4 & 1 \\
 					0 & 0 & 1 & -1
 				\end{bmatrix}$
+				\begin{soln}
+					The transition matrix for the embedded Markov chain is
+					\[\begin{bmatrix}
+							0 & 1/3 & 1/3 & 1/3 \\
+							0 & 0 & 2/3 & 1/3 \\
+							1/4 & 1/2 & 0 & 1/4 \\
+							0 & 0 & 1 & 0
+					\end{bmatrix}\]
+					Using the same notation from part (a), we have
+					\begin{align*}
+						E_1 &= T_1 + \frac{1}{3}(E_2+E_3+E_4) = \frac{1}{3} + \frac{1}{3}(E_2+E_3+E_4) \\
+						E_2 &= T_2 + \frac{2}{3} E_3 + \frac{1}{3} E_4 = \frac{1}{3} + \frac{2}{3} E_3 + \frac{1}{3} E_4 \\
+						E_3 &= T_3 + \frac{1}{4} E_1 + \frac{1}{2}E_2 + \frac{1}{4} E_4 = \frac{1}{4} + \frac{1}{4} E_1 + \frac{1}{2} E_2 + \frac{1}{4} E_4 \\
+						E_4 & = 0
+					\end{align*}
+					and solving, we find that $E_1=1.$
+				\end{soln}
 				
 		\end{enumerate}
 
@@ -42,35 +76,252 @@
 
 \begin{itemize}
 	\item[8.] Consider two machines, both of which have an exponential lifetime with mean $1/\lambda.$ There is a single repairman that can service machines at an exponential rate $\mu.$ Set up the Kolmogorov backward equations; you do not need to solve them.
+		\begin{soln}
+			If the states $\left\{ 0, 1, 2 \right\}$ are the number of broken machines, this is a birth and death process
+			\begin{align*}
+				\lambda_0 &= 2\lambda \\
+				\lambda_1 &= \lambda \\
+				\mu_1 &= \mu_2 = \mu
+			\end{align*}
+			Using this, we can construct $A$ and the Kolmogorov backward equation:
+			\begin{align*}
+				A &= \begin{bmatrix}
+					-2\lambda & 2\lambda & 0 \\
+					\mu & -(\mu+\lambda) & \lambda \\
+					0 & \mu & -\mu
+				\end{bmatrix} \\
+				P_t' = AP_t &= \begin{bmatrix}
+					-2\lambda & 2\lambda & 0 \\
+					\mu & -(\mu+\lambda) & \lambda \\
+					0 & \mu & -\mu
+				\end{bmatrix} P_t
+			\end{align*}
+		\end{soln}
 
 	\item[12.]Each individual in a biological population is assume to give birth at an exponential rate $\lambda,$ and to die at an exponential rate $\mu.$ In addition, there is an exponential rate of increase $\theta$ due to immigration. However, immigration is not allowed when the population size is $N$ or larger.
 		\begin{enumerate}[(a)]
 			\item Set this up as a birth and death model.
+				\begin{soln}
+					If $n$ is the number of people, then
+					\begin{align*}
+						\lambda_n &= \begin{cases}
+							n\lambda + \theta &\quad 0\le n<N \\
+							n\lambda &\quad n\ge N
+						\end{cases} \\
+						\mu_n &= n\mu \quad\quad n\ge 1
+					\end{align*}
+				\end{soln}
 
 			\item If $N=3, \lambda=\theta=1, \mu=2,$ determine the proportion of time that immigration is restricted.
+				\begin{soln}
+					If $\pi_i$ represents the proportion of time spent in state $i$ (which means $i$ individuals in the population), then we have
+					\begin{align*}
+						\mu_{n+1} \pi_{n+1} &= \lambda_n \pi_n \implies (n+1)\mu \pi_{n+1} = \lambda_n \pi_n \implies \pi_{n+1} = \frac{\lambda_n}{(n+1)\mu} \pi_n \\
+						\pi_1 &= \frac{\lambda_0}{\mu} \pi_0 = \frac{\theta}{\mu} \pi_0 = \frac{1}{2} \pi_0 \\
+						\pi_2 &= \frac{\lambda_1}{2\mu} \pi_1 = \frac{\lambda+\theta}{2\mu} \pi_1 = \frac{1+1}{2\cdot 2} \cdot \frac{1}{2} \pi_0 = \frac{1}{4} \pi_0 \\
+						\pi_3 &= \frac{\lambda_2}{3\mu} \pi_2 = \frac{2\lambda+\theta}{3\mu} \pi_2 = \frac{2\cdot 1+1}{3\cdot 2} \cdot \frac{1}{4} \pi_0 = \frac{1}{8} \pi_0 \\
+					\end{align*}
+					For $n\ge 3,$ immigration is restricted, so $\lambda_k=k\lambda$ for $k\ge 3.$ Then
+					\begin{align*}
+						\pi_{k+1} &= \frac{\lambda_k}{(k+1)\mu} \pi_k = \frac{k\lambda}{(k+1)\mu} \cdot \frac{\lambda_{k-1}}{k\mu} \pi_{k-1} = \frac{k\lambda}{(k+1)\mu}\cdot \frac{(k-1)\lambda}{k\mu} \cdot \frac{(k-2)\lambda}{(k-1)\mu}\pi_{k-2} = \cdots \\
+						&= \frac{k\lambda}{(k+1)\mu} \cdot \frac{(k-1)\lambda}{k\mu} \cdot \frac{(k-2)\lambda}{(k-1)\mu} \cdots \frac{3\lambda}{4\mu} \pi_3 \\
+						&= \frac{3}{k+1} \left( \frac{\lambda}{\mu} \right)^{k-2}\cdot \frac{1}{8} \pi_0 \\
+						\implies \pi_k &= \frac{3}{8k} \left( \frac{\lambda}{\mu} \right)^{k-3} \pi_0 = \frac{3}{8k} \left( \frac{1}{2} \right)^{k-3} \pi_0 = \frac{3}{k} \left( \frac{1}{2} \right)^{k} \pi_0
+					\end{align*}
+					Now, since these are limiting probabilities, we have
+					\begin{align*}
+						1 &= \pi_0+\pi_1+\pi_2 + \pi_3 + \sum_{k=4}^{\infty} \pi_k \\
+						&= \pi_0 + \frac{1}{2}\pi_0 + \frac{1}{4} \pi_0 + \frac{1}{8} \pi_0 + \sum_{k=4}^{\infty} \frac{3}{k}\left( \frac{1}{2} \right)^{k} \pi_0 \\
+						&= \pi_0 \left[ 1+\frac{1}{2} + \frac{1}{4} + \frac{1}{8} + 3\sum_{k=4}^{\infty} \frac{1}{k2^k} \right]
+					\end{align*}
+					Now, use the Taylor expansion
+					\begin{align*}
+						\ln\left( \frac{x}{x-1} \right) = \sum_{k=1}^{\infty} \frac{1}{kx^k}
+					\end{align*}
+					where $x=2$ to get
+					\begin{align*}
+						\sum_{k=4}^{\infty} \frac{1}{k2^k} = \ln\left( \frac{2}{2-1} \right) - \frac{1}{1\cdot 2^1} - \frac{1}{2\cdot 2^2} - \frac{1}{3\cdot 2^3} = \ln 2 - \frac{2}{3} 
+					\end{align*}
+					and substituting back above, we get
+					\begin{align*}
+						1 &= \pi_0\left[ \frac{15}{8} + 3\left( \ln 2 - \frac{2}{3} \right) \right] = \pi_0 \left( 3\ln 2-\frac{1}{8} \right) \\
+						\implies \pi_0 &= \frac{1}{3\ln 2 - \frac{1}{8}} = \frac{8}{24\ln 2-1}
+					\end{align*}
+					Now, the proportion of time that immigration is restricted is the complement of the proportion of time we spend in states 0, 1, and 2, which is
+					\begin{align*}
+						1-\pi_0 - \pi_1 - \pi_2 &= 1- \frac{8}{24\ln 2-1} - \frac{4}{24\ln 2-1} - \frac{2}{24\ln 2 -1} = 1-\frac{14}{24\ln 2-1}
+					\end{align*}
+				\end{soln}
 
 		\end{enumerate}
 	
 	\item[13.] A small barbershop, operated by a single barber, has room for at most two customers. Potential customers arrive at a Poisson rate of three per hour, and the successive service times are independent exponential random variable with mean $1/4$ hour.
 		\begin{enumerate}[(a)]
 			\item What is the average number of customers in the shop?
+				\begin{soln}
+					The states are $\left\{ 0, 1, 2 \right\}$ for the number of customers in the shop. The rates are
+					\begin{align*}
+						\lambda_0 &= \lambda_1 = 3 \\
+						\mu_1 &= \mu_2 = 4
+					\end{align*}
+					If $\pi_i$ is the long-run proportion of time we are in state $i,$ then we have
+					\begin{align*}
+						\mu_1 \pi_1 &= \lambda_0 \pi_0 \implies \pi_1 = \frac{3}{4} \pi_0 \\
+						\mu_2 \pi_2 &= \lambda_1 \pi_1 \implies \pi_2 = \frac{3}{4} \pi_1 = \frac{9}{16} \pi_0
+					\end{align*}
+					Since $\pi_0+\pi_1+\pi_2=1,$ we have
+					\begin{align*}
+						1=\pi_0 + \pi_1 + \pi_2 &= \pi_0 + \frac{3}{4} \pi_0 + \frac{9}{16} \pi_0 = \pi_0 \left( 1+\frac{3}{4} + \frac{9}{16}  \right) = \pi_0\cdot \frac{37}{16} \\
+						\implies \pi_0 &= \frac{16}{37} \implies \pi_1 = \frac{12}{37} \implies \pi_2 = \frac{9}{37}
+					\end{align*}
+					Thus, the average number of customers is
+					\begin{align*}
+						0\cdot \pi_0 + 1\cdot \pi_1 + 2\cdot \pi_2 &= \frac{12}{37} + 2\cdot \frac{9}{37} = \frac{30}{37}
+					\end{align*}
+				\end{soln}
 
 			\item What is the proportion of customers that enter the shop?
+				\begin{soln}
+					The proportion of customers that enter the shop is the complement of the proportion of those who don't. Customers don't enter only when there are already 2 customers in the shop, which occurs with long-term probability $\pi_2 = \frac{9}{37},$ so the proportion of customers that enter the shop is $1-\frac{9}{37} = \frac{28}{37}.$
+				\end{soln}
 
 			\item If the barber could work twice as fast, how much more business would he do?
+				\begin{soln}
+					If the barber could work twice as fast, then $\mu_1=\mu_2=8.$ Then since $\lambda_0, \lambda_1$ are unchanged we have the equations
+					\begin{align*}
+						\mu_1\pi_1&=\lambda_0\pi_0 \implies \pi_1 = \frac{3}{8} \pi_0 \\
+						\mu_2\pi_2 &= \lambda_1\pi_1 \implies \pi_2 = \frac{3}{8}\pi_1 = \frac{9}{64} \pi_0 \\
+						\implies 1=\pi_0+\pi_1+\pi_2 &= \pi_0\left( 1+\frac{3}{8} + \frac{9}{64} \right) = \pi_0\cdot \frac{97}{64} \\
+						\implies \pi_0 &= \frac{64}{97} \implies \pi_1 = \frac{24}{97}\implies \pi_2 = \frac{9}{97}
+					\end{align*}
+					In the original case, $\frac{28}{37}$ of the customers enter. Now, $1-\frac{9}{97} = \frac{88}{97}$ of the customers enter. Thus, since 3 customers enter per hour on average, the barber is getting $2\left( \frac{88}{97} - \frac{28}{37} \right)\approx 0.45$ more customers per hour.
+				\end{soln}
 				
 		\end{enumerate}
 
 	\item[14.] Potential customers arrive at a full-service, one-pump gas station at a Poisson rate of 20 cars per hour. However, customers will only enter the station for gas if there are no more than 2 cars (including the one currently being attended to) at the pump. Suppose the amount of time required to service a car is exponentially distributed with a mean of five minutes.
 		\begin{enumerate}[(a)]
 			\item What fraction of the attendant's time will be spent servicing cars?
+				\begin{soln}
+					The states are $\left\{ 0, 1, 2 \right\}$ for the number of cars in the station. The rates (per hour) are
+					\begin{align*}
+						\lambda_0 &= \lambda_1 = 20 \\
+						\mu_1 &= \mu_2 = 12
+					\end{align*}
+					If $\pi_i$ is the long-run proportion of time we are in state $i,$ then we have
+					\begin{align*}
+						\mu_1\pi_1 &= \lambda_0 \pi_0 \implies \pi_1 = \frac{5}{3} \pi_0 \\
+						\mu_2 \pi_2 &= \lambda_1 \pi_1 \implies \pi_2 = \frac{5}{3} \pi_1 = \frac{25}{9} \pi_0
+					\end{align*}
+					Since $\pi_0+\pi_1+\pi_2=1,$ we have
+					\begin{align*}
+						1 = \pi_0+\pi_1+\pi_{2} &= \pi_0 + \frac{5}{3} \pi_0 + \frac{25}{9} \pi_0 = \pi_0\left(1+\frac{5}{3} + \frac{25}{9}\right) = \pi_0\cdot \frac{ 49}{9} \\
+						\implies \pi_0 &= \frac{9}{49} \implies \pi_1 = \frac{15}{49} \implies \pi_2 = \frac{25}{49}
+					\end{align*}
+					Thus, the fraction of time the attendant will be servicing cars is $\pi_1+\pi_2=\frac{40}{49}.$
+				\end{soln}
 
 			\item What fraction of potential customers are lost?
+				\begin{soln}
+					The fraction of potential customers lost is the fraction of time the process is in state 2, or $\pi_2=\frac{25}{49}.$
+				\end{soln}
 				
 		\end{enumerate}
 
 	\item[22.] Customers arrive at a single-server queue in accordance with a Poisson process having rate $\lambda.$ However, an arrival that finds $n$ customers already in the system will only join the system with probability $1/(n+1).$ Show that the limiting distribution of the number of customers in the system is Poisson with mean $\lambda/\mu.$
+		\begin{proof}
+			This is a birth and death process with
+			\begin{align*}
+				\mu_n &= \mu, \quad \quad \quad n\ge 1 \\
+				\lambda_n &= \frac{\lambda}{n+1}, \quad n\ge 0
+			\end{align*}
+			Since this is a birth and death process, it is irreducible, so it has a limiting distribution. If $\pi_i$ is the long-term proportion of time spent in state $i,$ then we have
+			\begin{align*}
+				\mu_{n+1} \pi_{n+1} &= \lambda_n \pi_n \implies \mu \pi_{n+1} = \frac{\lambda}{n+1} \pi_n \implies \pi_{n+1} = \frac{\lambda}{(n+1)\mu} \pi_n
+			\end{align*}
+			Using this, we have
+			\begin{align*}
+				\pi_1 &= \frac{\lambda}{\mu} \pi_0 \\
+				\pi_2 &= \frac{\lambda}{2\mu} \pi_1 = \frac{\lambda^2}{2\mu^2} \pi_0 \\
+				\pi_3 &= \frac{\lambda}{3\mu} \pi_2 = \frac{\lambda^3}{3\cdot 2\mu^3} \pi_0
+			\end{align*}
+			and continuing by induction, the general form is 
+			\begin{align*}
+				\pi_k &= \frac{\lambda^k}{k! \mu^k} \pi_0 = \frac{(\lambda/\mu)^k}{k!} \pi_0
+			\end{align*}
+			Now, we have
+			\begin{align*}
+				1 &= \sum_{k=0}^{\infty} \pi_k = \sum_{k=0}^{\infty} \frac{(\lambda/\mu)^k}{k!} \pi_0 = \pi_0 \sum_{k=0}^{\infty} \frac{(\lambda/\mu)^k}{k!} = \pi_0 e^{\lambda/\mu} \\
+				\implies \pi_0 &= e^{-\lambda/\mu} \\
+				\implies \pi_k &= \frac{(\lambda/\mu)^k}{k!} e^{-\lambda/\mu}
+			\end{align*}	
+			so the limiting distribution is Poisson with mean $\lambda/\mu,$ as desired.
+		\end{proof}
 		
 \end{itemize}
+
+\section*{Exploration on Multiplicative Functions}
+
+Suppose $f$ is a real-valued function defined on $[0, \infty),$ which satisfies
+	\[f(t+s) = f(t) f(s)\]
+	for all $s, t\ge 0.$
+
+	\begin{enumerate}[(a)]
+		\item Show that either $f(t)=0$ for all $t\ge 0$ or $f(t)>0$ for all $t\ge 0.$
+
+			\begin{proof}
+				For any $t,$ we have
+				\begin{align*}
+					f(t) &= f\left( \frac{t}{2} + \frac{t}{2} \right) = f^2\left( \frac{1}{2} \right) \ge 0
+				\end{align*}
+				Now, suppose $f(t_0)=0$ for some $t_0.$ Then
+				\begin{align*}
+					f(t_0+s) &= f(t_0)f(s) = 0
+				\end{align*}
+				so $f(t)=0$ for all $t\ge t_0.$ Then we also have
+				\begin{align*}
+					f(t_0) &= f\left( \frac{t_0}{2} + \frac{t_0}{2} \right) = f^2\left( \frac{t_0}{2} \right) \implies f\left( \frac{t_0}{2} \right) = 0
+				\end{align*}
+				and continuing by induction it follows that $f\left( \frac{t_0}{2^{k}} \right) = 0$ for all $k\ge 0.$ Now, for any $0<a<t_0,$ there exists some $k$ such that $\frac{t_0}{2^k} \le a.$ Thus, 
+				\begin{align*}
+					f(a) &= f\left[ \frac{t_0}{2^k} + \left( t_0-\frac{t_0}{2^k} \right)\right] =  f\left( \frac{t_0}{2^k} \right) f\left( t_0-\frac{t_0}{2^k} \right) = 0
+				\end{align*}
+				Thus, if there exists $t_0$ such that $f(t_0)=0,$ then $f(t)=0$ for all $t>0.$ Otherwise, if there is no such $t_0,$ then we know that $f(t)>0$ for all $t\ge0.$ 
+			\end{proof}
+
+			In the remaining parts, assume that $f(t)>0$ for all $t>0.$
+
+		\item Determine the value of $f(0).$
+			\begin{soln}
+				If $s=0,$ then
+				\begin{align*}
+					f(t+s) &= f(t)f(s) \\
+					\implies f(t) &= f(t)f(0) \\
+					\implies f(t)\left[ f(0)-1 \right] &= 0
+				\end{align*}
+				Since $f(t)>0$ for all $t\ge 0,$ we must have $f(0)-1=0\implies f(0)=\boxed1.$
+			\end{soln}
+
+		\item Assume that $f$ is differentiable on $(0, \infty)$ and has a right-hand derivative at 0. Show that $f$ is an exponential function.
+			\begin{proof}
+				We have
+				\begin{align*}
+					f'(0) &= \lim_{h\to 0} \frac{f(0+h)-f(0)}{h} = \lim_{h\to 0} \frac{f(0)f(h)-f(0)}{h} = \lim_{h\to 0}\frac{f(h)-1}{h} \\
+					f'(t) &= \lim_{h\to 0} \frac{f(t+h)-f(t)}{h} = \lim_{h\to 0}\frac{f(t)f(h)-f(t)}{h} = f(t) \lim_{h\to 0} \frac{f(h)-1}{h}
+				\end{align*}
+				Thus, we have
+				\begin{align*}
+					f'(t) &= f(t) f'(0)\implies \frac{f'(t)}{f(t)} = f'(0)
+				\end{align*}
+				and solving this differential equation, we get
+				\begin{align*}
+					\int \frac{f'(t)}{f(t)} \, dt &= \int f'(0)\, dt \\
+					\ln f(t) &= f'(0)t + C \\
+					f(t) &= e^{f'(0)t + C} = Ce^{f'(0)t}
+				\end{align*}
+				so $f$ is an exponential function, as desired.
+			\end{proof}
+			
+	\end{enumerate}
 
 \end{document}
