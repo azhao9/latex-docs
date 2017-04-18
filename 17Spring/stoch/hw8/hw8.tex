@@ -18,7 +18,7 @@
 \section*{Problems on Expected Time Until Hitting a State}
 
 \begin{itemize}
-	\item[1.] Two possible infinitesimal generators for a 4-state Markov Process are given below. For each generator, find the expected time until the process hits state 4 if it starts in state 1.
+	\item[1.] Two possible infinitesimal generators for a 4-state Markov Process are given below. For each generator, find the expected time until the process hits state 4 if it starts in state 1. Find the limiting distributions.
 		\begin{enumerate}[(a)]
 			\item $\begin{bmatrix}
 					-2 & 1 & 1 & 0 \\ 
@@ -42,7 +42,26 @@
 						E_4 &= 0
 					\end{align*}
 					and solving, we find that $E_1=4.$
+
+					For the limiting distribution, we solve $\pi A = 0.$ This is
+					\begin{align*}
+						\begin{bmatrix}
+							\pi_1 & \pi_2 & \pi_3 & \pi_4
+						\end{bmatrix} \begin{bmatrix}
+							-2 & 1 & 1 & 0 \\
+							0 & -1 & 1 & 0 \\
+							1 & 1 & -3 & 1 \\
+							0 & 0 & 1 & -1
+						\end{bmatrix} = 0
+					\end{align*}
+					and solving (using $\pi_1+\pi_2+\pi_3+\pi_4 = 1$) we get $\begin{bmatrix}
+						\pi_1 & \pi_2 & \pi_3 & \pi_4
+					\end{bmatrix} = \begin{bmatrix}
+						1/8 & 3/8 & 1/4 & 1/4
+					\end{bmatrix}.$
 				\end{soln}
+
+				\newpage
 
 			\item $\begin{bmatrix}
 					-3 & 1 & 1 & 1 \\
@@ -66,6 +85,23 @@
 						E_4 & = 0
 					\end{align*}
 					and solving, we find that $E_1=1.$
+
+					For the limiting distribution, we solve $\pi A= 0.$ This is
+					\begin{align*}
+						\begin{bmatrix}
+							\pi_1 & \pi_2 & \pi_3 & \pi_4
+						\end{bmatrix} \begin{bmatrix}
+							-3 & 1 & 1 & 1 \\
+							0 & -3 & 2 & 1 \\
+							1 & 2 & -4 & 1 \\
+							0 & 0 & 1 & -1
+						\end{bmatrix} = 0
+					\end{align*}
+					and solving, we get $\begin{bmatrix}
+						\pi_1 & \pi_2 & \pi_3 & \pi_4
+					\end{bmatrix} = \begin{bmatrix}
+						3/38 & 7/38 & 9/38 & 19/38
+					\end{bmatrix}.$
 				\end{soln}
 				
 		\end{enumerate}
@@ -194,7 +230,7 @@
 						\implies 1=\pi_0+\pi_1+\pi_2 &= \pi_0\left( 1+\frac{3}{8} + \frac{9}{64} \right) = \pi_0\cdot \frac{97}{64} \\
 						\implies \pi_0 &= \frac{64}{97} \implies \pi_1 = \frac{24}{97}\implies \pi_2 = \frac{9}{97}
 					\end{align*}
-					In the original case, $\frac{28}{37}$ of the customers enter. Now, $1-\frac{9}{97} = \frac{88}{97}$ of the customers enter. Thus, since 3 customers enter per hour on average, the barber is getting $2\left( \frac{88}{97} - \frac{28}{37} \right)\approx 0.45$ more customers per hour.
+					In the original case, $\frac{28}{37}$ of the customers enter. Now, $1-\frac{9}{97} = \frac{88}{97}$ of the customers enter. Thus, since 3 customers enter per hour on average, the barber is getting $3\left( \frac{88}{97} - \frac{28}{37} \right)\approx 0.45$ more customers per hour.
 				\end{soln}
 				
 		\end{enumerate}
@@ -228,6 +264,7 @@
 				
 		\end{enumerate}
 
+		\newpage
 	\item[22.] Customers arrive at a single-server queue in accordance with a Poisson process having rate $\lambda.$ However, an arrival that finds $n$ customers already in the system will only join the system with probability $1/(n+1).$ Show that the limiting distribution of the number of customers in the system is Poisson with mean $\lambda/\mu.$
 		\begin{proof}
 			This is a birth and death process with
@@ -266,6 +303,8 @@ Suppose $f$ is a real-valued function defined on $[0, \infty),$ which satisfies
 	\[f(t+s) = f(t) f(s)\]
 	for all $s, t\ge 0.$
 
+	\newpage
+
 	\begin{enumerate}[(a)]
 		\item Show that either $f(t)=0$ for all $t\ge 0$ or $f(t)>0$ for all $t\ge 0.$
 
@@ -284,9 +323,9 @@ Suppose $f$ is a real-valued function defined on $[0, \infty),$ which satisfies
 				\end{align*}
 				and continuing by induction it follows that $f\left( \frac{t_0}{2^{k}} \right) = 0$ for all $k\ge 0.$ Now, for any $0<a<t_0,$ there exists some $k$ such that $\frac{t_0}{2^k} \le a.$ Thus, 
 				\begin{align*}
-					f(a) &= f\left[ \frac{t_0}{2^k} + \left( t_0-\frac{t_0}{2^k} \right)\right] =  f\left( \frac{t_0}{2^k} \right) f\left( t_0-\frac{t_0}{2^k} \right) = 0
+					f(a) &= f\left[ \frac{t_0}{2^k} + \left( a-\frac{t_0}{2^k} \right)\right] =  f\left( \frac{t_0}{2^k} \right) f\left( a-\frac{t_0}{2^k} \right) = 0
 				\end{align*}
-				Thus, if there exists $t_0$ such that $f(t_0)=0,$ then $f(t)=0$ for all $t>0.$ Otherwise, if there is no such $t_0,$ then we know that $f(t)>0$ for all $t\ge0.$ 
+				Thus, if there exists $t_0$ such that $f(t_0)=0,$ then $f(t)=0$ for all $t>0.$ Since $f$ is assumed to be differentiable, it must be continuous, so $f(0)=0,$ and thus $f(t)=0$ for all $t\ge 0.$ Otherwise, if there is no such $t_0,$ then we know that $f(t)>0$ for all $t\ge0.$ 
 			\end{proof}
 
 			In the remaining parts, assume that $f(t)>0$ for all $t>0.$
