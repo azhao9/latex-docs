@@ -1,0 +1,68 @@
+\documentclass{article}
+\usepackage[sexy, hdr, fancy]{evan}
+\setlength{\droptitle}{-4em}
+
+\lhead{Homework 9}
+\rhead{Introduction to Stochastic Processes}
+\lfoot{}
+\cfoot{\thepage}
+
+\newcommand{\var}{\mathrm{Var}}
+\newcommand{\cov}{\mathrm{Cov}}
+
+\begin{document}
+\title{Homework 9}
+\maketitle
+\thispagestyle{fancy}
+
+\section*{Chapter 7: Renewal Theory}
+
+\begin{itemize}
+	\item[1.] Is it true that
+		\begin{enumerate}[(a)]
+			\item $N(t)<n$ if and only if $S_n>t?$
+
+			\item $N(t)\le n$ if and only if $S_n\ge t?$
+
+			\item $N(t)>0$ if and only if $S_n<t?$
+				
+		\end{enumerate}
+
+	\item[2.] Suppose that the inter-arrival distribution for a renewal process is Poisson distributed with mean $\mu.$ That is, suppose
+		\[P[X_n=k] = e^{-\mu} \frac{\mu^k}{k!}, \quad k=0, 1, \cdots\]
+		\begin{enumerate}[(a)]
+			\item Find the distribution of $S_n.$
+
+			\item Calculate $P[N(t)=n].$
+				
+		\end{enumerate}
+
+	\item[4.] Let $\left\{ N_1(t), t\ge 0 \right\}$ and $\left\{ N_2(t), t\ge 0 \right\}$ be independent renewal processes. Let $N(t)=N_1(t)+N_2(t).$
+		\begin{enumerate}[(a)]
+			\item Are the inter-arrival times of $\left\{ N(t), t\ge 0 \right\}$ independent?
+
+			\item Are they identically distributed?
+
+			\item Is $\left\{ N(t), t\ge 0 \right\}$ a renewal process?
+				
+		\end{enumerate}
+
+	\item[5.] Let $U_1, U_2, \cdots$ be independent uniform $(0, 1)$ random variables, and define $N$ by
+		\[N=\min\Set{n}{U_1+U_2+\cdots+U_n>1}\]
+		What is $E[N]?$
+
+	\item[7.] Mr. Smith works on a temporary basis. The mean length of each job he gets is three months. If the amount of time he spends between jobs is exponentially distributed with mean 2, then at what rate does Mr. Smith get new jobs?
+
+	\item[9.] A worker sequentially works on jobs. Each time a job is completed, a new one is begun. Each job, independently, takes a random amount of time having distribution $F$ to complete. However, independently of this, shocks occur according to a Poisson process with rate $\lambda.$ Whenever a shock occurs, the worker discontinues working on the present job and starts a new one. In the long run, at what rate are jobs completed?
+
+	\item[12.] Events occur according to a Poisson process with rate $\lambda.$ Any event that occurs within a time $d$ of the event that immediately preceded it is called a $d$-event.
+		\begin{enumerate}[(a)]
+			\item At what rate do $d$-events occur?
+
+			\item What proportion of all events are $d$-events?
+				
+		\end{enumerate}
+		
+\end{itemize}
+
+\end{document}

@@ -1,0 +1,69 @@
+\documentclass{article}
+\usepackage[sexy, hdr, fancy]{evan}
+\setlength{\droptitle}{-4em}
+
+\lhead{Homework 10}
+\rhead{Advanced Algebra II}
+\lfoot{}
+\cfoot{\thepage}
+
+\DeclareMathOperator{\cha}{char}
+
+\begin{document}
+\title{Homework 10}
+\maketitle
+\thispagestyle{fancy}
+
+\begin{itemize}
+	\item[1.] Let $E/F$ be a finite field extension, and let $L/F$ be any field extension. Mimic the proof of $\S$ 10.2 Theorem 1 to show that
+		\[\#\left\{ F\text{-embeddings } E\to L \right\}\le [E:F].\]
+		
+\end{itemize}
+
+\section*{Section 10.1: Galois Groups and Separability}
+
+\begin{itemize}
+	\item[30.] Le $E\supseteq F$ be a finite extension, where $\cha F=p.$
+		\begin{enumerate}[(a)]
+			\item If $u\in E$ has a separable minimal polynomial $q$ over $F,$ show that $u\in F(u^p).$ [Hint: If $m$ is the minimal polynomial of $u$ over $F(u^p),$ show $m\mid q$ and $m\mid(x-u)^p.$]
+
+			\item Define $F(E^p)=\Set{a_1u_1^p + \cdots + a_nu_n^p}{a_i\in F, u_i\in E, n\ge 1}.$ Show that $F(E^p)$ is a subfield of $E.$
+			
+			\item If $E=F(E^p)$ and $\left\{ w_1, \cdots, w_k \right\}\subseteq E$ is $F$-independent, show that $\left\{ w_1^p, \cdots, w_k^p \right\}$ is $F$-independent. [Hint: Extend to a basis $\left\{ w_1, \cdots, w_{k}, \cdots, w_n \right\}$ of $E,$ show that $\left\{ w_1^p, \cdots, w_k^p, \cdots, w_n^p \right\}$ span $E,$ and apply Theorem 7 $\S$6.1.]
+
+			\item Show that $E\supseteq F$ is separable if and only if $F(E^p)=E.$ [Hint: If $E=F(E^p),$ use Theorem 4 $\S$6.2 and (c)]
+
+		\end{enumerate}
+
+	\item[31.] Let $E\supseteq K\supseteq F$ be fields with $[E:F]$ finite. Show that $E\supseteq F$ is separable if and only if both $E\supseteq K$ and $K\supseteq F$ are separable.
+
+	\item[32.] If $E\supseteq F$ is a finite extension, then $u\in E$ is called a separable element over $F$ if its minimal polynomial in $F[x]$ is separable. 
+		\begin{enumerate}[(a)]
+			\item If $u\in E$ is separable over $F$ and $E\supseteq K\supseteq F,$ where $K$ is a field, show that $u$ is separable over $K.$ [Hint: Exercise 30(d)]
+			
+			\item Show that $u\in E$ is separable over $F$ if and only if $F(u)\supseteq F$ is a separable extension.
+
+			\item Define $S=\Set{u\in E}{u\text{ is separable over F}}.$ Show that $S$ is a subfield of $E,$ that $S\supseteq F$ is separable, and that $E\supseteq K\supseteq F,$ with $K\supseteq F$ separable, implies that $S\supseteq K.$ [Hint: If $u, v\in S,$ show that $F(u, v)\supseteq F$ is separable by (a) and Exercise 31.]
+				
+		\end{enumerate}
+		
+\end{itemize}
+
+\section*{Section 10.2: The Main Theorem of Galois Theory}
+
+\begin{itemize}
+	\item[5.] Let $E=F(t)$ be the field of rational forms over a field. In each case, compute $K=E_G$ and find the minimal polynomial $m\in K[x]$ of $t$ over $K.$
+		\begin{enumerate}[(a)]
+			\item $G=\left< \sigma\right>,$ where $\sigma$ is that $F$-automorphism of $E$ given by $\sigma(t)=-t.$
+
+			\item $G=\left< \sigma\right>,$ where $\sigma$ is that $F$-automorphism of $E$ gien by $\sigma(t)=1-t.$
+				
+		\end{enumerate}
+
+	\item[10.] Let $E\supseteq F$ be fields with $G=\Gal(E/F).$
+
+	\item[11.] If $E\supseteq K\supseteq F$ are fields, show that $E\supseteq K$ is Galois if and only if $K$ is closed as an intermediate field of $E\supseteq F.$
+		
+\end{itemize}
+
+\end{document}
