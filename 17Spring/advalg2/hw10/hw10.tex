@@ -26,12 +26,40 @@
 	\item[30.] Le $E\supseteq F$ be a finite extension, where $\cha F=p.$
 		\begin{enumerate}[(a)]
 			\item If $u\in E$ has a separable minimal polynomial $q$ over $F,$ show that $u\in F(u^p).$ [Hint: If $m$ is the minimal polynomial of $u$ over $F(u^p),$ show $m\mid q$ and $m\mid(x-u)^p.$]
+				\begin{proof}
+					Let $m$ be the minimal polynomial of $u$ over $F(u^p).$ Then since $q\in F(u^p)[x]$ and $q(u) = 0,$ we must have $m\mid q$ since it is the minimal polynomial. Since $q$ is separable, it must have distinct roots in $F(u^p),$ and since $m\mid q,$ it too must have distinct roots. 
+
+					Suppose $f=x^p-u^p\in F(u^p)[x],$ but since $\cha F=p,$ this is $(x-u)^p.$ Since $f(u)=0,$ we must have $m\mid (x-u)^p.$ But since $m$ must have distinct roots, we must have $m=x-u,$ so since $m\in F(u^p)[x],$ we have $u\in F(u^p),$ as desired.
+				\end{proof}
 
 			\item Define $F(E^p)=\Set{a_1u_1^p + \cdots + a_nu_n^p}{a_i\in F, u_i\in E, n\ge 1}.$ Show that $F(E^p)$ is a subfield of $E.$
+				\begin{proof}
+					Clearly $1_E\in F(E^p).$ Then if
+					\begin{align*}
+						a_1u_1^p + \cdots + a_n u_n^p &\in F(E^p) \\
+						b_1v_1^p + \cdots + b_m v_m^p &\in F(E^p)
+					\end{align*}
+					where WLOG $n\le m$ and $a_i, b_j\in F$ and $u_i, v_j\in E$ for all $i, j,$ then 
+					\begin{align*}
+						&(a_1u_1^p + \cdots + a_n u_n^p) - (b_1v_1^p + \cdots + b_m v_m^p) \\
+						&= (a_1u_1^p - b_1v_1^p) + \cdots + (a_nu_n^p - b_n v_n^p) + b_{n+1}v_{n+1}^p + \cdots + b_m v_m^p \\
+						&= [a_1u_1^p - a_1v_1^p - (b_1-a_1)v_1^p] + \cdots + [a_nu_n^p - a_nv_n^p - (b_n - a_n)v_n^p] + \sum_{k=n+1}^{m} b_k v_k^p \\
+						&= a_1(u_1^p-v_1^p) + \cdots + a_n(u_n^p-v_n^p) + \sum_{j=1}^{n} (b_j-a_j) v_j^p + \sum_{k=n+1}^{m} b_k v_k^p \\
+						&= \sum_{i=1}^{n} a_i(u_i-v_i)^p + \sum_{j=1}^{n} (b_j-a_j)v_j^p + \sum_{k=n+1}^{m} b_k v_k^p \\
+						&\in F(E^p)
+					\end{align*}
+				\end{proof}
 			
 			\item If $E=F(E^p)$ and $\left\{ w_1, \cdots, w_k \right\}\subseteq E$ is $F$-independent, show that $\left\{ w_1^p, \cdots, w_k^p \right\}$ is $F$-independent. [Hint: Extend to a basis $\left\{ w_1, \cdots, w_{k}, \cdots, w_n \right\}$ of $E,$ show that $\left\{ w_1^p, \cdots, w_k^p, \cdots, w_n^p \right\}$ span $E,$ and apply Theorem 7 $\S$6.1.]
-
-			\item Show that $E\supseteq F$ is separable if and only if $F(E^p)=E.$ [Hint: If $E=F(E^p),$ use Theorem 4 $\S$6.2 and (c)]
+				\begin{proof}
+					Extend $\left\{ w_1, \cdots w_k \right\}$ to an $F$-basis $\left\{ w_1, \cdots, w_k, \cdots, w_n \right\}$ of $E.$ Now if $v\in E=F(E^p),$ then suppose 
+					\[v=\sum_{i=1}^{m} a_i u_i^p\]
+					where $a_i\in F$ and $u_i\in E$ for all $i.$ Then since $\left\{ w_1,\cdots, w_k, \cdots, w_n \right\}$ is a basis, there is a unique representation for $u_i$ in terms of these basis elements:
+					\begin{align*}
+						v &= \sum_{i=1}^{m} a_i u_i^p = \sum_{i=1}^{m} a_i \left( \sum_{j=1}^{n} b_{ij} w_j \right)^p = \sum_{i=1}^{m} \sum_{j=1}^{n}a_i b_{ij}^p w_j^p
+					\end{align*}
+					Thus, the set $\left\{ w_1^p, \cdots, w_k^p, \cdots , w_n^p \right\}$ spans $E.$ Since $\left\{ w_1, \cdots, w_k, \cdots, w_n \right\}$ was a basis, $\dim E=n$ so $\left\{ w_1^p, \cdots, w_k^p, \cdots, w_n^p \right\}$ is $F$-independent.
+				\end{proof}
 
 		\end{enumerate}
 
@@ -40,10 +68,18 @@
 	\item[32.] If $E\supseteq F$ is a finite extension, then $u\in E$ is called a separable element over $F$ if its minimal polynomial in $F[x]$ is separable. 
 		\begin{enumerate}[(a)]
 			\item If $u\in E$ is separable over $F$ and $E\supseteq K\supseteq F,$ where $K$ is a field, show that $u$ is separable over $K.$ [Hint: Exercise 30(d)]
+				\begin{proof}
+					If $p\in F[x]$ and $q\in K[x]$ are the minimal polynomials of $u$ over $F$ and $K,$ respectively, then since $p\in K[x],$ we must have $q\mid p.$ Since $u$ is separable over $F,$ that means $p$ is separable so it has distinct roots, and thus $q$ must also have distinct roots, so it is separable. Thus $u$ is separable over $K.$
+				\end{proof}
 			
 			\item Show that $u\in E$ is separable over $F$ if and only if $F(u)\supseteq F$ is a separable extension.
 
-			\item Define $S=\Set{u\in E}{u\text{ is separable over F}}.$ Show that $S$ is a subfield of $E,$ that $S\supseteq F$ is separable, and that $E\supseteq K\supseteq F,$ with $K\supseteq F$ separable, implies that $S\supseteq K.$ [Hint: If $u, v\in S,$ show that $F(u, v)\supseteq F$ is separable by (a) and Exercise 31.]
+			\item Define $S=\Set{u\in E}{u\text{ is separable over }F}.$ Show that $S$ is a subfield of $E,$ that $S\supseteq F$ is separable, and that $E\supseteq K\supseteq F,$ with $K\supseteq F$ separable, implies that $S\supseteq K.$ [Hint: If $u, v\in S,$ show that $F(u, v)\supseteq F$ is separable by (a) and Exercise 31.]
+				\begin{proof}
+					Subfield: Clearly $1_E\in S$ since $1_E\in F$ and $x-1$ is separable. If $u\in E,$ then from (b), we have $F(u)\supseteq F$ is separable. Then if $v\in E,$ since $F(u, v)=F(u)(v)$ is separable over $F(u),$ it follows that $F(u, v)\supseteq F$ is separable from Exercise 31. Thus, since $u+v$ and $uv$ are in $F(u, v),$ they are both separable, and thus in $S.$ Similarly, $u\inv\in F(u, v)$ so $u\inv$ is also separable, so $S$ is a subfield, as desired.
+
+					$S\supseteq F$ is separable by its definition, since everything inside is separable over $F.$ If $E\supseteq K\supseteq F$ and $K\supseteq F$ is separable, then if $u\in K$ is separable over $F,$ since $E\supseteq K,$ that means $u\in S,$ so $S\supseteq K.$
+				\end{proof}
 				
 		\end{enumerate}
 		
@@ -55,12 +91,28 @@
 	\item[5.] Let $E=F(t)$ be the field of rational forms over a field. In each case, compute $K=E_G$ and find the minimal polynomial $m\in K[x]$ of $t$ over $K.$
 		\begin{enumerate}[(a)]
 			\item $G=\left< \sigma\right>,$ where $\sigma$ is that $F$-automorphism of $E$ given by $\sigma(t)=-t.$
+				\begin{soln}
+					We have $\sigma^2(t)=t,$ so it suffices to consider $\sigma.$ Let $K\ni f = \frac{p(t)}{q(t)}$ for $p, q\in F[t].$ Then
+					\begin{align*}
+						\sigma(f) = f \iff \sigma\left( \frac{p(t)}{q(t)} \right) = \frac{p(-t)}{q(-t)} = \frac{p(t)}{q(t)} \iff p(t)q(-t) = p(-t)q(t)
+					\end{align*}
+					If $\cha F=2,$ then $K=E$ because $a=-a\implies at^n=-at^n$ for all $a\in F.$ Then the minimal polynomial is $x-t.$
+					
+					Otherwise, let $g(t) = p(t)q(-t),$ so $g(-t)=p(-t)q(t) = p(t)q(-t) = g(t),$ so $g(t) = h(t^2)$ for some $h\in F[t].$ Now, $f=\frac{p(t)}{q(t)} = \frac{h(t^2)}{q(t)q(-t)}$ and similarly, $q(t)q(-t)=k(t^2)$ for some $k\in F[t],$ so $f=\frac{h(t^2)}{k(t^2)},$ so $K=F(t^2).$ Then the minimal polynomial is $x^2-t^2.$
+				\end{soln}
 
-			\item $G=\left< \sigma\right>,$ where $\sigma$ is that $F$-automorphism of $E$ gien by $\sigma(t)=1-t.$
+			\item $G=\left< \sigma\right>,$ where $\sigma$ is that $F$-automorphism of $E$ given by $\sigma(t)=1-t.$
+				\begin{soln}
+					We have $\sigma^2(t)=t,$ so it suffices to consider $\sigma.$ Let $K\ni f=\frac{p(t)}{q(t)}$ for $p, q\in F[t].$ Let 
+					\begin{align*}
+						p(t) &= \sum_{i=0}^{m} a_i t^i \implies p(1-t) = \sum_{i=0}^{m} a_i (1-t)^i \\
+						q(t) &= \sum_{j=0}^{n} b_j t^j \implies q(1-t) = \sum_{j=0}^{n} b_j (1-t)^j
+					\end{align*}
+				\end{soln}
 				
 		\end{enumerate}
 
-	\item[10.] Let $E\supseteq F$ be fields with $G=\Gal(E/F).$
+	\item[10.] Let $E\supseteq F$ be fields with $G=\Gal(E/F).$ If $H\subseteq G$ is a subgroup and $H^\circ$ is finite, show that $H$ is closed.
 
 	\item[11.] If $E\supseteq K\supseteq F$ are fields, show that $E\supseteq K$ is Galois if and only if $K$ is closed as an intermediate field of $E\supseteq F.$
 		
