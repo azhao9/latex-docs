@@ -21,10 +21,19 @@
 	\item[1.] Is it true that
 		\begin{enumerate}[(a)]
 			\item $N(t)<n$ if and only if $S_n>t?$
+				\begin{answer*}
+					This is true. It is the negation of both sides of $N(t)\ge n\iff S_n\le t.$
+				\end{answer*}
 
 			\item $N(t)\le n$ if and only if $S_n\ge t?$
+				\begin{answer*}
+					This is not true. 
+				\end{answer*}
 
-			\item $N(t)>0$ if and only if $S_n<t?$
+			\item $N(t)>n$ if and only if $S_n<t?$
+				\begin{answer*}
+					This is not true.
+				\end{answer*}
 				
 		\end{enumerate}
 
@@ -32,34 +41,116 @@
 		\[P[X_n=k] = e^{-\mu} \frac{\mu^k}{k!}, \quad k=0, 1, \cdots\]
 		\begin{enumerate}[(a)]
 			\item Find the distribution of $S_n.$
+				\begin{answer*}
+					The sum of $n$ iid Poisson random variables with mean $\mu$ is Poisson with mean $n\mu.$
+				\end{answer*}
 
 			\item Calculate $P[N(t)=n].$
+				\begin{soln}
+					Let $s=\left\lfloor t \right\rfloor.$ Then
+					\begin{align*}
+						P[N(t)=n] &= P[S_n\le t] - P[S_{n+1}\le t] \\
+						&= \sum_{i=0}^{s} e^{-n\mu} \frac{(n\mu)^i}{i!} - \sum_{i=0}^{s} e^{-(n+1)\mu} \frac{[(n+1)\mu]^i}{i!}
+					\end{align*}
+				\end{soln}
 				
 		\end{enumerate}
 
 	\item[4.] Let $\left\{ N_1(t), t\ge 0 \right\}$ and $\left\{ N_2(t), t\ge 0 \right\}$ be independent renewal processes. Let $N(t)=N_1(t)+N_2(t).$
 		\begin{enumerate}[(a)]
 			\item Are the inter-arrival times of $\left\{ N(t), t\ge 0 \right\}$ independent?
+				\begin{answer*}
+					No. If the inter-arrival times of $N_1(t)$ are always 1 and the inter-arrival times of $N_2(t)$ are exponential with mean $\mu,$ then if $X_1=2/3$ for example, the next arrival is guaranteed to occur at or before 1, so it is at most $1/3.$
+				\end{answer*}
 
 			\item Are they identically distributed?
+				\begin{answer*}
+					No. Using the example from (a), the probability the first arrival time is 1 is the probability that $N_2(t)$ does not arrive before 1, which is $e^{-\mu}.$ Then afterwards, it is different.
+				\end{answer*}
 
 			\item Is $\left\{ N(t), t\ge 0 \right\}$ a renewal process?
+				\begin{answer*}
+					No. The inter-arrival times are neither independent nor identically distributed.
+				\end{answer*}
 				
 		\end{enumerate}
 
 	\item[5.] Let $U_1, U_2, \cdots$ be independent uniform $(0, 1)$ random variables, and define $N$ by
 		\[N=\min\Set{n}{U_1+U_2+\cdots+U_n>1}\]
 		What is $E[N]?$
+		\begin{soln}
+			This is a renewal process with inter-arrival times as Uniform $(0, 1)$ variables. Note that $N=N(1) + 1$ since it is the minimum number of arrivals to exceed 1, whereas $N(1)$ is the maximum number of arrivals to stay below 1. The mean function of this renewal process is given from the text as $m(t)=e^t-1, 0\le t\le 1,$ so we have
+			\begin{align*}
+				E[N] &= E[N(1) + 1] = m(1) + 1 = e
+			\end{align*}
+		\end{soln}
 
 	\item[7.] Mr. Smith works on a temporary basis. The mean length of each job he gets is three months. If the amount of time he spends between jobs is exponentially distributed with mean 2, then at what rate does Mr. Smith get new jobs?
+		\begin{soln}
+			On average, his job lasts 3 months, then he waits 2 months, so finding new jobs is a renewal process with mean inter-arrival time of 5. Thus he finds new jobs at a rate of once every 5 months.
+		\end{soln}
 
 	\item[9.] A worker sequentially works on jobs. Each time a job is completed, a new one is begun. Each job, independently, takes a random amount of time having distribution $F$ to complete. However, independently of this, shocks occur according to a Poisson process with rate $\lambda.$ Whenever a shock occurs, the worker discontinues working on the present job and starts a new one. In the long run, at what rate are jobs completed?
+		\begin{soln}
+			This is a renewal process, where arrivals are completions of jobs. Let $X$ be the inter-arrival time, let $T$ be the time it takes until the next job is completed, and let $S$ be the time until the next shock. We have
+			\begin{align*}
+				E[X\mid T=t] &= \int_0^\infty E[X\mid T=t, S=s] P[S=s]\, ds = \int_0^\infty E[X\mid T=t, S=s] \lambda e^{-\lambda s}\, ds
+			\end{align*}
+			Now, if the next shock occurs before the next job is completed, the process starts over. Otherwise, the next shock is irrelevant and the process is completed in time $t.$ Thus
+			\begin{align*}
+				E[X\mid T=t, S=s] &= \begin{cases}
+					s+E[X] \quad\quad & s<t \\
+					t \quad\quad\quad & s\ge t
+				\end{cases}
+			\end{align*}
+			so using this in the integral, we have
+			\begin{align*}
+				E[X\mid T=t] &= \int_0^t (s+E[X]) \lambda e^{-\lambda s}\, ds + \int_t^\infty t\lambda e^{-\lambda s}\, ds \\
+				&= \lambda\int_0^t se^{-\lambda s}\, ds + \lambda E[X] \int_0^t e^{-\lambda s}\, ds + t\lambda\int_t^\infty e^{-\lambda s}\, ds \\
+				&= \lambda\left[ -\frac{e^{-\lambda s}(\lambda s+1)}{\lambda^2} \right]\bigg\vert_0^t + \lambda E[X] \left( -\frac{1}{\lambda} e^{-\lambda s} \right)\bigg\vert_0^t + t\lambda\left( -\frac{1}{\lambda} e^{-\lambda s} \right)\bigg\vert_t^\infty \\
+				&= \frac{1}{\lambda} - te^{-\lambda t} - \frac{1}{\lambda} e^{-\lambda t} + E[X](1-e^{-\lambda t}) + te^{-\lambda t} \\
+				&= \left( E[X] + \frac{1}{\lambda} \right)(1-e^{-\lambda t}) \\
+				\implies E[X\mid T] &= \left( E[X]+\frac{1}{\lambda} \right)(1-e^{-\lambda T})
+			\end{align*}
+			Thus, taking the expectation of this, we get
+			\begin{align*}
+				E[E[X\mid T]] = E[X] &= E\left[ \left( E[X] + \frac{1}{\lambda} \right)(1-e^{-\lambda T}) \right] = \left( E[X] + \frac{1}{\lambda} \right) \left( 1-E[e^{-\lambda T}] \right) \\
+				\implies E[X] &= \frac{1-E[e^{-\lambda T}]}{\lambda E[e^{-\lambda t}]}
+			\end{align*}
+			Now, since $T$ has distribution given by $F,$ we have
+			\begin{align*}
+				E[e^{-\lambda T}] &= \int_0^\infty e^{-\lambda t} f(t)\, dt
+			\end{align*}
+			Substituting this, we get the average time between completion of jobs, so the rate at which they are completed is the reciprocal of that.
+		\end{soln}
 
 	\item[12.] Events occur according to a Poisson process with rate $\lambda.$ Any event that occurs within a time $d$ of the event that immediately preceded it is called a $d$-event.
 		\begin{enumerate}[(a)]
 			\item At what rate do $d$-events occur?
+				\begin{soln}
+					Let $X$ represent the time between successive $d$-events, and let $T$ be the time until the next event following a $d$ event. If the next event after a $d$-event does not occur within time $d,$ then the process resets.
+					\begin{align*}
+						E[X\mid T=t] &= \begin{cases}
+							t+E[X] \quad\quad &t> d \\
+							t \quad\quad\quad &t\le d
+						\end{cases}
+					\end{align*}
+					Thus, we have
+					\begin{align*}
+						E[X] &= E[E[X\mid T]] = \int_0^\infty E[X\mid T=t] P[T=t]\, dt \\
+						&= \int_0^d t \lambda e^{-\lambda t}\, dt + \int_d^\infty (t+E[X]) \lambda e^{-\lambda t}\, dt \\
+						&= \int_0^\infty t\lambda e^{-\lambda t}\, dt + E[X]\lambda \int_d^\infty e^{-\lambda t}\, dt \\
+						&= \frac{1}{\lambda} + E[X] \lambda \left( -\frac{1}{\lambda} e^{-\lambda t} \right)\bigg\vert_d^\infty \\
+						&= \frac{1}{\lambda} + E[X] e^{-\lambda d} \\
+						\implies E[X] &= \frac{1}{\lambda(1-e^{-\lambda d})}
+					\end{align*}
+					Thus, events happen at a rate of $1/E[X]=\lambda(1-e^{-\lambda d}).$
+				\end{soln}
 
 			\item What proportion of all events are $d$-events?
+				\begin{soln}
+					Since this is a Poisson process, the rate of events is $\lambda,$ so the proportion of events that are $d$-events is $\frac{\lambda(1-e^{-\lambda d})}{\lambda} = 1-e^{-\lambda d}.$
+				\end{soln}
 				
 		\end{enumerate}
 		
