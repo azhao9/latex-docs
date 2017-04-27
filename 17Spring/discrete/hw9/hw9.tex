@@ -1,0 +1,504 @@
+\documentclass{article}
+\usepackage[sexy, hdr, fancy]{evan}
+\usepackage{tikz}
+\usetikzlibrary{arrows}
+\setlength{\droptitle}{-4em}
+
+\lhead{Homework 9}
+\rhead{Discrete Math (Section 05)}
+\lfoot{}
+\cfoot{\thepage}
+
+\newcommand{\var}{\mathrm{Var}}
+\newcommand{\cov}{\mathrm{Cov}}
+
+\begin{document}
+\title{Homework 9}
+\maketitle
+\thispagestyle{fancy}
+
+\begin{itemize}
+	\item[1.] Create an intersection graph for each collection of sets.
+		\begin{enumerate}[(a)]
+			\item \begin{align*}
+					A_1 &= \Set{x\in\RR}{x<0} \\
+					A_2 &= \Set{x\in \RR}{-1<x<0} \\
+					A_3 &= \Set{x\in\RR}{0<x<1} \\
+					A_4 &= \Set{x\in\RR}{-1<x<1} \\
+					A_5 &= \Set{x\in\RR}{x>-1} \\
+					A_6 &= \RR
+				\end{align*}
+				\begin{soln}
+					The non-empty intersections are
+					\begin{align*}
+						A_1\cap A_2 \quad\quad A_1\cap A_4 \quad\quad A_1\cap A_5 \quad\quad A_1\cap A_6 \\
+						A_2\cap A_4 \quad\quad A_2\cap A_5 \quad\quad A_2\cap A_6 \\
+						A_3\cap A_4 \quad\quad A_3\cap A_5 \quad\quad A_3\cap A_6 \\
+						A_4\cap A_5 \quad\quad A_4\cap A_6 \\
+						A_5\cap A_6
+					\end{align*}
+					The intersection graph is given by
+					\begin{center}
+						\begin{tikzpicture}[shorten >=1pt, auto, node distance=3cm, thick, main node/.style={circle, draw, font=\sffamily\Large\bfseries}]
+							\node[main node] (1) {$A_1$};
+							\node[main node] (2) [right of=1] {$A_2$};
+							\node[main node] (3) [right of=2] {$A_3$};
+							\node[main node] (4) [below of=1] {$A_4$};
+							\node[main node] (5) [right of=4] {$A_5$};
+							\node[main node] (6) [right of=5] {$A_6$};
+
+							\path[every node/.style={font=\sffamily\small}]
+							(2) edge (1)
+							(4) edge (1)
+							edge (2)
+							edge (3)
+							(5) edge (1)
+							edge (2) 
+							edge (3)
+							edge (4)
+							(6) edge (1)
+							edge (2)
+							edge (3)
+							edge [bend left] (4)
+							edge (5);
+						\end{tikzpicture}
+					\end{center}
+				\end{soln}
+
+				\newpage
+			\item \begin{align*}
+					A_1 &= \Set{x\in\ZZ}{-4\le x\le 0} \\
+					A_2 &= \Set{x\in\ZZ}{\exists n\in \NN\text{ such that } x=2^n\text{ or } x=-(2)^n} \\
+					A_3 &= \Set{x\in\ZZ}{2\mid x} \\
+					A_4 &= \Set{x\in\ZZ}{x\text{ is odd}} \\
+					A_5 &= \Set{x\in\ZZ}{3\mid x}
+				\end{align*}
+				\begin{soln}
+					We have
+					\begin{align*}
+						A_1 &= \left\{ -4, -3, -2, -1, 0 \right\} \\
+						A_2 &= \left\{ \cdots, -8, -4, -2, -1, 1, 2, 4, 8, \cdots \right\} \\
+						A_3 &= \left\{ \cdots, -8, -6, -4, -2, 0, 2, 4, 6, 8, \cdots \right\} \\
+						A_4 &= \left\{ \cdots, -7, -5, -3, -1, 1, 3, 5, 7, \cdots \right\} \\
+						A_5 &= \left\{ \cdots, -6, -3, 0, 3, 6, \cdots \right\}
+					\end{align*}
+					and the non-empty intersections are
+					\begin{align*}
+						A_1\cap A_2 \quad\quad A_1\cap A_3 \quad\quad A_1\cap A_4 \quad\quad A_1\cap A_5 \\
+						A_2\cap A_3 \quad\quad A_2\cap A_4 \\
+						A_3\cap A_5 \\
+						A_4\cap A_5
+					\end{align*}
+					The intersection graph is given by
+					\begin{center}
+						\begin{tikzpicture}[shorten >=1pt, auto, node distance=3cm, thick, main node/.style={circle, draw, font=\sffamily\Large\bfseries}]
+							\node[main node] (1) {$A_1$};
+							\node[main node] (2) [right of=1] {$A_2$};
+							\node[main node] (3) [right of=2] {$A_3$};
+							\node[main node] (4) [below of=1] {$A_4$};
+							\node[main node] (5) [right of=4] {$A_5$};
+
+							\path[every node/.style={font=\sffamily\small}]
+							(2) edge (1)
+							(3) edge [bend right](1)
+							edge (2)
+							(4) edge (1)
+							edge (2)
+							(5) edge (1)
+							edge (3)
+							edge (4);
+						\end{tikzpicture}
+					\end{center}
+				\end{soln}
+
+		\end{enumerate}
+	\item[47.16] Prove that in any graph with two or more vertices, there must be two vertices of the same degree.
+		\begin{proof}
+			If the graph $G$ has two or more 0-degree vertices, then we are done. Otherwise, consider the graph $G'$ which is obtained by removing all 0-degree vertices from $G.$ If $G'$ has $n$ vertices, then the possible values of degrees of vertices is $\left\{ 1, 2, \cdots, n-1 \right\},$ but since there are $n$ vertices, by the Pigeonhole principle there must be two vertices of the same degree.
+		\end{proof}
+
+	\item[47.21] Let $G$ and $H$ be graphs. We say that $G$ is isomorphic to $H$ provided there is a bijection $f:V(G)\to V(H)$ such that for all $a, b\in V(G),$ we have $a\sim b$ in $G$ if and only if $f(a)\sim f(b)$ in $H.$ 
+		\begin{enumerate}[(a)]
+			\item Prove that isomorphic graphs have the same number of vertices.
+				\begin{proof}
+					Since $f$ is a bijection between finite sets $V(G)$ and $V(H),$ the cardinalities of the two sets must be equal, so $G$ and $H$ must have the same number of vertices.
+				\end{proof}
+
+			\item Prove that if $f:V(G)\to V(H)$ is an isomorphism of graphs $G$ and $H$ and if $v\in V(G),$ then he degree of $v$ in $G$ equals the degree of $f(v)$ in $H.$
+				\begin{proof}
+					Suppose $d_G(v)=n,$ and the neighbors of $v$ are $\left\{ u_1, \cdots, u_n \right\}\in V(G).$ Then since $u_i\sim v, \forall i$ in $G,$ it follows that $f(u_i)\sim f(v), \forall i$ in $H$ since $f$ is an isomorphism. Furthermore, this condition is bijective, so the neighbors of $f(v)$ are exactly $\left\{ f(u_1), \cdots, f(u_n) \right\}$ so $d_H(f(v))=n.$
+				\end{proof}
+
+			\item Prove that isomorphic graphs have the same number of edges.
+				\begin{proof}
+					If an edge $(a, b)$ is in $E(G),$ then $a\sim b\iff f(a)\sim f(b)$ so the edge $(f(a), f(b))$ is in $E(H),$ and conversely as well. Thus isomorphic graphs have the same number of edges.
+				\end{proof}
+
+			\item Give an example of two graphs that have the same number of vertices and the same number of edges but that are not isomorphic.
+				\begin{soln}
+					Here are two 4-vertex, 2-edge graphs that are not isomorphic.
+					\begin{center}
+						\begin{tikzpicture}[shorten >=1pt, auto, node distance=3cm, thick, main node/.style={circle, draw, font=\sffamily\Large\bfseries}]
+							\node[main node] (1) {1};
+							\node[main node] (2) [right of=1] {2};
+							\node[main node] (5) [right of=2] {1};
+							\node[main node] (6) [right of=5] {2};
+							\node[main node] (3) [below of=1] {3};
+							\node[main node] (4) [right of=3] {4};
+							\node[main node] (7) [right of=4] {3};
+							\node[main node] (8) [right of=7] {4};
+
+							\path[every node/.style={font=\sffamily\small}]
+							(1) edge (2)
+							edge (3)
+							(5) edge (7)
+							(6) edge (8);
+						\end{tikzpicture}
+					\end{center}
+				\end{soln}
+
+			\item Let $G$ be the graph whose vertex set is $\left\{ 1, 2, 3, 4, 5, 6 \right\}.$ In this graph, there is an edge from $v$ to $w$ if and only if $v-w$ is odd. Let $H$ be the graph in the figure. Find an isomorphism $f:V(G)\to V(H).$
+				\begin{center}
+					\begin{tikzpicture}[shorten >=1pt, auto, node distance=3cm, thick, main node/.style={circle, draw, font=\sffamily\Large\bfseries}]
+						\node[main node] (1) {a};
+						\node[main node] (2) [right of=1] {b};
+						\node[main node] (3) [right of=2] {c};
+						\node[main node] (4) [below of=1] {d};
+						\node[main node] (5) [right of=4] {e};
+						\node[main node] (6) [right of=5] {f};
+
+						\path[every node/.style={font=\sffamily\small}]
+						(1) edge (4)
+						edge (5)
+						edge (6)
+						(2) edge (4)
+						edge (5)
+						edge (6)
+						(3) edge (4)
+						edge (5)
+						edge (6)
+						(4) edge (1)
+						edge (2)
+						edge (3)
+						(5) edge (1)
+						edge (2)
+						edge (3)
+						(6) edge (1)
+						edge (2)
+						edge (3);
+					\end{tikzpicture}
+				\end{center}
+				\begin{soln}
+					$G$ is given by
+					\begin{center}
+						\begin{tikzpicture}[shorten >=1pt, auto, node distance=3cm, thick, main node/.style={circle, draw, font=\sffamily\Large\bfseries}]
+							\node[main node] (1) {1};
+							\node[main node] (2) [right of=1] {3};
+							\node[main node] (3) [right of=2] {5};
+							\node[main node] (4) [below of=1] {2};
+							\node[main node] (5) [right of=4] {4};
+							\node[main node] (6) [right of=5] {6};
+
+							\path[every node/.style={font=\sffamily\small}]
+							(1) edge (4)
+							edge (5)
+							edge (6)
+							(2) edge (4)
+							edge (5)
+							edge (6)
+							(3) edge (4)
+							edge (5)
+							edge (6)
+							(4) edge (1)
+							edge (2)
+							edge (3)
+							(5) edge (1)
+							edge (2)
+							edge (3)
+							(6) edge (1)
+							edge (2)
+							edge (3);
+						\end{tikzpicture}
+					\end{center}
+					So an isomorphism $f$ is
+					\begin{align*}
+						f:\begin{cases}
+							1 &\mapsto a \\
+							2 &\mapsto d \\
+							3 &\mapsto b \\
+							4 &\mapsto e \\
+							5 &\mapsto c \\
+							6 &\mapsto f
+						\end{cases}
+					\end{align*}
+				\end{soln}
+		\end{enumerate}
+
+	\item[48.11] Recall the definition of graph isomorphism from Exercise 47.21. We call a graph $G$ self-complementary if $G$ is isomorphic to $\overline{G}.$ 
+		\begin{enumerate}[(a)]
+			\item Show that the graph $G=(\left\{ a, b, c, d \right\}, \left\{ ab, bc, cd \right\})$ is self-complementary.
+				\begin{proof}
+					We have 
+					\begin{align*}
+						V(\overline{G})&=\left\{ a, b, c, d \right\} \\
+						E(\overline{G}) &= \left\{ ac, ad, bd \right\}
+					\end{align*}
+					and we have an isomorphism
+					\begin{align*}
+						f:\begin{cases}
+							a &\mapsto c \\
+							b &\mapsto a \\
+							c &\mapsto d \\
+							d &\mapsto b
+						\end{cases}
+					\end{align*}
+					This is an isomorphism because
+					\begin{align*}
+						a \sim_G b &\iff f(a)=c\sim_H a = f(b) \\
+						b\sim_G c &\iff f(b)=a\sim_H d=f(c) \\
+						c\sim_G d &\iff f(c)=d\sim_H b=f(d)
+					\end{align*}
+				\end{proof}
+
+			\item Find a self-complementary graph with five vertices.
+				\begin{soln}
+					If $G=(\left\{ a, b, c, d, e \right\}, \left\{ ab, bc, cd, de, ae \right\}),$ then $G$ is self-complementary because $\overline{G}=(\left\{ a, b, c, d, e \right\}, \left\{ ac, ad, bd, be, ce \right\})$ and we have an isomorphism (easy to check\ldots)
+					\begin{align*}
+						f:\begin{cases}
+							a &\mapsto a \\
+							b &\mapsto c \\
+							c &\mapsto e \\
+							d &\mapsto b \\
+							e &\mapsto d
+						\end{cases}
+					\end{align*}
+				\end{soln}
+
+				\newpage
+			\item Prove that if a self-complementary graph has $n$ vertices, then $n\equiv0\pmod 4$ or $n\equiv1\pmod 4.$
+				\begin{proof}
+					There are a total of $\binom{n}{2}=\frac{n(n-1)}{2}$ possible edges. If a graph $G$ is self-complementary, then its complement $\overline{G}$ must have the same number of edges, and combined these exhaust all $\binom{n}{2}$ edges. Thus $\frac{n(n-1)}{2}$ must be even.
+
+					Suppose $n\equiv 2\pmod 4.$ Then $n=4k+2$ for some $k\in\NN,$ and
+					\begin{align*}
+						\frac{n(n-1)}{2} &= \frac{(4k+2)(4k+1)}{2} = (2k+1)(4k+1)
+					\end{align*}
+					which is odd, which can't work. Now if $n\equiv 3\pmod 4,$ then $n=4k+3$ for some $k\in\NN$ and
+					\begin{align*}
+						\frac{n(n-1)}{2} &= \frac{(4k+3)(4k+2)}{2} = (4k+3)(2k+1)
+					\end{align*}
+					which is odd, which can't work. Thus, we must have either $n\equiv 0\pmod 4$ or $n\equiv 1\pmod 4,$ and as demonstrated from parts (a) and (b), graphs that satisfy these conditions ($n=4$ and $n=5$) exist.
+				\end{proof}
+
+		\end{enumerate}
+
+	\item[49.4] Let $n\ge 2$ be an integer. Form a graph $G_n,$ whose vertices are all the two-element subsets of $\left\{ 1, 2, \cdots, n \right\}.$ In this graph we have an edge between distinct vertices $\left\{ a, b \right\}$ and $\left\{ c, d \right\}$ exactly when $\left\{ a, b \right\}\cap \left\{ c, d \right\}=\varnothing.$
+		\begin{enumerate}[(a)]
+			\item How many vertices does $G_n$ have?
+				\begin{soln}
+					The number of vertices is the number of 2-element subsets of $\left\{ 1, 2, \cdots, n \right\},$ or $\binom{n}{2}.$
+				\end{soln}
+
+			\item How many edges does $G_n$ have?
+				\begin{soln}
+					For a vertex $\left\{ a, b \right\},$ the number of disjoint 2-element subsets of $\left\{ 1, 2, \cdots, n \right\}$ is just the number of 2-element subsets of $\left\{ 1, 2, \cdots, n \right\}\smallsetminus \left\{ a, b \right\},$ which is $\binom{n-2}{2}.$ There are $\binom{n}{2}$ total vertices, but this double counts every edge, so the total number of edges is $\frac{1}{2} \binom{n}{2} \binom{n-2}{2}.$
+				\end{soln}
+
+			\item For which values of $n\ge 2$ is $G_n$ connected? Prove your answer.
+				\begin{soln}
+					Assume different variables represent different values. Starting at $\left\{ a, b \right\}$ we can travel to any $\left\{ c, d \right\}$ because there is an edge between them. Suppose we wish to travel to $\left\{ a, c \right\}$ from $\left\{ a, b \right\}.$ There is no edge because these are not disjoint. Thus we must find an intermediate edge disjoint from both of these: $\left\{ d, e \right\},$ and then there is a path $\left\{ a, b \right\}\to \left\{ d, e \right\}\to \left\{ a, c \right\}.$ Thus, there must be distinct values $a, b, c, d, e,$ so $n$ must be at least 5.
+				\end{soln}
+
+		\end{enumerate}
+
+	\item[6.] Let $A$ be the set of all simple undirected graphs. Let $R$ be the relation on $A$ defined as follows: $(G, H)\in R$ if there is an isomorphism $f:V(G)\to V(H).$ Prove $R$ is an equivalence relation.
+		\begin{proof}
+			Reflexive: Clearly $(G, G)\in R$ because there is the identity isomorphism $f=\id_G.$
+
+			Symmetric: If $(G, H)\in R,$ then there exists an isomorphism $f:V(G)\to V(H).$ Then its inverse $f\inv: V(H)\to V(G)$ is also an isomorphism, so $(H, G)\in R.$
+
+			Transitive: If $(G, H)\in R$ and $(H, K)\in R,$ then there exists isomorphisms $f:V(G)\to V(H)$ and $g:V(H)\to V(K).$ Then the composition $g\circ f: V(G)\to V(K)$ is also an isomorphism, so $(G, K)\in R$ as well.
+		\end{proof}
+
+	\item[7.] Let $k, n\in\NN$ with $n>0.$ Derive a formula using $n$ and $k$ the number of subgraphs of $K_n$ with exactly $k$ vertices.
+		\begin{soln}
+			There are $\binom{n}{k}$ ways to choose $k$ vertices to be in the sub-graph. Of all of the possible $\binom{k}{2}$ edges between these vertices (all of which are also in $K_n$), we choose a subset of these to be in the sub-graph, in $2^{\binom{k}{2}}$ ways. Thus the number of subgraphs of $K_n$ with exactly $k$ vertices is $\binom{n}{k} 2^{\binom{k}{2}}.$
+		\end{soln}
+
+	\item[8.] 
+		\begin{enumerate}[(a)]
+			\item Give one advantage and one disadvantage each for the star, ring, and hybrid LAN topologies.
+				\begin{answer*}
+					Star:
+					\begin{itemize}
+						\ii Every node is connected to every other node.
+						\ii High dependence on central node.
+					\end{itemize}
+					Ring:
+					\begin{itemize}
+						\ii Every node is connected to every other node.
+						\ii Connections are inefficient because most connections must pass through other nodes.
+					\end{itemize}
+					Hybrid:
+					\begin{itemize}
+						\ii Every node is connected to every other node.
+						\ii It is a complicated system.
+					\end{itemize}
+				\end{answer*}
+
+			\item In the basic mesh network, the number of devices, $n,$ is a perfect square, so $n=m^2$ where $m\in\NN.$ The devices are labeled $D(i, j)$ where $0\le i, j\le m-1.$ There is an edge joining $D(i, j)$ to any of the vertices $D(i\pm 1, j)$ and $D(i, j\pm 1)$ that exist. Draw the mesh network for $n=16.$
+				\begin{soln}
+					Here, $m=4.$ The mesh network is
+					\begin{center}
+						\begin{tikzpicture}[shorten >=1pt, auto, node distance=3cm, thick, main node/.style={circle, draw, font=\sffamily\Large\bfseries}]
+							\node[main node] (1) {$D(0, 0)$};
+							\node[main node] (2) [right of=1] {$D(0, 1)$};
+							\node[main node] (3) [right of=2] {$D(0, 2)$};
+							\node[main node] (4) [right of=3] {$D(0, 3)$};
+							\node[main node] (5) [below of=1] {$D(1, 0)$};
+							\node[main node] (6) [right of=5] {$D(1, 1)$};
+							\node[main node] (7) [right of=6] {$D(1, 2)$};
+							\node[main node] (8) [right of=7] {$D(1, 3)$};
+							\node[main node] (9) [below of=5] {$D(2, 0)$};
+							\node[main node] (10) [right of=9] {$D(2, 1)$};
+							\node[main node] (11) [right of=10] {$D(2, 2)$};
+							\node[main node] (12) [right of=11] {$D(2, 3)$};
+							\node[main node] (13) [below of=9] {$D(3, 0)$};
+							\node[main node] (14) [right of=13] {$D(3, 1)$};
+							\node[main node] (15) [right of=14] {$D(3, 2)$};
+							\node[main node] (16) [right of=15] {$D(3, 3)$};
+	
+							\path[every node/.style={font=\sffamily\small}]
+							(1) edge (2)
+							edge (5)
+							edge (6)
+							(2) edge (3)
+							edge (5)
+							edge (6) 
+							edge (7)
+							(3) edge (4)
+							edge (6)
+							edge (7)
+							edge (8)
+							(4) edge (7)
+							edge (8)
+							(5) edge (6)
+							edge (9)
+							edge (10)
+							(6) edge (7)
+							edge (9)
+							edge (10) 
+							edge (11)
+							(7) edge (8)
+							edge (10)
+							edge (11)
+							edge (12)
+							(8) edge (11)
+							edge (12)
+							(9) edge (10)
+							edge (13)
+							edge (14)
+							(10) edge (11)
+							edge (13)
+							edge (14) 
+							edge (15)
+							(11) edge (12)
+							edge (14)
+							edge (15)
+							edge (16)
+							(12) edge (15)
+							edge (16)
+							(13) edge (14)
+							(14) edge (15)
+							(15) edge (16);
+						\end{tikzpicture}
+					\end{center}
+				\end{soln}
+
+				\newpage
+			\item In a variant of the mesh network, there is an edge joining $D(i, j)$ to any of the vertices $D( (i\pm 1) \mod m, j)$ and $D(i, (j\pm 1)\mod m).$ Draw this variant of the mesh network for $n=16.$
+				\begin{soln}
+					Here, $m=4.$ This variant mesh network is \begin{center}
+						\begin{tikzpicture}[shorten >=1pt, auto, node distance=3cm, thick, main node/.style={circle, draw, font=\sffamily\Large\bfseries}]
+							\node[main node] (1) {$D(0, 0)$};
+							\node[main node] (2) [right of=1] {$D(0, 1)$};
+							\node[main node] (3) [right of=2] {$D(0, 2)$};
+							\node[main node] (4) [right of=3] {$D(0, 3)$};
+							\node[main node] (5) [below of=1] {$D(1, 0)$};
+							\node[main node] (6) [right of=5] {$D(1, 1)$};
+							\node[main node] (7) [right of=6] {$D(1, 2)$};
+							\node[main node] (8) [right of=7] {$D(1, 3)$};
+							\node[main node] (9) [below of=5] {$D(2, 0)$};
+							\node[main node] (10) [right of=9] {$D(2, 1)$};
+							\node[main node] (11) [right of=10] {$D(2, 2)$};
+							\node[main node] (12) [right of=11] {$D(2, 3)$};
+							\node[main node] (13) [below of=9] {$D(3, 0)$};
+							\node[main node] (14) [right of=13] {$D(3, 1)$};
+							\node[main node] (15) [right of=14] {$D(3, 2)$};
+							\node[main node] (16) [right of=15] {$D(3, 3)$};
+	
+							\path[every node/.style={font=\sffamily\small}]
+							(1) edge (2)
+							edge (5)
+							edge (6)
+							edge [bend left] (4)
+							edge [bend right] (13)
+							(2) edge (3)
+							edge (5)
+							edge (6) 
+							edge (7)
+							edge [bend left] (14)
+							(3) edge (4)
+							edge (6)
+							edge (7)
+							edge (8)
+							edge [bend left] (15)
+							(4) edge (7)
+							edge (8)
+							edge [bend left] (16)
+							(5) edge (6)
+							edge (9)
+							edge (10)
+							edge [bend right] (8)
+							(6) edge (7)
+							edge (9)
+							edge (10) 
+							edge (11)
+							(7) edge (8)
+							edge (10)
+							edge (11)
+							edge (12)
+							(8) edge (11)
+							edge (12)
+							(9) edge (10)
+							edge (13)
+							edge (14)
+							edge [bend right] (12)
+							(10) edge (11)
+							edge (13)
+							edge (14) 
+							edge (15)
+							(11) edge (12)
+							edge (14)
+							edge (15)
+							edge (16)
+							(12) edge (15)
+							edge (16)
+							(13) edge (14)
+							edge [bend right] (16)
+							(14) edge (15)
+							(15) edge (16);
+						\end{tikzpicture}
+					\end{center}
+				\end{soln}
+
+			\item Are there any advantages of a mesh network (either type) over the topologies discussed in part (a)? Explain.
+				\begin{answer*}
+					In the variant mesh network, the maximum distance between any two nodes is 2 in the case $n=16,$ which is way better than the ring and star topologies for $n=16,$ and also better than the hybrid topology for $n=16,$ which is also worse than the regular mesh network.
+				\end{answer*}
+
+		\end{enumerate}
+
+\end{itemize}
+
+\end{document}
