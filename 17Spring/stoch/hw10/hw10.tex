@@ -1,0 +1,140 @@
+\documentclass{article}
+\usepackage[sexy, hdr, fancy]{evan}
+\setlength{\droptitle}{-4em}
+
+\lhead{Homework 10}
+\rhead{Introduction to Stochastic Processes}
+\lfoot{}
+\cfoot{\thepage}
+
+\newcommand{\var}{\mathrm{Var}}
+\newcommand{\cov}{\mathrm{Cov}}
+
+\begin{document}
+\title{Homework 10}
+\maketitle
+\thispagestyle{fancy}
+
+\section*{Chapter 10: Brownian Motion and Stationary Processes}
+
+\begin{itemize}
+	\item[4.] Show that
+		\begin{align*}
+			P[T_a<\infty] &= 1 \\
+			E[T_a]&= \infty, a\neq 0
+		\end{align*}
+		\begin{proof}
+			By result 10.6 in the book, we have
+			\begin{align*}
+				P[T_a<\infty] &= \lim_{t\to\infty} P[T_a\le t] = \lim_{t\to \infty} \frac{2}{\sqrt{2\pi}} \int_{\abs{a}/\sqrt{t}}^\infty e^{-y^2/2}\, dy \\
+				&= \frac{2}{\sqrt{2\pi}}\int_0^\infty e^{-y^2/2}\, dy \\
+				&= 2\int_0^\infty \frac{1}{\sqrt{2\pi}} e^{-y^2/2}\, dy = 2\cdot \frac{1}{2} = 1
+			\end{align*}
+			Using the tail probability formulation for expectation, we have
+			\begin{align*}
+				E[T_a] &= \int_0^\infty P[T_a>t]\, dt = \int_0^\infty (1-P[T_a\le t])\, dt \\
+				&= \int_0^\infty \left( 1-\frac{2}{\sqrt{2\pi}}\int_{\abs{a}/\sqrt{t}}^\infty e^{-y^2/2}\, dy \right)\, dt
+			\end{align*}
+			and somehow this integral diverges, but I don't know how to show it.
+		\end{proof}
+
+	\item[5.] What is $P[T_1<T_{-1}<T_2]?$
+		\begin{soln}
+			This is the probability we hit 1 before -1 before 2. This is
+			\begin{align*}
+				P[T_1<T_{-1}, T_{-1}<T_2] &= P[T_1<T_{-1}] \cdot P[T_{-1}<T_2\mid T_1<T_{-1}] \\
+				&= \frac{1}{2} \cdot P[\text{down 2 before up 1}] \\
+				&= \frac{1}{2}\cdot \frac{1}{3} = \frac{1}{6}
+			\end{align*}
+		\end{soln}
+
+		\newpage
+	\item[17.] Show that standard Brownian motion is a Martingale.
+		\begin{proof}
+			We have
+			\begin{align*}
+				E[\abs{B(t)}] &= \int_{-\infty}^\infty \abs{x}\cdot \frac{1}{\sqrt{2\pi}} e^{-x^2/2}\, dx \\
+				&= \int_{-\infty}^0 (-x) \cdot \frac{1}{\sqrt{2\pi}}e^{-x^2/2}\, dx + \int_0^\infty x\cdot \frac{1}{\sqrt{2\pi}} e^{-x^2/2}\, dx \\
+				(u = x^2/2\implies du=x\, dx) &= \frac{1}{\sqrt{2\pi}}\left(\int_{-\infty}^0 -e^{-u}\, du + \int_0^\infty e^{-u}\, du\right) \\
+				&= \frac{1}{\sqrt{2\pi}} \left[(e^{-u})\big\vert^0_{-\infty} + (-e^{-u})\big\vert^\infty_0\right] \\
+				&= \frac{1}{\sqrt{2\pi}}(1 + 1) = \sqrt{\frac{2}{\pi}} < \infty
+			\end{align*}
+			and for $s<t,$
+			\begin{align*}
+				E[B(t)\mid B(u), 0\le u\le s] &= E[B(t)-B(s)\mid B(u), 0\le u\le s] + E[B(s)\mid B(u), 0\le u\le s] \\
+				&= E[B(t-s)] + E[B(s)\mid B(u), 0\le u\le s] \\
+				&= 0 + B(s) = B(s)
+			\end{align*}
+			by independent and stationary increments. Thus standard Brownian motion is a Martingale.
+		\end{proof}
+
+	\item[18.] Show that $\left\{ Y(t), t\ge 0 \right\}$ is a Martingale when $Y(t)=B^2(t)-t.$ What is $E[Y(t)]?$ [Hint: First compute $E[Y(t)\mid B(u), 0\le u\le s].$]
+		\begin{proof}
+			We have
+			\begin{align*}
+				B(t)&\sim N(0, t) = \sqrt{t}Z \\
+				\implies B^2(t) &\sim tZ^2 \\
+				\implies E\left[ \abs{B^2(t)-t} \right] &= E[\abs{tZ^2-t}] = t \cdot E\left[ \abs{Z^2-1} \right]\\
+				&= t\left( E[Z^2-1, Z\ge 1] + E[1-Z^2, 0\le Z < 1] \right)
+			\end{align*}
+			This is obviously bounded because each of these expectations is bounded.
+
+			For $s<t,$ the conditional distribution of $B(t)$ given $B(s)$ is a normal random variable with mean $B(s)$ and variance $t-s.$ Then using $E[X^2]=\var(X) + (E[X])^2,$ we have
+			\begin{align*}
+				E[B^2(t)\mid B(u), 0\le u\le s] &= (t-s) + B^2(s) \\
+				\implies  E[B^2(t) - t\mid B(u), 0\le u\le s] &= (t-s)+B^2(s)-t = B^2(s)-s
+			\end{align*}
+			Thus $Y(t)$ is a Martingale. Then
+			\begin{align*}
+				E[Y(t)] &= E[tZ^2-t] = t(E[Z^2] - 1) = t(1-1)=0
+			\end{align*}
+		\end{proof}
+
+	\item[20.] Let $T=\min\left\{ t:B(t)=2-4t \right\}.$ Use the Martingale stopping theorem to find $E[T].$
+		\begin{soln}
+			By the Martingale stopping theorem, we have
+			\begin{align*}
+				E[B(T)] &= E[B(0)] = 0
+			\end{align*}
+			Since $B(T) = 2-4T,$ this is
+			\begin{align*}
+				E[2-4T] &= 0 \\
+				\implies 2- 4E[T] &= 0 \\
+				\implies E[T] &= \frac{1}{2}
+			\end{align*}
+		\end{soln}
+
+	\item[28.] Compute the mean and variance of
+		\begin{enumerate}[(a)]
+			\item $\int_0^1 t\, d B(t)$
+				\begin{soln}
+					The mean is 0 using the result from the book. We have
+					\begin{align*}
+						\var\left( \int_0^1 t\, dB(t) \right) &= \int_0^1 t^2\, dt = \frac{1}{3} t^3\bigg\vert_0^1 = \frac{1}{3}
+					\end{align*}
+				\end{soln}
+
+			\item $\int_0^1 t^2\, dB(t)$
+				\begin{soln}
+					The mean is 0 using the result from the book. We have
+					\begin{align*}
+						\var\left( \int_0^1 t^2\, dB(t) \right) &= \int_0^1 (t^2)^2\, dt = \frac{1}{5} t^5\bigg\vert_0^1 = \frac{1}{5}
+					\end{align*}
+				\end{soln}
+				
+		\end{enumerate}
+
+	\item[31.] For $s<t,$ argue that $B(s)-\frac{s}{t} B(t)$ and $B(t)$ are independent.
+		\begin{soln}
+			We compute the covariance:
+			\begin{align*}
+				\cov\left( B(s)-\frac{s}{t} B(t), B(t) \right) &= \cov(B(s), B(t)) - \cov\left( \frac{s}{t} B(t), B(t) \right) \\
+				&= E[B(s) B(t)] - E[B(s)]E[B(t)] - \frac{s}{t} \var(B(t)) \\
+				&= s\wedge t - \frac{s}{t}\cdot t = s - s = 0
+			\end{align*}
+			Thus these are independent.
+		\end{soln}
+	
+\end{itemize}
+
+\end{document}
