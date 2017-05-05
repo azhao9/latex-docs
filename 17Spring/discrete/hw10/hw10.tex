@@ -1,0 +1,378 @@
+\documentclass{article} 
+\usepackage[sexy, hdr, fancy]{evan}
+\usepackage{tikz}
+\usetikzlibrary{arrows}
+\setlength{\droptitle}{-4em}
+
+\lhead{Homework 10}
+\rhead{Discrete Math (Section 05)}
+\lfoot{}
+\cfoot{\thepage}
+
+\newcommand{\var}{\mathrm{Var}}
+\newcommand{\cov}{\mathrm{Cov}}
+
+\begin{document}
+\title{Homework 10}
+\maketitle
+\thispagestyle{fancy}
+
+\begin{itemize}
+	\item[50.7] Let $T$ be a tree with at least two vertices and let $v\in V(T).$ If $T-v$ is a tree, then $v$ is a leaf.
+		\begin{proof}
+			Suppose $d(v)\neq 1.$ Then it is at least 2, and since $T$ is a tree, every edge from $v$ is a cut edge. Suppose we have a path $u\to v\to w.$ Then since $T-v$ is a tree, it must be connected, but this is impossible since $(u, v)$ and $(v, w)$ are cut edges. Thus, $d(v)=1$ so $v$ is a leaf.
+		\end{proof}
+
+	\item[50.11] 
+		\begin{enumerate}[(a)]
+			\item First prove, using strong induction and the fact that every edge of a tree is a cut edge, that a tree with $n$ vertices has exactly $n-1$ edges.
+				\begin{proof}
+					We proceed by strong induction. In the case $n=1,$ there is obviously $1-1=0$ edges. Suppose a tree with $n$ vertices has exactly $n-1$ edges for $n=1, \cdots, k.$ Let $T$ be a tree with $n=k+1$ vertices, and let $v$ be a leaf of $T.$ Let $T'=T-v$ so $T'$ is a tree on $k$ vertices, with $k-1$ edges. Since $v$ was a leaf, it had degree 1, so $T$ must have had $(k-1)+1=(k+1)-1$ edges, so the claim is proved by induction.
+				\end{proof}
+
+			\item Use (a) to prove that the average degree of a vertex in a tree is less than 2.
+				\begin{proof}
+					Suppose a tree has $n$ vertices, and thus $n-1$ edges. Then 
+					\begin{align*}
+						\sum_{v\in V}^{}d(v) &= 2(\# E) = 2(n-1) \\
+						\implies \frac{1}{n} \sum_{v\in V}^{} d(v) &= 2\cdot \frac{n-1}{n} < 2
+					\end{align*}
+					where the LHS is the average degree of a vertex.
+				\end{proof}
+
+			\item Use (b) to prove that every tree (with at least two vertices) has a leaf.
+				\begin{proof}
+					If every vertex had degree at least 2, then the average degree of a vertex would be at least 2. However, from (b), we know that the average degree is strictly less than 2, which is a contradiction. Thus, there must exist a vertex of degree 1, which is a leaf.
+				\end{proof}
+
+		\end{enumerate}
+
+	\item[50.16] Let $G$ be a graph. A cycle of $G$ that contains all the vertices in $G$ is called a Hamiltonian cycle.
+		\begin{enumerate}[(a)]
+			\item Show that if $n\ge 5,$ then $\overline{C_n}$ has a Hamiltonian cycle.
+				\begin{proof}
+					Label the vertices in order as $v_1, \cdots, v_n.$ If $n$ is odd, then there is an obvious Hamiltonian cycle by incrementing vertex index by 2 each time modulo $n.$ Every vertex is exhausted because $\gcd(n, 2)=1.$
+
+					If $n$ is even, then consider the cycle on $n-1$ vertices, as well as the Hamiltonian cycle of the complement obtained as above. Adjoin the vertex $v_n$ such that it lies between $v_1$ and $v_2$ in the cycle. Then replace the edge in the Hamiltonian cycle between $v_3$ and $v_5$ with the path $v_3\to v_n\to v_5.$ Then this is a Hamiltonian cycle, and we are on the complement of $C_n$ now. Thus, $\overline{C_n}$ has a Hamiltonian cycle for all $n\ge 5.$
+				\end{proof}
+
+				\newpage
+			\item Prove that the graph in the figure does not have a Hamiltonian cycle.
+				\begin{center}
+					\begin{tikzpicture}[shorten >=1pt, auto, node distance=1cm, thick, main node/.style={circle, draw, font=\sffamily\Large\bfseries}]
+						\node[main node] (1) {};
+						\node[main node] (2) [right of=1] {};
+						\node[main node] (3) [right of=2]{};
+						\node[main node] (4) [right of=3]{};
+						\node[main node] (5) [right of=4]{};
+						\node[main node] (6) [below of=1]{};
+						\node[main node] (7) [right of=6]{};
+						\node[main node] (8) [right of=7]{};
+						\node[main node] (9) [right of=8]{};
+						\node[main node] (10) [right of=9] {};
+						\node[main node] (11) [below of=6]{};
+						\node[main node] (12) [right of=11] {};
+						\node[main node] (13) [right of=12]{};
+						\node[main node] (14) [right of=13]{};
+						\node[main node] (15) [right of=14]{};
+						\node[main node] (16) [below of=11]{};
+						\node[main node] (17) [right of=16]{};
+						\node[main node] (18) [right of=17]{};
+						\node[main node] (19) [right of=18]{};
+						\node[main node] (20) [right of=19]{};
+						\node[main node] (21) [below of=16]{};
+						\node[main node] (22) [right of=21]{};
+						\node[main node] (23) [right of=22]{};
+						\node[main node] (24) [right of=23]{};
+						\node[main node] (25) [right of=24]{};
+
+						\path[every node/.style={font=\sffamily\small}]
+						(7) edge (2) edge (6) edge (8) edge (12)
+						(9) edge (8) edge (10) edge (4) edge (14)
+						(17) edge (12) edge (16) edge (18) edge (22)
+						(19) edge (14) edge (18) edge (20) edge (24)
+						(13) edge (8) edge (12) edge (14) edge (18)
+						(3) edge (2) edge (4) edge (8)
+						(11) edge (6) edge (12) edge (16)
+						(15) edge (10) edge (14) edge (20)
+						(23) edge (18) edge (22) edge (24)
+						(1) edge (2) edge (6)
+						(5) edge (4) edge (10)
+						(21) edge (16) edge (22)
+						(25) edge (20) edge (24);
+					\end{tikzpicture}
+				\end{center}
+				\begin{proof}
+					If there did exist a Hamiltonian cycle, then it would consist of 25 vertices and 25 edges. Since the graph itself has 28 edges, we would need to delete 3 edges to create a cycle, that is, every vertex would have degree 2. However, this is clearly impossible, so there is no Hamiltonian cycle.
+				\end{proof}
+
+		\end{enumerate}
+
+	\item[50.18] Consider the following algorithm. 
+		\begin{itemize}
+				\ii Input: A connected graph $G.$
+				\ii Output: A spanning tree of $G.$
+		\end{itemize}
+		\begin{enumerate}
+				\ii Let $T$ be a copy of $G.$
+				\ii Let $e_1, e_2, \cdots, e_m$ be the edges of $G.$
+				\ii For $k=1, 2, \cdots, m,$ do: If edge $e_k$ is not a cut edge of $T,$ then delete $e_k$ from $T.$
+				\ii Output $T.$
+		\end{enumerate}
+		Prove that this algorithm is correct. 
+		\begin{proof}
+			Since $G$ is connected, if we are deleting edges that are not cut edges, the result at the end of the algorithm is a connected graph. Then since we never deleted any vertices, the result is spanning of $G.$ At termination, all edges that are not cut edges are deleted, so everything remaining is a cut edge, and thus the result is a tree. Thus, $T$ is a spanning tree of $G,$ as desired.
+		\end{proof}
+
+	\item[52.4] Let $a, b$ be integers with $a, b\ge 3.$ The torus graph $T_{a, b}$ has vertex set $V=\Set{(x, y)}{0\le x<a, 0\le y<b}.$ Every vertex $(x, y)$ in $T_{a, b}$ has exactly four neighbors: $(x+1, y), (x-1, y), (x, y+1),$ and $(x, y-1)$ where arithmetic in the first position is modulo $a$ and arithmetic in the second position is modulo $b.$ Determine $\chi(T_{a, b}).$
+		\begin{soln}
+			Suppose $a$ represents the number of rows, and $b$ represents the number of columns in the graph, if we were to enumerate the vertices that way.
+
+			If $a$ and $b$ are both even, then $\chi(T_{a, b})=2$ since there are no odd-length cycles. If $a$ is even and $b$ is odd, then consider the following construction. Begin with a coloring by alternating two colors.
+			\begin{center}
+				\begin{tikzpicture}[shorten >=1pt, auto, node distance=1cm, thick, main node/.style={circle, draw, font=\sffamily\Large\bfseries}]
+					\node[main node] (1) {1};
+					\node[main node] (2) [right of=1] {2};
+					\node[main node] (3) [right of=2] {1};
+					\node[main node] (4) [right of=3] {2};
+					\node[main node] (5) [right of=4] {1};
+					\node[main node] (6) [below of=1] {2};
+					\node[main node] (7) [right of=6] {1};
+					\node[main node] (8) [right of=7] {2};
+					\node[main node] (9) [right of=8] {1};
+					\node[main node] (10) [right of=9] {2};
+					\node[main node] (11) [below of=6] {1};
+					\node[main node] (12) [right of=11] {2};
+					\node[main node] (13) [right of=12] {1};
+					\node[main node] (14) [right of=13] {2};
+					\node[main node] (15) [right of=14] {1};
+					\node[main node] (16) [below of=11] {2};
+					\node[main node] (17) [right of=16] {1};
+					\node[main node] (18) [right of=17] {2};
+					\node[main node] (19) [right of=18] {1};
+					\node[main node] (20) [right of=19] {2};
+				\end{tikzpicture}
+			\end{center}
+			Then since there are adjacencies between the first and last columns, we must correct this coloring by introducing a new color in the first and last columns that eliminates conflicts.
+			\begin{center}
+				\begin{tikzpicture}[shorten >=1pt, auto, node distance=1cm, thick, main node/.style={circle, draw, font=\sffamily\Large\bfseries}]
+					\node[main node] (1) {1};
+					\node[main node] (2) [right of=1] {2};
+					\node[main node] (3) [right of=2] {1};
+					\node[main node] (4) [right of=3] {2};
+					\node[main node] (5) [right of=4] {3};
+					\node[main node] (6) [below of=1] {3};
+					\node[main node] (7) [right of=6] {1};
+					\node[main node] (8) [right of=7] {2};
+					\node[main node] (9) [right of=8] {1};
+					\node[main node] (10) [right of=9] {2};
+					\node[main node] (11) [below of=6] {1};
+					\node[main node] (12) [right of=11] {2};
+					\node[main node] (13) [right of=12] {1};
+					\node[main node] (14) [right of=13] {2};
+					\node[main node] (15) [right of=14] {3};
+					\node[main node] (16) [below of=11] {3};
+					\node[main node] (17) [right of=16] {1};
+					\node[main node] (18) [right of=17] {2};
+					\node[main node] (19) [right of=18] {1};
+					\node[main node] (20) [right of=19] {2};
+				\end{tikzpicture}
+			\end{center}
+			This alternating and replacing construction can be extended to any values $a$ and $b$ with $a$ even and $b$ odd, and similarly for when $a$ is odd and $b$ is even, so $\chi(T_{a, b})=3$ in these cases. 
+
+			If both $a$ and $b$ are odd, then $\chi(T_{a, b})=3$ as well, by a similar construction.
+		\end{soln}
+
+	\item[52.8] Let $G$ be a graph with $n$ vertices. Prove that $\chi(G)\ge \omega(G)$ and $\chi(G)\ge n/\alpha(G).$
+		\begin{proof}
+			Since $\omega(G)$ is the size of the largest clique, these vertices are all adjacent to each other. Thus, to color this clique and by extension the entire graph, we need at least $\omega(G)$ colors.
+
+			Suppose we needed fewer than $n/\alpha(G)$ colors to color $G.$ Then, if we consider all vertices of the same color as a set, one of these sets must have more than $\alpha(G)$ vertices, since
+			\begin{align*}
+				\frac{n}{\frac{n}{\alpha(G)}-\varepsilon} > \alpha(G)
+			\end{align*}
+			is the average number of vertices in a color set, which is greater than $\alpha(G).$ However, since all of the vertices in this set are the same color, none can be adjacent, and thus it is an independent set. However, $\alpha(G)$ was the size of the largest independent set in $G,$ which is a contradiction. Thus, we need at least $n/\alpha(G)$ colors.
+		\end{proof}
+
+	\item[52.13] Let $n$ be a positive integer. The $n$-cube is a graph, denoted $Q_n,$ whose vertices are the $2^n$ possible length-$n$ lists of 0s and 1s. Two vertices of $Q_n$ are adjacent if their lists differ in exactly one position. 
+		\begin{enumerate}[(a)]
+			\item Show that $Q_2 $ is a four-cycle.
+				\begin{proof}
+					$Q_2$ is shown below, and is clearly a four-cycle.
+					\begin{center}
+						\begin{tikzpicture}[shorten >=1pt, auto, node distance=3cm, thick, main node/.style={circle, draw, font=\sffamily\Large\bfseries}]
+							\node[main node] (1) {00};
+							\node[main node] (2) [right of=1] {01};
+							\node[main node] (3) [below of=1] {10};
+							\node[main node] (4) [right of=3] {11};
+
+							\path
+							(1) edge (2) edge (3)
+							(2) edge (4)
+							(3) edge (4);
+						\end{tikzpicture}
+					\end{center}
+				\end{proof}
+
+				\newpage
+			\item Draw a picture of $Q_3$ and explain why this graph is called a cube.
+				\begin{soln}
+					$Q_3$ is shown below. It is called a cube because it resembles a cube.
+					\begin{center}
+						\begin{tikzpicture}[shorten >=1pt, auto, node distance=4cm, thick, main node/.style={circle, draw, font=\sffamily\Large\bfseries}]
+							\node[main node] (1) {000};
+							\node[main node] (2) [right of=1] {001};
+							\node[main node] (3) [above right of=1] {010};
+							\node[main node] (4) [below of=1] {100};
+							\node[main node] (5) [right of=3] {011};
+							\node[main node] (6) [below of=2] {101};
+							\node[main node] (7) [below of=3] {110};
+							\node[main node] (8) [below of=5] {111};
+
+							\path
+							(1) edge (2) edge (3) edge (4)
+							(8) edge (5) edge (6) edge (7)
+							(3) edge (5) edge (7)
+							(6) edge (4) edge (2)
+							(4) edge (7)
+							(2) edge (5);
+						\end{tikzpicture}
+					\end{center}
+				\end{soln}
+
+			\item How many edges does $Q_n$ have?
+				\begin{soln}
+					Every vertex has $n$ bits, so it is connected to $n$ other vertices, since there are $n$ positions for a single bit change. Since there are $2^n$ vertices, the total number of edges is
+					\begin{align*}
+						\frac{1}{2} \sum_{v\in V}^{}d(v) = \frac{1}{2} \left( 2^n\cdot n \right) = n2^{n-1}
+					\end{align*}
+				\end{soln}
+
+			\item Prove that $Q_n$ is bipartite.
+				\begin{proof}
+					Suppose there existed an odd-length cycle $v_1\to \cdots \to v_n\to v_1.$ Then along each adjacency in this cycle, there is a single bit change, so there is an odd number of bit changes. However, this is impossible because the number of bit changes must be even in order to return to $v_1.$ This is a contradiction, so there are no odd-length cycles, and thus $Q_n$ is bipartite.
+				\end{proof}
+
+			\item Prove that $K_{2, 3}$ is not a subgraph of $Q_n$ for any $n.$
+				\begin{proof}
+					Suppose $K_{2, 3}$ is a subgraph, and let $v_1, v_2$ and $u_1, u_2, u_3$ be the two sets of vertices in $K_{2, 3}.$ Since $u_1, u_2, u_3$ differ from $v_1$ in exactly one place each and they are distinct, $n\ge 3,$ and since we can ignore the bits that are not changed, WLOG $n=3.$ Then encode $v_1=a_1a_2a_3,$ and $u_1=b_1a_2a_3, u_2=a_1b_2a_3, u_3=a_1a_2b_3,$ where $a_i$'s represent the original values, and $b_i$'s represent a change in that position from the original $v_1$ (no matter what $v_1$ was originally). Then since $v_2$ differs from $b_1a_2a_3$ and $a_1b_2a_3$ in exactly one position each, it must be exactly $b_1b_2a_3$ since the only other option is $a_1a_2a_3$ but $v_2\neq v_1.$ However, then $v_2$ is not adjacent to $u_3$ since they differ in more than one position, and thus $K_{2, 3}$ is not a subgraph.
+				\end{proof}
+
+		\end{enumerate}
+
+		\newpage
+	\item[52.18] A proper $k$-edge coloring of a graph $G$ is a function $f:E(G)\to \left\{ 1, 2, \cdots, k \right\}$ with the property that if $e$ and $e'$ are distinct edges that have a common end point, then $f(e)\neq f(e').$ The edge chromatic number of $G,$ denoted $\chi'(G),$ is the least $k$ such that $G$ has a proper $k$-edge coloring.
+		\begin{enumerate}[(a)]
+			\item Show that the edge chromatic number of the graph in the figure is 4.
+				\begin{center}
+					\begin{tikzpicture}[shorten >=1pt, auto, node distance=1cm, thick, main node/.style={circle, draw, font=\sffamily\Large\bfseries}]
+						\node[main node] (1) {};
+						\node[main node] (2) [right of=1] {};
+						\node[main node] (3) [right of=2]{};
+						\node[main node] (4) [right of=3]{};
+						\node[main node] (5) [right of=4]{};
+						\node[main node] (6) [below of=1]{};
+						\node[main node] (7) [right of=6]{};
+						\node[main node] (8) [right of=7]{};
+						\node[main node] (9) [right of=8]{};
+						\node[main node] (10) [right of=9] {};
+						\node[main node] (11) [below of=6]{};
+						\node[main node] (12) [right of=11] {};
+						\node[main node] (13) [right of=12]{};
+						\node[main node] (14) [right of=13]{};
+						\node[main node] (15) [right of=14]{};
+						\node[main node] (16) [below of=11]{};
+						\node[main node] (17) [right of=16]{};
+						\node[main node] (18) [right of=17]{};
+						\node[main node] (19) [right of=18]{};
+						\node[main node] (20) [right of=19]{};
+						\node[main node] (21) [below of=16]{};
+						\node[main node] (22) [right of=21]{};
+						\node[main node] (23) [right of=22]{};
+						\node[main node] (24) [right of=23]{};
+						\node[main node] (25) [right of=24]{};
+
+						\path[every node/.style={font=\sffamily\small}]
+						(7) edge (2) edge (6) edge (8) edge (12)
+						(9) edge (8) edge (10) edge (4) edge (14)
+						(17) edge (12) edge (16) edge (18) edge (22)
+						(19) edge (14) edge (18) edge (20) edge (24)
+						(13) edge (8) edge (12) edge (14) edge (18)
+						(3) edge (2) edge (4) edge (8)
+						(11) edge (6) edge (12) edge (16)
+						(15) edge (10) edge (14) edge (20)
+						(23) edge (18) edge (22) edge (24)
+						(1) edge (2) edge (6)
+						(5) edge (4) edge (10)
+						(21) edge (16) edge (22)
+						(25) edge (20) edge (24);
+					\end{tikzpicture}
+				\end{center}
+				\begin{proof}
+					The maximum degree of any vertex is 4. If we required fewer than 4 colors, then some edges coming out of a degree 4 vertex would have the same color, which is invalid. A 4-edge coloring is shown:
+					\begin{center}
+						\begin{tikzpicture}[shorten >=1pt, auto, node distance=1cm, thick, main node/.style={circle, draw, font=\sffamily\Large\bfseries}]
+							\node[main node] (1) {};
+							\node[main node] (2) [right of=1] {};
+							\node[main node] (3) [right of=2]{};
+							\node[main node] (4) [right of=3]{};
+							\node[main node] (5) [right of=4]{};
+							\node[main node] (6) [below of=1]{};
+							\node[main node] (7) [right of=6]{};
+							\node[main node] (8) [right of=7]{};
+							\node[main node] (9) [right of=8]{};
+							\node[main node] (10) [right of=9] {};
+							\node[main node] (11) [below of=6]{};
+							\node[main node] (12) [right of=11] {};
+							\node[main node] (13) [right of=12]{};
+							\node[main node] (14) [right of=13]{};
+							\node[main node] (15) [right of=14]{};
+							\node[main node] (16) [below of=11]{};
+							\node[main node] (17) [right of=16]{};
+							\node[main node] (18) [right of=17]{};
+							\node[main node] (19) [right of=18]{};
+							\node[main node] (20) [right of=19]{};
+							\node[main node] (21) [below of=16]{};
+							\node[main node] (22) [right of=21]{};
+							\node[main node] (23) [right of=22]{};
+							\node[main node] (24) [right of=23]{};
+							\node[main node] (25) [right of=24]{};
+
+							\path[every node/.style={font=\sffamily\small}]
+							(7) edge node {1} (2) edge node [above] {2} (6) edge node {3} (8) edge node [left] {4} (12)
+							(9) edge node [above] {1} (8) edge node {2} (10) edge node {3} (4) edge node [left] {4} (14)
+							(17) edge node {1} (12) edge node [above] {2} (16) edge node {3} (18) edge node [left] {4} (22)
+							(19) edge node {1} (14) edge node [above] {2} (18) edge node {3} (20) edge node [left] {4} (24)
+							(13) edge node {1} (8) edge node [above] {2} (12) edge node {3}(14) edge node [left] {4} (18)
+							(3) edge node [above] {3} (2) edge node {1} (4) edge node [left] {4}(8)
+							(11) edge node {4} (6) edge node {3} (12) edge node [left] {1} (16)
+							(15) edge node {4} (10) edge node [above] {2} (14) edge node [left] {1} (20)
+							(23) edge node {1} (18) edge node [above] {3} (22) edge node {2} (24)
+							(1) edge node {2} (2) edge node [left] {1} (6)
+							(5) edge node [above] {2} (4) edge node [left] {3} (10)
+							(21) edge node {4} (16) edge node {2} (22)
+							(25) edge node {4} (20) edge node [above] {3} (24);
+						\end{tikzpicture}
+					\end{center}
+
+				\end{proof}
+
+			\item Prove that if $T$ is a tree, then $\chi'(T)=\Delta(T).$
+				\begin{proof}
+					Clearly we can't have fewer that $\Delta(T)$ colors, otherwise the vertex with degree $\Delta(T)$ would have two edges of the same color coming from it. We proceed by induction on the number of vertices $n.$ If $n=1,$ then $\chi'(T)=0=\Delta(T).$ 
+
+					Suppose a tree $G$ with $k$ vertices has $\chi'(G)=\Delta(G).$ Then consider $T$ a tree with $k+1$ vertices, and let $v$ be a leaf of $T$ with parent $u.$ Now let $T'=T-v,$ so $T'$ is a tree with $k$ vertices. Thus, $T'$ can be colored with $\Delta(T')$ colors. Now, if $d_{T'}(u)=\Delta(T'),$ then $d_T(u)=1+\Delta(T') = \Delta(T),$ and we can take the coloring of $T'$ and simply color the edge $(u, v)$ with a new color to obtain a coloring of $T,$ which uses $\Delta(T)$ colors. 
+					
+					If $d_{T'}(u)< \Delta(T'),$ then $\Delta(T')=\Delta(T),$ and to color $T,$ we take the coloring of $T'$ and color the edge $(u, v)$ with one of the existing colors, since we won't violate the property on $u.$ In both cases, we use $\Delta(T)$ colors, so the claim is proven by induction.
+				\end{proof}
+
+			\item Give an example of a graph $G$ for which $\chi'(G)>\Delta(G).$
+				\begin{soln}
+					Consider the graph $K_3.$ Every vertex has degree 2, but $\chi'(K_3)=3.$
+				\end{soln}
+
+		\end{enumerate}
+
+\end{itemize}
+
+\end{document}
