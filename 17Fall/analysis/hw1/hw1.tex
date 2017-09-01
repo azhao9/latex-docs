@@ -1,0 +1,62 @@
+\documentclass{article}
+\usepackage[sexy, hdr, fancy]{evan}
+\setlength{\droptitle}{-4em}
+
+\lhead{Homework 1}
+\rhead{Honors Analysis I}
+\lfoot{}
+\cfoot{\thepage}
+
+\begin{document}
+\title{Homework 1}
+\maketitle
+\thispagestyle{fancy}
+
+\section*{Chapter 1: Calculus Review}
+
+\begin{itemize}
+	\item[3.] Let $A$ be a nonempty subset of $\RR$ that is bounded above. Prove that $s=\sup A$ if and only if
+		\begin{enumerate}[(i)]
+			\ii $s$ is an upper bound for $A$
+			\ii for every $\varepsilon>0,$ there is an $a\in A$ such that $a>s-\varepsilon.$
+		\end{enumerate}
+		State and prove the corresponding result for the infimum of a nonempty subset of $\RR$ that is bounded below.
+
+	\item[7.] If $a<b,$ then there is also an irrational $x\in \RR\setminus\QQ$ with $a<x<b.$ (Hint: Find an irrational of the form $p\sqrt{2}/q.$)
+
+	\item[15.] Show that a Cauchy sequence with a convergent subsequence actually converges.
+
+	\item[17.] Given real numbers $a$ and $b,$ establish the following formulas:
+		\begin{itemize}
+				\ii $\abs{a+b}\le \abs{a}+\abs{b}$
+				\ii $\abs{\abs{a}-\abs{b}}\le\abs{a-b}$
+				\ii $\max\left\{ a, b \right\} = \frac{1}{2}(a+b+\abs{a-b})$
+				\ii $\min\left\{ a, b \right\} = \frac{1}{2} (a+b-\abs{a-b})$
+		\end{itemize}
+
+	\item[37.] If $(E_n)$ is a sequence of subsets of a fixed set $S,$ we define
+		\begin{align*}
+			\limsup_{n\to\infty} E_n &=\bigcap_{n=1}^\infty\left( \bigcup_{k=n}^\infty E_k \right) \\
+			\liminf_{n\to\infty} E_n &= \bigcup_{n=1}^\infty\left( \bigcap_{k=n}^\infty E_k \right)
+		\end{align*}
+		Show that
+		\begin{itemize}
+			\item  $\displaystyle\liminf_{n\to\infty}E_n \subset \limsup_{n\to\infty} E_n$
+
+			\item $\displaystyle\liminf_{n\to\infty}(E_n^c) = \left( \limsup_{n\to\infty} E_n \right)^c$
+
+		\end{itemize}
+
+	\item[45.] Let $f:[a, b]\to\RR$ be continuous and suppose that $f(x)=0$ whenever $x$ is rational. Show that $f(x)=0$ for every $x$ in $[a, b].$
+
+	\item[46.] Let $f:\RR\to\RR$ be continuous.
+		\begin{enumerate}[(a)]
+			\item If $f(0)>0,$ show that $f(x)>0$ for all $x$ in some open interval $(-a, a).$
+
+			\item If $f(x)\ge 0$ for every rational $x,$ show that $f(x)\ge0$ for all real $x.$ Will this result hold with $\ge0$ replaced by $>0?$ Explain.
+				
+		\end{enumerate}
+		
+\end{itemize}
+
+\end{document}
