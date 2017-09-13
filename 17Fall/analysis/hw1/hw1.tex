@@ -17,22 +17,91 @@
 \begin{itemize}
 	\item[3.] Let $A$ be a nonempty subset of $\RR$ that is bounded above. Prove that $s=\sup A$ if and only if
 		\begin{enumerate}[(i)]
-			\ii $s$ is an upper bound for $A$
-			\ii for every $\varepsilon>0,$ there is an $a\in A$ such that $a>s-\varepsilon.$
+			\item $s$ is an upper bound for $A$
+			\item for every $\varepsilon>0,$ there is an $a\in A$ such that $a>s-\varepsilon.$
 		\end{enumerate}
 		State and prove the corresponding result for the infimum of a nonempty subset of $\RR$ that is bounded below.
+		\begin{proof}
+			$(\implies):$ By definition, (i) is true. Then suppose for some $\varepsilon,$ there is no $a\in A$ such that $a>s-\varepsilon.$ Thus, $s-\varepsilon$ is an upper bound since $a\le s-\varepsilon, \forall a\in A,$ but $s-\varepsilon<s,$ contradicting the minimality of $s.$ Thus, such an $a$ must exist.
 
-	\item[7.] If $a<b,$ then there is also an irrational $x\in \RR\setminus\QQ$ with $a<x<b.$ (Hint: Find an irrational of the form $p\sqrt{2}/q.$)
+			$(\impliedby):$ Suppose there exists an upper bound $b$ for $A$ such that $b<s.$ Then let $\varepsilon=s-b>0.$ Then $s-\varepsilon=s-(s-b)=b,$ but since $b$ is an upper bound for $A,$ there cannot exist $a\in A$ such that $a>b,$ contradicting (ii). Thus, $b$ does not exist, so $s\le b$ for all upper bounds $b,$ and thus $s=\sup A.$
+
+			The corresponding result for the infimum: Prove that $m=\inf A$ if and only if
+			\begin{enumerate}[(i)]
+				\item $m$ is a lower bound for $A$
+				\item for every $\varepsilon>0,$ there is an $a\in A$ such that $a<m+\varepsilon.$
+			\end{enumerate}
+			\begin{subproof}
+				$(\implies):$ By definition, (i) is true. Then suppose for some $\varepsilon,$ there is no $a\in A$ such that $a<m+\varepsilon.$ Thus $m+\varepsilon$ is a lower bound since $a\ge m+\varepsilon, \forall a\in A,$ but $m+\varepsilon>m,$ contradicting the maximality of $m.$ Thus, such a $a$ must exist.	
+
+				$(\impliedby):$ Suppose there exists a lower bound $b$ for $A$ such that $b>m.$ Then let $\varepsilon=b-m>0.$ Then $m+\varepsilon = m+(b-m) = b,$ but since $b$ is a lower bound for $A,$ there cannot exist $a\in A$ such that $a<b,$ contradicting (ii). Thus, $b$ does not exist, so $m\ge b$ for all lower bounds $b,$ and thus $m=\inf A.$
+			\end{subproof}
+		\end{proof}
+
+	\item[7.] If $a<b,$ then there is also an irrational $x\in \RR\setminus\QQ$ with $a<x<b.$
+		\begin{proof}
+			If $a<b$ then $a/\sqrt{2}<b/\sqrt{2},$ so by Theorem 1.3, there exists a rational $p/q\in\QQ$ such that $a/\sqrt{2}<p/q<b/\sqrt{2}.$ Then $a<\frac{p\sqrt{2}}{q}<b,$ and $\frac{p\sqrt{2}}{q}$ is irrational, as desired.
+		\end{proof}
 
 	\item[15.] Show that a Cauchy sequence with a convergent subsequence actually converges.
+		\begin{proof}
+			Suppose $(x_n)$ is a sequence with a convergent subsequence $(x_{k_j})\to y.$ Let $\varepsilon>0.$ Since $(x_n)$ is Cauchy, choose $N\in \NN$ such that $\abs{x_n-x_m}< \varepsilon/2$ for all $n, m\ge N.$ Next, since $(x_{k_j})\to y,$ choose $M$ such that $\abs{x_{k_j}-y}< \varepsilon/2$ for all $k_j\ge M.$ Take $K=\max\{N, M\},$ so that $\abs{x_n-x_{k_j}}<\varepsilon/2$ and $\abs{x_{k_j}-y}<\varepsilon/2$ for all $n, k_j\ge K.$ By the triangle inequality, we have
+			\begin{align*}
+				\abs{x_n-y}\le \abs{x_n-x_{k_j}}+\abs{x_{k_j}-y} < \frac{\varepsilon}{2} + \frac{\varepsilon}{2} = \varepsilon
+			\end{align*}
+			for all $n\ge K,$ as desired.
+		\end{proof}
 
 	\item[17.] Given real numbers $a$ and $b,$ establish the following formulas:
-		\begin{itemize}
-				\ii $\abs{a+b}\le \abs{a}+\abs{b}$
-				\ii $\abs{\abs{a}-\abs{b}}\le\abs{a-b}$
-				\ii $\max\left\{ a, b \right\} = \frac{1}{2}(a+b+\abs{a-b})$
-				\ii $\min\left\{ a, b \right\} = \frac{1}{2} (a+b-\abs{a-b})$
-		\end{itemize}
+		\begin{enumerate}[(a)]
+			\item $\abs{a+b}\le \abs{a}+\abs{b}$
+				\begin{proof}
+					Using the fact that
+					\begin{align*}
+						\abs{a}=\begin{cases}
+							a,\quad\quad a\ge 0 \\
+							-a,\quad a<0
+						\end{cases}
+					\end{align*}
+					we have
+					\begin{align*}
+						a, b\ge0&\implies\abs{a+b}=a+b\le a+b = \abs{a}+\abs{b}\\
+						a, b<0&\implies\abs{a+b}=-(a+b)\le -a-b = \abs{a}+\abs{b} \\
+						a\ge 0, b<0, a+b\ge0&\implies\abs{a+b}=a+b\le a-b = \abs{a}+\abs{b} \\
+						a\ge0, b<0, a+b<0&\implies\abs{a+b}=-(a+b)\le a - b = \abs{a} + \abs{b}
+					\end{align*}
+					The case where $a<0, b\ge 0$ is identical to the third and fourth inequalities.
+				\end{proof}
+
+			\item $\abs{\abs{a}-\abs{b}}\le\abs{a-b}$
+				\begin{proof}
+					If $a, b\ge 0,$ then
+					\begin{align*}
+						a, b\ge 0&\implies\abs{\abs{a}-\abs{b}}=\abs{a-b} \\
+						a, b<0&\implies\abs{\abs{a}-\abs{b}}=\abs{-a+b}=\abs{a-b} \\
+						a\ge 0, b<0&\implies\abs{\abs{a}-\abs{b}}=\abs{a+b}\le \abs{a}+\abs{b} = a - b = \abs{a-b} \\
+						a<0, b\ge 0&\implies\abs{\abs{a}-\abs{b}}=\abs{-a-b}=\abs{a+b}\le\abs{a}+\abs{b} = -a+b = \abs{a-b}
+					\end{align*}
+					where the third and fourth inequalities are from the result of (a).
+				\end{proof}
+
+			\item $\max\left\{ a, b \right\} = \frac{1}{2}(a+b+\abs{a-b})$
+				\begin{proof}
+					\begin{align*}
+						a\ge b&\implies\frac{1}{2}(a+b+\abs{a-b}) = \frac{1}{2}(a+b+(a-b)) = a = \max\left\{ a, b \right\} \\
+						a<b&\implies\frac{1}{2}(a+b+\abs{a-b}) = \frac{1}{2}(a+b-(a-b)) = b = \max\left\{ a, b \right\}
+					\end{align*}
+				\end{proof}
+
+			\item $\min\left\{ a, b \right\} = \frac{1}{2} (a+b-\abs{a-b})$
+				\begin{proof}
+					\begin{align*}
+						a\ge b&\implies\frac{1}{2}(a+b-\abs{a-b}) = \frac{1}{2}(a+b-(a-b)) = b = \min\left\{ a, b \right\} \\
+						a<b &\implies \frac{1}{2}(a+b-\abs{a-b}) = \frac{1}{2}(a+b+(a-b)) = a = \min\left\{ a, b \right\}
+					\end{align*}
+				\end{proof}
+
+		\end{enumerate}
 
 	\item[37.] If $(E_n)$ is a sequence of subsets of a fixed set $S,$ we define
 		\begin{align*}
@@ -40,20 +109,46 @@
 			\liminf_{n\to\infty} E_n &= \bigcup_{n=1}^\infty\left( \bigcap_{k=n}^\infty E_k \right)
 		\end{align*}
 		Show that
-		\begin{itemize}
-			\item  $\displaystyle\liminf_{n\to\infty}E_n \subset \limsup_{n\to\infty} E_n$
+		\begin{enumerate}[(a)]
+			\item $\displaystyle\liminf_{n\to\infty}E_n \subset \limsup_{n\to\infty} E_n$
+				\begin{proof}
+					If $x\in\liminf E_n$ then $x\in\bigcap_{k=N}^\infty E_k$ for some $N.$ It follows that $x\in E_k$ for all $k\ge N,$ so $x\in\bigcup_{k=n}^\infty E_k$ for all $n,$ and is thus in the intersection of these sets, so $x\in \limsup E_n,$ and thus $\liminf E_n\subset\limsup E_n.$
+				\end{proof}
 
 			\item $\displaystyle\liminf_{n\to\infty}(E_n^c) = \left( \limsup_{n\to\infty} E_n \right)^c$
+				\begin{proof}
+					Using the facts $A^c\cap B^c = (A\cup B)^c$ and $A^c\cup B^c = (A\cap B)^c,$ we have
+					\begin{align*}
+						\liminf(E_n^c)=\bigcup_{n=1}^\infty\left( \bigcap_{k=n}^\infty E_k^c \right) = \bigcup_{n=1}^\infty\left( \bigcup_{k=n}^\infty E_k \right)^c = \left[ \bigcap_{n=1}^\infty \left( \bigcup_{k=n}^\infty E_k \right) \right]^c = \left( \limsup E_n \right)^c
+					\end{align*}
+				\end{proof}
 
-		\end{itemize}
+		\end{enumerate}
 
 	\item[45.] Let $f:[a, b]\to\RR$ be continuous and suppose that $f(x)=0$ whenever $x$ is rational. Show that $f(x)=0$ for every $x$ in $[a, b].$
+		\begin{proof}
+			Suppose $f(x')=y\neq 0$ for some $x'\in[a, b].$ Then consider a sequence of rationals $(x_n)\to x'.$ Since $f$ is continuous, we must have $f(x_n)\to f(x'),$ but the sequence $(f(x_n))$ is entirely 0's since the $x_i$ are rational, whereas $f(x')\neq 0,$ contradiction. Thus, $x$ does not exist, so $f(x)\equiv0$ on $[a, b],$ as desired.
+		\end{proof}
 
 	\item[46.] Let $f:\RR\to\RR$ be continuous.
 		\begin{enumerate}[(a)]
 			\item If $f(0)>0,$ show that $f(x)>0$ for all $x$ in some open interval $(-a, a).$
+				\begin{proof}
+					Suppose $f(0)=y>0.$ Then take $\varepsilon=y/2.$ Now, since $f$ is continuous at 0, there must exist $a>0$ such that
+					\begin{align*}
+						\abs{x}<a &\implies \abs{f(x)-y}<\frac{y}{2} \\
+						x\in(-a, a) &\implies -\frac{y}{2}<f(x)-y<\frac{y}{2} \\
+						&\implies 0<\frac{y}{2} < f(x)
+					\end{align*}
+					Here, $f(x)>0$ for all $x\in(-a, a),$ as desired.
+				\end{proof}
 
 			\item If $f(x)\ge 0$ for every rational $x,$ show that $f(x)\ge0$ for all real $x.$ Will this result hold with $\ge0$ replaced by $>0?$ Explain.
+				\begin{proof}
+					Suppose $f(x')=y<0$ for some irrational $x'.$ Then consider a sequence of rationals $(x_n)\to x'.$ Since $f$ is continuous, we must have $f(x_n)\to f(x'),$ but the sequence $(f(x_n))$ is always non-negative since the $x_i$ are rational, whereas $f(x)<0,$ contradiction. Thus, $x'$ does not exist, so $f(x)\ge 0$ for all $x,$ as desired. 
+
+					If $\ge 0$ is replaced by $>0,$ the statement does not hold. Suppose $r$ is a fixed irrational number. Then let $f(x)=(r-x)^2,$ which is continuous on $\RR,$ and positive for all $x\in\QQ$ since $r$ is irrational. However, $f(r)=0,$ so the statement is false.
+				\end{proof}
 				
 		\end{enumerate}
 		

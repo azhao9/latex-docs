@@ -1,0 +1,52 @@
+\documentclass{article}
+\usepackage[sexy, hdr, fancy]{evan}
+\setlength{\droptitle}{-4em}
+
+\lhead{Homework 1}
+\rhead{Introduction to Financial Derivatives}
+\lfoot{}
+\cfoot{\thepage}
+
+\newcommand{\var}{\mathrm{Var}}
+\newcommand{\cov}{\mathrm{Cov}}
+
+\begin{document}
+\title{Homework 1}
+\maketitle
+\thispagestyle{fancy}
+
+\section*{Chapter 1: Introduction}
+
+\begin{itemize}
+	\item[17.] A company knows that it is due to receive a certain amount of a foreign currency in 4 months. What type of option contract is appropriate for hedging?
+
+	\item[18.] A US company expect to have to pay 1 million Canadian dollars in 6 months. Explain how the exchange rate risk can be hedged using (a) a forward contract and (b) an option.
+
+	\item[22.] Describe the profit from the following portfolio: a long forward contract on a asset and a long European put option on the asset with the same maturity as the forward contract and a strike price that is equal to the forward price of the asset at the time the portfolio is set up.
+
+	\item[23.] In the 1980s, Bankers Trust developed index currency option notes. These are bonds in which the amount received by the holder at maturity varies with a foreign exchange rate. One example was its trading with the Long Term Credit Bank of Japan. The ICON specified that if the yen-US dollar exchange rate, $S_T,$ is greater than 169 yen per dollar at maturity (in 1995), the holder of the bond receives \$1000. If it is less than 169 yen per dollar, the amount received by the holder of the bond is
+		\[1000-\max\left\{ 0, 1000\left( \frac{169}{S_T}-1 \right) \right\}\]
+		When the exchange rate is below 84.5, nothing is received by the holder at maturity. Show that this ICON is a combination of a regular bond and two options.
+
+	\item[39.] Suppose that in the situation of Table 1.1 a corporate treasurer said: "I will have \pounds1 million to sell in 6 months. If the exchange rate is less than 1.52, I want you to give me 1.52. If it is greater than 1.58, I will accept 1.58. If the exchange rate is between 1.52 and 1.58, I will sell the sterling for the exchange rate." How could you use options to satisfy the treasurer?
+
+	\item[40.] Describe how foreign currency options can be used for hedging in the situation considered in Section 1.7 so that (a) ImportCo is guaranteed that its exchange rate will be less than 1.5700 and (b) ExportCo is guaranteed that is exchange rate will be at least 1.5300. Use DerivaGem to calculate the cost of setting up the hedge in each case assuming that the exchange rate volatility is 12\%, interest rates in the US are 5\%, and the interests rates in Britain are 5.7\%. Assume that the current exchange rate is the average of the bid and offer in Table 1.1.
+		
+\end{itemize}
+
+\section*{Chapter 2: Mechanics of Futures Markets}
+
+\begin{itemize}
+	\item[15.] At the end of one day a clearing house member is long 100 contracts, and the settlement price is \$50000 per contract. The original margin is \$2000 per contract. On the following day the member becomes responsible for clearing an additional 20 long contracts, entered into at a price of \$51000 per contract. The settlement price at the end of this day is \$50200. How much does the member have to add to its margin account with the exchange clearing house?
+
+	\item[21.] What do you think would happen if an exchange started trading a contract in which the quality of the underlying asset was incompletely specified?
+
+	\item[22.] "When a futures contract is traded on the floor of the exchange, it may be the case that the open interest increases by one, stays the same, or decreases by one." Explain this statement.
+
+	\item[28.] Explain what is meant by open interest. Why does the open interest usually decline during the moth preceding the delivery month? On a particular day, there were 2000 trade in a particular futures contract. This means that there were 2000 buyers and 2000 sellers. Of the 2000 buyers, 1400 were closing out positions and 600 were entering into new positions. Of the 2000 sellers, 1200 were closing out positions and 800 were entering into new positions. What is the impact of the day's trading on open interest?
+
+	\item[31.] Suppose that there are no storage costs for crude oil and the interest rate for borrowing or lending is 5\% per annum. How could you make money if the June and December futures contracts for a particular year trade at \$80 and \$86, respectively?
+		
+\end{itemize}
+
+\end{document}

@@ -1,0 +1,67 @@
+\documentclass{article}
+\usepackage[sexy, hdr, fancy]{evan}
+\setlength{\droptitle}{-4em}
+
+\lhead{Homework 1}
+\rhead{Intro Algorithms}
+\lfoot{}
+\cfoot{\thepage}
+
+\begin{document}
+\title{Homework 1}
+\maketitle
+\thispagestyle{fancy}
+
+\section{Asymptotic Notation}
+
+For each of the following statements explain if it is true or false and prove your answer. The base of $\log$ is 2 unless otherwise specified, and $\ln$ is $\log_e.$
+
+\begin{enumerate}[(a)]
+	\item $100(n\log^4 n+\frac{1}{2}n^2)=\Theta(n^2)$
+
+	\item $2^n=\Omega(2^{(n/2)})$
+
+	\item $\log(n^{6\log n})=\Theta\left( \left( \log n^{1/3} \right)^2 \right)$
+
+	\item $3^n=\Theta\left( 3.1^n \right)$
+
+	\item $\sqrt{n+\cos n} = O(\sqrt{n})$
+
+	\item Let $f, g$ be positive functions. Then $f(n)+g(n)=O(\max\left\{ f(n), g(n) \right\}).$
+
+	\item Let $f, g$ be positive functions, and let $g(n)=\omega(f(n)).$ Then $f(n)+g(n)=\Theta(g(n)).$
+
+	\item $2^{\frac{\log n}{2}} = \Theta(n).$
+
+\end{enumerate}
+
+\section{Recurrences}
+
+Solve the following recurrences, giving your answer in $\Theta$ notation. For each of them you may assume $T(x)=1$ for $x\le 5$ (or if it makes the base case easier you may assume $T(x)$ is any other constant for $x\le 5$). Justify.
+
+\begin{enumerate}[(a)]
+	\item $T(n)=3T(n-2)$
+
+	\item $T(n)=n^{1/3} T(n^{2/3}) + n$
+
+	\item $T(n)=8T(n/4) + n$
+
+	\item $T(n) = T(n-3) + 5$
+
+	\item $T(n)= 3T(n/3) + n\log_3 n$
+		
+\end{enumerate}
+
+\section{Basic Proofs}
+
+\begin{enumerate}[(a)]
+	\item Prove that $\sum_{k=1}^{2n}(-1)^{k+1}\frac{1}{k} = \sum_{k=n+1}^{2n}\frac{1}{k}$ for all $n\ge 1.$ 
+
+	\item There are 9 course assistants for this class. Let us assume that 92 students submit their assignments for this problem set, and each submission is graded by one course assistant. Prove that there is some course assistant who grades at least 11 submissions.
+
+	\item Let $x_1, x_2, \cdots, x_n$ be real numbers. Prove that for any $1\le k\le n,$
+		\[\sum_{i=k}^{n} x_i\le n\cdot\max_{i=1}^n \left\{ x_i \right\} - \sum_{j=1}^{k-1} x_j\]
+
+\end{enumerate}
+
+\end{document}
