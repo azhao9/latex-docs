@@ -134,11 +134,11 @@
 		\begin{enumerate}[(a)]
 			\item If $f(0)>0,$ show that $f(x)>0$ for all $x$ in some open interval $(-a, a).$
 				\begin{proof}
-					Suppose $f(0)=y>0.$ Then take $\varepsilon=y/2.$ Now, since $f$ is continuous at 0, there must exist $a>0$ such that
+					Suppose $f(0)=y>0.$ Then take $\varepsilon=y.$ Now, since $f$ is continuous at 0, there must exist $a>0$ such that
 					\begin{align*}
-						\abs{x}<a &\implies \abs{f(x)-y}<\frac{y}{2} \\
-						x\in(-a, a) &\implies -\frac{y}{2}<f(x)-y<\frac{y}{2} \\
-						&\implies 0<\frac{y}{2} < f(x)
+						\abs{x}<a &\implies \abs{f(x)-y}<y \\
+						x\in(-a, a) &\implies -y<f(x)-y<y \\
+						&\implies 0 < f(x)
 					\end{align*}
 					Here, $f(x)>0$ for all $x\in(-a, a),$ as desired.
 				\end{proof}
