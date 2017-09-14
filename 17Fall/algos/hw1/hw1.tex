@@ -18,20 +18,98 @@ For each of the following statements explain if it is true or false and prove yo
 
 \begin{enumerate}[(a)]
 	\item $100(n\log^4 n+\frac{1}{2}n^2)=\Theta(n^2)$
+		\begin{proof}
+			This is true. We wish to show that there exists $c_1, c_2, n_0>0$ such that
+			\begin{align*}
+				c_1n^2\le n\log^4n+\frac{1}{2}n^2\le c_2n^2
+			\end{align*}
+			Clearly, $c_1=\frac{1}{2}$ satisfies the left hand inequality. Now, suppose $c_2=1,$ and suppose $n_0=2^k$ for some $k.$ Then we must have
+			\begin{align*}
+				n\log^4n+\frac{1}{2}n^2 = 2^k\cdot k^4 + 2^{2k-1}&\le 2^{2k} = n^2 \\
+				\implies k^4 &\le 2^{k-1}
+			\end{align*}
+			Now, $k^4$ grows slower than $2^{k-1},$ so take a large enough value for $k$ (say, 100), and we will be done. Thus $n_0=2^{100}$ and $c=1$ will satisfy the inequality, so $100\left( n\log^4n + \frac{1}{2} n^2 \right) = \Theta(n^2),$ as desired.	
+		\end{proof}
 
-	\item $2^n=\Omega(2^{(n/2)})$
+	\item $2^n=\Omega(2^{n/2})$
+		\begin{proof}
+			This is true. We have
+			\begin{align*}
+				2^n \ge c(2^{n/2}) \implies 2^{n/2}\ge c
+			\end{align*}
+			which is true for $c=1, n_0=1,$ so $2^n=\Omega(2^{n/2}),$ as desired.
+		\end{proof}
 
 	\item $\log(n^{6\log n})=\Theta\left( \left( \log n^{1/3} \right)^2 \right)$
+		\begin{proof}
+			This is true. Simplifying the logarithms, we have
+			\begin{align*}
+				\log\left( n^{6\log n} \right) = 6\log n\log n = 6\log^2 n \\
+				\left( \log n^{1/3} \right)^2 = \left( \frac{1}{3}\log n \right)^2 = \frac{1}{9}\log^2 n
+			\end{align*}
+			Thus, taking $c_1=54$ and $c_2=54,$ we have
+			\begin{align*}
+				c_1\cdot \left( \frac{1}{9} \log^2 n\right) \le 6\log^2 n\le c_2\left( \frac{1}{9} \log^2 n \right) \\
+				\implies \log\left( n^{6\log n} \right) = \Theta\left( \left( \log n^{1/3} \right)^2 \right)
+			\end{align*}
+			as desired.
+		\end{proof}
 
 	\item $3^n=\Theta\left( 3.1^n \right)$
+		\begin{proof}
+			This is false. Suppose $c, n_0>0$ satisfy $3^n\ge c(3.1)^n$ for all $n>n_0.$ Then $(3/3.1)^n\ge c,$ so
+			\begin{align*}
+				\log \left( \frac{3}{3.1} \right)^n&\ge \log c \\
+				n\log\left( \frac{3}{3.1} \right)&\ge\log c \\
+				n&\le \frac{\log c}{\log 3-\log 3.1}
+			\end{align*}
+			So if we take some $N>\frac{\log c}{\log 3-\log 3.1},$ then the inequality fails, so $3^n\neq\Omega(3.1^n),$ and thus $3^n\neq\Theta(3.1^n),$ as desired.
+		\end{proof}
 
 	\item $\sqrt{n+\cos n} = O(\sqrt{n})$
+		\begin{proof}
+			This is true. We have $-1\le \cos n\le 1,$ so $\sqrt{n+\cos n}\le \sqrt{n+1}.$ Take $c=2, n_0=1.$ Then we have $\sqrt{n+1}\le 2\sqrt{n}=\sqrt{4n}$ which holds for all $n>1,$ so $\sqrt{n+\cos n}=O\left( \sqrt{n} \right),$ as desired.
+		\end{proof}
 
 	\item Let $f, g$ be positive functions. Then $f(n)+g(n)=O(\max\left\{ f(n), g(n) \right\}).$
+		\begin{proof}
+			This is true. We have
+			\begin{align*}
+				\max\left\{ f(n), g(n) \right\}&\ge \frac{1}{2}\left[ f(n)+g(n) \right] \\
+				\implies2\cdot\max\left\{ f(n), g(n) \right\} &\ge f(n)+g(n)
+			\end{align*}
+			so taking $c=2, n_0=1,$ we get $f(n)+g(n)=O\left( \max\left\{ f(n), g(n) \right\} \right),$ as desired.
+		\end{proof}
 
 	\item Let $f, g$ be positive functions, and let $g(n)=\omega(f(n)).$ Then $f(n)+g(n)=\Theta(g(n)).$
+		\begin{proof}
+			This is true. Since $g(n)=\omega(f(n)),$ for all $c>0,$ there exists $n_0>0$ such that 
+			\begin{equation}
+				g(n) > cf(n)\implies \frac{f(n)}{g(n)}<\frac{1}{c}
+			\end{equation}
+			for all $n>n_0.$ We wish to show that there exists $c_1, c_2, n_0>0$ such that 
+			\begin{align*}
+				c_1g(n) \le f(n)+g(n)\le c_2g(n)
+			\end{align*}
+			Clearly $c_1=1$ works for the left-hand inequality, since $f(n)$ is positive. Next, fix $d$ and $m_0$ such that (1) is true. Then 
+			\begin{align*}
+				\frac{f(n)}{g(n)}+1 = \frac{f(n)+g(n)}{g(n)} <\frac{1}{d} + 1 \le \frac{1}{d} + 2
+			\end{align*}
+			for all $n>m_0.$ Now let $c_2=\frac{1}{d} + 2$ and $n_0=m_0.$ Then
+			\begin{align*}
+				\frac{f(n)+g(n)}{g(n)}\le c_2\implies f(n)+g(n)\le c_2g(n)
+			\end{align*}
+			for all $n>n_0,$ so $f(n)+g(n)=\Theta(g(n)).$	
+		\end{proof}
 
 	\item $2^{\frac{\log n}{2}} = \Theta(n).$
+		\begin{proof}
+			This is false. Simplifying, we have $2^{\frac{\log n}{2}} = n^{1/2}.$ Suppose $n^{1/2}=\Omega(n).$ Fix some $c,$ and suppose there exists $n_0$ such that $n^{1/2}\ge cn$ for all $n>n_0.$ Then
+			\begin{align*}
+				\frac{1}{c} &\ge n^{1/2}\implies n\le \frac{1}{c^2}
+			\end{align*}
+			However, if we take $N>\frac{1}{c^2},$ the inequality fails. Thus, $n^{1/2}\neq \Omega(n),$ so $n^{1/2} = 2^{\frac{\log 2}{2}} \neq \Theta(n).$
+		\end{proof}
 
 \end{enumerate}
 
@@ -41,26 +119,138 @@ Solve the following recurrences, giving your answer in $\Theta$ notation. For ea
 
 \begin{enumerate}[(a)]
 	\item $T(n)=3T(n-2)$
+		\begin{soln}
+			We have
+			\begin{align*}
+				T(n)=3T(n-2)=3^2T(n-4)=\cdots=3^kT(n-2k)
+			\end{align*}
+			Supposing $n-2k=5,$ we have $k=\frac{n-5}{2},$ so
+			\begin{align*}
+				T(n)=3^{\frac{n-5}{2}}T(5)=3^{\frac{n-5}{2}}=\Theta(3^{n/2})
+			\end{align*}
+		\end{soln}
 
 	\item $T(n)=n^{1/3} T(n^{2/3}) + n$
+		\begin{soln}
+			Claim: $T(n)=kn+n^{1-(2/3)^k}T\left( n^{(2/3)^k} \right)$ for $k\ge 1.$ The base case is trivial. Suppose the claim holds for all $1\le k\le m$ for arbitrary $m.$ Then
+			\begin{align*}
+				T(n) = mn+n^{1-(2/3)^m} T\left( n^{(2/3)^m} \right) &= mn + n^{1-(2/3)^m} \left[ \left( n^{(2/3)^m} \right)^{1/3} T\left( n^{(2/3)^{m+1}} \right) + n^{(2/3)^m} \right] \\
+				&= mn + n^{1-\left( \frac{2}{3} \right)^m + \frac{1}{3}\cdot\left( \frac{2}{3} \right)^m} T\left( n^{(2/3)^{m+1}} \right) + n \\
+				&= (m+1)n + n^{1-(2/3)^{m+1}}T\left( n^{(2/3)^{m+1}} \right)
+			\end{align*}
+			Thus, the claim holds for $k=m+1,$ so the claim is proven by induction. Now suppose that
+			\begin{align*}
+				n^{(2/3)^k} = 2 &\implies \left( \frac{2}{3} \right)^k\log n = \log 2 = 1 \\
+				\implies \left( \frac{2}{3} \right)^k = \frac{1}{\log n} &\implies k\log \frac{2}{3} = \log\left( \frac{1}{\log n} \right) = -\log(\log n) \\
+				&\implies k = \frac{-\log(\log n)}{\log 2-\log 3} = \frac{\log(\log n)}{\log 3-1}
+			\end{align*}
+			Using this value of $k,$ we have
+			\begin{align*}
+				T(n) &= kn + n^{1-(2/3)^k} T\left(n^{(2/3)^k}\right) = n\cdot \frac{\log(\log n)}{\log 3 - 1} + \frac{n}{n^{(2/3)^k}} T(2) \\
+				&= \frac{1}{\log 3 - 1} n\log(\log n) + \frac{n}{2} = \frac{1}{\log 3 - 1}n\log(\log n) + \frac{n}{2}
+			\end{align*}
+			Claim: This is $\Theta\left( n\log(\log n) \right).$ We must find $c_1, c_2, n_0>0$ such that 
+			\begin{align*}
+				c_1\cdot n\log(\log n)\le \frac{1}{\log3-1}n\log(\log n) + \frac{n}{2} \le c_2\cdot n\log(\log n)
+			\end{align*}
+			for all $n>n_0.$ Clearly $c_1=\frac{1}{\log 3-1}$ satisfies the left hand inequality. Suppose we fix a value for $c_2.$ Then we must have
+			\begin{align*}
+				\frac{1}{\log 3 -1}n\log(\log n)+\frac{n}{2} \le c_2\cdot n\log(\log n) &\implies n\ge 10^{10^{\frac{1}{2\left( c_2-\frac{1}{\log 3 -1} \right)}}}
+			\end{align*}
+			Thus, take any value $n_0$ greater than this to satisfy the inequality, and the claim is proven.
+		\end{soln}
 
 	\item $T(n)=8T(n/4) + n$
+		\begin{soln}
+			In the notation of the master theorem, $a=8, b=4, f(n)=n.$ Then $\log_ba=\log_48=3/2$ and $f(n)=n=O\left(n^{\frac{3}{2} - \frac{1}{2}}\right) = O(n)$ where $\varepsilon=1/2.$ Thus, by the master theorem, $T(n)=\Theta(n^{3/2}).$
+		\end{soln}
 
 	\item $T(n) = T(n-3) + 5$
+		\begin{soln}
+			We have
+			\begin{align*}
+				T(n) = T(n-3) + 5 = T(n-6) + 10 = \cdots = T(n-3k) + 5k
+			\end{align*}
+			Supposing $n-3k=5,$ we have $k=\frac{n-5}{3},$ so
+			\begin{align*}
+				T(n) = T(5) + 5\cdot \frac{n-5}{3} = 1 + \frac{5n-25}{3} = \Theta(n)
+			\end{align*}
+		\end{soln}
 
 	\item $T(n)= 3T(n/3) + n\log_3 n$
+		\begin{soln}
+			Using a recursive tree, at level 0 we have $n\log_3n,$ at level 1 we have $3\cdot \frac{n}{3}\log_3\frac{n}{3},$ and in general, at level $i$ we have $3^i\cdot \frac{n}{3^i}\log_3\frac{n}{3^i}=n(\log_3n-i).$ The lowest level is $\log_3 n,$ so
+			\begin{align*}
+				T(n) &= \sum_{i=0}^{\log_3 n}n\left( \log_3n-i \right) = \sum_{i=0}^{\log_3 n}n\log_3n - n\sum_{i=0}^{\log_3n}i \\
+				&= n\log_3n\left( \log_3n+1 \right) - n\cdot \frac{\log_3n(\log_3n+1)}{2} \\
+				&= \frac{1}{2}n\log_3^2n + \frac{1}{2}n\log_3n
+			\end{align*}
+			Claim: $\frac{1}{2}n\log_3^2n+\frac{1}{2}n\log_3n = \Theta(n\log_3^2n).$ We must find $c_1, c_2, n_0>0$ such that
+			\begin{align*}
+				c_1 n\log_3^2n \le \frac{1}{2}n\log_3^2n + \frac{1}{2}n\log_3n \le c_2n\log_3^2n
+			\end{align*}
+			for all $n>n_0.$ Clearly, $c_1=1/2$ satisfies the left hand inequality. Fix some $c_2.$ Then
+			\begin{align*}
+				\frac{1}{2}n\log_3^2n+\frac{1}{2}n\log_3n \le c_2n\log_3^2n &\implies \frac{1}{2} + \frac{1}{2\log_3n}\le c_2 \\
+				\implies c_2-\frac{1}{2}\ge \frac{1}{2\log_3n} &\implies \log_3n\ge \frac{1}{2c-1} \\
+				\implies n\ge 3^{\frac{1}{2c-1}}
+			\end{align*}
+			Thus, as long as we choose $n_0>3^{\frac{1}{2c-1}},$ the inequality will be satisfied, and the claim is proven.
+		\end{soln}
 		
 \end{enumerate}
 
+\newpage
 \section{Basic Proofs}
 
 \begin{enumerate}[(a)]
 	\item Prove that $\sum_{k=1}^{2n}(-1)^{k+1}\frac{1}{k} = \sum_{k=n+1}^{2n}\frac{1}{k}$ for all $n\ge 1.$ 
+		\begin{proof}
+			Base case: $n=1.$ We have
+			\begin{align*}
+				\sum_{k=1}^{2\cdot 1}(-1)^{k+1}\frac{1}{k} &= \frac{1}{1}-\frac{1}{2} = \frac{1}{2} \\
+				\sum_{k=1+1}^{2\cdot 1}\frac{1}{k} &= \frac{1}{2}
+			\end{align*}
+			Now, suppose the assertion holds for arbitrary $m.$ Then 
+			\begin{align*}
+				\sum_{k=1}^{2m}(-1)^{k+1}\frac{1}{k} = \sum_{k=m+1}^{2m}\frac{1}{k} \\
+			\end{align*}
+			Then if we add
+			\begin{align*}
+				(-1)^{(2m+1)+1}\frac{1}{2m+1} + (-1)^{(2m+2)+1}\frac{1}{2m+2} = \frac{1}{2m+1} - \frac{1}{2m+2}
+			\end{align*}
+			to both sides, we have
+			\begin{align*}
+				\sum_{k=1}^{2(m+1)} (-1)^{k+1}\frac{1}{k} &= \sum_{k=m+1}^{2m}\frac{1}{k} + \frac{1}{2m+1} - \frac{1}{2m+2} \\ 
+				&= \left( \frac{1}{m+1} + \frac{1}{m+2} + \cdots + \frac{1}{2m} \right) + \frac{1}{2m+1} - \frac{1}{2}\cdot \frac{1}{m+1} \\
+				&= \frac{1}{m+2} + \cdots + \frac{1}{2m} + \frac{1}{2m+1} + \frac{1}{2m+2} = \sum_{k=(m+1)+1}^{2(m+1)}\frac{1}{k}
+			\end{align*}
+			so the assertion is true for $m+1,$ completing the proof.
+		\end{proof}
 
 	\item There are 9 course assistants for this class. Let us assume that 92 students submit their assignments for this problem set, and each submission is graded by one course assistant. Prove that there is some course assistant who grades at least 11 submissions.
+		\begin{proof}
+			Define $n_i$ as the number of papers graded by course assistant $i.$ Suppose $n_1, n_2, \cdots n_9$ are each at most 10. Then
+			\begin{align*}
+				n_1+n_2+\cdots+n_9\le9\cdot 10 = 90
+			\end{align*}
+			but there are 92 papers total, contradiction. Thus, some $n_i$ must be at least 11, as desired. Alternatively, trivialized by the Pigeonhole Principle.
+		\end{proof}
 
+		\newpage
 	\item Let $x_1, x_2, \cdots, x_n$ be real numbers. Prove that for any $1\le k\le n,$
 		\[\sum_{i=k}^{n} x_i\le n\cdot\max_{i=1}^n \left\{ x_i \right\} - \sum_{j=1}^{k-1} x_j\]
+		\begin{proof}
+			Rearranging, we must show
+			\begin{align*}
+				\sum_{j=1}^{k-1}x_j + \sum_{i=k}^{n} x_i = \sum_{m=1}^{n} x_i\le n\cdot \max_{i=1}^n\left\{ x_i \right\}
+			\end{align*}
+			WLOG, $\max_{i=1}^n\left\{ x_i \right\} = x_1.$ Then $x_2\le x_1, x_3\le x_1, \cdots, x_n\le x_1,$ so their sum is
+			\begin{align*}
+				\sum_{m=1}^{n} x_i = x_1+x_2+x_3+\cdots+x_n\le x_1+x_1+x_1+\cdots+x_1 = n\cdot x_1 = n\max_{i=1}^n \left\{ x_i \right\}
+			\end{align*}
+			as desired.
+		\end{proof}
 
 \end{enumerate}
 
