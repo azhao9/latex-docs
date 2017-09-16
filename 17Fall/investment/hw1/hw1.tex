@@ -1,0 +1,153 @@
+\documentclass{article}
+\usepackage[sexy, hdr, fancy]{evan}
+\setlength{\droptitle}{-4em}
+
+\lhead{Homework 1}
+\rhead{Investment Science}
+\lfoot{}
+\cfoot{\thepage}
+
+\newcommand{\var}{\mathrm{Var}}
+\newcommand{\cov}{\mathrm{Cov}}
+
+\begin{document}
+\title{Homework 1}
+\maketitle
+\thispagestyle{fancy}
+
+\section*{Chapter 2: The Basic Theory of Interest}
+
+\begin{itemize}
+	\item[2.] The number of years $n$ required for an investment at interest rate $r$ to double in value must satisfy $(1+r)^n=2.$ Using $\ln 2 = 0.69$ and the approximation $\ln(1+r)\approx r$ valid for small $r,$ show that $n\approx 69/i,$ where $i$ is the interest rate percentage. Using the better approximation $\ln(1+r)\approx r-\frac{1}{2}r^2,$ show that for $r\approx 0.08$ there holds $n\approx 72/i.$
+		\begin{proof}
+			Solving $(1+r)^n=2,$ we have
+			\begin{align*}
+				(1+r)^n = 2 &\implies \ln(1+r)^n = n\ln (1+r)= \ln 2 \\
+				\implies nr\approx 0.69 &\implies n \approx \frac{0.69}{r} = \frac{69}{i}
+			\end{align*}
+
+			Using a better approximation $\ln(1+r)\approx r-\frac{1}{2}r^2,$ we have
+			\begin{align*}
+				n\ln(1+r) = \ln 2 &\implies n\left( r-\frac{1}{2}r^2 \right)\approx 0.69 \\
+				\implies n\left( 0.08-\frac{1}{2}\cdot 0.08^2 \right) = 0.0768n = 0.69 &\implies n \approx 8.984 \approx \frac{72}{8} = \frac{72}{i}
+			\end{align*}
+		\end{proof}
+
+	\item[3.] Find the corresponding effective rates for:
+		\begin{enumerate}[(a)]
+			\item 3\% compounded monthly
+				\begin{answer*}
+					\begin{align*}
+						r &= \left( 1+\frac{0.03}{12} \right)^{12} - 1 = 3.042\%
+					\end{align*}
+				\end{answer*}
+
+			\item 18\% compounded monthly
+				\begin{answer*}
+					\begin{align*}
+						r &= \left( 1+\frac{0.18}{12} \right)^{12} - 1 = 19.562\%
+					\end{align*}
+				\end{answer*}
+
+			\item 18\% compounded quarterly 
+				\begin{answer*}
+					\begin{align*}
+						r &= \left( 1+\frac{0.18}{4} \right)^4 - 1 = 19.252\%
+					\end{align*}
+				\end{answer*}
+
+		\end{enumerate}
+
+	\item[8.] Two copy machines are available. Both have useful lives of 5 years. One machine can be either leased or purchased outright; the other must be purchased. Hence there are a total of three options: A, B, and C. The present values of the expenses of these three options using a 10\% interest rate are also indicated in the table. According to a present value analysis, the machine of least cost, as measured by the present value, should be selected; that is, option B.
+		\begin{center}
+			\begin{tabular}{lccc}
+				 & & Option & \\
+				 \hline
+				 & A & B & C \\
+				 \hline
+				 Initial outlay & 6000 & 30,000 & 35,000 \\
+				 Yearly expense & 8000 & 2000 & 1600 \\
+				 Resale value & 0 & 10, 000 & 12,000 \\
+				 Present value (@10\%) & 31,359 & 30,131 & 32,621 \\
+				 \hline
+			\end{tabular}
+		\end{center}
+		It is not possible to compute the IRR for any of these alternatives, because all cash flows are negative (except for the resale values). However, it is possible to calculate the IRR on an incremental basis. Find the IRR corresponding to a change from A to B. Is the change from A to B justified on the basis of the IRR?
+		\begin{soln}
+			The net change in cash flows is -24, 000 initially, then 6000 each year for 4 year, then a final 10, 000 at resale. The IRR is the value of $r$ such that
+			\begin{align*}
+				0 &= -24000 + \frac{6000}{1+r} + \frac{6000}{(1+r)^2}+\frac{6000}{(1+r)^3}\frac{6000}{(1+r)^4} + \frac{10000}{(1+r)^5} \\
+				\implies r &= 11.8\%
+			\end{align*}
+			Since the IRR is greater than the prevailing interest rate, the change from A to B is justified.
+		\end{soln}
+
+	\item[11.] Consider the two projects whose cash flows are shown in Table 2.8. Find the IRRs of the two projects and the NPVs at 5\%. Show that the IRR and NPV figures yield different recommendations. Can you explain this?
+		\begin{center}
+			\begin{tabular}{lcccccc}
+				& & & Years & & & \\
+				\hline
+				& 0 & 1 & 2 & 3 & 4 & 5 \\
+				\hline
+				Project 1 & -100 & 30 & 30 & 30 & 30 & 30 \\
+				Project 2 & -150 & 42 & 42 & 42 & 42 & 42 \\
+				\hline
+			\end{tabular}
+		\end{center}
+		\begin{soln}
+			Project 1: For IRR, we must find the rate $r_1$
+			\begin{align*}
+				0 &= -100 + \frac{30}{1+r_1} + \frac{30}{(1+r_1)^2} + \frac{30}{(1+r_1)^3} + \frac{30}{(1+r_1)^4} + \frac{30}{(1+r_1)^5} \\
+				\implies r_1 &= 15.2\%
+			\end{align*}
+			The NPV is calculated using $d=0.05:$
+			\begin{align*}
+				NPV_1 &= -100 + \frac{30}{1+0.05} + \frac{30}{(1+0.05)^2} + \frac{30}{(1+0.05)^3} + \frac{30}{(1+0.05)^4} + \frac{30}{(1+0.05)^5} = 29.88
+			\end{align*}
+
+			Project 2: For IRR, we must find the rate $r_2$ 
+			\begin{align*}
+				0 &= -150 + \frac{42}{1+r_2} + \frac{42}{(1+r_2)^2} + \frac{42}{(1+r_2)^3} + \frac{42}{(1+r_2)^4} + \frac{42}{(1+r_2)^5} \\
+				\implies r_2 &= 12.4\%
+			\end{align*}
+			The NPV is calculated using $d=0.05:$
+			\begin{align*}
+				NPV_2 &= -150 + \frac{42}{1+0.05} + \frac{42}{(1+0.05)^2} + \frac{42}{(1+0.05)^3} + \frac{42}{(1+0.05)^4} + \frac{42}{(1+0.05)^5} = 31.84
+			\end{align*}
+
+			IRR recommends taking project 1 because $r_1>r_2,$ but NPV recommends taking project 2 because $NPV_2>NPV_1.$ These criteria disagree because the sizes of the projects are different. 
+		\end{soln}
+
+	\item[13.] In general, we say that two projects with cash flows $x_i$ and $y_i, i=0, 1, 2, \cdots, n,$ cross if $x_0<y_0$ and $\sum_{i=0}^{n} x_i>\sum_{i=0}^{n} y_i.$ Let $P_x(d)$ and $P_y(d)$ denote the present values of these two projects when the discount factor is $d.$
+		\begin{enumerate}[(a)]
+			\item Show that there is a crossover value $c$ such that $P_x(c)=P_y(c).$
+				\begin{proof}
+					We must show there is a value $c$ such that
+					\begin{align*}
+						\sum_{i=0}^{n} \frac{x_i}{(1+c)^i} &= \sum_{i=0}^{n} \frac{y_i}{(1+c)^i} \\
+						\implies \sum_{i=0}^{n} \frac{x_i-y_i}{(1+c)^i} &= 0	
+					\end{align*}
+					Define $f(c)=\sum_{i=0}^{n} \frac{x_i-y_i}{(1+c)^i}.$ Then we have
+					\begin{align*}
+						f(0) &= \sum_{i=0}^{n} \frac{x_i-y_i}{1^i} = \sum_{i=0}^{n} (x_i-y_i)>0 \\
+						\lim_{c\to\infty} f(c) &= \lim_{c\to\infty}\sum_{i=0}^{n} \frac{x_i-y_i}{(1+c)^i} = (x_0-y_0) + \lim_{c\to\infty}\sum_{i=1}^{n} \frac{x_i-y_i}{(1+c)^i} = x_0-y_0 < 0
+					\end{align*}
+					Thus, since $f$ is continuous over $(-1, \infty),$ by the intermediate value theorem, there must exist a value $c$ such that $f(c)=0,$ which is the value such that $P_x(c)=P_y(c).$
+				\end{proof}
+
+			\item For Exercise 11, calculate the crossover value $c.$
+				\begin{soln}
+					When the discount rate is the crossover value $c,$ we have
+					\begin{align*}
+						NPV_1 &= NPV_2 \\
+						-100+\sum_{i=1}^{5}\frac{30}{(1+c)^i} &= -150 + \sum_{i=1}^{5}\frac{42}{(1+c)^i} \\
+						\implies 0 &= -50+\sum_{i=1}^{5}\frac{42}{(1+c)^i} - \sum_{i=1}^{5}\frac{30}{(1+c)^i} = -50+\sum_{i=1}^{5}.\frac{12}{(1+c)^i} \\
+						\implies c &= 6.4\%
+					\end{align*}
+				\end{soln}
+				
+		\end{enumerate}
+
+\end{itemize}
+
+\end{document}
