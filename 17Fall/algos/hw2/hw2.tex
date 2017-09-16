@@ -1,0 +1,70 @@
+\documentclass{article}
+\usepackage[sexy, hdr, fancy]{evan}
+\usepackage{fancyvrb}
+\setlength{\droptitle}{-4em}
+
+\lhead{Homework 2}
+\rhead{Intro Algorithms}
+\lfoot{}
+\cfoot{\thepage}
+
+\begin{document}
+\title{Homework 2}
+\maketitle
+\thispagestyle{fancy}
+
+\section{Reversals}
+
+Given an array $[a_1, a_2, \cdots, a_n],$ a reversal is a pair $(i, j)$ such that $i<j$ but $a_i>a_j.$ For example, in the array $[5, 3, 2, 10]$ there are three reversals $\left\{ (1, 2), (1, 3), (2, 3) \right\}.$ Note that the array has no reversals if and only if it is sorted, so the number of reversals can be thought of as a measure of how well-sorted an array is.
+
+\begin{enumerate}[(a)]
+	\item What is the expected number of reversals in a random array? More formally consider a random permutation of $n$ distinct elements $a_1, \cdots, a_n:$ what is the expected number of reversals?
+		\begin{soln}
+			Let $I_{ij}$ be the indicator random variable defined as
+			\begin{align*}
+				I_{ij} = \begin{cases}
+					1 & \text{if } a_i>a_j \\
+					0 & \text{if } a_1\le a_j
+				\end{cases}
+			\end{align*}
+			That is, $I_{ij}=1$ if and only if $(i, j)$ is a reversal. The total number of reversals $R$ is the sum of all such indicators:
+			\begin{align*}
+				R &= \sum_{i=1}^{n} \sum_{j=i+1}^{n} I_{ij} \\
+				\implies E[R] &= E\left[ \sum_{i=1}^{n} \sum_{j=i+1}^{n} I_{ij} \right] = \sum_{i=1}^{n} \sum_{j=i+1}^{n} E[I_{ij}]
+			\end{align*}
+			Now, since $I_{ij}$ is an indicator variable, we have $E[I_{ij}] = P(a_i>a_j).$ Since $a_i, a_j$ are identically distributed, this probability is exactly $1/2$ for all $i, j.$ Thus, we have
+			\begin{align*}
+				E[R] &= \sum_{i=1}^{n} \sum_{j=i+1}^{n} \frac{1}{2} = \frac{n(n-1)}{2}\cdot \frac{1}{2} = \frac{n(n-1)}{4}
+			\end{align*}
+		\end{soln}
+
+	\item Recall the insertion sort:		
+		\begin{Verbatim}[tabsize=4]
+		for i = 1 to n
+			j = i
+			while j > 0 and A[j-1] > A[j]
+				swap A[j] and A[j-1]
+				j = j - 1
+		\end{Verbatim}
+		Suppose that our array has $d$ reversals. Prove that the running time of insertion sort is $O(n+d).$
+
+	\item What does this imply about the average case running time of insertion sort as a function only of $n?$ That is, if we draw a permutation uniformly at random, what is the expected running time of insertion sort? 
+		
+\end{enumerate}
+
+\section{Costly Median}
+ 
+Suppose that you are given $n$ distinct numbers $x_1, x_2, \cdots, x_n\in\RR^+,$ each of which also has a cost $c_i\in\RR^+$ so that $\sum_{i=1}^{n} c_i=1.$ the costly median is defined to be the number $x_k$ such that
+\begin{align*}
+	\sum_{i: x_i<x_k}^{} c_i<\frac{1}{2} \quad\text{and}\quad \sum_{i:x_i>x_k}^{}c_i\le\frac{1}{2}
+\end{align*}
+Give a deterministic algorithm which finds the costly median and has $O(n)$ worst-case running time (and prove correctness and running time).
+
+\section{Dumbbell Matching}
+You belong to a gym which has two sets of dumbbells $A$ and $B$, each of which has $n$ dumbbells.  You know that there is a correspondence between the sets: for every dumbbell in set $A$ there is exactly one dumbbell in set $B$ that has the same weight, and similarly for every dumbbell in set $B$ there is exactly one dumbbell in set $A$ that has the same weight.  You want to perform exercises that require two dumbbells of the same weight.  So you want to pair up the dumbbells by weight, i.e., for every dumbbell you want to know which dumbbell from the other set has the exact same weight.
+
+Unfortunately the dumbbells are unsorted and unlabeled, and you can't tell their weights by looking at them. The only way to compare two dumbbells is to pick them both up simultaneously (one in each hand) and perform a curl.  By comparing the strain on your arms, you can tell whether the two dumbbells are the same weight, and if not, which one is heavier.  Even more unfortunately, the owner of the gym has a rule that two dumbbells from the same set cannot be used at the same time.  So you can compare a dumbbell from set $A$ to a dumbbell from set $B$, but cannot compare two dumbbells from the same set.  
+
+Design a randomized algorithm which correctly determines the pairing between the sets and uses only $O(n \log n)$ comparisons in expectation.  As always, prove correctness and running time.
+
+\end{document}

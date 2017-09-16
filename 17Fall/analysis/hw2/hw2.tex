@@ -1,0 +1,124 @@
+\documentclass{article}
+\usepackage[sexy, hdr, fancy]{evan}
+\setlength{\droptitle}{-4em}
+
+\lhead{Homework 2}
+\rhead{Honors Analysis I}
+\lfoot{}
+\cfoot{\thepage}
+
+\DeclareMathOperator{\Ima}{Im}
+
+\begin{document}
+\title{Homework 2}
+\maketitle
+\thispagestyle{fancy}
+
+\section*{Chapter 2: Countable and Uncountable Sets}
+
+\begin{itemize}
+	\item[3.] Given finitely many countable sets $A_1, \cdots, A_n,$ show that $A_1\cup\cdots\cup A_n$ and $A_1\times\cdots\times A_n$ are countable sets.
+		\begin{proof}
+			Since $A_i$ are countable, we have
+			\begin{align*}
+				A_1 &= \left\{ a_{11}, a_{12}, a_{13}, \cdots \right\} \\
+				A_2 &= \left\{ a_{21}, a_{22}, a_{23}, \cdots \right\} \\
+				\vdots \\
+				A_n &= \left\{ a_{n1}, a_{n2}, a_{n3}\cdots \right\}
+			\end{align*}
+			The set of all the $a_{ij}$ (including possible duplicates) is countable by Cantor's diagonal argument, so the union $A_1\cup\cdots\cup A_n$ is countable.
+
+			Since each of the $A_i$ is countable, there exists bijections $f_i:\NN\to A_i.$ We can construct a map 
+			\begin{align*}
+				g:\NN^n &\to A_1\times\cdots\times A_n \\
+				(b_1, b_2, \cdots, b_n) &\mapsto (f_1(b_1), f_2(b_2), \cdots, f_n(b_n))
+			\end{align*}
+			which is clearly bijective since each of the $f_i$ is bijective. Since $\NN^n$ is countable by Cantor's diagonal argument, the product $A_1\times\cdots\times A_n$ is countable.
+		\end{proof}
+
+	\item[7.] Let $A$ be countable. If $f:A\to B$ is onto, show that $B$ is countable; if $g:C\to A$ is 1-1, show that $C$ is countable.
+		\begin{proof}
+			Since $A$ is countable, suppose its elements are $\left\{ a_1, a_2, a_3, \cdots \right\}.$ Then since $f$ is onto, we must have $B\subset \left\{ f(a_1), f(a_2), f(a_3), \cdots \right\},$ which is a countable set, and therefore $B$ itself is countable.
+
+			Since $g$ is injective, it is a bijection from $C\to g(C)=\left\{ g(c):c\in C \right\}.$ Since $g(C)\subset A,$ it is countable, so there exists a bijection $h:g(C)\to A.$ Thus, the composition $h\circ g:C\to g(C)\to A$ is a bijection, so $C\sim A$ and thus $C$ is countable.
+		\end{proof}
+
+	\item[8.] Show that $(0, 1)$ is equivalent to $[0, 1]$ and to $\RR.$
+		\begin{proof}
+			Consider the function $f:(0, 1)\to\RR$ given by $f(x)=\tan\left( \frac{\pi}{2}x - \frac{\pi}{2} \right).$ This is bijective since it has a well defined inverse $f\inv = \frac{2}{\pi}\left( \arctan x + 1 \right).$ Thus, $(0, 1)\sim\RR.$
+
+			To show that $[0, 1]\sim (0, 1),$ consider an infinite sequence $(x_n)_{n\ge 2}$ of distinct elements in $(0, 1),$ and the corresponding set $S=\left\{ x_n: n\ge 2 \right\}.$ Let $x_0=0$ and $x_1=1.$ Then construct a mapping $g$ such that
+			\begin{align*}
+				g(x) &= \begin{cases}
+					x & \text{if }x\in(1, 0)\setminus X \\
+					x_{n+2} & \text{if }x=x_n\in X, n\ge 0
+				\end{cases}
+			\end{align*}
+			Here, $g$ is defined on $[0, 1]$ and is bijective because of how we have defined it. Thus, $[0, 1]\sim(0, 1).$
+	\end{proof}
+
+	\item[16.] The algebraic numbers are those real or complex numbers that are the roots of polynomials having integer coefficients. Prove that the set of algebraic numbers is countable.
+		\begin{proof}
+			Consider the set of polynomials with integer coefficients, $\ZZ[x].$ Within $\ZZ[x],$ consider the set $S_n$ of polynomials of degree $n.$ Now, we construct a bijective map $g:\ZZ^{n+1}\to S_n:$
+			\begin{align*}
+				(a_0, a_1, \cdots, a_n) \mapsto \begin{cases}
+					a_0 + a_1x + \cdots + (a_n+1) x^n, \quad &a_n\ge 0 \\
+					a_0+a_1x+\cdots+a_n x^n, \quad\quad &a_n<0	
+				\end{cases}
+			\end{align*}
+			This is obviously injective, and it is surjective because if
+			\begin{align*}
+				g=b_0+b_1x+\cdots+b_n x^n
+			\end{align*}
+			then if $b_n>0,$ we can recover $(b_0, b_1, \cdots, b_n-1)$ and if $b_n<0,$ we can recover $(b_0, b_1, \cdots, b_n).$ The case where $b_n=0$ is impossible since the polynomial has degree $n.$ Thus, $S_n$ is countable since $\ZZ^{n+1}$ is a countable union of countable sets $\ZZ.$ Since $S_n$ is countable, we can enumerate the polynomials $f_i\in S_n$ with $\NN$ and their corresponding set of $n$ (possibly repeated) roots $R_i$:
+			\begin{align*}
+				R_1 &= \left\{ r_{11}, r_{12}, r_{13}, \cdots, r_{1n} \right\} \\
+				R_2 &= \left\{ r_{21}, r_{22}, r_{23}, \cdots, r_{2n} \right\} \\
+				R_3 &= \left\{ r_{31}, r_{32}, r_{33}, \cdots, r_{3n} \right\} \\
+				\vdots
+			\end{align*}
+			The set of all roots is countable by Cantor's diagonal argument, and denote this set by $T_n$ for $S_n.$ Now, the set of all algebraic integers is
+			\begin{align*}
+				\bigcup_{n=i}^\infty T_i
+			\end{align*}
+			which is a countable union of countable sets $T_i,$ and therefore countable, as desired.
+		\end{proof}
+
+	\item[17.] If $A$ is uncountable and $B$ is countable, show that $A$ and $A\setminus B$ are equivalent. In particular, conclude that $A\setminus B$ is uncountable.
+		\begin{proof}
+			Let $S\subset A\setminus B$ be a countably infinite set. Then $B\cup S$ is a countable union of countable sets, and therefore countable, so there exists a bijection $g:(B\cup S)\to S.$ Now, define the mapping
+			\begin{align*}
+				f:A &\to A\setminus B \\
+				a &\mapsto \begin{cases}
+					a & \text{if } a\in A\setminus(B\cup S) \\
+					g(a) & \text{if } a\in (B\cup S)
+				\end{cases}
+			\end{align*}
+			This function is bijective as defined, so $A\sim A\setminus B,$ as desired. 
+
+			If $A\setminus B$ was countable, then $(A\setminus B)\cup B$ is a countable union of countable sets, and therefore countable. Then $A\subseteq (A\setminus B)\cup B,$ which is a contradiction, since $A$ was assumed to be uncountable. Thus, $A\setminus B$ is uncountable, as desired.
+		\end{proof}
+
+		\newpage
+	\item[18.] Show that the set of all real numbers in the interval $(0, 1)$ whose base 10 decimal expansion contains no 3s or 7s is uncountable.
+		\begin{proof}
+			Suppose the set is countable. Then elements can be indexed with $\NN,$ so suppose the list
+			\begin{align*}
+				x_1 &= 0.a_{11}a_{12}a_{13}\cdots \\
+				x_2 &= 0.a_{21}a_{22}a_{23}\cdots \\
+				x_3 &= 0.a_{31}a_{32}a_{33}\cdots \\
+				\vdots
+			\end{align*}
+			is exhaustive, where $a_{ij}\in\left\{ 0, 1, 2, 4, 5, 6, 8, 9 \right\}.$ Now, construct a new number
+			\begin{align*}
+				y &= 0.b_1b_2b_3\cdots, \quad b_i = \begin{cases}
+					4, \quad a_{ii} = 5 \\
+					5, \quad a_{ii}\neq 5
+				\end{cases}
+			\end{align*}
+			This element is not equal to any of the $x_i,$ but it still fits the criteria of the set. Contradiction, so such a set must be uncountable.
+		\end{proof}
+		
+\end{itemize}
+
+\end{document}
