@@ -44,7 +44,11 @@
 		\end{answer*}
 
 	\item[17.] A corn farmer argues "I do not use futures contracts for hedging. My real risk is not the price of corn. It is that my whole crop gets wiped out by the weather." Discuss this viewpoint. Should the farmer estimate his or her expected production of corn and hedge to try to lock in a price for expected production?
+		\begin{answer*}
+			No, the farmer should not take a short futures position. If the weather is bad, then many farmers will suffer, and there will be an overall lower supply of corn, causing the price of corn to go up in the market. This results in a loss for the farmer because his delivery price will probably be lower than the spot price at maturity, on top of his loss due to a bad harvest.
+		\end{answer*}
 
+		\newpage
 	\item[18.] On July 1, an investor holds 50, 000 shares of a certain stock. The market price is \$30 per share. The investor is interested in hedging against movements in the market over the next month and decides to use the September Mini S\&P 500 futures contract. The index futures price is currently 1500 and one contract is for deliver of \$50 times the index. The beta of the stock is 1.3. What strategy should the investor follow? Under what circumstances will it be profitable?
 		\begin{soln}
 			The investor should short futures contract on stock index. The optimal number is
@@ -55,10 +59,17 @@
 		\end{soln}
 
 	\item[20.] A futures contract is used for hedging. Explain why the daily settlement of the contract can give rise to cash-flow problems.
+		\begin{answer*}
+			If a hedger enters into a short position in a futures contract, and the price of the asset started rising, then the price of the futures contract will also rise. This will lead to margin calls for the hedger, which equate to cash out-flows, but at a different timing than the cash inflow at maturity. These outflows may offset the inflow.
+		\end{answer*}
 
 	\item[22.] Suppose that the 1-year gold lease rate is 1.5\% and the 1-year risk-free rate is 5.0\%. Both rates are compounded annually. Use the discussion in Business Snapshot 3.1 to calculate the maximum 1-year gold forward price Goldman Sachs should quote to the gold-mining company when the spot price is \$1200.
+		\begin{soln}
+			GS should borrow gold from the central bank and sell it at \$1200 then invest the proceeds at \%5. After 1 year, the investment will have appreciated to $\$1200(1.05)=\$1260,$ and GS will have to buy the gold from the mining company and repay the central bank, as well as $\$1200(0.015)=\$18,$ for a net of \$1242. GS should quote a price of $\$1242$ or less.
+		\end{soln}
 
-	\item[32.] It is now October 2014. A company anticipates that it will purchase 1 million pounds of copper in each of 02/15, 08/15, 02/16, and 08/16. The company has decided to use the futures contracts traded in the COMEX division of the CME Group to hedge its risk. One contract is for the delivery of 25, 000 pounds of copper. The initial margin is \$2000 per contract and the maintenance margin is \$1500 per contract. The company's policy is to hedge 80\% of its exposure. Contracts with maturities up to 13 months in the future are considered to have sufficient liquidity to meet the company's needs. Devise a hedging strategy for the company. 
+		\newpage
+	\item[32.] It is now October 2014. A company anticipates that it will purchase 1 million pounds of copper in each of 02/15, 08/15, 02/16, and 08/16. The company has decided to use the futures contracts traded in the COMEX division of the CME Group to hedge its risk. One contract is for the delivery of 25,000 pounds of copper. The initial margin is \$2000 per contract and the maintenance margin is \$1500 per contract. The company's policy is to hedge 80\% of its exposure. Contracts with maturities up to 13 months in the future are considered to have sufficient liquidity to meet the company's needs. Devise a hedging strategy for the company. 
 
 		Assume the market prices (in cents per pound) today and at future dates are as in the following table. What is the impact of the strategy you propose on the price the company pays for copper? What is the initial margin requirement in October 2014? Is the company subject to any margin calls?
 		\begin{center}	
@@ -67,13 +78,33 @@
 				Date & Oct 2014 & Feb 2015 & Aug 2015 & Feb 2016 & Aug 2016 \\
 				\hline
 				Spot price & 372.00 & 369.00 & 365.00 & 377.00 & 388.00 \\
-				Mar 2014 futures price & 372.00 & 369.10 & & & \\
-				Sept 2014 futures price & 372.80 & 370.20 & 364.80 & & \\
-				Mar 2015 futures price & & 370.70 & 364.30 & 376.70 & \\
-				Sept 2015 futures price & & & 364.20 & 376.50 & 388.20 \\
+				Mar 2015 futures price & 372.30 & 369.10 & & & \\
+				Sept 2015 futures price & 372.80 & 370.20 & 364.80 & & \\
+				Mar 2016 futures price & & 370.70 & 364.30 & 376.70 & \\
+				Sept 2016 futures price & & & 364.20 & 376.50 & 388.20 \\
 				\hline
 			\end{tabular}
 		\end{center}
+		\begin{soln}
+			The company will hedge 80\%, or 0.8 million pounds of copper for Feb 2015 by going long in $\frac{800,000}{25, 000} = 32$ Mar 2015 contracts. The company has a 3 million pound remaining exposure, which must be hedged at 80\% by going long in $\frac{3, 000, 000*0.8}{25, 000} = 96$ Sept 2015 contracts. In Feb 2015, the company should close out the 32 Mar 2015 contracts, and in Aug 2015, the company should close out the 96 Sept 2015 contracts. At this point, the exposure is 2 million pounds, so the company should go long in 32 Mar 2016 and 32 Sept 2016 contracts, and close them out in Feb 2016 and Aug 2016, respectively. 
+
+			Using this strategy, the company buys copper in Feb 2015 and Aug 2015 at
+			\begin{align*}
+				369.00 + 0.8(372.30-369.10) &= 369.00 + 0.8(3.20) = 371.56 \\
+				365.00 + 0.8(372.80 - 364.80) &= 365.00 + 0.8(8.00) = 371.40
+			\end{align*}
+			per pound, respectively. For the Feb 2016 purchase, the company loses $372.80-364.80=8.00$ on the Sept 2015 futures, and gains $376.70-364.30=12.40$ on the Mar 2016 futures, so the company buy copper at
+			\begin{align*}
+				377.00 + 0.8(8.00) - 0.8(12.40) = 373.48
+			\end{align*}
+			per pound. Finally, for the Aug 2016 purchase, the company loses 8.00 on the Sept 2015 futures, and gains $388.20-364.20 =24.00$ on the Sept 2016 futures, so the company buys copper at
+			\begin{align*}
+				388 + 0.8(8.00) - 0.8(24.00) = 375.20
+			\end{align*}
+			per pound. 
+
+			The initial margin requirement in Oct 2014 is $\$2000\cdot128=\$256, 000.$ Since each contract is for 25,000 pounds of copper, and there is a margin call when the value of the contract drops by \$500, or $\frac{500}{25, 000} = 0.02$ per pound. This happens to the Mar 2015 and Sept 2015 contracts between Oct 2014 and Feb 2015, and to the Sept 2016 contract between Feb 2016 and Aug 2016.
+		\end{soln}
 		
 \end{itemize}
 
