@@ -47,14 +47,14 @@
 		\begin{proof}
 			Consider the function $f:(0, 1)\to\RR$ given by $f(x)=\tan\left( \frac{\pi}{2}x - \frac{\pi}{2} \right).$ This is bijective since it has a well defined inverse $f\inv = \frac{2}{\pi}\left( \arctan x + 1 \right).$ Thus, $(0, 1)\sim\RR.$
 
-			To show that $[0, 1]\sim (0, 1),$ consider a countably infinite subset $(0, 1)\supset S=\left\{ x_1, x_2, x_3, \cdots \right\}.$ Let $T=\left\{ 0, 1\right\}.$  Then construct a mapping $g$ such that
+			To show that $[0, 1]\sim (0, 1),$ consider a countably infinite subset $(0, 1)\supset S=\left\{ x_1, x_2, x_3, \cdots \right\}.$ Let $T=\left\{ 0, 1\right\}.$  Then since $S\cup T$ is a countable union of countable sets, it is countable, and therefore $(S\cup T)\sim S,$ so there exists a bijection $h:(S\cup T)\to S.$ Now, define $g:[0, 1]\to(0, 1)$ as
 			\begin{align*}
 				g(x) &= \begin{cases}
-					x & \text{if }x\in(1, 0)\setminus X \\
-					x_{n+2} & \text{if }x=x_n\in X, n\ge 0
+					x & \text{if }x\in[1, 0]\setminus (S\cup T) \\
+					h(x) & \text{if } x\in (S\cup T)
 				\end{cases}
 			\end{align*}
-			Here, $g$ is defined on $[0, 1]$ and is bijective because of how we have defined it. Thus, $[0, 1]\sim(0, 1).$
+			Here, $g$ is defined on $[0, 1],$ its image is $[1, 0]\setminus T = (0, 1),$ and is bijective because of how we have defined it. Thus, $[0, 1]\sim(0, 1).$
 	\end{proof}
 
 	\item[16.] The algebraic numbers are those real or complex numbers that are the roots of polynomials having integer coefficients. Prove that the set of algebraic numbers is countable.
