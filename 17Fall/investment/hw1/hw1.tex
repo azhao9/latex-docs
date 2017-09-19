@@ -100,7 +100,7 @@
 				0 &= -100 + \frac{30}{1+r_1} + \frac{30}{(1+r_1)^2} + \frac{30}{(1+r_1)^3} + \frac{30}{(1+r_1)^4} + \frac{30}{(1+r_1)^5} \\
 				\implies r_1 &= 15.2\%
 			\end{align*}
-			The NPV is calculated using $d=0.05:$
+			The NPV is calculated using $d=\frac{1}{1+0.05}:$
 			\begin{align*}
 				NPV_1 &= -100 + \frac{30}{1+0.05} + \frac{30}{(1+0.05)^2} + \frac{30}{(1+0.05)^3} + \frac{30}{(1+0.05)^4} + \frac{30}{(1+0.05)^5} = 29.88
 			\end{align*}
@@ -110,7 +110,7 @@
 				0 &= -150 + \frac{42}{1+r_2} + \frac{42}{(1+r_2)^2} + \frac{42}{(1+r_2)^3} + \frac{42}{(1+r_2)^4} + \frac{42}{(1+r_2)^5} \\
 				\implies r_2 &= 12.4\%
 			\end{align*}
-			The NPV is calculated using $d=0.05:$
+			The NPV is calculated using $d=\frac{1}{1+0.05}:$
 			\begin{align*}
 				NPV_2 &= -150 + \frac{42}{1+0.05} + \frac{42}{(1+0.05)^2} + \frac{42}{(1+0.05)^3} + \frac{42}{(1+0.05)^4} + \frac{42}{(1+0.05)^5} = 31.84
 			\end{align*}
@@ -124,25 +124,24 @@
 				\begin{proof}
 					We must show there is a value $c$ such that
 					\begin{align*}
-						\sum_{i=0}^{n} \frac{x_i}{(1+c)^i} &= \sum_{i=0}^{n} \frac{y_i}{(1+c)^i} \\
-						\implies \sum_{i=0}^{n} \frac{x_i-y_i}{(1+c)^i} &= 0	
+						\sum_{i=0}^{n} x_ic^i = \sum_{i=0}^{n} y_i c^i \implies (x_0-y_0) + \sum_{i=1}^{n} (x_i-y_i)c^i &= 0	
 					\end{align*}
-					Define $f(c)=\sum_{i=0}^{n} \frac{x_i-y_i}{(1+c)^i}.$ Then we have
+					Define $f(c):=(x_0-y_0) + \sum_{i=1}^{n} (x_i-y_i)c^i.$ Then we have
 					\begin{align*}
-						f(0) &= \sum_{i=0}^{n} \frac{x_i-y_i}{1^i} = \sum_{i=0}^{n} (x_i-y_i)>0 \\
-						\lim_{c\to\infty} f(c) &= \lim_{c\to\infty}\sum_{i=0}^{n} \frac{x_i-y_i}{(1+c)^i} = (x_0-y_0) + \lim_{c\to\infty}\sum_{i=1}^{n} \frac{x_i-y_i}{(1+c)^i} = x_0-y_0 < 0
+						f(0) &= (x_0-y_0) + \sum_{i=1}^{n} (x_i-y_i)0^i = x_0-y_0 < 0 \\
+						f(1) &= (x_0-y_0) + \sum_{i=1}^{n} (x_i-y_i)1^i = \sum_{i=0}^{n} (x_i-y_i) > 0
 					\end{align*}
-					Thus, since $f$ is continuous over $(-1, \infty),$ by the intermediate value theorem, there must exist a value $c$ such that $f(c)=0,$ which is the value such that $P_x(c)=P_y(c).$
+					Thus, since $f$ is continuous, by the intermediate value theorem, there must exist some $c\in[0, 1]$ such that $f(c)=0,$ as desired.
 				\end{proof}
 
 			\item For Exercise 11, calculate the crossover value $c.$
 				\begin{soln}
-					When the discount rate is the crossover value $c,$ we have
+					When the discount factor is $c,$ we have
 					\begin{align*}
 						NPV_1 &= NPV_2 \\
-						-100+\sum_{i=1}^{5}\frac{30}{(1+c)^i} &= -150 + \sum_{i=1}^{5}\frac{42}{(1+c)^i} \\
-						\implies 0 &= -50+\sum_{i=1}^{5}\frac{42}{(1+c)^i} - \sum_{i=1}^{5}\frac{30}{(1+c)^i} = -50+\sum_{i=1}^{5}.\frac{12}{(1+c)^i} \\
-						\implies c &= 6.4\%
+						-100+\sum_{i=1}^{5}30c^i &= -150 + \sum_{i=1}^{5}42c^i \\
+						\implies 0 &= -50+\sum_{i=1}^{5}42c^i - \sum_{i=1}^{5}30c^i = -50+\sum_{i=1}^{5} 12c^i \\
+						\implies c &= 0.94
 					\end{align*}
 				\end{soln}
 				

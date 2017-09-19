@@ -47,7 +47,7 @@
 		\begin{proof}
 			Consider the function $f:(0, 1)\to\RR$ given by $f(x)=\tan\left( \frac{\pi}{2}x - \frac{\pi}{2} \right).$ This is bijective since it has a well defined inverse $f\inv = \frac{2}{\pi}\left( \arctan x + 1 \right).$ Thus, $(0, 1)\sim\RR.$
 
-			To show that $[0, 1]\sim (0, 1),$ consider an infinite sequence $(x_n)_{n\ge 2}$ of distinct elements in $(0, 1),$ and the corresponding set $S=\left\{ x_n: n\ge 2 \right\}.$ Let $x_0=0$ and $x_1=1.$ Then construct a mapping $g$ such that
+			To show that $[0, 1]\sim (0, 1),$ consider a countably infinite subset $(0, 1)\supset S=\left\{ x_1, x_2, x_3, \cdots \right\}.$ Let $T=\left\{ 0, 1\right\}.$  Then construct a mapping $g$ such that
 			\begin{align*}
 				g(x) &= \begin{cases}
 					x & \text{if }x\in(1, 0)\setminus X \\
@@ -77,9 +77,9 @@
 				R_3 &= \left\{ r_{31}, r_{32}, r_{33}, \cdots, r_{3n} \right\} \\
 				\vdots
 			\end{align*}
-			The set of all roots is countable by Cantor's diagonal argument, and denote this set by $T_n$ for $S_n.$ Now, the set of all algebraic integers is
+			The set of all roots is countable by Cantor's diagonal argument, and denote this set by $T_n$ for $S_n.$ Now, the set of all algebraic numbers is
 			\begin{align*}
-				\bigcup_{n=i}^\infty T_i
+				\bigcup_{i=1}^\infty T_i
 			\end{align*}
 			which is a countable union of countable sets $T_i,$ and therefore countable, as desired.
 		\end{proof}
@@ -94,9 +94,7 @@
 					g(a) & \text{if } a\in (B\cup S)
 				\end{cases}
 			\end{align*}
-			This function is bijective as defined, so $A\sim A\setminus B,$ as desired. 
-
-			If $A\setminus B$ was countable, then $(A\setminus B)\cup B$ is a countable union of countable sets, and therefore countable. Then $A\subseteq (A\setminus B)\cup B,$ which is a contradiction, since $A$ was assumed to be uncountable. Thus, $A\setminus B$ is uncountable, as desired.
+			This function is bijective as defined, so $A\sim A\setminus B,$ as desired. Equivalent sets have the same cardinality, so it follows that $A\setminus B$ is also uncountable.
 		\end{proof}
 
 		\newpage
