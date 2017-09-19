@@ -58,30 +58,36 @@
 
 		\end{enumerate}
 
-	\item[8.] Two copy machines are available. Both have useful lives of 5 years. One machine can be either leased or purchased outright; the other must be purchased. Hence there are a total of three options: A, B, and C. The present values of the expenses of these three options using a 10\% interest rate are also indicated in the table. According to a present value analysis, the machine of least cost, as measured by the present value, should be selected; that is, option B.
-		\begin{center}
-			\begin{tabular}{lccc}
-				 & & Option & \\
-				 \hline
-				 & A & B & C \\
-				 \hline
-				 Initial outlay & 6000 & 30,000 & 35,000 \\
-				 Yearly expense & 8000 & 2000 & 1600 \\
-				 Resale value & 0 & 10, 000 & 12,000 \\
-				 Present value (@10\%) & 31,359 & 30,131 & 32,621 \\
-				 \hline
-			\end{tabular}
-		\end{center}
-		It is not possible to compute the IRR for any of these alternatives, because all cash flows are negative (except for the resale values). However, it is possible to calculate the IRR on an incremental basis. Find the IRR corresponding to a change from A to B. Is the change from A to B justified on the basis of the IRR?
+	\item[6.] A young couple has made a nonrefundable deposit of the first month's rent (equal to \$1000) on a 6-month apartment lease. The next day they find a different apartment that they like just as well, but its monthly rent is only \$900. They plan to be in the apartment only 6 months. Should they switch to the new apartment? What if they plan to stay 1 year? Assume an interest rate of 12\%.
 		\begin{soln}
-			The net change in cash flows is -24, 000 initially, then 6000 each year for 4 year, then a final 10, 000 at resale. The IRR is the value of $r$ such that
+			The monthly interest rate is $12\%/12 = 1\%.$ By switching, the couple will have to pay \$1900 the first month, then \$900 for 5 months, whereas by keeping, the couple will be paying \$1000 for 6 months. The present values are
 			\begin{align*}
-				0 &= -24000 + \frac{6000}{1+r} + \frac{6000}{(1+r)^2}+\frac{6000}{(1+r)^3}\frac{6000}{(1+r)^4} + \frac{10000}{(1+r)^5} \\
-				\implies r &= 11.8\%
+				NPV_k &= \sum_{i=0}^{5} \frac{-1000}{1.01^i} = -5853.43 \\
+				NPV_s &= -1900 - \sum_{i=1}^{5} \frac{-900}{1.01^i} = -6268.09
 			\end{align*}
-			Since the IRR is greater than the prevailing interest rate, the change from A to B is justified.
+			Thus, the couple should keep the current apartment since the NPV is greater.
+
+			If they plan to stay for 1 year, then the net present values are
+			\begin{align*}
+				NPV_k &= \sum_{i=0}^{11} \frac{-1000}{1.01^i} = -11367.6 \\
+				NPV_s &= -1900 - \sum_{i=1}^{11} \frac{-900}{1.01^i} = -11230.9
+			\end{align*}
+			In this case, it makes sense to switch because the NPV of the alternative is greater.
 		\end{soln}
 
+	\item[9.] You are considering the purchase of a nice home. It is in every way perfect for you and in excellent condition, except for the roof. The roof has only 5 years of life remaining. A new roof would last 20 years, but would cost \$20,000. The house is expected to last forever. Assuming that costs will remain constant and that the future interest rate is 5\%, what value would you assign to the existing roof?
+		\begin{soln}
+			Since a roof lasts for 20 years and costs \$20,000 up front, this is equivalent to costing $C$ each year, where $C$ is the value such that
+			\begin{align*}
+				20, 000 &= \sum_{i=0}^{19} \frac{C}{(1+0.05)^i} \implies C = 1528.4
+			\end{align*}
+			Now, if the existing roof will last 5 more years, its present value should be
+			\begin{align*}
+				\sum_{i=0}^{4} \frac{1528.4}{(1+0.05)^i} = 6948
+			\end{align*}
+		\end{soln}
+
+		\newpage
 	\item[11.] Consider the two projects whose cash flows are shown in Table 2.8. Find the IRRs of the two projects and the NPVs at 5\%. Show that the IRR and NPV figures yield different recommendations. Can you explain this?
 		\begin{center}
 			\begin{tabular}{lcccccc}
@@ -117,35 +123,6 @@
 
 			IRR recommends taking project 1 because $r_1>r_2,$ but NPV recommends taking project 2 because $NPV_2>NPV_1.$ These criteria disagree because the sizes of the projects are different. 
 		\end{soln}
-
-	\item[13.] In general, we say that two projects with cash flows $x_i$ and $y_i, i=0, 1, 2, \cdots, n,$ cross if $x_0<y_0$ and $\sum_{i=0}^{n} x_i>\sum_{i=0}^{n} y_i.$ Let $P_x(d)$ and $P_y(d)$ denote the present values of these two projects when the discount factor is $d.$
-		\begin{enumerate}[(a)]
-			\item Show that there is a crossover value $c$ such that $P_x(c)=P_y(c).$
-				\begin{proof}
-					We must show there is a value $c$ such that
-					\begin{align*}
-						\sum_{i=0}^{n} x_ic^i = \sum_{i=0}^{n} y_i c^i \implies (x_0-y_0) + \sum_{i=1}^{n} (x_i-y_i)c^i &= 0	
-					\end{align*}
-					Define $f(c):=(x_0-y_0) + \sum_{i=1}^{n} (x_i-y_i)c^i.$ Then we have
-					\begin{align*}
-						f(0) &= (x_0-y_0) + \sum_{i=1}^{n} (x_i-y_i)0^i = x_0-y_0 < 0 \\
-						f(1) &= (x_0-y_0) + \sum_{i=1}^{n} (x_i-y_i)1^i = \sum_{i=0}^{n} (x_i-y_i) > 0
-					\end{align*}
-					Thus, since $f$ is continuous, by the intermediate value theorem, there must exist some $c\in[0, 1]$ such that $f(c)=0,$ as desired.
-				\end{proof}
-
-			\item For Exercise 11, calculate the crossover value $c.$
-				\begin{soln}
-					When the discount factor is $c,$ we have
-					\begin{align*}
-						NPV_1 &= NPV_2 \\
-						-100+\sum_{i=1}^{5}30c^i &= -150 + \sum_{i=1}^{5}42c^i \\
-						\implies 0 &= -50+\sum_{i=1}^{5}42c^i - \sum_{i=1}^{5}30c^i = -50+\sum_{i=1}^{5} 12c^i \\
-						\implies c &= 0.94
-					\end{align*}
-				\end{soln}
-				
-		\end{enumerate}
 
 \end{itemize}
 
