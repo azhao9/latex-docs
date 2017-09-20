@@ -20,21 +20,30 @@ Given an array $[a_1, a_2, \cdots, a_n],$ a reversal is a pair $(i, j)$ such tha
 \begin{enumerate}[(a)]
 	\item What is the expected number of reversals in a random array? More formally consider a random permutation of $n$ distinct elements $a_1, \cdots, a_n:$ what is the expected number of reversals?
 		\begin{soln}
-			Let $I_{ij}$ be the indicator random variable defined as
+			WLOG, let the array be a permutation of $[1, 2, \cdots, n].$ Let $I_{ij}$ be the indicator defined as
 			\begin{align*}
 				I_{ij} = \begin{cases}
 					1 & \text{if } a_i>a_j \\
-					0 & \text{if } a_1\le a_j
-				\end{cases}
+					0 & \text{if } a_i\le a_j
+				\end{cases}\quad i<j
 			\end{align*}
-			That is, $I_{ij}=1$ if and only if $(i, j)$ is a reversal. The total number of reversals $R$ is the sum of all such indicators:
+			That is, $I_{ij}=1$ if and only if $(i, j)$ is a reversal. The number of reversals $R$ is the sum of all indicators:
 			\begin{align*}
 				R &= \sum_{i=1}^{n} \sum_{j=i+1}^{n} I_{ij} \\
 				\implies E[R] &= E\left[ \sum_{i=1}^{n} \sum_{j=i+1}^{n} I_{ij} \right] = \sum_{i=1}^{n} \sum_{j=i+1}^{n} E[I_{ij}]
 			\end{align*}
-			Now, since $I_{ij}$ is an indicator variable, we have $E[I_{ij}] = P(a_i>a_j).$ Since $a_i, a_j$ are identically distributed, this probability is exactly $1/2$ for all $i, j.$ Thus, we have
+			Now, since $I_{ij}$ is an indicator variable, we have $E[I_{ij}] = P(a_i>a_j).$ Now, by the law of total probability, 
 			\begin{align*}
-				E[R] &= \sum_{i=1}^{n} \sum_{j=i+1}^{n} \frac{1}{2} = \frac{n(n-1)}{2}\cdot \frac{1}{2} = \frac{n(n-1)}{4}
+				P(a_i>a_j) = \sum_{k=1}^{n} P(a_i>a_j\mid a_j=k)P(a_j=k)
+			\end{align*}
+			Since each $k$ is equally likely, $P(a_j=k)=\frac{1}{n},$ and there are $n-k$ elements greater than $k$ for $a_i,$ all equally likely out of $n-1$ remaining values. Thus, this is equal to
+			\begin{align*}
+				P(a_i>a_j) &= \sum_{k=1}^{n} \frac{n-k}{n-1} \cdot \frac{1}{n} = \frac{1}{n(n-1)} \sum_{k=1}^{n} (n-k) \\
+				&= \frac{1}{n(n-1)}\sum_{k=0}^{n-1} k = \frac{1}{n(n-1)} \cdot \frac{n(n-1)}{2} = \frac{1}{2}
+			\end{align*}
+			Finally, we have
+			\begin{align*}
+				E[R] &= \sum_{i=1}^{n} \sum_{j=i+1}^{n} E[I_{ij}] = \sum_{i=1}^{n} \sum_{j=i+1}^{n} \frac{1}{2} = \frac{n(n-1)}{4}
 			\end{align*}
 		\end{soln}
 
@@ -72,7 +81,7 @@ Design a randomized algorithm which correctly determines the pairing between the
 		\ii If $n=0$ or 1, return.
 		\ii Uniformly randomly select a "pivot" dumbbell $p$ from set $A.$
 		\ii Using $p,$ partition $B$ into 3 sets: the set of dumbbells lighter than $p$ as $L,$ the set of dumbbells heavier than $p$ as $H,$ and the single dumbbell equal in weight to $p$ as $q.$ The rank of $p$ is $\abs{L}+1,$ so move it and $q$ to that location, and reorder the dumbbells of $B$ accordingly so dumbbells in $L$ come before $q,$ and dumbbells in $H$ come after.
-		\ii Using $q,$ repeat step 3 to partition and reorder set $A.$ Now $p$ and $q$ should be in the right spots.
+		\ii Using $q,$ repeat step 3 to partition and reorder set $A,$ excluding the comparison to $p.$ Now $p$ and $q$ should be in the right spots.
 		\ii Recurse on $L$ and $H.$
 	\end{enumerate}
 	Now, both sets $A$ and $B$ should be sorted by weight and matched with their corresponding dumbbells. 
