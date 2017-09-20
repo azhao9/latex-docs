@@ -38,7 +38,7 @@
 
 	\item[7.] Let $A$ be countable. If $f:A\to B$ is onto, show that $B$ is countable; if $g:C\to A$ is 1-1, show that $C$ is countable.
 		\begin{proof}
-			Since $A$ is countable, suppose its elements are $\left\{ a_1, a_2, a_3, \cdots \right\}.$ Then since $f$ is onto, we must have $B\subset \left\{ f(a_1), f(a_2), f(a_3), \cdots \right\},$ which is a countable set, and therefore $B$ itself is countable.
+			Since $f$ is onto, $S_b:=\left\{ a\in A:f(a)=b \right\}$ is nonempty for all $b\in B.$ Since $S_b\subset A,$ it must be countable, so its elements can be enumerated with $\NN.$ Now, for any $b,$ choose the element $a_b\in S_b$ with the smallest index, and $b\mapsto a_b$ is injective, since the sets are disjoint. This is easy to see because $a\in S_b\cap S_c\implies f(a)=b=c\implies S_b=S_c.$ Since $A$ is countable it can be injected into $\NN,$ and thus $B\injto A\injto \NN$ implies $B$ is countable.
 
 			Since $g$ is injective, it is a bijection from $C\to g(C)=\left\{ g(c):c\in C \right\}.$ Since $g(C)\subset A,$ it is countable, so there exists a bijection $h:g(C)\to A.$ Thus, the composition $h\circ g:C\to g(C)\to A$ is a bijection, so $C\sim A$ and thus $C$ is countable.
 		\end{proof}
