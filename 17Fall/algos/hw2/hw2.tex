@@ -77,7 +77,7 @@ Give a deterministic algorithm which finds the costly median and has $O(n)$ wors
 \begin{soln}
 	Consider the algorithm:
 	\begin{enumerate}
-			\ii If $n=0$ or 1, return.
+			\ii If $n=0$ or 1, return. If $n=2$ and $c_1<\frac{1}{2},$ then return $x_2.$ Else, return $x_1.$
 			\ii Use BPFRT to find the median $m$ of $S$ in $O(n)$ time.
 			\ii Using $m,$ partition the array into $L$ and $G,$ the elements less than, and greater than $m.$
 			\ii Compute the costs $C_L$ and $C_G$ associated with $L$ and $G,$ respectively.
@@ -136,10 +136,9 @@ Design a randomized algorithm which correctly determines the pairing between the
 		\begin{align*}
 			T(n) &= (2n-1) + \sum_{i=1}^{n} P(a_i\text{ is pivot}) E[\#\text{ comparisons}\mid a_i\text{ is pivot}] \\
 			&= (2n-1) + \sum_{i=1}^{n}\frac{1}{n}\cdot \left[ T(i-1) + T(n-i) \right] \\
-			&= (2n-1) + \frac{1}{n}\left( \sum_{i=1}^{n} T(i-1) + \sum_{i=1}^{n} T(n-i) \right) \\
 			&= (2n-1) + \frac{1}{n}\cdot 2\sum_{i=1}^{n-1} T(i) = (2n-1) + \frac{2}{n} \sum_{i=1}^{n-1} T(i)
 		\end{align*}
-		We wish to show that $T(n)\le cn(\ln n + 1)$ for some $c\ge 1.$ The base case $T(1)$ is
+		Claim: $T(n)\le cn(\ln n + 1)$ for some $c\ge 1.$ The base case $T(1)$ is
 		\begin{align*}
 			T(1) &= (2\cdot 1 - 1) + \frac{2}{1}\sum_{i=1}^{0} T(i) = 1 \le c\cdot 1(\ln 1+1) = c
 		\end{align*}
