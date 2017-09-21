@@ -56,8 +56,14 @@ Given an array $[a_1, a_2, \cdots, a_n],$ a reversal is a pair $(i, j)$ such tha
 				j = j - 1
 		\end{Verbatim}
 		Suppose that our array has $d$ reversals. Prove that the running time of insertion sort is $O(n+d).$
+		\begin{proof}
+			The swap operation only occurs when there is an inversion in the array, and each time a swap is performed, the number of inversions decreases by 1. Thus, the total number of swaps is equal to $d.$ Since the outer loop must run $n$ times, the total runtime is $O(n+d),$ as desired.
+		\end{proof}
 
 	\item What does this imply about the average case running time of insertion sort as a function only of $n?$ That is, if we draw a permutation uniformly at random, what is the expected running time of insertion sort? 
+		\begin{soln}
+			Since $E[R] = \frac{n(n-1)}{4} = O(n^2)$ is the expected number of inversions for a random permutation, the expected running time is $O(n^2+n) = O(n^2).$
+		\end{soln}
 		
 \end{enumerate}
 
@@ -68,6 +74,39 @@ Suppose that you are given $n$ distinct numbers $x_1, x_2, \cdots, x_n\in\RR^+,$
 	\sum_{i: x_i<x_k}^{} c_i<\frac{1}{2} \quad\text{and}\quad \sum_{i:x_i>x_k}^{}c_i\le\frac{1}{2}
 \end{align*}
 Give a deterministic algorithm which finds the costly median and has $O(n)$ worst-case running time (and prove correctness and running time).
+\begin{soln}
+	Consider the algorithm:
+	\begin{enumerate}
+			\ii If $n=0$ or 1, return.
+			\ii Use BPFRT to find the median $m$ of $S$ in $O(n)$ time.
+			\ii Using $m,$ partition the array into $L$ and $G,$ the elements less than, and greater than $m.$
+			\ii Compute the costs $C_L$ and $C_G$ associated with $L$ and $G,$ respectively.
+			\begin{enumerate}[(i)]
+					\ii If $C_L<\frac{1}{2}$ and $C_G\le \frac{1}{2},$ then return $m.$
+					\ii If $C_L<\frac{1}{2}$ and $C_G>\frac{1}{2},$ then the costly median is in $G.$ Add $C_L$ to the cost of $m$ and then recurse on $G\cup\left\{ m \right\}.$
+					\ii If $C_L\ge \frac{1}{2}$ and $C_G\le \frac{1}{2},$ then the costly median is in $L.$ Add $C_G$ to the cost of $m$ and then recurse on $L\cup \left\{ m \right\}.$
+			\end{enumerate}
+	\end{enumerate}
+
+	Correctness:
+	\begin{subproof}
+		This algorithm always terminates because in step 4, the size of the array we work on always decreases. Now, since the costly median must be in $S,$ it must be in either $L$ or $G,$ and the algorithm operates on whichever array contains the costly median. Thus, the costly median is always in the array during iterations of the algorithm, and the size of the array is eventually trivial, so this must be the correct costly median.
+	\end{subproof}
+
+	Running time:
+	\begin{subproof}
+		Let $T(n)$ be the running time on a set of size $n.$ BPFRT takes at most $10cn,$ and splitting the array into $L$ and $G$ costs $n-1$ comparisons. Computing the costs of $L$ and $G$ takes $n-1$ additions. Then in the worst case, we will need to recurse on either $L$ or $G,$ which both have $\frac{n}{2}$ elements. Thus, we have
+		\begin{align*}
+			T(n) \le 10cn + (n-1) + (n-1) + T\left( \frac{n}{2} \right) = (10c+2)n-2 + T\left( \frac{n}{2} \right)
+		\end{align*}
+		We claim that $T(n)\le (20c+4)n.$ The base case is obviously true. Now,
+		\begin{align*}
+			T(n)&\le (10c+2)n-2+T\left( \frac{n}{2} \right) \le (10c+2)n-2 + (10c+2)n \\
+			&= (20c+4)n-2\le (20c+4)n
+		\end{align*}
+		Thus, $T(n)=O(n),$ as desired.
+	\end{subproof}
+\end{soln}
 
 \section{Dumbbell Matching}
 You belong to a gym which has two sets of dumbbells $A$ and $B$, each of which has $n$ dumbbells.  You know that there is a correspondence between the sets: for every dumbbell in set $A$ there is exactly one dumbbell in set $B$ that has the same weight, and similarly for every dumbbell in set $B$ there is exactly one dumbbell in set $A$ that has the same weight.  You want to perform exercises that require two dumbbells of the same weight.  So you want to pair up the dumbbells by weight, i.e., for every dumbbell you want to know which dumbbell from the other set has the exact same weight.
@@ -84,12 +123,12 @@ Design a randomized algorithm which correctly determines the pairing between the
 		\ii Using $q,$ repeat step 3 to partition and reorder set $A,$ excluding the comparison to $p.$ Now $p$ and $q$ should be in the right spots.
 		\ii Recurse on $L$ and $H.$
 	\end{enumerate}
-	Now, both sets $A$ and $B$ should be sorted by weight and matched with their corresponding dumbbells. 
 
+	\newpage
 	Correctness:
 	\begin{subproof}
-		
-	\end{subproof}<++>
+		This algorithm must terminate because $L$ and $H$ are both strictly smaller than the original sets. At each call to the algorithm, the pivot $p$ and its corresponding $q$ must be put in the correct spot. Thus, at conclusion, every dumbbell must be in the correct position.	
+	\end{subproof}
 
 	Running time:
 	\begin{subproof}
@@ -106,8 +145,7 @@ Design a randomized algorithm which correctly determines the pairing between the
 		\end{align*}
 		which is satisfied. Then we have
 		\begin{align*}
-			T(n) &= (2n-1) + \frac{2}{n} \sum_{i=1}^{n-1} T(i) \\
-			&\le (2n-1) + \frac{2}{n} \sum_{i=1}^{n-1} ci(\ln i + 1) \\
+			T(n) &= (2n-1) + \frac{2}{n} \sum_{i=1}^{n-1} T(i) \le (2n-1) + \frac{2}{n} \sum_{i=1}^{n-1} ci(\ln i + 1) \\
 			&= (2n-1) + \frac{2c}{n} \left( \sum_{i=1}^{n-1} i\ln i + \sum_{i=1}^{n-1} i \right) \\
 			&= (2n-1) + c(n-1) + \frac{2c}{n} \sum_{i=1}^{n-1} i\ln i  \\
 			&\le (2n-1) + c(n-1) + \frac{2c}{n}\int_1^n x\ln x\, dx \\
@@ -119,6 +157,6 @@ Design a randomized algorithm which correctly determines the pairing between the
 		\end{align*}
 		as long as $c\ge 4.$ Thus, $T(n)\le cn(\ln n+1) = O(n\log n),$ as desired.
 	\end{subproof}
-\end{soln}<++>
+\end{soln}
 
 \end{document}
