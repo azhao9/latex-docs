@@ -1,0 +1,202 @@
+\documentclass{article}
+\usepackage[sexy, hdr, fancy]{evan}
+\setlength{\droptitle}{-4em}
+
+\lhead{Homework 2}
+\rhead{Investment Science}
+\lfoot{}
+\cfoot{\thepage}
+
+\newcommand{\var}{\mathrm{Var}}
+\newcommand{\cov}{\mathrm{Cov}}
+
+\begin{document}
+\title{Homework 2}
+\maketitle
+\thispagestyle{fancy}
+
+\begin{enumerate}
+	\item[1.]
+		\begin{soln}
+			Using the annuity formula $P=\frac{A}{r}\left( 1-\frac{1}{(1+r)^n} \right),$ with monthly interest $7\%/12$ over a period of 84 months, we have
+			\begin{align*}
+				A &= \frac{r(1+r)^n P}{(1+r)^n-1} = \frac{\frac{0.07}{12}\left( 1+\frac{0.07}{12} \right)^{84}\cdot 25, 000}{\left( 1+\frac{0.07}{12} \right)^{84}-1} \\
+				&= 377.32
+			\end{align*}
+		\end{soln}
+
+	\item[2.]
+		\begin{soln}
+			We have
+			\begin{align*}
+				P &= \sum_{i=0}^{n} \frac{x_i}{(1+r)^i} = \sum_{i=0}^{n} \frac{A}{(1+r)^i} = \frac{A}{r}\left( 1-\frac{1}{(1+r)^n} \right)
+			\end{align*}
+			Now, $P_{\infty}$ is equivalent to a cash flow of $P$ every $n$ years, which is
+			\begin{align*}
+				P_\infty &= \sum_{j=0}^{\infty} \frac{P}{(1+r)^{nj}} = P\cdot \frac{1}{1-\frac{1}{(1+r)^n}} \\
+				&= \frac{A}{r}\left( 1-\frac{1}{(1+r)^n} \right)\cdot \frac{1}{1-\frac{1}{(1+r)^n}} \\
+				&= \frac{A}{r} \\
+				\implies A &= r\cdot P_\infty
+			\end{align*}
+			These differ by a constant multiple, so either can be used to find the present value of stream $X_\infty.$
+		\end{soln}
+
+	\item[3.] 
+		\begin{enumerate}[(a)]
+			\item 
+				\begin{soln}
+					Using $x$ as the 1 period discount factor, we have $S_n$ is
+					\begin{align*}
+						S_n &= 3^0x^0 + 3^1x^1+\cdots+3^nx^n = \sum_{i=0}^{n} (3x)^i \\
+						&= \frac{(3x)^{n+1}-1}{3x-1}
+					\end{align*}
+				\end{soln}
+
+			\item
+				\begin{soln}
+					Using $x$ as the 1 period discount factor, we have
+					\begin{align*}
+						S_{\infty} &= 1+2x+3x^2+4x^3+\cdots \\
+						x\cdot S_{\infty} &= 0 + 1x + 2x^2 + 3x^3 + \cdots \\
+						\implies S_{\infty} (1-x) &= 1 + x + x^2 + x^3 + \cdots = \frac{1}{1-x} \\
+						\implies S_{\infty} &= \frac{1}{(1-x)^2}
+					\end{align*}
+				\end{soln}
+
+		\end{enumerate}
+
+	\item[4.]
+		\begin{soln}
+			The price, as a percentage of the face value, is given by
+			\begin{align*}
+				P &= 1-Y\cdot \frac{d}{360} = 1-3\%\cdot \frac{90}{360} = 99.25\%
+			\end{align*}
+		\end{soln}
+
+	\item[5.]
+		\begin{enumerate}[(a)]
+			\item 
+				\begin{soln}
+					The bank discount yield $Y$ is given by
+					\begin{align*}
+						Y &= \left( 1-\frac{P}{F} \right)\cdot \frac{360}{d} = (1-90\%)\cdot \frac{360}{365} = 9.86\%
+					\end{align*}
+				\end{soln}
+
+			\item 
+				\begin{soln}
+					The instrument is bought at 90\%, and paid back at 100\% after 1 year, so the effective annual yield $R$ is
+					\begin{align*}
+						0.90(1+R) &= 1 \implies R = 11.1\%
+					\end{align*}
+					
+				\end{soln}
+		\end{enumerate}
+
+	\item[6.]
+		\begin{enumerate}[(a)]
+			\item 
+				\begin{soln}
+					Suppose our portfolio contains positions in short bond 2, short bond 3, and long three bond 1. Then if $L$ is the short rate, the net of the annual coupon rates is $-(4+L)-(8-L)+3\cdot 4 = 0.$ The net initial cash flow is $1100+900-3\cdot 950 = -850,$ and the net principal at maturity is $-1000-1000+3(1000) = 1000.$ This portfolio is equivalent to a 10-year zero coupon bond with face value \$1000, and its price is thus \$850.
+				\end{soln}
+
+			\item 
+				\begin{soln}
+					Suppose our portfolio contains positions in long two bond 1, and short 1 bond 3. Then if $L$ is the short rate, the net of the annual coupon rates is $2\cdot 4 - (8-L) = L.$ The net initial cash flow is $-2\cdot 1000 + 1100 = -900,$ and the net principal at maturity is $2\cdot 1000 - 1\cdot 1000 = 1000.$ This portfolio is equivalent to a 10-year floating rate bond with face value \$1000, and its price is thus \$900.
+				\end{soln}
+				
+		\end{enumerate}
+
+	\item[7.]
+		\begin{enumerate}[(a)]
+			\item 
+				\begin{soln}
+					Suppose our portfolio contains positions in long two bond 1, and short bond 2. The net of the coupon payments per period is 0 since the coupon from bond 2 is twice the coupon from bond 1. The net initial cash flow is $-2\cdot 77.92 + 100 = -55.84.$ Since $F_1=F_2,$ suppose $F=F_1\times\max\left\{ \frac{CPI_{20}}{CPI_0}, 1 \right\}$ is the principal at maturity. Then the net cash flow at maturity is $2F-F=F.$ This portfolio is equivalent to a 10-year inflation-adjusted zero-coupon bond, and its price is thus \$55.84.
+				\end{soln}
+
+			\item
+				\begin{soln}
+					The answer in (a) does not depend on inflation, since the corresponding coupon payments and the principal at maturity of both bonds will be adjusted using the same level of inflation.
+				\end{soln}
+				
+		\end{enumerate}
+
+	\item[8.]
+		\begin{soln}
+			There are 2 coupons payments per year, so 36 payments over the course of 18 years. Using $\lambda=0.09$ and $C=8,$ we have
+			\begin{align*}
+				P &= \frac{100}{\left( 1+\frac{0.09}{2} \right)^{36}} + \frac{8}{0.09}\left( 1-\frac{1}{\left( 1+\frac{0.09}{2} \right)^{36}} \right) \\
+				&= 91.17
+			\end{align*}
+		\end{soln}
+
+	\item[9.]
+		\begin{soln}
+			The term is 91 days, so the amount received at maturity is
+			\begin{align*}
+				100\left( 1+0.34\%\cdot \frac{91}{360} \right) = 100.086
+			\end{align*}
+		\end{soln}
+
+	\item[10.]
+		\begin{enumerate}[(a)]
+			\item 
+				\begin{soln}
+					Lending \$1M overnight at a rate of 0.25\% will mature to
+					\begin{align*}
+						\$1M\left( 1+0.25\%\cdot \frac{1}{360} \right) = \$1, 000, 006.94
+					\end{align*}
+				\end{soln}
+
+			\item 
+				\begin{soln}
+					If today is Friday, then the term is 3 days, so the deposit will mature to
+					\begin{align*}
+						\$1M\left( 1+0.25\%\cdot \frac{3}{360} \right) = \$1, 000, 020.83
+					\end{align*}
+				\end{soln}
+
+			\item
+				\begin{soln}
+					Lending for 1 week is a term of 7 days, so the deposit will mature to
+					\begin{align*}
+						\$1M\left( 1+0.25\%\cdot \frac{7}{360} \right) = \$1, 000, 048.61
+					\end{align*}
+				\end{soln}
+
+			\item 
+				\begin{soln}
+					It does not matter which day of the week the deposit is made on, since the term will always be 7 days until maturity.
+				\end{soln}
+
+			\item 
+				\begin{soln}
+					After 52 weeks, which is a term of 364 days, we will have
+					\begin{align*}
+						\$1M\left( 1+0.25\%\cdot \frac{364}{360} \right) = \$1, 002, 527.78
+					\end{align*}
+				\end{soln}
+
+			\item
+				\begin{soln}
+					The price, as a fraction of face value, is given by
+					\begin{align*}
+						1-Y\cdot\frac{d}{360} = 1-0.25\%\cdot \frac{364}{360} = 0.997472
+					\end{align*}
+					so an initial investment of \$1M will mature to $\$1M/0.997472 = \$1, 002, 534.18.$
+				\end{soln}
+
+			\item 
+				\begin{soln}
+					Option (f) will give us a greater return. If we let $Y\cdot \frac{d}{360}=r$ be the common rate, then option (e) has a yield of $1+r,$ and option (f) has a yield of $\frac{1}{1-r}.$ Now,
+					\begin{align*}
+						1>1-r^2\implies \frac{1}{1-r} > 1+r
+					\end{align*}
+					so option (f) will always have a higher profit over the same term.
+				\end{soln}
+				
+		\end{enumerate}
+		
+\end{enumerate}
+
+\end{document}
