@@ -1,0 +1,104 @@
+\documentclass{article}
+\usepackage[sexy, hdr, fancy]{evan}
+\setlength{\droptitle}{-4em}
+
+\lhead{Homework 4}
+\rhead{Introduction to Financial Derivatives}
+\lfoot{}
+\cfoot{\thepage}
+
+\newcommand{\var}{\mathrm{Var}}
+\newcommand{\cov}{\mathrm{Cov}}
+
+\begin{document}
+\title{Homework 4}
+\maketitle
+\thispagestyle{fancy}
+
+\section*{Chapter 5: Determination of Forward and Futures Prices}
+
+\begin{itemize}
+	\item[2.] What is the difference between the forward price and the value of a forward contract?
+		\begin{answer*}
+			The forward price is the price where arbitrage opportunities would not exist today. The value of a forward contract is the payoff at maturity on any given day, discounted back to that day. 
+		\end{answer*}
+
+	\item[4.] A stock index currently stands at 350. The risk-free interest rate is 8\% per annum (with continuous compounding) and the dividend yield on the index is 4\% per annum. What should the futures price for a 4-month contract be?
+		\begin{soln}
+			Using equation (5.3), the futures price should be
+			\begin{align*}
+				F_0 &= S_0 e^{(r-q)T} = 350e^{(0.08-0.04)\cdot \frac{1}{3}} = 354.70
+			\end{align*}
+		\end{soln}
+
+	\item[6.] Explain carefully the meaning of the terms convenience yield and cost of carry. What is the relationship between futures price, spot price, convenience yield, and cost of carry?
+		\begin{answer*}
+			The convenience yield is the benefit of holding an asset, compared to holding a futures contract for the asset. The cost of carry is the total of the cost of storage, cost of financing, minus the income earned by the asset. For a consumption asset, we have $F_0 = S_0e^{(c-y)T},$ where $c$ is the cost of carry, and $y$ is the convenience yield.
+		\end{answer*}
+
+	\item[7.] Explain why a foreign currency can be treated as an asset providing a known yield.
+		\begin{answer*}
+			An investment in a foreign currency pays interest in that currency. Since the interest and the investment itself are in the same currency, the yield in the domestic currency is a known percentage of the foreign currency, so this has the properties of an asset with a known yield.
+		\end{answer*}
+
+	\item[12.] Suppose that the risk-free interest rate is 10\% per annum with continuous compounding and that the dividend yield on a stock index is 4\% per annum. The index is standing at 400, and the futures price for a contract deliverable in four months is 405. What arbitrage opportunities does this create?
+		\begin{soln}
+			The correct futures price should be
+			\begin{align*}
+				F_0 = S_0e^{(r-q)T} = 400e^{(0.10-0.04)\cdot \frac{1}{3}} = 408.08
+			\end{align*}
+			An arbitrageur can short sell the stocks underlying the index and long the 4-month futures contract.
+		\end{soln}
+
+	\item[16.] Suppose $F_1$ and $F_2$ are two futures contracts on the same commodity with times to maturity, $t_1$ and $t_2,$ where $t_2>t_1.$ Prove that
+		\begin{align*}
+			F_2\le F_1e^{r(t_2-t_1)}
+		\end{align*}
+		where $r$ is the interest rate (assumed constant) and there are no storage costs. For the purposes of this problem, assume that a futures contract is the same as a forward contract.
+		\begin{proof}
+			Suppose $F_2>F_1e^{r(t_2-t_1)}\implies F_2-F_1e^{r(t_2-t_1}>0.$ Then take a long position in $F_1$ and a short position in $F_2.$ At $t_1,$ borrow $F_1$ at rate $r$ to buy the commodity. Then at $t_2,$ sell the commodity at $F_2$ and pay back $F_1e^{r(t_2-t_1)}$ for a profit of $F_2-F_1e^{r(t_2-t_1)}>0.$ This is a riskless arbitrage, which should not be possible, contradiction. Thus, $F_2\le F_1e^{r(t_2-t_1)},$ as desired.
+		\end{proof}
+
+	\item[17.] When a known future cash outflow in a foreign currency is hedged by a company using a forward contract, there is no foreign exchange risk. When it is hedged using futures contracts, the daily settlement process does leave the company exposed to some risk. Explain the nature of this risk. In particular, consider whether the company is better off using a futures contract or a forward contract when: (Assume that the forward price equals the futures price.)
+		\begin{enumerate}[(a)]
+			\item The value of the foreign currency falls rapidly during the life of the contract.
+				\begin{answer*}
+					The forward contract is better. The futures contract dropping in value causes cash outflows earlier than the settlement date, and due to the time value of money, the discounted value of these outflows costs more than the settlement at maturity.
+				\end{answer*}
+
+			\item The value of the foreign currency rises rapidly during the life of the contract.
+				\begin{answer*}
+					The futures contract is better. The futures contract rising in value causes cash inflows earlier than the settlement date, and due to the time value of money, the discounted value of these inflows is more valuable than the settlement at maturity.
+				\end{answer*}
+
+			\item The value of the foreign currency first rises and then falls back to its initial value.
+				\begin{answer*}
+					The futures contract is better. Earlier cash inflows means they will not be discounted by as much as the later cash outflows, leading to a net positive present value of cash flow.
+				\end{answer*}
+
+			\item The value of the foreign currency first falls and then rises back to its initial value.
+				\begin{answer*}
+					The forward contract is better. Earlier cash outflows means they will not be discounted by as much as the later cash inflows, leading to a net negative present value of cash flow.
+				\end{answer*}
+
+		\end{enumerate}
+
+	\item[20.] Show that equation (5.3) is true by considering an investment in the asset combined with a short position in a futures contract. Assume that all income from the asset is reinvested in the asset. Use an argument similar to that in footnotes 2 and 3 of this chapter and explain in detail what an arbitrageur would do if equation (5.3) did not hold.
+		\begin{proof}
+			Suppose $F_0>S_0e^{(r-q)T}\implies F_0e^{qT}>S_0e^{rT}.$ Then we should borrow $S_0$ at $r$ to buy the asset, and enter a short futures contract for $e^{qT}$ units of the asset. The dividends are invested into the asset, so it grows from 1 unit to $e^{qT}$ units at maturity, so the investor sells them at $F_0e^{qT},$ and pays back the loan of $S_0e^{rT},$ which is a riskless arbitrage due to our assumption. 
+
+			Suppose $F_0<S_0e^{(r-q)T}\implies F_0e^{qT}<S_0e^{rT}.$ Then we should short the asset, and enter a long futures contract for $e^{qT}$ units of the asset. The proceeds are invested at $r,$ which matures to $S_0e^{rT}.$ The investor must pay dividends on the asset, which can be done by shorting additional units until the total number of assets shorted is $e^{qT}.$ The short positions can be closed out by buying the assets for $F_0e^{qT},$ which is a riskless arbitrage due to our assumption.
+
+			Thus, it must hold that $F_0=S_0e^{(r-q)T}.$
+		\end{proof}
+
+	\item[27.] An index is 1200. The 3-month risk-free rate is 3\% per annum and the dividend yield over the next 3 months is 1.2\% per annum. The 6-month risk-free rate is 3.5\% per annum and the dividend yield over the next 6 months is 1\% per annum. Estimate the futures price of the index for 3-month and 6-month contracts. All interest rates and dividend yields are continuously compounded.
+		\begin{soln}
+			3-month: The futures price of the index is $1200e^{(0.03-0.012)\cdot \frac{1}{4}} = 1205.41.$
+
+			6 month: The futures price of the index is $1200e^{(0.035-0.01)\cdot \frac{1}{2}} = 1215.09.$
+		\end{soln}
+		
+\end{itemize}
+
+\end{document}
