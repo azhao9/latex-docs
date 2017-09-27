@@ -26,6 +26,8 @@
 				-n<\log_3(b-a)\implies 3^{-n}<3^{\log_3(b-a)} = b-a
 			\end{align*}
 			Since the measure of $I_n$ is $3^{-n},$ it cannot contain an interval of strictly greater measure, so $(a, b)\not\subset \Delta.$
+
+			Suppose that if $x<z<y,$ then $z\in \Delta.$ Then $\Delta$ would contain the interval $(x, y),$ which is a contradiction. Thus, some $z\in(x, y)$ must lie outside of $\Delta.$
 		\end{proof}
 
 	\item[23.] The endpoints of $\Delta$ are those points in $\Delta$ having a finite-length base 3 decimal expansion (not necessarily in the proper form), that is, all of the points in $\Delta$ of the form $a/3^n$ for some integers $n$ and $0\le a\le 3^n.$ Show that the endpoints of $\Delta$ other than 0 and 1 can be written as $0.a_1a_2\cdots a_{n+1}$ (base 3), where each $a_k$ is 0 or 2, except $a_{n+1},$ which is either 1 or 2. That is, the discarded "middle third" intervals are of the form $(0.a_1a_2\cdots a_n1, 0.a_1a_2\cdots a_n2),$ where both entries are points of $\Delta$ written in base 3.
