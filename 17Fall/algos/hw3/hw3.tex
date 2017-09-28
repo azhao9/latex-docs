@@ -72,7 +72,7 @@ In this problem we will only be concerned with normal binary search trees. Recal
 				\item The number of nodes $\ge x$ and $<y$ is thus $c(y)-c(x),$ so return $c(y)-c(x)+1$ to include $y.$
 			\end{enumerate}
 
-			This algorithm takes $O(h)$ to find $x$ then $O(h)$ to bubble up to the root and, and same for $y,$ so the total time is $O(h).$ This algorithm is correct because if (a), then $x$ is less than its parent, and if (b), $x$ is greater than its parent and therefore all of its parent's left subtree. 
+			This algorithm takes $O(h)$ to find $x$ then $O(h)$ to bubble up to the root and, and same for $y,$ so the total time is $O(h).$ This algorithm is correct because if (a), then $x$ is less than its parent, and if (b), $x$ is greater than its parent and therefore all of its parent's left subtree. Any up-left movement to a node $q$ means that $x$ is in the right subtree of $q,$ and therefore $x>q.$
 		\end{soln}
 
 	\item Describe how to maintain this information in $O(h)$ time when a new node is inserted (note that there are no rotations on an insert - it's just the regular binary search tree insert, but you need to update information appropriately).
