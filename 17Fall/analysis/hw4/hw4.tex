@@ -1,0 +1,88 @@
+\documentclass{article}
+\usepackage[sexy, hdr, fancy]{evan}
+\setlength{\droptitle}{-4em}
+
+\lhead{Homework 4}
+\rhead{Honors Analysis I}
+\lfoot{}
+\cfoot{\thepage}
+
+
+\begin{document}
+\title{Homework 4}
+\maketitle
+\thispagestyle{fancy}
+
+\section*{Chapter 3: Metrics and Norms}
+
+\begin{itemize}
+	\item[6.] If $d$ is any metric on $M,$ show that $\rho(x, y)=\sqrt{d(x, y)}, \sigma(x, y)=\frac{d(x, y)}{1+d(x, y)},$ and $\tau(x, y)=\min\left\{ d(x, y), 1 \right\}$ are also metrics on $M.$
+		\begin{proof}
+			$\rho:$ Clearly $\rho$ is non-negative since $d$ is non-negative by being a metric, and 
+			\begin{align*}
+				\rho(x, y)=0=\sqrt{d(x, y)}\iff d(x, y)=0\iff x=y
+			\end{align*}
+			It is also symmetric because $d$ is symmetric, and finally
+			\begin{align*}
+				\rho(x, y)+\rho(y, z) &= \sqrt{d(x, y)}+\sqrt{d(y, z)} \\
+				\implies \left[ \rho(x, y)+\rho(y, z) \right]^2 &= d(x, y) + d(y, z) + 2\sqrt{d(x, y)d(y, z)} \\
+				&\ge d(x, z) + 2\sqrt{d(x, y)d(y, z)} \ge d(x, z) \\
+				\implies \rho(x, y)+\rho(y, z)&\ge \sqrt{d(x, z)} = \rho(x, z)
+			\end{align*}
+
+			$\sigma:$ Clearly $\sigma$ is non-negative since $d$ is non-negative, and
+			\begin{align*}
+				\sigma(x, y) = 0 = \frac{d(x, y)}{1+d(x, y)} \iff d(x, y) = 0 \iff x = y
+			\end{align*}
+			It is also symmetric because $d$ is symmetric. Now, define $F(t)=\frac{t}{1+t}.$ Then $F'(t)=\frac{1}{(1+t)^2}>0$ so $F$ is increasing, and we have
+			\begin{align*}
+				F(t)+F(s) &= \frac{t}{1+t} + \frac{s}{1+s} = \frac{t+ts+s+st}{(1+t)(1+s)} = \frac{s+t+2st}{1+s+t+st} \\
+				&= \frac{s+t+st}{1+s+t+st} + \frac{st}{1+s+t+st} = F(s+t+st) + \frac{st}{1+s+t+st} \\
+				&\ge F(s+t)
+			\end{align*}
+			since $F$ is increasing since $F'(t)=(1+t)^{-2}>0.$ Thus,
+			\begin{align*}
+				\sigma(x, y)+\sigma(y, z) &= F(d(x, y))+F(d(y, z)) \ge F\left( d(x, y)+d(y, z) \right) \\
+				&\ge F(d(x, z)) = \sigma(x, z)
+			\end{align*}
+
+			$\tau:$ Clearly $\tau$ is non-negative since $d$ and $1$ are non-negative, and
+			\begin{align*}
+				\tau(x, y) = 0 = \min\left\{ d(x, y), 1 \right\}\iff d(x, y) = 0\iff x=y
+			\end{align*}
+			It is also symmetric because $d$ is symmetric. Suppose that
+			\begin{align*}
+				\tau(x, y)+\tau(y, z) &< \tau(x, z) \\
+				\min\left\{ d(x, y), 1 \right\} +\min\left\{ d(y, z), 1 \right\} = m_1+m_2 &< \min\left\{ d(x, z), 1 \right\} \\
+				\implies m_1+m_2 &< 1, \quad m_1+m_2<d(x, z)
+			\end{align*}
+			If $m_1+m_2<1,$ then we must have $m_1=d(x, y)$ and $m_2=d(y, z),$ but since $d$ is a metric, $m_1+m_2=d(x, y)+d(y, z) \ge d(x, z),$ so it is impossible for both conditions to be true. Contradiction, so $\tau(x, y)+\tau(y, z)\ge \tau(x, z),$ and $\tau$ is a metric.
+		\end{proof}
+
+	\item[15.] We define the diameter of a nonempty subset $A$ of $M$ by $\diam(A)=\sup\left\{ d(a, b):a, b\in A \right\}.$ Show that $A$ is bounded if and only if $\diam(A)$ is finite.
+		\begin{proof}
+			$(\implies):$ If $A$ is bounded, then $\exists x_0\in M$ and $C<\infty$ such that $d(a, x_0)\le C$ for all $a\in A.$ Then
+			\begin{align*}
+				\diam(A) = \sup\left\{ d(a, b):a, b\in A \right\} \le \sup\left\{ d(a, x_0)+d(x_0, b):a, b\in A \right\} \le 2C <\infty
+			\end{align*}
+
+			$(\impliedby):$ If $\diam(A)$ is finite, say $s=\diam(A).$ Then take any $x_0\in A\subset M,$ and take $C=s.$ Since $s$ is the supremum, it follows that
+			\begin{align*}
+				C = s =\sup\left\{ d(a, b):a, b\in A \right\} \ge d(a, x_0)
+			\end{align*}
+			for any $a\in A,$ so $A$ is bounded, as desired.
+		\end{proof}
+
+	\item[22.] Show that $\left\lVert x \right\rVert_\infty\le\left\lVert x \right\rVert_2$ for any $x\in\ell_2,$ and that $\left\lVert x \right\rVert_2\le\left\lVert x \right\rVert_1$ for any $x\in\ell_1.$
+
+	\item[23.] The subset of $\ell_\infty$ consisting of all sequences that converge to 0 is denoted by $c_0.$ (Note that $c_0$ is actually a linear subspace of $\ell_\infty;$ thus $c_0$ is also a normed vector space under $\left\lVert \cdot \right\rVert_\infty.)$ Show that we have the following proper set inclusions: $\ell_1\subset\ell_2\subset c_0\subset\ell_\infty.$
+
+	\item[25.] The same techniques can be used to show that $\left\lVert f \right\rVert_p = \left( \int_0^1 \abs{f(t)}^p\, dt \right)^{1/p}$ defines a norm on $C\left( [0, 1] \right)$ for any $1<p<\infty.$ State and prove the analogues of Lemma 3.7 and Theorem 3.8 in this case. (Does Lemma 3.7 still hold in this setting for $p=1$ and $q=\infty?)$
+
+	\item[31.] Give an example where $\diam(A\cup B)>\diam(A)+\diam(B).$ If $A\cap B\neq\varnothing,$ show that $\diam(A\cup B)\le \diam(A)+\diam(B).$
+
+	\item[37.] A Cauchy sequence with a convergent subsequence converges.
+		
+\end{itemize}
+
+\end{document}

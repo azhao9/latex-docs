@@ -1,0 +1,159 @@
+\documentclass{article}
+\usepackage[sexy, hdr, fancy]{evan}
+\setlength{\droptitle}{-4em}
+
+\lhead{Homework 3}
+\rhead{Investment Science}
+\lfoot{}
+\cfoot{\thepage}
+
+\newcommand{\var}{\mathrm{Var}}
+\newcommand{\cov}{\mathrm{Cov}}
+
+\begin{document}
+\title{Homework 3}
+\maketitle
+\thispagestyle{fancy}
+
+\begin{enumerate}[1.]
+	\item 
+		\begin{proof}
+			From the definition of Macaulay duration, we have
+			\begin{align*}
+				PV &= \sum_{k=1}^{n} \frac{c}{\left( 1+y \right)^k} + \frac{1}{(1+y)^{n}} = \frac{c}{y}\left( 1- \frac{1}{(1+y)^n} \right) + \frac{1}{(1+y)^n} = \frac{c(1+y)^n-c+y}{y(1+y)^n} \\
+				D &= \frac{1}{PV} \left[\sum_{k=1}^{n} \frac{kc}{\left( 1+y \right)^k} + \frac{n}{(1+y)^n}\right] = \frac{c}{PV}\sum_{k=1}^{n} \frac{k}{(1+y)^k} + \frac{n}{PV(1+y)^n}
+			\end{align*}
+			Now, to compute the closed form of the summation, we have
+			\begin{align*}
+				S &= \frac{1}{1+y} + \frac{2}{(1+y)^2} + \frac{3}{(1+y)^3} + \cdots + \frac{n}{(1+y)^n} \\
+				S\cdot \frac{1}{1+y} &= \frac{0}{1+y} + \frac{1}{(1+y)^2} + \frac{2}{(1+y)^3} + \cdots + \frac{n-1}{(1+y)^n} + \frac{n}{(1+y)^{n+1}} \\
+				\implies S\left( 1- \frac{1}{1+y} \right) &= \frac{1}{1+y} + \frac{1}{(1+y)^2} + \frac{1}{(1+y)^3} + \cdots + \frac{1}{(1+y)^n} - \frac{n}{(1+y)^{n+1}} \\
+				S\cdot \frac{y}{1+y} &= \frac{1}{1+y}\left( 1+\frac{1}{1+y} + \cdots + \frac{1}{(1+y)^{n-1}} - \frac{n}{(1+y)^n} \right) \\
+				\implies S &= \frac{1}{y} \left( \frac{1-\frac{1}{(1+y)^n}}{1-\frac{1}{1+y}} - \frac{n}{(1+y)^n} \right) = \frac{(1+y)^{n+1}-ny-y-1}{y^2(1+y)^n}
+			\end{align*}
+			Now, the duration is given by
+			\begin{align*}
+				D &= \frac{c}{PV}\cdot S + \frac{n}{PV(1+y)^n} = \frac{y(1+y)^n}{c(1+y)^n-c+y}\left(\frac{c\left[(1+y)^{n+1}-ny-y-1\right]}{y^2(1+y)^n} + \frac{n}{(1+y)^n}\right) \\
+				&= \frac{y(1+y)^n}{c(1+y)^n-c+y}\cdot \frac{c(1+y)^{n+1}-cny-cy-c + ny^2}{y^2(1+y)^n} = \frac{c(1+y)^{n+1}-cny-cy-c+ny^2}{y\left[c(1+y)^n-c+y\right]} \\
+				&= \frac{1}{y}\cdot \left(\frac{c(1+y)^{n+1}-cy-c+y^2+y}{c(1+y)^n-c+y} + \frac{-cny+(n-1)y^2-y}{c(1+y)^n-c+y} \right) \\
+				&= \frac{1+y}{y} - \frac{1+y+n(c-y)}{c(1+y)^n-c+y}
+			\end{align*}
+			This is the duration in terms of number of periods, so the duration in years is thus
+			\begin{align*}
+				\frac{1}{m} \left( \frac{1+y}{y} - \frac{1+y+n(c-y)}{c(1+y)^n-c+y} \right) = \frac{1+y}{my} - \frac{1+y+n(c-y)}{mc\left[ (1+y)^n-1 \right]+my}
+			\end{align*}
+			as desired.
+		\end{proof}
+
+	\item 
+		\begin{soln}
+			The present value of the perpetuity is given by
+			\begin{align*}
+				PV &= \sum_{k=1}^{\infty} \frac{A}{(1+r)^k} = \frac{A}{1+r} \sum_{k=0}^{\infty} \frac{1}{(1+r)^k} = \frac{A}{1+r} \cdot \frac{1}{1-\frac{1}{1+r}} = \frac{A}{r}
+			\end{align*}
+			Now, the duration is calculated as
+			\begin{align*}
+				D &= \frac{1}{PV} \sum_{k=1}^{\infty} \frac{Ak}{(1+r)^k} = \frac{r}{A}\cdot A\sum_{k=1}^{\infty} \frac{k}{(1+r)^k} = r\sum_{k=1}^{\infty} \frac{k}{(1+r)^k}
+			\end{align*}
+			To calculate the summation, we have
+			\begin{align*}
+				S &= \frac{1}{1+r} + \frac{2}{(1+r)^2} + \frac{3}{(1+r)^3} + \cdots \\
+				S\cdot \frac{1}{1+r} &= \frac{0}{1+r} + \frac{1}{(1+r)^2} + \frac{2}{(1+r)^3} + \cdots \\
+				\implies S\left( 1-\frac{1}{1+r} \right) &= \frac{1}{1+r} + \frac{1}{(1+r)^2} + \frac{1}{(1+r)^3} + \cdots \\
+				S\cdot \frac{r}{1+r} &= \frac{\frac{1}{1+r}}{1-\frac{1}{1+r}} = \frac{1}{r} \\
+				\implies S &= \frac{1+r}{r^2} \\
+				\implies D &= rS = \frac{1+r}{r} \\
+				\implies D_M &= D\cdot \frac{1}{1+r} = \frac{1}{r}
+			\end{align*}
+		\end{soln}
+
+	\item 
+		\begin{proof}
+			From 1, the formulation of duration is given by
+			\begin{align*}
+				D &= \frac{1+y}{my} - \frac{1+y+n(c-y)}{mc\left[ (1+y)^n-1 \right]+my} \\
+				\implies \lim_{n\to\infty} D &= \frac{1+y}{my} - \lim_{n\to\infty} \frac{1+y+n(c-y)}{mc\left[ (1+y)^n-1 \right]+my}
+			\end{align*}
+			By L'Hopital's rule, the right hand limit evaluates to 0, so the limiting value of duration is
+			\begin{align*}
+				\lim_{n\to\infty} D &= \frac{1+y}{my} = \frac{1 + \frac{\lambda}{m}}{m\cdot \frac{\lambda}{m}} = \frac{1+\frac{\lambda}{m}}{\lambda}
+			\end{align*}
+			as desired.
+		\end{proof}
+
+	\item
+		\begin{enumerate}[(a)]
+			\item 
+				\begin{soln}
+					The T-note settles on Sep 28, 2017. The current period started on July 31, 2017, and ends Jan 31, 2018. Thus, the number of days that has passed since the period started is 59, out of a total of 184 days, so the accrued interest is
+					\begin{align*}
+						A/I &= \frac{59}{184}\cdot \frac{2.25\%}{2} \cdot \$100 = \$0.36
+					\end{align*}
+				\end{soln}
+
+			\item 
+				\begin{soln}
+					There are $184-59=125$ days until the next coupon payment, so $t_1=\frac{125}{184}.$ There are 10 periods remaining in the bond, each coupon payment is $2.25/2=1.125,$ and the semi-annual yield is 0.9\%, so the dirty price is
+					\begin{align*}
+						&\sum_{k=1}^{10} \frac{1.125}{(1+0.9\%)^{t_1+k}} + \frac{101.125}{(1+0.9\%)^{t_1+10}} = \frac{1.125}{1.009^{t_1}}\sum_{k=0}^{9} \frac{1}{1.009^k} + \frac{101.125}{1.009^{t_1+10}} \\
+						&= \frac{1.125}{1.009^{t_1}}\cdot \frac{1-\frac{1}{1.009^{10}}}{1-\frac{1}{1.009}} + \frac{101.125}{1.009^{t_1+10}} = \$102.55
+					\end{align*}
+				\end{soln}
+
+			\item 
+				\begin{soln}
+					The clean price is the accrued interest subtracted from the dirty price, which is
+					\begin{align*}
+						102.55-0.36 = \$102.19
+					\end{align*}
+				\end{soln}
+				
+		\end{enumerate}
+
+	\item 
+		\begin{enumerate}[(a)]
+			\item 
+				\begin{soln}
+					The coupon dates are 15-May-2018 and 15-Nov-2017. The cash flows are \$100.50 and \$0.50, respectively.
+				\end{soln}
+
+			\item 
+				\begin{soln}
+					The settlement date is 2-Oct-2017, so the number of days until 15-Nov-2017 is 44.
+				\end{soln}
+
+			\item 
+				\begin{soln}
+					The current period started on 15-May-2017, and ends on 15-Nov-2017, for 184 days.
+				\end{soln}
+
+			\item 
+				\begin{soln}
+					The accrued interest is
+					\begin{align*}
+						\frac{184-44}{184}\cdot \frac{1\%}{2}\cdot \$100 = \$0.3804
+					\end{align*}
+				\end{soln}
+
+			\item 
+				\begin{soln}
+					The dirty bid price is the quoted bid price plus the accrued interest, which is
+					\begin{align*}
+						99.8047+0.3804=\$100.1851
+					\end{align*}
+				\end{soln}
+
+			\item 
+				\begin{soln}
+					The YTM $\lambda$ at this bid price is the solution to
+					\begin{align*}
+						100.1851 &= \frac{0.5}{\left( 1+\frac{\lambda}{2} \right)^{44/184}} + \frac{100.5}{\left( 1+\frac{\lambda}{2} \right)^{1+44/184}} \\
+						\implies \lambda &= 1.3171\%
+					\end{align*}
+				\end{soln}
+				
+		\end{enumerate}
+		
+\end{enumerate}
+
+\end{document}
