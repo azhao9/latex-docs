@@ -12,9 +12,7 @@
 \maketitle
 \thispagestyle{fancy}
 
-
 \section{Move to Front (34 points)}
-Amortized analysis can be used not just to give absolute bounds on running times, but also bounds \emph{compared to other algorithms}.  In this problem we'll see an example of this.
 
 Suppose we have $n$ items $x_1, x_2, \dots, x_n$ that we wish to store in a linked list.  The cost of a \emph{lookup} operation is the position in the list, i.e.~if we lookup some element $x_i$ we pay $1$ if it is the first element, $2$ if it is the second element, $3$ if it is the third element, etc.  This models the time it takes to scan through the list to find the element.  
 
@@ -22,15 +20,36 @@ For example, suppose there are four items and we lookup $x_1$ twice, $x_2$ three
 
 But what if we do not know how many times each element will be looked up?  It turns out that a good strategy is \emph{Move-to-Front} (MTF): when we lookup an item, we also move it to the head of the list.  Let's say that moving an element is free (it is easy enough to implement with a constant number of pointer switches, in any case).  So if, for example, we start with the list $(x_1, x_2, \dots, x_n)$ and then lookup $x_4$, we pay a cost of $4$ and afterwards the list will be $(x_4, x_1, x_2, x_3, x_5, x_6, \dots, x_n)$.  Then if we lookup $x_4$ again we only have to pay a cost of $1$.  
 
-\begin{enumerate}
+\begin{enumerate}[(a)]
 
 	\item Consider a sequence of $m$ operations (think of $m$ as being much larger than $n$).  Let $C_{init}$ be the cost of these operations if we used the original list $(x_1, x_2, \dots, x_n)$ the entire time (i.e.~we do not use MTF).  Let $C_{MTF}$ be the cost if we use MTF on the same operations starting from the original list.  Prove that $C_{MTF} \leq 2 C_{init}$.  
 
 		Hint: Think of each item $x_i$ as having a ``piggy bank" in which the number of tokens is the number of elements before it in the current list that come after it in the initial list, or a potential function equal to the number of reversals.  
+		\begin{proof}
+			Consider a potential function $\Phi$ equal to the number of reversals in the list relative to the initial ordering. Then $\Phi_0=0$ since the lists are initially identical, and it is non-negative since there cannot be a negative number of reversals.
+			
+			Now, suppose operation $c_i$ finds $x,$ the $j_i$th element in the current list, which was the $k_i$th element in the initial list. This takes $j_i$ time, then $x$ is moved to the front. Since $x$ was the $k_i$th element in the initial list, this movement can create at most $k_i-1$ new reversals involving $x.$ Since $x$ was the $j_i$th element in the current list before moving, the total number of reversal switches (either reversal to non-reversal or non-reversal to reversal) is exactly $j_i-1,$ so this movement must change at least $j_i-1-(k_i-1)=j_i-k_i$ pairs from reversals to non-reversals. 
+
+			After $c_i,$ the number of new reversals is at most $k_i-1-(j_i-k_i)=2k_k-j_i-1\ge \Phi_{i+1}-\Phi_i.$ Thus,
+			\begin{align*}
+				c_i' = c_i + \Phi_{i+1}-\Phi_i \le j_i + (2k_i-j_i-1) = 2k_i - 1
+			\end{align*}
+			Now, the total time for the $m$ operations on the initial list is just $\sum_{}^{}k_i,$ so we have
+			\begin{align*}
+				C_{MTF}=\sum_{}^{}c_i\le \sum_{}^{}c_i'\le \sum_{}^{}(2k_i-1)\le 2\sum_{}^{}k_i = 2C_{init}
+			\end{align*}
+		\end{proof}
 
 	\item Now let $C_{static}$ be the smallest possible cost among all fixed lists.  In other words, given the same sequence of lookups, each fixed list (without MTF) has some cost, and let $C_{static}$ be the minimum of those costs.  Note that this will correspond to the list that is sorted by the number of accesses, like in the first example.  Prove that $C_{MTF} \leq 2C_{static} + n^2$.
 
 		Hint: think of a new bank or potential function which is relative to the unknown static best fixed list, rather than relative to the initial list.  What does this imply about the initial amount of money in the bank / potential?
+		\begin{proof}
+			Define $\Phi$ as the number of reversals in the current list with the optimal list. In the worst case, the optimal ordering will be exactly the opposite order of the initial order, so there will be at most $\binom{n}{2} = \frac{n(n-1)}{2}$ reversals at the beginning, so $0\le \Phi_0\le \frac{n(n-1)}{2}.$ Then we have
+			\begin{align*}
+				C_{MTF} = \sum_{}^{}c_i = \sum_{}^{}c_i' + \Phi_0 - \Phi_m \le \sum_{}^{}(2k_i-1) + \frac{n(n-1)}{2} \le 2\sum_{}^{}k_i + n^2 = 2C_{static} + n^2
+			\end{align*}
+			as desired.
+		\end{proof}
 \end{enumerate}
 
 \section{Amortized analysis of 2-3-4 trees (33 points)}
@@ -40,8 +59,23 @@ Recall that in a 2-3-4 tree, whenever we insert a new key we immediately split (
 Hint: Using a piggy bank at every node which stores a token if the node is full (or equivalently, a potential function which is equal to the number of full nodes) does not work.  Why not?  Can you modify the banks/potential functions?
 
 Note: this does not mean that the amortized running time of an insert is $O(1)$ (since this is not true); it just means that the amortized number of splits is $O(1)$.  So think of ``cost" not as ``time", but as ``number of splits".  Since we didn't talk about them in class, feel free to assume there are no delete operations.  
+\begin{proof}
+	If $n$ is the number of 4-nodes and $m$ is the number of 3-nodes in the tree, then $\Phi=2n+m$ is the potential function. Clearly $\Phi_0=0,$ and $\Phi\ge 0$ at all times. When a 4-node must be split, it can be split into either a 2-node or 3-node parent, never a 4-node parent since that parent would have been split on the way down. 
+
+	If it splits into a parent 2-node, then the parent becomes a 3-node. We lose a 4-node but gain a 3-node, so
+	\begin{align*}
+		\Phi_{i+1}-\Phi_i = \left[2(n-1)+(m+1)\right]-(2n+m) = -1 
+	\end{align*}
+
+	If it splits into a parent 3-node, then the parent becomes a 4-node. We lose a 4-node, but gain it back in the next configuration, and lose an additional 3-node, so 
+	\begin{align*}
+		\Phi_{i+1}-\Phi_i = \left[ 2n+(m-1) \right] - (2n+m) = -1
+	\end{align*}
+	This decrease in potential in both cases pays for the split, so the amortized number of splits is $O(1).$
+\end{proof}
 
 
+\newpage
 \section{More stacks (33 points)}
 In this problem we have two stacks $A$ and $B$.  In what follows, we will use $n$ to denote the number of elements in stack $A$ and use $m$ to denote the number of elements in stack $B$.  Suppose that  we use these stacks to implement the following operations: 
 \begin{itemize}
@@ -55,5 +89,38 @@ In this problem we have two stacks $A$ and $B$.  In what follows, we will use $n
 We are using the stacks as a black box -- you may assume that \textsc{PushA}, \textsc{PushB}, \textsc{MultipopA($1$)}, and \textsc{MultipopB($1$)} each take one unit of time (i.e.~it takes one time step to push or pop a single element).
 
 Design a potential function $\Phi(n,m)$, and use it to prove that the amortized running time is $O(1)$ for every operation.
+\begin{proof}
+	Consider the potential function $\Phi(n, m) = 3n+m.$ Then at the beginning, $\Phi$ is 0, and is obviously never negative since $n, m\ge 0.$ Then for \textsc{PopA($x$)}, we have
+	\begin{align*}
+		c_i' &= c_i + \Phi_{i+1}-\Phi_i = 1 + \Phi(n+1, m) - \Phi(n, m) \\
+		&= 1 + \left[ 3(n+1)+m \right] - (3n+m) \\
+		&= 4
+	\end{align*}
+	and similarly for \textsc{PopB($x$)} we have
+	\begin{align*}
+		c_i' &= c_i + \Phi_{i+1} - \Phi_i = 1 + \Phi(n, m+1) - \Phi(n, m) \\
+		&= 1 + \left[ 3n+(m+1) \right] - (3n+m) \\
+		&= 2
+	\end{align*}
+	Since \textsc{MultipopA(1)} and \textsc{MultipopB(1)} are both $O(1),$ it follows that $\textsc{MultipopA($k$)}$ and $\textsc{MultipopB($k$)}$ take $\min\left\{ n, k \right\}$ and $\min\left\{ m, k \right\},$ respectively. So for \textsc{MultipopA($k$)}, we have
+	\begin{align*}
+		c_i' &= c_i + \Phi_{i+1} - \Phi_i = \min\left\{ n, k \right\} + \Phi\left( n-\min\left\{ n, k \right\}, m \right) - \Phi(n, m) \\
+		&= \min\left\{ n, k \right\} + \left[ 3\left( n-\min\left\{ n, k \right\} \right) + m \right] - (3n+m) \\
+		&= -2\min\left\{ n, k \right\}
+	\end{align*}
+	and similarly for \textsc{MultipopB($k$)} we have
+	\begin{align*}
+		c_i' &= c_i + \Phi_{i+1} - \Phi_i = \min\left\{ m, k \right\} + \Phi\left( n, m-\min\left\{ m, k \right\} \right) - \Phi(n, m) \\
+		&= \min\left\{ m, k \right\} + \left[ 3n+\left( m-\min\left\{ m, k \right\} \right) \right] - (3n+m) \\
+		&= 0
+	\end{align*}
+	\textsc{Transfer($k$)} is first a \textsc{MultipopA($k$)} which takes $\min\left\{ n, k \right\}$ and then $\min\left\{ n, k \right\}$ calls to \textsc{PushB($x$)}. Thus,
+	\begin{align*}
+		c_i' &= c_i + \Phi_{i+1} - \Phi_i = 2\min\left\{ n, k \right\} + \Phi\left( n-\min\left\{ n, k \right\}, m+\min\left\{ n, k \right\} \right) - \Phi(n, m) \\
+		&= 2\min\left\{ n, k \right\} + \left[ 3\left( n-\min\left\{ n, k \right\} \right) + \left( m+\min\left\{ n, k \right\} \right) \right] - (3n+m) \\
+		&= 0
+	\end{align*}
+	Thus, since $c_i'\le 4$ for all operations, it follows that the amortized cost of all operations is $O(1).$
+\end{proof}
 
 \end{document}
