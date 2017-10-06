@@ -19,20 +19,92 @@
 
 \begin{itemize}
 	\item[4.] A Eurodollar futures price changes from 96.76 to 96.82. What is the gain or loss to an investor who is long two contracts?
+		\begin{soln}
+			The price increases by 6 bps, so the investor who is long 2 contracts gains $6\cdot 2\cdot \$25 = \$300.$
+		\end{soln}
 
 	\item[6.] The 350-day LIBOR rate is 3\% with continuous compounding and the forward rate calculated from a Eurodollar futures contract that matures in 350 days is 3.2\% with continuous compounding. Estimate the 440-day zero rate.
+		\begin{soln}
+			Using $F_0=3.2\%$ and $R_0=3\%,$ we have
+			\begin{align*}
+				R_{1} &= \frac{F_0(T_{1}-T_0)+R_0T_0}{T_{1}} = \frac{3.2\%\left( \frac{440}{365}-\frac{350}{365} \right) + 3\%\cdot \frac{350}{365}}{\frac{440}{365}} \\
+				&= 3.0409\%
+			\end{align*}
+		\end{soln}
 
 	\item[9.] It is May 5, 2014. The quoted price of a government bond with a 12\% coupon that matures on July 27, 2024, is 110-17. What is the cash price?
+		\begin{soln}
+			The current coupon period ends on July 27, 2014 and started on Jan 27, 2014, which is 181 days. 98 days have elapsed since Jan 27, each coupon is $\frac{12\%}{2}\cdot 100 = \$6,$ so the cash price is
+			\begin{align*}
+				110\frac{17}{32} + \frac{98}{181}\cdot 6 = \$113.78
+			\end{align*}
+		\end{soln}
 
 	\item[11.] It is July 30, 2015. The cheapest-to-deliver bond in a September 2015 Treasury bond futures contract is a 13\% coupon bond, and delivery is expected to be on September 30, 2015. Coupon payments on the bond are made on February 4 and August 4 each year. The term structure is flat, and the rate of interest with semiannual compounding is 12\% per annum. The conversion factor for the bond is 1.5. The current quoted bond price is \$110. Calculate the quoted futures price for the contract.
+		\begin{soln}
+			The coupon period started on Feb 4, so 176 days have elapsed, and the coupon period is 181 days. Thus the cash price is
+			\begin{align*}
+				110 + \frac{176}{181}\cdot \frac{13}{2} = 116.3204
+			\end{align*}
+			The semi-annual rate is 12\% per annum which is equal to $\ln(1.06^2)=11.65\%$ with continuous compounding. The coupon of \$6.50 will be received in 5 days, so it has present value $6.5e^{-0.1165\cdot \frac{5}{365}} = 6.4896.$ The futures contract lasts for 62 days, so the cash futures price would be
+			\begin{align*}
+				(116.3204-6.4896)e^{0.1165\cdot \frac{62}{365}} = 112.0259
+			\end{align*}
+			At delivery, there are $62-5=57$ days of accrued interest, out of a 184 day period, so the quoted futures price on a 13\% bond should be
+			\begin{align*}
+				112.0259-\frac{57}{184}\cdot \frac{13}{2} = 110.0123
+			\end{align*}
+			Finally, the quoted futures price of the contract should be $\frac{110.0123}{1.5} = \$73.34.$
+		\end{soln}
 
 	\item[14.] Suppose that the 300-day LIBOR zero rate is 4\% and the Eurodollar quotes for contracts maturing in 300, 398, and 489 days are 95.83, 95.62, and 95.48. Calculate 398-day and 489-day LIBOR zero rates. Assume no difference between forward and futures rates for the purposes of your calculation.
+		\begin{soln}
+			The forward rate for the 300-day ED contract is $100-95.83=4.17\%,$ compounded quarterly under ACT/360, which is equivalent to $F_0=\frac{365}{90}\ln\left( 1+\frac{4.17\%}{4} \right) = 4.2060\%$ compounded continuously under ACT/365. Using $R_0=4\%,$ we have
+			\begin{align*}
+				R_1 &= \frac{F_0(T_1-T_0)+R_0T_0}{T_1} = \frac{4.206\%(398-300) + 4\%\cdot 300}{398} \\
+				&= 4.0507\%
+			\end{align*}
+			is the 398-day LIBOR zero rate. Similarly, the forward rate for the 398-day ED contract is $100-95.62=4.38\%,$ compounded quarterly under ACT/360, which is equivalent to $F_1=\frac{365}{90}\ln\left( 1+\frac{4.38\%}{4} \right) = 4.4167\%$ compounded continuously under ACT/365. Thus, we have
+			\begin{align*}
+				R_2 &= \frac{F_1(T_2-T_1)+R_1T_1}{T_2} = \frac{4.4167\%(489-398) + 4.0507\%\cdot 398}{489} \\
+				&= 4.1188\%
+			\end{align*}
+			is the 489-day LIBOR zero rate.
+		\end{soln}
 
-	\item[21.] The 3-month Eurodollar futures price for a contract maturing in 6 year is quoted as 95.20. The standard deviation of the change in the short term interest rate in 1 year is 1.1\%. Estimate the forward LIBOR interest rate for the period between 6.00 and 6.25 years in the future.
+	\item[21.] The 3-month Eurodollar futures price for a contract maturing in 6 years is quoted as 95.20. The standard deviation of the change in the short term interest rate in 1 year is 1.1\%. Estimate the forward LIBOR interest rate for the period between 6.00 and 6.25 years in the future.
+		\begin{soln}
+			The futures rate is $100-95.20=4.80\%$ with quarterly compounding under ACT/360, which is equivalent to $\frac{365}{90}\ln\left( 1+\frac{4.80\%}{4} \right) = 4.8377\%$ with continuous compounding under ACT/365. We have $\sigma=0.011, T_1=6, T_2=6.25,$ so using the convexity adjustment, we have the forward rate is
+			\begin{align*}
+				4.8377\%-\frac{1}{2}\sigma^2T_1T_2 = 4.8377\%-\frac{1}{2}(0.011)^2\cdot 6\cdot 6.25 = 4.6108\%
+			\end{align*}
+		\end{soln}
 
+		\newpage
 	\item[26.] A Eurodollar futures quote for the period between 5.1 and 5.35 years in the future is 97.1. The standard deviation of the change in the short-term interest rate in one year is 1.4\%. Estimate the forward interest rate in an FRA.
+		\begin{soln}
+			The futures rate is $100-97.1=2.9\%$ with quarterly compounding under ACT/360, which is equivalent to $\frac{365}{90}\ln\left( 1+\frac{2.9\%}{4} \right) = 2.9297\%$ with continuous compounding under ACT/365. We have $\sigma=0.014, T_1=5.1, T_2=5.35,$ so using the convexity adjustment, we have the forward rate is
+			\begin{align*}
+				2.9297\%-\frac{1}{2}\sigma^2T_1T_2=2.9297\%-\frac{1}{2}(0.014)^2\cdot 5.1\cdot 5.35 = 2.6623\%
+			\end{align*}
+		\end{soln}
 		
 	\item[27.] It is March 10, 2014. The cheapest-to-deliver bond in a December 2014 Treasury bond futures contract is an 8\% coupon bond, and the delivery is expected to be made on December 31, 2014. Coupon payments on the bond are made on March 1 and September 1 each year. The rate of interest with continuous compounding is 5\% per annum for all maturities. The conversion factor for the bond is 1.2191. The current quoted bond price is \$137. Calculate the quoted futures price for the contract.
+		\begin{soln}
+			The coupon period started on March 1, so 9 days have elapsed, and the coupon period is 184 days. Thus the cash price is
+			\begin{align*}
+				137+\frac{9}{184}\cdot \frac{8}{2} = 137.1957
+			\end{align*}
+			The coupon of \$4 will be received in 175 days, so it has present value $4e^{-0.05\cdot \frac{175}{365}} = 3.9052.$ The futures contract lasts for 296 days, so the cash futures price would be
+			\begin{align*}
+				(137.1957-3.9052)e^{0.05\cdot \frac{296}{365}} = 138.8062
+			\end{align*}
+			At delivery, there are $296-175=121$ days of accrued interest, out of a 181 day period, so the quoted futures price on an 8\% bond should be
+			\begin{align*}
+				138.8062-\frac{121}{181}\cdot \frac{8}{2} = 136.1322
+			\end{align*}
+			Finally, the quoted futures price of the contract should be $\frac{136.1322}{1.2191} = \$111.67.$
+		\end{soln}
 		
 \end{itemize}
 
