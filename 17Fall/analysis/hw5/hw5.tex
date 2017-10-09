@@ -1,0 +1,59 @@
+\documentclass{article}
+\usepackage[sexy, hdr, fancy]{evan}
+\setlength{\droptitle}{-4em}
+
+\lhead{Homework 5}
+\rhead{Honors Analysis I}
+\lfoot{}
+\cfoot{\thepage}
+
+\begin{document}
+\title{Homework 5}
+\maketitle
+\thispagestyle{fancy}
+
+\section*{Chapter 4: Open Sets and Closed Sets}
+
+\begin{itemize}
+	\item[3.] Some authors say that two metrics $d$ and $\rho$ on a set $M$ are equivalent if they generate the same open sets. Prove this.
+
+	\item[18.] Given a nonempty bounded subset $E$ of $\RR,$ show that $\sup E$ and $\inf E$ are elements of $\overline{E}.$ Thus $\sup E$ and $\inf E$ are elements of $E$ whenever $E$ is closed.
+
+	\item[33.] Let $A$ be a subset of $M.$ A point $x\in M$ is called a limit point of $A$ if every neighborhood of $x$ contains a point of $A$ that is different from $x$ itself, that is, if $(B_\varepsilon(x)\setminus\left\{ x \right\})\cap A\neq\varnothing$ for every $\varepsilon>0.$ If $x$ is a limit point of $A,$ show that every neighborhood of $x$ contains infinitely many points of $A.$
+
+	\item[41.] Related to the notion of limit points and isolated points are boundary points. A point $x\in M$ is said to be a boundary point of $A$ if each neighborhood of $x$ hits both $A$ and $A^c.$ In symbols, $x$ is a boundary point of $A$ if and only if $B_\varepsilon(x)\cap A\neq\varnothing$ and $B_\varepsilon(x)\cap A^c\neq\varnothing$ for every $\varepsilon>0.$ Verify each of the following formulas, where $\partial(A)$ denotes the set of boundary points of $A:$
+		\begin{enumerate}[(a)]
+			\item $\partial(A)=\partial(A^c)$
+
+			\item $\overline{A}=\partial(A)\cup A^\circ$
+
+			\item $M=A^\circ\cup \partial(A)\cup (A^c)^\circ$
+				
+		\end{enumerate}
+
+	\item[48.] A metric space is called separable if it contains a countable dense subset. Find examples of countable dense sets in $\RR,$ in $\RR^2,$ and in $\RR^n.$
+		
+\end{itemize}
+
+\section*{Chapter 5: Continuity}
+
+\begin{itemize}
+	\item[17.] Let $f, g:(M, d)\to(N, \rho)$ be continuous, and let $D$ be a dense subset of $M.$ If $f(x)=g(x)$ for all $x\in D,$ show that $f(x)=g(x)$ for all $x\in M.$ If $f$ is onto, show that $f(D)$ is dense in $N.$
+
+	\item[42.] Suppose that $f:\QQ\to\RR$ is Lipschitz. Show that $f$ extends to a continuous function $h:\RR\to\RR.$ Is $h$ unique? Explain. (Hint: Given $x\in\RR,$ choose a sequence of rationals $(r_n)$ converging to $x$ and argue that $h(x)=\lim_{n\to\infty} f(r_n)$ exists and is actually independent of the sequence $(r_n).$)
+
+	\item[46.] Show that every metric space is homeomorphic to one of finite diameter. (Hint: Every metric is equivalent to a bounded metric.)
+
+	\item[48.] Prove that $\RR$ is homeomorphic to $(0, 1)$ and that $(0, 1)$ is homeomorphic to $(0, \infty).$ Is $\RR$ isometric to $(0, 1)?$ to $(0, \infty)?$ Explain.
+
+	\item[56.] Let $f:(M, d)\to (N, \rho).$
+		\begin{enumerate}[(i)]
+			\item We say that $f$ is an open map if $f(U)$ is open in $N$ whenever $U$ is open in $M;$ that is, $f$ maps open sets to open sets. Give examples of a continuous map that is not open and an open map that is not continuous.
+
+			\item Similarly, $f$ is called closed if it maps closed sets to closed sets. Give examples of a continuous map that is not closed and a closed map that is not continuous. 
+				
+		\end{enumerate}
+		
+\end{itemize}
+
+\end{document}

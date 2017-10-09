@@ -74,14 +74,107 @@
 		\end{proof}
 
 	\item[22.] Show that $\left\lVert x \right\rVert_\infty\le\left\lVert x \right\rVert_2$ for any $x\in\ell_2,$ and that $\left\lVert x \right\rVert_2\le\left\lVert x \right\rVert_1$ for any $x\in\ell_1.$
+		\begin{proof}
+			We have
+			\begin{align*}
+				\abs{x_k}\le \left( \sum_{i=1}^{\infty} \abs{x_i}^2 \right)^{1/2}
+			\end{align*}
+			for all $k$ (obvious once we square both sides), so it follows that
+			\begin{align*}
+				\left\lVert x \right\rVert_\infty = \sup\abs{x_k} &\le \left( \sum_{i=1}^{\infty} \abs{x_i}^2 \right)^{1/2} = \left\lVert x \right\rVert_2
+			\end{align*}
 
-	\item[23.] The subset of $\ell_\infty$ consisting of all sequences that converge to 0 is denoted by $c_0.$ (Note that $c_0$ is actually a linear subspace of $\ell_\infty;$ thus $c_0$ is also a normed vector space under $\left\lVert \cdot \right\rVert_\infty.)$ Show that we have the following proper set inclusions: $\ell_1\subset\ell_2\subset c_0\subset\ell_\infty.$
+			By Cauchy, we have
+			\begin{align*}
+				\sum_{i=1}^{\infty} \abs{x_i\cdot x_i} &\le \sum_{i=1}^{\infty} \abs{x_i}\sum_{i=1}^{\infty} \abs{x_i} \\
+				\implies \left\lVert x \right\rVert_2 = \left( \sum_{i=1}^{\infty}\abs{x_i}^2 \right)^{1/2} &\le \sum_{i=1}^{\infty} \abs{x_i} = \left\lVert x \right\rVert_1
+			\end{align*}
+		\end{proof}
+
+	\item[23.] The subset of $\ell_\infty$ consisting of all sequences that converge to 0 is denoted by $c_0.$ Note that $c_0$ is actually a linear subspace of $\ell_\infty;$ thus $c_0$ is also a normed vector space under $\left\lVert \cdot \right\rVert_\infty.$ Show that we have the following proper set inclusions: $\ell_1\subset\ell_2\subset c_0\subset\ell_\infty.$
+		\begin{proof}
+			Suppose $x\in \ell_1.$ Then $\sum_{i=1}^{\infty} \abs{x_i}<\infty.$ By Cauchy, we have
+			\begin{align*}
+				\sum_{i=1}^{\infty}\abs{x_i\cdot x_i} &\le \sum_{i=1}^{\infty}\abs{x_i}\sum_{i=1}^{\infty}\abs{x_i} \\
+				\implies \left( \sum_{i=1}^{\infty} \abs{x_i}^2 \right)^{1/2} &\le \sum_{i=1}^{\infty}\abs{x_i}<\infty
+			\end{align*}
+			so $\ell_1\subset\ell_2.$ Then the reverse inclusion does not hold because for the sequence $x_n=\frac{1}{n},$ we have
+			\begin{align*}
+				\sum_{i=1}^{\infty} \frac{1}{i^2} &= \frac{\pi}{6} \quad\text{but}\quad \sum_{i=1}^{\infty} \frac{1}{i} \to \infty
+			\end{align*}
+
+			Suppose $y\in \ell_2,$ but $y_n$ does not converge to 0. Clearly $y$ must be bounded, otherwise it would not be in $\ell_2.$ Then there exists some $\varepsilon>0$ such that $\abs{y_n}\ge\varepsilon$ infinitely often. Then $\sum_{i=1}^{\infty}\abs{y_i}^2\to\infty,$ so $y\notin\ell_2,$ contradiction. Thus $y_n\to0\implies y\in c_0,$ as desired. The reverse inclusion does not hold for the sequence $y_n=\frac{1}{\sqrt{n}},$ since $y_n\to 0$ but $\sum_{i=1}^{\infty} \left( \frac{1}{\sqrt{i}} \right)^2 \to\infty.$
+
+			Finally, $c_0$ is a linear subspace of $\ell_\infty,$ and the reverse inclusion does not hold if we consider the sequence $(1, 0, 1, 0, 1, 0, \cdots).$ This is bounded, but does not converge to 0.
+		\end{proof}
 
 	\item[25.] The same techniques can be used to show that $\left\lVert f \right\rVert_p = \left( \int_0^1 \abs{f(t)}^p\, dt \right)^{1/p}$ defines a norm on $C\left( [0, 1] \right)$ for any $1<p<\infty.$ State and prove the analogues of Lemma 3.7 and Theorem 3.8 in this case. (Does Lemma 3.7 still hold in this setting for $p=1$ and $q=\infty?)$
 
+		Lemma 3.7': Let $1<p<\infty$ and let $q$ be defined by $1/p+1/q=1.$ Given $f, g\in C([0, 1]),$ we have $\int_0^1 \abs{f(x)g(x)}\, dx\le \left\lVert f \right\rVert_p\left\lVert g \right\rVert_q.$
+		\begin{proof}
+			From Young's inequality, we have
+			\begin{align*}
+				\abs{\frac{f(x)}{\left\lVert f \right\rVert_p}}\cdot \abs{\frac{g(x)}{\left\lVert g \right\rVert_q}} &\le \frac{1}{p} \abs{ \frac{f(x)}{\left\lVert f \right\rVert_p}}^p+\frac{1}{q}\abs{\frac{g(x)}{\left\lVert g \right\rVert_q}}^q \\
+				\implies \int_0^1 \abs{\frac{f(x)g(x)}{\left\lVert f \right\rVert_p\left\lVert g \right\rVert_q}}\, dx &\le \int_0^1 \frac{1}{p} \abs{\frac{f(x)}{\left\lVert f \right\rVert_p}}^p\, dx + \int_0^1 \frac{1}{q} \abs{\frac{g(x)}{\left\lVert g \right\rVert_q}}^q\, dx \\
+				&= \frac{1}{p} + \frac{1}{q} = 1 \\
+				\implies \int_0^1 \abs{f(x)g(x)}\, dx &\le \left\lVert f \right\rVert_p\left\lVert g \right\rVert_q
+			\end{align*}
+			as desired. If $p=1$ and $q=\infty,$ the statement still holds. We have
+			\begin{align*}
+				\left\lVert g \right\rVert_q &= \sup_{0\le t\le 1} \abs{g(t)} \\
+				\implies \abs{f(x)}\abs{g(x)} &\le \abs{f(x)} \cdot\sup_{0\le t\le 1} \abs{g(t)} \\
+				\implies \int_0^1\abs{f(x)g(x)}\, dx &\le \int_0^1\abs{f(x)}\cdot \sup_{0\le t\le 1}\abs{g(t)}\, dx \\
+				&= \left\lVert g \right\rVert_\infty \left\lVert f \right\rVert_1
+			\end{align*}
+		\end{proof}
+
+		Theorem 3.8': Let $1<p<\infty.$ If $f, g\in C([0, 1]).$ then $\left\lVert f+g \right\rVert_p\le \left\lVert f \right\rVert_p + \left\lVert g \right\rVert_p.$
+		\begin{proof}
+			Let $q$ be the conjugate of $p.$ By the triangle inequality and Holder's inequality, we have
+			\begin{align*}
+				\abs{f(x)+g(x)}^p &= \abs{f(x)+g(x)}\cdot \abs{f(x)+g(x)}^{p-1} \\
+				&\le \abs{f(x)}\cdot \abs{f(x)+g(x)}^{p-1} + \abs{g(x)}\cdot \abs{f(x)+g(x)}^{p-1} \\
+				\implies \int_0^1\abs{f(x)+g(x)}^p\, dx &\le \int_0^1 \abs{f(x)}\cdot \abs{f(x)+g(x)}^{p-1}\, dx + \int_0^1 \abs{g(x)}\cdot \abs{f(x)+g(x)}^{p-1}\, dx \\
+				&\le \left\lVert f \right\rVert_p \left\lVert (f+g)^{p-1} \right\rVert_q + \left\lVert g \right\rVert_p\left\lVert (f+g)^{p-1} \right\rVert_q 
+			\end{align*}
+			Now, since $1/p+1/q=1\implies q=\frac{p}{p-1},$ we have
+			\begin{align*}
+				\left\lVert (f+g))^{p-1} \right\rVert_q &= \left(\int_0^1 \left(f(x)+g(x)^{p-1}\right)^{\frac{p}{p-1}}\, dx\right)^{\frac{p-1}{p}} \\
+				&= \left(\left( \int_0^1 \abs{f(x)+g(x)}^p\, dx \right)^{1/p}\right)^{(p-1)} \\
+				&= \left\lVert f+g \right\rVert_p^{p-1}
+			\end{align*}
+			so it follows that
+			\begin{align*}
+				\int_0^1\abs{f(x)+g(x)}^p\, dx = \left\lVert f+g \right\rVert_p^p &\le \left(\left\lVert f \right\rVert_p + \left\lVert g \right\rVert_p\right)\cdot \left\lVert f+g \right\rVert_p^{p-1} \\
+				\implies \left\lVert f+g\right\rVert_p &\le \left\lVert f \right\rVert_p + \left\lVert g \right\rVert_p
+			\end{align*}
+			as desired.
+		\end{proof}
+
 	\item[31.] Give an example where $\diam(A\cup B)>\diam(A)+\diam(B).$ If $A\cap B\neq\varnothing,$ show that $\diam(A\cup B)\le \diam(A)+\diam(B).$
+		\begin{proof}
+			Let $A=\left\{ 0 \right\}$ and $B=\left\{ 1 \right\}$ under the discrete metric. Then $\diam(A)=0$ and $\diam(B)=0,$ but $\diam(A\cup B)=\diam\left( \left\{ 0, 1 \right\} \right) = 1.$
+
+			Take two points $x, y\in A\cup B.$ If $x$ and $y$ are both in $A,$ then $d(x, y)\le \diam (A),$ so
+			\begin{align*}
+				\diam(A\cup B) = \sup\left\{ d(a, b):a, b\in A\cup B \right\} \le \diam (A)
+			\end{align*}
+			and similarly if $x, y\in B.$ WLOG $x\in A, y\in B.$ Since $A\cap B\neq\varnothing,$ take $z\in A\cap B\implies z\in A, z\in B.$
+			\begin{align*}
+				d(x, y) &\le d(x, z) + d(y, z) \le \diam(A)+\diam(B) \\
+				\implies \diam(A\cup B)&=\sup\left\{ d(a, b):a, b\in A\cup B \right\}\le \diam(A)+\diam(B)
+			\end{align*}
+			as desired.
+		\end{proof}
 
 	\item[37.] A Cauchy sequence with a convergent subsequence converges.
+		\begin{proof}
+			Suppose $(x_n)$ is a sequence with a convergent subsequence $(x_{k_j})\to y.$ Let $\varepsilon>0.$ Since $(x_n)$ is Cauchy, choose $N\in \NN$ such that $d(x_n, x_m)<\varepsilon/2$ for all $n, m\ge N.$ Next, since $(x_{k_j})\to y,$ choose $M$ such that $d(x_{k_j}, y)<\varepsilon/2$ for all $k_j\ge M.$ Take $K=\max\left\{ K, M \right\},$ so that $d(x_n, x_{k_j})<\varepsilon/2$ and $d(x_{k_j}, y)<\varepsilon/2$ for all $n, k_j\ge K.$ By the triangle inequality, we have
+			\begin{align*}
+				d(x_n, y)\le d(x_n, x_{k_j}) + d(x_{k_j}, y)<\frac{\varepsilon}{2} + \frac{\varepsilon}{2} = \varepsilon
+			\end{align*}
+			for all $n\ge K,$ as desired.
+		\end{proof}
 		
 \end{itemize}
 
