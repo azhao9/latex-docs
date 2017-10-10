@@ -1,0 +1,199 @@
+\documentclass{article}
+\usepackage[sexy, hdr, fancy]{evan}
+\setlength{\droptitle}{-4em}
+
+\lhead{Homework 4}
+\rhead{Investment Science}
+\lfoot{}
+\cfoot{\thepage}
+
+\newcommand{\var}{\mathrm{Var}}
+\newcommand{\cov}{\mathrm{Cov}}
+
+\begin{document}
+\title{Homework 4}
+\maketitle
+\thispagestyle{fancy}
+
+\begin{enumerate}
+	\item 
+		\begin{soln}
+			The coupons are 4\% semi-annually, and the semi-annual yield is 5\%, so the price is
+			\begin{align*}
+				P &= \sum_{k=1}^{20} \frac{4\%}{(1+5\%)^k} + \frac{1}{(1+5\%)^{20}} = \frac{4\%}{5\%}\left( 1-\frac{1}{(1+5\%)^{20}} \right) + \frac{1}{(1+5\%)^{20}} \\
+				&= 0.875378 = 87.5378\%
+			\end{align*}
+			of the par value. The duration in number of periods is given by
+			\begin{align*}
+				D' &= \frac{1}{PV}\cdot \left(\sum_{k=1}^{20} \frac{4\%}{(1+5\%)^k}\cdot k + \frac{1}{(1+5\%)^{20}}\cdot 20\right) \\
+				&= \frac{1}{PV}\cdot \left[4\%\left( \frac{1}{1.05} + \frac{2}{1.05^2} + \frac{3}{1.05^3} + \cdots + \frac{20}{1.05^{20}} \right) + \frac{20}{1.05^{20}} \right] \\
+				D'\cdot \frac{1}{1.05} &= \frac{1}{PV}\cdot\left[4\%\left( \frac{0}{1.05} + \frac{1}{1.05^2} + \frac{2}{1.05^3} + \cdots + \frac{19}{1.05^{20}} + \frac{20}{1.05^{21}} \right) + \frac{20}{1.05^{21}} \right] \\
+				\implies D'\left( 1-\frac{1}{1.05} \right) &= \frac{1}{PV}\cdot \left[4\%\left( \frac{1}{1.05} + \frac{1}{1.05^2} + \frac{1}{1.05^3} + \cdots + \frac{1}{1.05^{20}} - \frac{20}{1.05^{21}} \right) + \frac{20}{1.05^{20}}\left( 1-\frac{1}{1.05} \right) \right] \\
+				&= \frac{1}{PV}\cdot 4\%\cdot \left[\frac{1}{5\%}\left( 1-\frac{1}{1.05^{20}} \right) - \frac{20}{1.05^{21}} \right] + \frac{1}{PV} \cdot \frac{20}{1.05^{20}}\left( 1-\frac{1}{1.05} \right) \\
+				\implies D' &= 13.6807 \\
+				\implies D &= 6.8404
+			\end{align*}
+		\end{soln}
+
+	\item 
+		\begin{enumerate}[(a)]
+			\item 
+				\begin{soln}
+					The bond prices are
+					\begin{align*}
+						P_A &= \frac{100}{1+15\%} + \frac{100}{(1+15\%)^2} + \frac{1100}{(1+15\%)^3} = 885.84 \\
+						P_B &= \frac{50}{1+15\%} + \frac{50}{(1+15\%)^2} + \frac{1050}{(1+15\%)^3} = 771.68 \\
+						P_C&= \frac{1000}{(1+15\%)^3} = 657.52 \\
+						P_D &= \frac{1000}{1+15\%} = 869.57
+					\end{align*}
+				\end{soln}
+
+			\item 
+				\begin{soln}
+					The bond durations are
+					\begin{align*}
+						D_A &= \frac{1}{P_A}\cdot \left( \frac{100\cdot 1}{1+15\%} + \frac{100\cdot 2}{(1+15\%)^2} + \frac{1100\cdot 3}{(1+15\%)^3} \right) = 2.718 \\
+						D_B &= \frac{1}{P_B}\cdot\left( \frac{50\cdot 1}{1+15\%} + \frac{50\cdot 2}{(1+15\%)^2} + \frac{1050\cdot 3}{(1+15\%)^3} \right) = 2.838 \\
+						D_C &= \frac{1}{P_C}\cdot \frac{1000\cdot 3}{(1+15\%)^3} = 3 \\
+						D_D &= \frac{1}{P_D}\cdot \frac{1000}{1+15\%} = 1
+					\end{align*}	
+				\end{soln}
+
+			\item 
+				\begin{soln}
+					Bond C is the most sensitive to a change in yield because it has the greatest duration.
+				\end{soln}
+
+			\item 
+				\begin{soln}
+					The present value and duration of the obligation are
+					\begin{align*}
+						P_O &= \frac{2000}{(1+15\%)^2} = 1512.29 \\
+						D_O &= \frac{1}{P_O} \cdot \frac{2000\cdot 2}{(1+15\%)^2} = 2
+					\end{align*}
+					To immunize the obligation, we must have
+					\begin{align*}
+						V_A+V_B+V_C+V_D &= 1512.29 \\
+						2.718V_A + 2.838V_B + 3V_C + V_D &= 1512.29\cdot 2
+					\end{align*}
+				\end{soln}
+				
+			\item 
+				\begin{soln}
+					We should choose Bond D because it is the only one with duration less than 2, which is the duration of the obligation. We have
+					\begin{align*}
+						V_C + V_D &= 1512.29 \\
+						3V_C + V_D &= 3024.58 \\
+						\implies V_C &= 756.15 \\
+						\implies V_D &= 756.15
+					\end{align*}
+				\end{soln}
+
+			\item 
+				\begin{soln}
+					No, other combinations would not lead to lower costs. In order to immunize, the present value of our portfolio must always be \$1512.29.
+				\end{soln}
+	
+		\end{enumerate}
+
+	\item 
+				\begin{soln}
+					If $\lambda$ is the continuously compounded annual rate, then we have
+					\begin{align*}
+						P &= \frac{1}{e^{\lambda T}} = e^{-\lambda T} \\
+						C &= \frac{1}{P} \cdot \frac{\partial^2 P}{\partial\lambda^2} = e^{\lambda T}\cdot T^2 e^{-\lambda T} = T^2
+					\end{align*}
+				\end{soln}
+				
+	\item Suppose that an obligation occurring at a single time period is immunized against interest rate changes with bonds that have only non-negative cash flows. Let $P(\lambda)$ be the value of the resulting portfolio, including the obligation, when the interest rate is $r+\lambda$ and $r$ is the current interest rate. By construction $P(0)=0$ and $P'(0)=0.$ In this exercise we show that $P(0)$ is a local minimum; that is, $P''(0)\ge0.$
+
+		Assume a yearly compounding convention. The discount factor for time $t$ is $d_t(\lambda)=(1+r+\lambda)^{-t}.$ Let $d_t=d_t(0).$ For convenience assume that the obligation has magnitude 1 and is due at time $\bar{t}.$ The conditions for immunization are then
+		\begin{align*}
+			P(0) &= \sum_{t}^{}c_td_t-d_{\bar{t}} = 0 \\
+			P'(0)(1+r) &= \sum_{t}^{}tc_td_t - \bar{t}d_{\bar{t}} = 0
+		\end{align*}
+
+		\begin{enumerate}[(a)]
+			\item Show that for all values of $\alpha$ and $\beta$ there holds
+				\begin{align*}
+					P''(0)(1+r)^2 &= \sum_{t}^{}(t^2+\alpha t+\beta)c_td_t - (\bar{t}^2+\alpha\bar{t}+\beta)d_{\bar{t}}
+				\end{align*}
+				\begin{proof}
+					We have
+					\begin{align*}
+						P(\lambda) &= \sum_{t}^{}c_t(1+r+\lambda)^{-t} - (1+r+\lambda)^{-\bar{t}} \\
+						P'(\lambda) &= \sum_{t}^{}-tc_t(1+r+\lambda)^{-t-1} + \bar{t}(1+r+\lambda)^{-\bar{t}-1} \\
+						P''(\lambda) &= \sum_{t}^{}t(t+1)c_t(1+r+\lambda)^{-t-2} - \bar{t}(\bar{t}+1)(1+r+\lambda)^{-\bar{t}-2} \\
+						\implies P''(0)&= \sum_{t}^{}t(t+1)c_t(1+r)^{-t-2} - \bar{t}(\bar{t}+1)(1+r)^{-\bar{t}-2} \\
+						\implies P''(0)(1+r)^2 &= \sum_{t}^{}(t^2+t)c_td_t - (\bar{t}^2+\bar{t})d_{\bar{t}} \tag{1}
+					\end{align*}
+					Now, from the immunization conditions, we have
+					\begin{align*}
+						P(0) = 0 &= \sum_{t}^{} c_td_t - d_{\bar{t}} \\
+						\implies 0 &= \beta\left( \sum_{t}^{}c_td_t-d_{\bar{t}} \right) = \sum_{t}^{} \beta c_td_t - \beta d_{\bar{t}} \tag{2} \\
+						P'(0)(1+r) = 0 &= \sum_{t}^{}tc_td_t-\bar{t}d_{\bar{t}} \\
+						\implies 0 &= (\alpha-1)\left( \sum_{t}^{}tc_td_t-\bar{t}d_{\bar{t}} \right) = \sum_{t}^{}(\alpha-1)tc_td_t - (\alpha-1)\bar{t}d_{\bar{t}} \tag{3}
+					\end{align*}
+					Adding (2) and (3) to (1), we get our desired 
+					\begin{align*}
+						P''(0)(1+r)^2 &= \sum_{t}^{}(t^2+\alpha t + \beta)c_td_t - (\bar{t}^2+\alpha\bar{t}+\beta)d_{\bar{t}}
+					\end{align*}
+				\end{proof}
+
+			\item Show that $\alpha$ and $\beta$ can be selected so that the function $t^2+\alpha t+\beta$ has a minimum at $\bar{t}$ and has a value of 1 there. Use these values to conclude that $P''(0)\ge 0.$
+				\begin{proof}
+					If $f(t)=t^2+\alpha t+\beta,$ then
+					\begin{align*}
+						f'(t) &= 2t+\alpha = 0 \implies t = -\frac{\alpha}{2}
+					\end{align*}
+					so we can choose $\alpha$ to be $-2\bar{t},$ so the derivative is 0, and therefore the minimum of the function is at $\bar{t}.$ Then we can choose $\beta$ such that
+					\begin{align*}
+						f(\bar{t}) &= \bar{t}^2 - 2\bar{t}\cdot \bar{t} + \beta = 1 \implies \beta = \bar{t}^2+1
+					\end{align*}
+					Thus, the function $f(t)=t^2-2\bar{t}\cdot t + (\bar{t}^2+1)$ has a minimum value of 1 at $t=\bar{t}.$ Now
+					\begin{align*}
+						P''(0)(1+r)^2 &= \sum_{t}^{}(t^2-2\bar{t}\cdot t + (\bar{t}^2+1)) c_td_t - (\bar{t}^2-2\bar{t}\cdot \bar{t} + (\bar{t}^2+1))d_{\bar{t}} \\
+						&\ge \sum_{t}^{} 1\cdot c_td_t - 1\cdot d_{\bar{t}} = P(0) = 0 \\
+						\implies P''(0) &\ge 0
+					\end{align*}
+					as desired.
+				\end{proof}
+
+		\end{enumerate}
+
+	\item 
+		\begin{enumerate}[(a)]
+			\item 
+				\begin{soln}
+					The settlement date is 10-Oct-2016, and the time to maturity is 339 days, so sold at
+					\begin{align*}
+						P = \left( 1-Y\cdot \frac{d}{360} \right)\cdot F = \left( 1-0.65\%\cdot \frac{339}{360} \right)\cdot \$10M = \$9, 938, 791.67
+					\end{align*}
+				\end{soln}
+
+			\item 
+				\begin{soln}
+					The time to maturity is 338 days, so we bought at
+					\begin{align*}
+						P = \left( 1-Y\cdot \frac{d}{360} \right)\cdot F = \left( 1-0.75\%\cdot \frac{338}{360} \right)\cdot \$10M = \$9, 929, 583.33
+					\end{align*}
+				\end{soln}
+
+			\item 
+				\begin{soln}
+					For the reverse repo, we borrow \$10M of T-bills on 10-Oct-2016 and lend out \$10M of cash, then sell the T-bills for the price from part (a). On 11-Oct-2016, we buy back the T-bills for the price from part (b), and return them to the reverse repo counterparty for 
+					\begin{align*}
+						\$10M\left( 1+0.4\%\cdot \frac{1}{360} \right) = \$10, 000, 111.11
+					\end{align*}
+				\end{soln}
+
+			\item 
+				\begin{soln}
+					The profit from the reverse repo is \$111.11, and the profit from the buying and selling of the T-bills is \$9208.34, so the total profit is \$9319.45.
+				\end{soln}
+				
+		\end{enumerate}
+
+\end{enumerate}
+
+\end{document}
