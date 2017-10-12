@@ -42,6 +42,7 @@ We saw in class that universal hashing lets us give guarantees that hold for arb
 			\begin{align*}
 				\prob{\text{some bin with at least }2\sqrt{m}+2\text{ elements}} &\le \prob{X>2m+3\sqrt{m}+1} \\
 				&= \prob{X>\frac{2m+3\sqrt{m}+1}{\frac{m-1}{2}}\cdot \frac{m-1}{2}} \\
+				&\le \prob{X>\frac{2m+3\sqrt{m}+1}{\frac{m-1}{2}}\cdot \expct{X}} \\
 				&< \frac{\frac{m-1}{2}}{2m+3\sqrt{m}+1} \le \frac{1}{4}
 			\end{align*}
 			The probability that no bin has more than $2\sqrt{m}+1$ elements is the complement of this, which is at least $3/4,$ as desired.
