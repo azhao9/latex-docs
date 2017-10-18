@@ -16,22 +16,63 @@
 
 \begin{itemize}
 	\item[3.] Some authors say that two metrics $d$ and $\rho$ on a set $M$ are equivalent if they generate the same open sets. Prove this.
+		\begin{proof}
+			Suppose $(x_n)\to x$ under $d.$ Then let $U$ be an open set under $\rho$ containing $x.$ Since $d$ and $\rho$ are equivalent, $U$ is also open under $d,$ so $x_n$ is eventually in $U,$ which means that $(x_n)\to x$ under $\rho$ as well. Thus, if $d$ and $\rho$ generate the same open sets, they generate the same convergent sequences, so they are equivalent.
+		\end{proof}
 
 	\item[18.] Given a nonempty bounded subset $E$ of $\RR,$ show that $\sup E$ and $\inf E$ are elements of $\overline{E}.$ Thus $\sup E$ and $\inf E$ are elements of $E$ whenever $E$ is closed.
+		\begin{proof}
+			From HW1, there exists $a, b\in E$ such that $a>\sup E-\varepsilon$ and $b<\inf E+\varepsilon$ for any $\varepsilon>0,$ thus
+			\begin{align*}
+				a\in B_{\varepsilon}(\sup E)\cap E&\implies \sup E\in \overline{E} \\
+				b\in B_{\varepsilon}(\inf E)\cap E&\implies \inf E\in \overline{E}
+			\end{align*}
+			If $E$ is closed, then $E=\overline{E}$ and the conclusion follows.
+		\end{proof}
 
 	\item[33.] Let $A$ be a subset of $M.$ A point $x\in M$ is called a limit point of $A$ if every neighborhood of $x$ contains a point of $A$ that is different from $x$ itself, that is, if $(B_\varepsilon(x)\setminus\left\{ x \right\})\cap A\neq\varnothing$ for every $\varepsilon>0.$ If $x$ is a limit point of $A,$ show that every neighborhood of $x$ contains infinitely many points of $A.$
+		\begin{proof}
+			Suppose there exists $\varepsilon>0$ such that $(B_{\varepsilon}(x)\setminus\left\{ x \right\})\cap A=\left\{ x_1, x_2, \cdots, x_n \right\}$ is a finite set. Take
+			\begin{align*}
+				r&=\min_{1\le i\le n}\left\{ d(x, x_i) \right\} \\
+				\implies \varnothing &= (B_r(x)\setminus \left\{ x \right\})\cap A
+			\end{align*}
+			which contradicts the fact that $x$ is a limit point. Thus, any intersection must be infinite, as desired.
+		\end{proof}
 
 	\item[41.] Related to the notion of limit points and isolated points are boundary points. A point $x\in M$ is said to be a boundary point of $A$ if each neighborhood of $x$ hits both $A$ and $A^c.$ In symbols, $x$ is a boundary point of $A$ if and only if $B_\varepsilon(x)\cap A\neq\varnothing$ and $B_\varepsilon(x)\cap A^c\neq\varnothing$ for every $\varepsilon>0.$ Verify each of the following formulas, where $\partial(A)$ denotes the set of boundary points of $A:$
 		\begin{enumerate}[(a)]
 			\item $\partial(A)=\partial(A^c)$
+				\begin{proof}
+					\begin{align*}
+						x\in \partial (A) &\iff B_{\varepsilon}(x)\cap A\neq\varnothing\text{ and } B_{\varepsilon}\cap A^c\neq \varnothing \\
+						&\iff B_{\varepsilon} (x)\cap A^c\neq\varnothing\text{ and } B_{\varepsilon}(x)\cap (A^c)^c \neq \varnothing \\
+						&\iff x\in \partial(A^c)
+					\end{align*}
+				\end{proof}
 
 			\item $\overline{A}=\partial(A)\cup A^\circ$
+				\begin{proof}
+					$(\supset):$ Suppose $x\in\partial(A)$ but $x\notin A.$ Then $x$ is not in some set $B$ containing $A,$ so $x\in B^c$ which is open. Thus, there exists some $\varepsilon>0$ such that $B_{\varepsilon} (x)\cap A=\varnothing$ since $A\subset B.$ This contradicts $x\in \partial(A),$ so $x$ must be in every closed set containing $A,$ so $x\in\overline{A}.$
+
+					$(\subset):$ Suppose $x\in \overline{A}$ but $x\notin \partial(A)\cup A^\circ.$ Then $x\notin A^\circ$ so $B_\varepsilon(x)\not\subset A\implies B_\varepsilon(x)\cap A^c\neq \varnothing$ for all $\varepsilon>0.$ Since $x\notin \partial(A),$ it must be that $B_\delta(x)\cap A=\varnothing$ for some $\delta.$ Then $(B_\delta(x))^c\supset A$ is a closed set containing $A$ but not $x,$ which contradicts $x\in \overline{A}.$ Thus, $x\in\partial(A)\cup A^\circ.$
+				\end{proof}
 
 			\item $M=A^\circ\cup \partial(A)\cup (A^c)^\circ$
+				\begin{proof}
+					From part (b), this is $M=\overline{A}\cup (A^c)^\circ.$
+
+					$(\supset):$ If $x\in\overline{A},$ then since $M$ is closed in $M,$ we have $\overline{A}\subset M,$ so $x\in M.$ Since $(A^c)^\circ \subset A^c\subset M,$ it follows that if $x\in (A^c)^\circ,$ it must be that $x\in M.$
+
+					$(\subset):$ Suppose $x\in M$ but $x\notin \overline{A}$ and $x\notin (A^c)^\circ.$ Since $x\notin (A^c)^\circ,$ we have $B_{\varepsilon}(x)\not\subset A^c\implies B_\varepsilon(x)\cap A\neq\varnothing$ for all $\varepsilon>0.$ Since $x\notin \overline{A},$ there exists some $\delta>0$ such that $B_\delta(x)\cap A=\varnothing.$ Contradiction, so $x\in \overline{A}\cup (A^c)^\circ.$
+				\end{proof}
 				
 		\end{enumerate}
 
 	\item[48.] A metric space is called separable if it contains a countable dense subset. Find examples of countable dense sets in $\RR,$ in $\RR^2,$ and in $\RR^n.$
+		\begin{soln}
+			$\QQ\subset\RR$ is a countable dense subset. Then under the Euclidean metric, $\QQ^2\subset\RR^2$ is also dense, and countable. Consider any $x=(x_1, x_2)\in\RR^2.$ Then consider sequences $(p_n)\to x_1$ and $(q_n)\to x_2$ where $p_i, q_i\in\QQ,$ so $d(x, (p_n, q_n))\to 0$ and thus $(p_n, q_n)\to x.$ Extending this argument, $\QQ^n\subset \RR^n$ is a countable dense subset.
+		\end{soln}
 		
 \end{itemize}
 
@@ -39,18 +80,50 @@
 
 \begin{itemize}
 	\item[17.] Let $f, g:(M, d)\to(N, \rho)$ be continuous, and let $D$ be a dense subset of $M.$ If $f(x)=g(x)$ for all $x\in D,$ show that $f(x)=g(x)$ for all $x\in M.$ If $f$ is onto, show that $f(D)$ is dense in $N.$
+		\begin{proof}
+			Suppose $x\in M\setminus D.$ Then since $D$ is dense in $M,$ there exists a sequence $(x_n)\to x$ in $D.$ Since $f$ is continuous, we have $f(x_n)\to f(x)$ and since $f$ and $g$ agree on $D,$ we have $g(x_n)\to f(x),$ and thus $f(x)=g(x).$ If $x\in D,$ then the conclusion is obviously true, so $f(x)=g(x)$ for all $x\in M,$ as desired.
+
+			If $f$ is surjective, for any $y\in N$ there exists $x\in M$ such that $f(x)=y.$ Then since $D$ is dense, there exists a sequence $(x_n)\to x$ in $D,$ and since $f$ is continuous, we have $f(x_n)\to f(x) = y,$ so the sequence $\left( f(x_n) \right)\to y$ where $f(x_i)\in f(D),$ and thus $f(D)$ is dense in $N,$ as desired.
+		\end{proof}
 
 	\item[42.] Suppose that $f:\QQ\to\RR$ is Lipschitz. Show that $f$ extends to a continuous function $h:\RR\to\RR.$ Is $h$ unique? Explain. (Hint: Given $x\in\RR,$ choose a sequence of rationals $(r_n)$ converging to $x$ and argue that $h(x)=\lim_{n\to\infty} f(r_n)$ exists and is actually independent of the sequence $(r_n).$)
-
+		\begin{proof}
+			If $f$ is Lipschitz, then let $K\in\RR$ such that $\abs{f(x)-f(y)}\le K\abs{x-y}.$ If $x\in\QQ,$ set $h(x)=f(x).$ Otherwise, if $x\in\RR\setminus\QQ,$ then since $\QQ$ is dense in $\RR,$ there exists a sequence of rationals $(r_n)\to x.$ Thus, since convergent sequences are Cauchy, for any $\varepsilon,$ there exists $N\in\NN$ such that $\abs{r_n-r_m}<\frac{\varepsilon}{K}$ for all $n, m\ge N.$ Then since $f$ is Lipschitz, we have
+			\begin{align*}
+				\abs{f(r_n)-f(r_m)}\le K\abs{r_n-r_m} < \varepsilon
+			\end{align*}
+			for all $n, m\ge N,$ so $f(r_n)$ is Cauchy. Since Cauchy sequences in $\RR$ converge, set $h(x)=\lim_{n\to\infty} f(r_n).$ Since $f$ is continuous, it doesn't matter which sequence $(r_n)$ we choose, and $h$ is unique.
+		\end{proof}
+ 
 	\item[46.] Show that every metric space is homeomorphic to one of finite diameter. (Hint: Every metric is equivalent to a bounded metric.)
+		\begin{proof}
+			Let $(M, d)$ be a metric space, and set $\rho(x, y)=\min\left\{ 1, d(x, y) \right\}$ for $x, y\in M.$ Then $\rho$ is a metric on $M$ from HW4, so $(M, \rho)$ is a bounded metric space since $\rho(x, y)\le 1$ for any $x, y\in M,$ and from exercise 3.42, $d$ is equivalent to $\rho.$ Since $d$ and $\rho$ are equivalent, we have $i:(M, d)\to (M, \rho)$ the identity map and its inverse $i\inv$ are both continuous, so $(M, d)$ is homeomorphic to $(M, \rho).$
+		\end{proof}
 
 	\item[48.] Prove that $\RR$ is homeomorphic to $(0, 1)$ and that $(0, 1)$ is homeomorphic to $(0, \infty).$ Is $\RR$ isometric to $(0, 1)?$ to $(0, \infty)?$ Explain.
+		\begin{proof}
+			Let $f:(0, 1)\to\RR$ be given by $f(x)=\tan\left( \pi x-\frac{\pi}{2} \right).$ Clearly $f$ is continuous on $(0, 1)$ under the usual metric. Then $f\inv(y)=\frac{1}{\pi}\arctan(y)+\frac{1}{2}$ is its continuous inverse on $\RR,$ so $\RR$ is homeomorphic to $(0, 1),$ under the usual metric for both. 
+
+			Let $g:(0, 1)\to(0, \infty)$ be given by $g(x)=\frac{x}{1-x}.$ Clearly $g$ is continuous on $(0, 1)$ under the usual metric. Then $g\inv(y)=\frac{y}{1+y}$ is also continuous on $(0, \infty),$ so $(0, 1)$ is homeomorphic to $(0, \infty),$ under the usual metric for both.
+
+			$\RR$ is not isometric to $(0, 1)$ or $(0, \infty),$ or any proper subset of itself. Suppose $X\subsetneq \RR$ and $f:\RR\to X$ was isometric. Then $\abs{f(x)-f(0)}=\abs{x}$ so either $f(x)=f(0)+x$ or $f(x)=f(0)-x.$ Since $X$ is a proper subset, there exists $y\in \RR\setminus X.$ Then if $f(y-f(0))=f(0)+(y-f(0)) = y,$ we reach a contradiction since $y\not\in X,$ so we must have $f(y-f(0)) = f(0)-(y-f(0)) = 2f(0)-y.$ Similarly, we must have $f(f(0)-y)=2f(0)-y=f(y-f(0)).$ Since $f$ is an isometry, it must be injective, so $f(0)-y=y-f(0)$ so $y=f(0),$ which is a contradiction since $y\not\in X.$ Thus, an isometry does not exist.
+		\end{proof}
 
 	\item[56.] Let $f:(M, d)\to (N, \rho).$
 		\begin{enumerate}[(i)]
 			\item We say that $f$ is an open map if $f(U)$ is open in $N$ whenever $U$ is open in $M;$ that is, $f$ maps open sets to open sets. Give examples of a continuous map that is not open and an open map that is not continuous.
+				\begin{soln}
+					Let $f:\NN\to\RR$ where $f(n)=n.$ Then $f$ is continuous, and $\left\{ n \right\}$ is open in $\NN,$ but $f(\left\{ n \right\}) = \left\{ n \right\},$ which is not open in $\RR.$
+
+					Let $g:\RR\to\ZZ$ where $g(x)=\left\lfloor x \right\rfloor$ and $\ZZ$ is endowed with the discrete metric. Then any subset of $\ZZ$ is open, but $g$ is not continuous.
+				\end{soln}
 
 			\item Similarly, $f$ is called closed if it maps closed sets to closed sets. Give examples of a continuous map that is not closed and a closed map that is not continuous. 
+				\begin{soln}
+					Let $f:\RR\to\RR$ where $f(x)=e^x.$ Then $f$ is continuous on $\RR,$ and $\RR$ is closed in $\RR,$ but $f(\RR)=(0, \infty)$ is not closed in $\RR.$
+
+					Let $g:\RR\to\ZZ$ where $g(x)=\left\lfloor x \right\rfloor$ and $\ZZ$ is endowed with the discrete metric. Then any subset of $\ZZ$ is closed, but $g$ is not continuous.
+				\end{soln}
 				
 		\end{enumerate}
 		
