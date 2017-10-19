@@ -59,6 +59,7 @@ Give an $O(n^2)$-time algorithm to find a configuration of minimum total cost.  
 	from (1), as desired. Finally, $M[0]$ is the cost of the optimal configuration, since including $S_0$ costs 0.
 \end{proof}
 
+\newpage
 \section{Mobile Business (34 points)}
 
 Let's say that you have a great idea for a new food truck, and in order to save money you decide to run it out of your RV so you can live where you work.  Each day $i$ there is some demand for your food in Baltimore and some demand in Washington -- let's say you would make $B_i$ dollars by being in Baltimore and $W_i$ dollars by being in Washington.  However, if you wake up in one city (due to being there the previous day) and want to serve in the other city, it costs you $M$ dollars to drive there.  
@@ -69,19 +70,32 @@ For example, let $M = 10$ and suppose that $B_1 = 1, B_2 = 3, B_3 = 20, B_4 = 30
 
 Given the fixed driving cost $M$ and profits $B_1, \dots B_n$ and $W_1, \dots, W_n$, devise an algorithm that runs in $O(n)$ time and computes the profit of an optimal schedule.  As always, prove correctness and running time.  
 \begin{proof}
-	Let $S_i=s_1s_2\cdots s_i$ be the optimal schedule for $\left\{ B_1, B_2, \cdots, B_i \right\}$ and $\left\{ W_1, W_2, \cdots, W_i \right\},$ where $s_j\in\left\{ B, W \right\}.$ Let $p(S)$ be the profit of a schedule $S.$ We claim that $S_i' = s_1s_2\cdots s_{j},$ where $j<i$ is the minimum value such that $s_{j+1}$ to $s_i$ are all either $B$ or $W,$ is the optimal schedule for $\left\{ B_1, B_2, \cdots, B_j \right\}$ and $\left\{ W_1, W_2, \cdots, W_j \right\}.$
-
-	Suppose otherwise. Let $\hat{S_i} = S_j\circ s_{j+1}s_{j+2}\cdots s_i = t_1t_2\cdots t_j s_{j+1}\cdots s_i.$ Then since $S_j=t_1t_2\cdots t_j$ is optimal, we have $p(S_j)>p(S_i').$ If $s_{j+1}= B$ and $t_j=B,$ then
+	Let $S_i=s_1s_2\cdots s_i$ be the optimal schedule for $\left\{ B_1, B_2, \cdots, B_i \right\}$ and $\left\{ W_1, W_2, \cdots, W_i \right\},$ where $s_i=B$ and $s_j\in\left\{ B, W \right\}$ for $1\le j<i.$ Similarly, let $T_i=t_1t_2\cdots t_i$ be the optimal schedule, but where $t_i=W.$ Let $p(S)$ be the profit of a schedule $S.$ We claim that for $1<i\le n,$
 	\begin{align*}
-		p(\hat{S_i})=p(S_j) + \sum_{k=j+1}^{i} B_k > p(S_i') + \sum_{k=j+1}^{i} B_k - M= p(S_i) 
+		p(S_i) &= B_i + \max\left\{ p(S_{i-1}), p(T_{i-1})- M \right\} \\
+		p(T_i) &= W_i + \max\left\{ p(S_{i-1}) - M, p(T_{i-1}) \right\}
 	\end{align*}
-	a contradiction since $S_i$ was assumed to be optimal. Similarly, if $t_j=W,$ then
-	\begin{align*}
-		p(\hat{S_i}) = p(S_j) + \sum_{k=j+1}^{i} B_k - M > p(S_i') + \sum_{k=j+1}^{i} B_k - M = p(S_i)
-	\end{align*}
-	is a contradiction. The case where $s_{j+1}=W$ is handled identically. 
-\end{proof}<++>
+	where $p(S_1)=B_1$ and $p(T_1)=W_1-M.$ If $p(T_i)$ and $p(S_i)$ are the respective optimal schedules, then $p(S_{i+1})$ ends in $B,$ so either $s_i$ is $B$ or it is $W.$ If it is $B,$ then the profit is $p(S_i)+B_{i+1}$ and likewise if it is $W,$ then the profit is $p(T_i)+B_{i+1}-M.$ In either case, the claim is satisfied. The proof for $p(T_{i+1})$ is identical. 
 
+	Using this relation, we have the algorithm:
+	\begin{Verbatim}[tabsize=4]
+		Schedule(B, W, M, n) {
+			X[1] = B[1]
+			Y[1] = W[1] - M
+
+			for (i from 2 to n) {
+				X[i] = B[i] + max(X[i-1], Y[i-1] - M)
+				Y[i] = W[i] + max(X[i-1] - M, Y[i-1])
+			}
+
+			return max(X[n], Y[n])
+		}
+	\end{Verbatim}
+
+	For running time, each iteration of the loop takes $O(1)$ time, so the total time is $O(n).$ It is correct by the argument above.
+\end{proof}
+
+\newpage
 \section{Word Segmentation (33 points)}
 A number of languages, both ancient and modern, are written without spaces between the words.  In these languages, an important problem is word segmentation: given a string of characters, divide the string into consecutive words.  In English, the analogous problem would consist of taking a string like ``meetateight" and deciding that the best segmentation is ``meet at eight" (and not ``me et at eight" or ``meet ate ight", etc.).  
 
