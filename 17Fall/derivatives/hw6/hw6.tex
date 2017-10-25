@@ -1,0 +1,178 @@
+\documentclass{article}
+\usepackage[sexy, hdr, fancy]{evan}
+\setlength{\droptitle}{-4em}
+\usepackage{tikz}
+\usetikzlibrary{arrows}
+
+\lhead{Homework 6}
+\rhead{Introduction to Financial Derivatives}
+\lfoot{}
+\cfoot{\thepage}
+
+\newcommand{\var}{\mathrm{Var}}
+\newcommand{\cov}{\mathrm{Cov}}
+
+\begin{document}
+\title{Homework 6}
+\maketitle
+\thispagestyle{fancy}
+
+\section*{Chapter 7: Swaps}
+
+\begin{itemize}
+	\item[1.] Companies A and B have been offered the following rates per annum on a \$20 million 5-year loan:
+		\begin{center}
+			\begin{tabular}{ccc}
+				& Fixed rate & Floating rate \\
+				\hline
+				Company A: & 5.0\% & LIBOR + 0.1\% \\
+				Company B: & 6.4\% & LIBOR + 0.6\%
+			\end{tabular}
+		\end{center}
+		Company A requires a floating-rate loan; company B requires a fixed rate loan. Design a swap that will net a bank, acting as intermediary, 0.1\% per annum and that will appear equally attractive to both companies.
+		\begin{soln}
+			In the following swap, company A pays out LIBOR - 0.3\%, an improvement of 0.4\%, and company B pays out 6.0\%, an improvement of 0.4\%, and bank nets 0.1\%.
+			\begin{center}
+				\begin{tikzpicture}[->, >=stealth', shorten >=1pt, auto, node distance=3cm, thick, main node/.style={circle, draw, font=\sffamily\Large\bfseries}]
+
+					\node[main node] (1) {A};
+					\node[main node] (2) [right of=1] {Bank};
+					\node[main node] (3) [right of=2] {B};
+					\node[main node] (4) [left of=1] {X};
+					\node[main node] (5) [right of=3] {Y};
+
+					\path[every node/.style={font=\sffamily\small}]
+					(1) edge[bend right] node [below] {LIBOR} (2)
+					edge node [above] {5.0\%} (4)
+					(2) edge[bend right] node [above] {5.3\%} (1)
+					edge [bend right] node [below] {LIBOR} (3)
+					(3) edge[bend right] node [above] {5.4\%} (2)
+					edge node [below] {LIBOR + 0.6\%} (5);
+				\end{tikzpicture}
+			\end{center}
+		\end{soln}
+
+	\item[5.] A currency swap has a remaining life of 15 months. It involves exchanging interest at 10\% on \pounds20 million for interest at 6\% on \$30 million once a year. The term structure of interest rates in both the UK and the US is currently flat, and if the swap were negotiated today the interest rates exchanged would be 4\% in dollars and 7\% in sterling. All interest rates are quoted with annual compounding. The current exchange rate (dollars per pound sterling) is 1.5500. What is the value of the swap to the party paying sterling? What is the value of the swap to the party paying dollars?
+		\begin{soln}
+			Suppose party A was receiving sterling and party B was receiving USD. Party A is receiving \pounds2M in 3 months, and \pounds22M in 15 months, while party B is receiving \$1.8M in 3 months, and \$31.8M in 15 months. The continuously compounded rate for USD is $\ln(1+4\%)=3.922\%$ and the rate for sterling is $\ln(1+7\%)=6.766\%,$ so we have
+			\begin{align*}
+				PV_A &= \frac{\$1.5500}{\pounds1}\cdot\left( \pounds2\cdot e^{-0.06766\cdot 0.25}  + \pounds22\cdot e^{-0.06766\cdot 1.25}\right) \\
+				&= \$34.3826 \\
+				PV_B &= \$1.8\cdot e^{-0.03922\cdot 0.25} + \$31.8\cdot e^{-0.03922\cdot 1.25} \\
+				&= \$32.061
+			\end{align*}
+			Thus, the value to the party paying sterling is $\$32.061-\$34.3826=-\$2.3216$M and the value to the party paying USD is \$2.3216M.
+		\end{soln}
+
+	\item[6.] Explain the difference between the credit risk and the market risk in a financial contract.
+		\begin{answer*}
+			Credit risk arises from the possibility of one of the counterparties defaulting on a payment. Market risk arises from changing interest rates affecting the floating leg of the swap.
+		\end{answer*}
+
+	\item[9.] Companies X and Y have been offered the following rates per annum on a \$5 million 10-year investment:
+		\begin{center}
+			\begin{tabular}{ccc}
+				& Fixed rate & Floating rate \\
+				\hline
+				Company X & 8.0\% & LIBOR \\
+				Company Y & 8.8\% & LIBOR
+			\end{tabular}
+		\end{center}
+		Company X requires a fixed-rate investment; company Y requires a floating-rate investment. Design a swap that will net a bank, acting as intermediary, 0.2\% per annum and will appear equally attractive to X and Y.
+		\begin{soln}
+			In the following swap, company X receives 8.3\%, an improvement of 0.3\%, company Y receives LIBOR + 0.3\%, an improvement of 0.3\%, and the bank nets 0.2\%.
+			\begin{center}
+				\begin{tikzpicture}[->, >=stealth', shorten >=1pt, auto, node distance=3cm, thick, main node/.style={circle, draw, font=\sffamily\Large\bfseries}]
+
+					\node[main node] (1) {X};
+					\node[main node] (2) [right of=1] {Bank};
+					\node[main node] (3) [right of=2] {Y};
+					\node[main node] (4) [left of=1] {A};
+					\node[main node] (5) [right of=3] {B};
+
+					\path[every node/.style={font=\sffamily\small}]
+					(1) edge[bend right] node [below] {LIBOR} (2)
+					(2) edge[bend right] node [above] {8.3\%} (1)
+					edge [bend right] node [below] {LIBOR} (3)
+					(3) edge[bend right] node [above] {8.5\%} (2)
+					(4) edge node [below] {LIBOR} (1)
+					(5) edge node [above] {8.8\%} (3);
+				\end{tikzpicture}
+			\end{center}
+		\end{soln}
+
+	\item[11.] Companies A and B face the following interest rates
+		\begin{center}
+			\begin{tabular}{ccc}
+				& Company A & Company B \\
+				\hline
+				US dollars (floating rate): & LIBOR + 0.5\% & LIBOR + 1.0\% \\
+				Canadian dollars (fixed rate): & 5.0\% & 6.5\%
+			\end{tabular}
+		\end{center}
+		Assume that A wants to borrow US dollars at a floating rate of interest and B wants to borrow Canadian dollars at a fixed rate of interest. A financial institution is planning to arrange a swap and requires a 50-basis-point spread. If the swap is to appear equally attractive to A and B, what rates of interest will A and B end up paying?
+		\begin{soln}
+			In the following swap, company A pays out USD at LIBOR + 0.25\%, a 0.25\% improvement, company B pays out CAD at 6.25\%, a 0.25\% improvement, and the financial institution nets
+			\begin{align*}
+				(6.25\%-5.0\%)+(0.25\%-1.0\%) = 0.5\%
+			\end{align*}
+			or 50 bps, as required.
+			\begin{center}
+				\begin{tikzpicture}[->, >=stealth', shorten >=1pt, auto, node distance=3cm, thick, main node/.style={circle, draw, font=\sffamily\Large\bfseries}]
+
+					\node[main node] (1) {A};
+					\node[main node] (2) [right of=1] {Bank};
+					\node[main node] (3) [right of=2] {B};
+					\node[main node] (4) [left of=1] {X};
+					\node[main node] (5) [right of=3] {Y};
+
+					\path[every node/.style={font=\sffamily\small}]
+					(1) edge[bend right] node [below] {USD LIBOR + 0.25\%} (2)
+					edge node [above] {CAD 5.0\%} (4)
+					(2) edge[bend right] node [above] {CAD 5.0\%} (1)
+					edge [bend right] node [below] {USD LIBOR + 1.0\%} (3)
+					(3) edge[bend right] node [above] {CAD 6.25\%} (2)
+					edge node [below] {USD LIBOR + 1.0\%} (5);
+				\end{tikzpicture}
+			\end{center}
+		\end{soln}
+
+	\item[24.] Company A, a British manufacturer wishes to borrow US dollars at a fixed rate of interest. Company B, a US multinational, wishes to borrow sterling at a fixed rate of interest. They have been quoted the following rates per annum
+		\begin{center}
+			\begin{tabular}{ccc}
+				& Sterling & US dollars \\
+				\hline
+				Company A & 11.0\% & 7.0\% \\
+				Company B & 10.6\% & 6.2\%
+			\end{tabular}
+		\end{center}
+		Design a swap that will net a bank, acting as an intermediary, 10 basis points per annum and that will produce a gain of 15 basis points per annum for each of the two companies.
+		\begin{soln}
+			In the following swap, company A pays out USD at 6.85\%, an improvement of 15 bps, company B pays out sterling at 10.45\%, an improvement of 15 bps, and the bank nets 
+			\begin{align*}
+				(6.85\%-6.2\%)+(10.45\%-11.0\%)=0.1\%
+			\end{align*}
+			or 10 bps.
+			\begin{center}
+				\begin{tikzpicture}[->, >=stealth', shorten >=1pt, auto, node distance=3cm, thick, main node/.style={circle, draw, font=\sffamily\Large\bfseries}]
+
+					\node[main node] (1) {A};
+					\node[main node] (2) [right of=1] {Bank};
+					\node[main node] (3) [right of=2] {B};
+					\node[main node] (4) [left of=1] {X};
+					\node[main node] (5) [right of=3] {Y};
+
+					\path[every node/.style={font=\sffamily\small}]
+					(1) edge[bend right] node [below] {USD 6.85\%} (2)
+					edge node [above] {Sterling 11.0\%} (4)
+					(2) edge[bend right] node [above] {Sterling 11.0\%} (1)
+					edge [bend right] node [below] {USD 6.2\%} (3)
+					(3) edge[bend right] node [above] {Sterling 10.45\%} (2)
+					edge node [below] {USD 6.2\%} (5);
+				\end{tikzpicture}
+			\end{center}
+		\end{soln}
+		
+\end{itemize}
+
+\end{document}
