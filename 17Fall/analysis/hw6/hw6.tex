@@ -1,0 +1,122 @@
+\documentclass{article}
+\usepackage[sexy, hdr, fancy]{evan}
+\setlength{\droptitle}{-4em}
+
+\lhead{Homework 6}
+\rhead{Honors Analysis I}
+\lfoot{}
+\cfoot{\thepage}
+
+\begin{document}
+\title{Homework 6}
+\maketitle
+\thispagestyle{fancy}
+
+\section*{Chapter 6: Connectedness}
+
+\begin{itemize}
+	\item[5.] If $E$ and $F$ are connected subsets of $M$ with $E\cap F\neq\varnothing,$ show that $E\cup F$ is connected.
+		\begin{proof}
+			Suppose $E\cup F$ was disconnected. Then write $E\cup F=A\cup B$ where $A\cap B=\varnothing$ and $A, B\neq\varnothing.$ Since $E\cap F\neq\varnothing,$ take $x\in E\cap F,$ and WLOG $x\in A.$ Then since $B\neq\varnothing,$ take $y\in B.$ Then either $y\in E$ or $y\in F,$ so WLOG $y\in E,$ and thus $y\in B\cap E.$ Now, $x\in E$ as well so $x\in A\cap E.$ Thus we have $A\cap E\neq \varnothing$ and $B\cap E\neq\varnothing,$ but $(A\cap E)\cup (B\cap E) = E$ is a disconnection for $E.$ Contradiction, since $E$ was assumed to be connected, and thus $E\cup F$ is connected.
+		\end{proof}
+
+	\item[12.] If $M$ is connected and has at least two points, show that $M$ is uncountable. (Hint: Find a non-constant, continuous, real-valued function on $M.$)
+		\begin{proof}
+			Let $x, y\in M,$ then $d(x, y)>0.$ Consider $d(x, \cdot):M\to\RR.$ If $d$ takes on every value from $0$ to $d(x, y),$ then $M$ must be uncountable. If not, then suppose $d(x, a)\neq d_0$ for any $a\in M.$ Then we have
+			\begin{align*}
+				M = \left\{ a:d(x, a)<d_0 \right\} \cup \left\{ a:d(x, a)>d_0 \right\}
+			\end{align*}
+			is a disjoint union of open sets in $M,$ which contradicts that $M$ is connected. Thus, it follows that $M$ is uncountable.
+		\end{proof}
+
+	\item[15.] If $f:\RR\to\RR$ is continuous and open, show that $f$ is strictly monotone.
+		\begin{proof}
+			Suppose $f$ was not strictly monotonic. Then there exists $a<c<b,$ where either
+			\begin{align*}
+				f(a)\le f(c)\ge f(b)
+			\end{align*}
+			or 
+			\begin{align*}
+				f(a)\ge f(c)\le f(b)
+			\end{align*}
+			If the first condition is true, then $f$ attains a maximum value over $[a, b]$ that is a least as large as $f(c),$ which means $f$ attains a maximum value $m$ over $(a, b)$ as well since $f(a)$ and $f(b)$ are not unique maxima. Then the image of $(a, b)$ contains its maximum, contradicting the fact that $f$ is an open map.
+
+			If the second condition is true, then $f$ attains a minimum value of $[a, b]$ that is at most as large as $f(c),$ which means $f$ attains a minimum value $n$ over $(a, b)$ as well since $f(a)$ and $f(b)$ are not unique minima. Then the image of $(a, b)$ contains its minimum, contradicting the fact that $f$ is an open map. Thus, $f$ must be strictly monotonic.
+		\end{proof}
+
+	\item[26.] Let $f:[0, 1]\to\RR$ be defined by $f(x)=\sin(1/x)$ for $x\neq 0$ and $f(0)=0.$ Show that although $f$ is not continuous, the graph of $f$ is a connected subset of $\RR^2.$ (Hint: Use exercise 9.)
+		\begin{proof}
+		Let $A=\left\{ (x, \sin(1/x)):x\in(0, 1] \right\}.$ Then $\overline{A}=A\cup\left\{ (0, 0) \right\}.$ Since $A$ is connected, it follows that $\overline{A}$ is also connected, which is the graph of $f$ in $\RR^2.$
+		\end{proof}
+		
+\end{itemize}
+
+\section*{Chapter 7: Completeness}
+
+\begin{itemize}
+	\item[5.] Prove that $A$ is totally bounded if and only if $\overline{A}$ is totally bounded.
+		\begin{proof}
+			$(\implies):$ Since $A$ is totally bounded, for any $\varepsilon>0,$ we have $A\subset \bigcup_{i=1}^n B_{\varepsilon/2}(x_i)$ for $x_i\in M.$ Take $y\in \overline{A}.$ Then there must exist some $x\in A$ such that $d(y, x)<\varepsilon/2$ since $y$ is a limit point of $A.$ Then we also have $d(x, x_i)<\varepsilon/1$ for some $i,$ so 
+			\begin{align*}
+				d(y, x_i) \le d(y, x) + d(x, x_i) < \frac{\varepsilon}{2} + \frac{\varepsilon}{2} = \varepsilon
+			\end{align*}
+			so $y$ is within $\varepsilon$ of some $x_i.$ Thus $\overline{A}\subset \bigcup_{i=1}^n B_\varepsilon(x_i),$ so $\overline{A}$ is totally bounded.
+
+			$(\impliedby):$ Since $A\subset \overline{A},$ it follows that $A$ is totally bounded.
+		\end{proof}
+
+	\item[9.] Give an example of a closed bounded subset of $\ell_\infty$ that is not totally bounded.
+		\begin{soln}
+			Let $S=\left\{ e^{(n)}:n\ge 1 \right\}$ where $e^{(i)}$ is the sequence of 0s with a 1 in the $i$th position. Then clearly $S$ is closed and bounded since $d(x, y)=1$ for $x\neq y.$ However, if $\varepsilon<1,$ then $S$ cannot be covered by finitely many $\varepsilon$-balls since each ball could only cover a single element in $S,$ so $S$ is not totally bounded.
+		\end{soln}
+
+	\item[10.] Prove that a totally bounded metric space $M$ is separable. (Hint: For each $n,$ let $D_n$ be a finite $(1/n)$-net for $M.$ Show that $D=\bigcup_{n=1}^\infty D_n$ is a countable dense set.)
+		\begin{proof}
+			For $n\ge 1,$ let $D_n$ be a finite $(1/n)$-net for $M,$ which must exist because $M$ is totally bounded. Then since $D_i$ is finite for all $i,$ their union is countable.
+
+			Now, suppose $x\in M$ but $B_\varepsilon(x)\cap D=\varnothing$ for some $\varepsilon>0.$ Then that means $B_\varepsilon(x)\cap D_k=\varnothing$ for all $k.$ However, if $k>1/\varepsilon$ then since $B_\varepsilon(x)\cap D_k=\varnothing,$ it follows that $x$ is not within $1/k$ of any element in the net, which is a contradiction. Thus $D$ is dense in $M,$ so $M$ is separable.
+		\end{proof}
+
+	\item[18.] Fill in the details of the proofs that $\ell_1$ and $\ell_\infty$ are complete.
+		\begin{proof}
+			$(\ell_1)$: Let $(f_n)$ be a sequence in $\ell_1,$ where $f_n=(f_n(k))_{k=1}^\infty,$ and suppose $(f_n)$ is Cauchy in $\ell_1.$
+			\begin{align*}
+				\abs{f_n(k)-f_m(k)} \le \sum_{i=1}^{\infty}\abs{f_n(i)-f_m(i)} = \left\lVert f_n-f_m \right\rVert_1
+			\end{align*}
+			for any $k,$ so $(f_n(k))_{n=1}^\infty$ is Cauchy for any $k.$ Then set $f(k):=\lim_{n\to\infty} f_n(k)$ for each $k.$
+
+			Now, $(f_n)$ is bounded in $\ell_1$ since it is Cauchy, so suppose $\left\lVert f_n \right\rVert_2\le B$ for all $n.$ Then
+			\begin{align*}
+				\sum_{k=1}^{N} \abs{f(k)} = \lim_{n\to\infty} \sum_{k=1}^{N} \abs{f_n(k)}\le B
+			\end{align*}
+			Since this holds for arbitrary $N,$ it follows that $\left\lVert f \right\rVert_1\le B.$
+
+			Given $\varepsilon>0,$ choose $n_0$ such that $\left\lVert f_n-f_m \right\rVert_1<\varepsilon$ whenever $m, n\ge n_0.$ Then for any $N$ and any $n\ge n_0,$ 
+			\begin{align*}
+				\sum_{i=k}^{N} \abs{f(k)-f_n(k)} = \lim_{m\to\infty} \sum_{k=1}^{N} \abs{f_m(k)-f_n(k)}< \varepsilon
+			\end{align*}
+			and thus $\left\lVert f-f_n \right\rVert_1<\varepsilon$ for all $n\ge n_0,$ so $f_n\to f.$
+
+			$(\ell_\infty):$ Let $(f_n)$ be a sequence in $\ell_\infty,$ where $f_n=(f_n(k))_{k=1}^\infty,$ and suppose $(f_n)$ is Cauchy in $\ell_\infty.$
+			\begin{align*}
+				\abs{f_n(k)-f_m(k)} \le \sup_j\abs{f_n(j)-f_m(j)} = \left\lVert f_n-f_m \right\rVert_\infty
+			\end{align*}
+			for any $k,$ so $(f_n(k))_{n=1}^\infty$ is Cauchy for any $k.$ Then set $f(k):=\lim_{n\to\infty} f_n(k)$ for each $k.$
+
+			Now, $(f_n)$ is bounded in $\ell_\infty$ since it is Cauchy, so suppose $\left\lVert f_n \right\rVert_\infty\le B$ for all $n.$ Then
+			\begin{align*}
+				\sup_{1\le i\le N}\abs{f(i)} = \lim_{n\to\infty} \sup_{1\le i\le N}\abs{f_n(i)}\le B
+			\end{align*}
+			Since this holds for arbitrary $N,$ it follows that $\left\lVert f \right\rVert_1\le B.$
+
+			Given $\varepsilon>0,$ choose $n_0$ such that $\left\lVert f_n-f_m \right\rVert_\infty<\varepsilon$ whenever $m, n\ge n_0.$ Then for any $N$ and any $n\ge n_0,$ 
+			\begin{align*}
+				\sup_{1\le i\le N}\abs{f(i)-f_n(i)} = \lim_{m\to\infty} \sup_{1\le i\le N} \abs{f_m(i)-f_n(i)} < \varepsilon
+			\end{align*}
+			and thus $\left\lVert f-f_n \right\rVert_\infty<\varepsilon$ for all $n\ge n_0,$ so $f_n\to f.$
+
+		\end{proof}
+		
+\end{itemize}
+
+\end{document}
