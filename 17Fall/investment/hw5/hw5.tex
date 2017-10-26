@@ -1,0 +1,326 @@
+\documentclass{article}
+\usepackage[sexy, hdr, fancy]{evan}
+\setlength{\droptitle}{-4em}
+
+\lhead{Homework 5}
+\rhead{Investment Science}
+\lfoot{}
+\cfoot{\thepage}
+
+\newcommand{\var}{\mathrm{Var}}
+\newcommand{\cov}{\mathrm{Cov}}
+
+\begin{document}
+\title{Homework 5}
+\maketitle
+\thispagestyle{fancy}
+
+\begin{enumerate}[1.]
+	\item 
+		\begin{soln}
+			We have 
+			\begin{align*}
+				(1+s_2)^2 &= (1+s_1)(1+f_{1, 2}) \\
+				\implies f_{1, 2} &= \frac{(1+6.9\%)^2}{1+6.3\%}-1 = \boxed{7.5\%}
+			\end{align*}
+		\end{soln}
+
+	\item
+		\begin{soln}
+			Since the spot curve follows expectations dynamics, the curve for the next year satisfies
+			\begin{align*}
+				s_{j-1}' = f_{1, j} = \left[ \frac{(1+s_j)^j}{1+s_1} \right]^{1/(j-1)} - 1
+			\end{align*}
+			We compute the spot curve for the next year as
+			\begin{align*}
+				s_1' &= f_{1, 2} = \left[ \frac{(1+s_2)^2}{1+s_1} \right]^{1/1} - 1 = 5.6\% \\
+				s_2' &= f_{1, 3} = \left[ \frac{(1+s_3)^3}{1+s_1} \right]^{1/2} - 1 = 5.9\% \\
+				s_3' &= f_{1, 4} = \left[ \frac{(1+s_4)^4}{1+s_1} \right]^{1/3}-1 = 6.07\% \\
+				s_4' &= f_{1, 5} = \left[ \frac{(1+s_5)^5}{1+s_1} \right]^{1/4} - 1 =6.25\% \\
+				s_5' &= f_{1, 6} = \left[ \frac{(1+s_6)^5}{1+s_1} \right]^{1/5} - 1 = 6.32\%
+			\end{align*}
+		\end{soln}
+
+	\item 
+		\begin{soln}
+			Consider a portfolio with a long position in 4.5 bonds of the 7\% coupon and a short position in 3.5 bonds of the 9\% coupon. The coupon payments cancel out, and the net face value is 100, and the net price is $4.5\cdot 93.20-3.5\cdot 101.00 = 65.90.$ This portfolio is equivalent to a 5-year ZCB, so the price of a 5-year ZCB is 65.90.
+		\end{soln}
+
+	\item  
+		\begin{enumerate}[(a)]
+			\item
+				\begin{soln}
+					We have
+					\begin{align*}
+						e^{s(t_1)t_1}\cdot e^{f(t_1, t_2)(t_2-t_1)} &= e^{s(t_2)t_2} \\
+						\implies f(t_1, t_2) &= \boxed{\frac{s(t_2)t_2-s(t_1)t_1}{t_2-t_1}}
+					\end{align*}
+				\end{soln}
+
+			\item
+				\begin{proof}
+					By definition, we have
+					\begin{align*}
+						s'(t) &= \lim_{t_2\to t} \frac{s(t_2)-s(t)}{t_2-t}
+					\end{align*}
+					By simple algebra, we have
+					\begin{align*}sj
+						s(t) + s'(t)t &= s(t) + \lim_{t_2\to t} \frac{s(t_2)-s(t)}{t_2-t}\cdot t \\
+						&= \lim_{t_2\to t} \left( s(t) + \frac{s(t_2)t-s(t)t}{t_2-t} \right) = \lim_{t_2\to t}\left( s(t_2) + \frac{s(t_2)t-s(t)t}{t_2-t} \right) \\
+						&= \lim_{t_2\to t}\left( \frac{s(t_2)t_2-s(t_2)t}{t_2-t} + \frac{s(t_2)t-s(t)t}{t_2-t} \right) \\
+						&= \lim_{t_2\to t} \frac{s(t_2)t_2-s(t)t}{t_2-t} \\
+						&= r(t)
+					\end{align*}
+				\end{proof}
+
+			\item 
+				\begin{soln}
+					Rearranging, we have
+					\begin{align*}
+						\frac{1}{x(t)}\, dx &= r(t)\, dt
+					\end{align*}
+					and integrating both sides, we get
+					\begin{align*}
+						\int \frac{1}{x(t)}\, dx &= \int r(t)\, dt \\
+						\implies \ln(x(t)) &= \int \left( s(t) + s'(t)t \right)\, dt = \int s(t)\, dt + \int s'(t)t\, dt
+					\end{align*}
+					Now, let $u=t$ and $dv = s'(t)\, dt,$ so $du=dt$ and $v = s(t).$ Integrating by parts, we have
+					\begin{align*}
+						\int s'(t)t\, dt &= s(t)t-\int s(t)\, dt \\
+						\implies \ln(x(t)) &= \int s(t)\, dt + s(t)t - \int s(t)\, dt = s(t) t + C \\
+						\implies x(t) &= e^{s(t)t+C} = Ce^{s(t)t}
+					\end{align*}
+					Letting $t=0,$ we have
+					\begin{align*}
+						x(0)=x_0 = Ce^0\implies C = x_0
+					\end{align*}
+					so finally the expression for $x(t)$ is
+					\begin{align*}
+						x(t) = \boxed{x_0 e^{s(t)t}}
+					\end{align*}
+				\end{soln}
+		\end{enumerate}
+
+	\item
+		\begin{soln}
+			The discount factors satisfy $d_{i, k}=d_{i, j}d_{j, k}.$ Thus, we have
+			\begin{align*}
+				d_{0, 1} &= 0.950 \\
+				d_{0, 2} &= d_{0, 1}d_{1, 2} = 0.950\cdot 0.940 = 0.893 \\
+				d_{0, 3} &= d_{0, 2} d_{2, 3} = 0.893\cdot 0.932 = 0.832 \\
+				d_{0, 4} &= d_{0, 3}d_{3, 4} = 0.832\cdot 0.925 = 0.770 \\
+				d_{0, 5} &= d_{0, 4}d_{4, 5} = 0.770\cdot 0.919 = 0.707 \\
+				d_{0, 6} &= d_{0, 5}d_{5, 6} = 0.707\cdot 0.913 = 0.646
+			\end{align*}
+		\end{soln}
+
+	\item 
+		\begin{enumerate}[(a)]
+			\item
+				\begin{soln}
+					The present value $V$ of the principal payment stream is
+					\begin{align*}
+						V &= \sum_{k=1}^{n} \frac{P(k)}{(1+r)^k} = \sum_{k=1}^{n} \frac{B-rM(k-1)}{(1+r)^k} \\
+						&= \sum_{k=1}^{n} \frac{B}{(1+r)^k} - r\sum_{k=1}^{n} \frac{(1+r)^{k-1} M - \frac{(1+r)^{k-1}-1}{r}\cdot B}{(1+r)^k} \\
+						&= B\sum_{k=1}^{n} \frac{1}{(1+r)^k} - r\sum_{k=1}^{n} \frac{M}{1+r} + \sum_{k=1}^{n} \frac{(1+r)^{k-1}-1}{(1+r)^k}\cdot B \\
+						&= B\sum_{k=1}^{n} \frac{1}{(1+r)^k} - \frac{nrM}{1+r} + \sum_{k=1}^{n} \frac{B}{1+r} - B\sum_{k=1}^{n} \frac{1}{(1+r)^k} \\
+						&= \boxed{\frac{n}{1+r}\left( B-rM \right)}
+					\end{align*}
+				\end{soln}
+
+			\item 
+				\begin{soln}
+					Substituting the expression for $B,$ we have
+					\begin{align*}
+						V &= \frac{n}{1+r}(B-rM) = \frac{n}{1+r}\left( \frac{r(1+r)^nM}{(1+r)^n-1} - rM\right) \\
+						&= \frac{nrM}{1+r}\left( \frac{(1+r)^n}{(1+r)^n-1}-1 \right) \\
+						&= \boxed{\frac{nrM}{1+r}\cdot \frac{1}{(1+r)^n-1}}
+					\end{align*}
+				\end{soln}
+
+			\item
+				\begin{soln}
+					The present value $W$ of the interest payment stream is
+					\begin{align*}
+						W &= \sum_{k=1}^{n} \frac{I(k)}{(1+r)^k} = \sum_{k=1}^{n} \frac{B-P(k)}{(1+r)^k} = \sum_{k=1}^{n} \frac{B}{(1+r)^k} - V \\
+						&= B\cdot \frac{1}{r}\cdot \frac{(1+r)^n-1}{(1+r)^n} - \frac{nrM}{1+r}\cdot \frac{1}{(1+r)^n-1} \\
+						&= \frac{r(1+r)^nM}{(1+r)^n-1}\cdot \frac{1}{r} \cdot \frac{(1+r)^n-1}{(1+r)^n} - \frac{nrM}{1+r}\cdot \frac{1}{(1+r)^n-1} \\
+						&= \boxed{M - \frac{nrM}{1+r}\cdot \frac{1}{(1+r)^n-1}}
+					\end{align*}
+				\end{soln}
+
+			\item 
+				\begin{soln}
+					As $n\to\infty,$ by l'Hopital's rule, we have
+					\begin{align*}
+						\lim_{n\to\infty} V &=\lim_{n\to\infty} \frac{nrM}{1+r}\cdot \frac{1}{(1+r)^n-1} \\
+						&= \frac{rM}{1+r}\cdot \lim_{n\to\infty} \frac{n}{(1+r)^n-1} \\
+						&= \frac{rM}{1+r}\cdot \lim_{n\to\infty} \frac{1}{ (1+r)^{n}\ln(1+r)} \\
+						&= 0
+					\end{align*}
+				\end{soln}
+
+			\item 
+				\begin{soln}
+					As $n$ grows, $V$ decreases. Thus since duration is the weighted average with $V$ in the denominator, the duration of the principal stream goes to infinity for arbitrarily large $n.$
+				\end{soln}
+
+		\end{enumerate}
+
+	\item 
+		\begin{enumerate}[(a)]
+			\item 
+				\begin{soln}
+					The price, as a percentage of face value, is
+					\begin{align*}
+						P &= \frac{0.04}{1+s_1} + \frac{1.04}{(1+s_2)^2} = \frac{0.04}{1.05} + \frac{1.04}{(1.06)^2} = \boxed{96.369\%}
+					\end{align*}
+				\end{soln}
+
+			\item 
+				\begin{soln}
+					One year from now, the 1-year spot rate will be 6.5\%, so the price will be
+					\begin{align*}
+						P &= \frac{1.04}{1.065} = \boxed{97.653\%}
+					\end{align*}
+				\end{soln}
+
+			\item 
+				\begin{soln}
+					After 1 year, we receive a coupon of 4\%, so the return will be $\frac{97.653+4}{96.369} = \boxed{5.483\%.}$
+				\end{soln}
+
+			\item 
+				\begin{soln}
+					According to expectations dynamics, the 1-year spot rate one year from now should be
+					\begin{align*}
+						s_1' &= \left[ \frac{(1+s_2)^2}{1+s_1} \right]^{1/1} - 1 = 7\%
+					\end{align*}
+					Using this spot rate, the price in one year would have been $\frac{1.04}{1.07} = 97.196\%,$ and the return would be $\frac{97.196+4}{96.369}-1 = \boxed{5.009\%.}$
+				\end{soln}
+				
+		\end{enumerate}
+
+	\item 
+		\begin{enumerate}[(a)]
+			\item 
+				\begin{soln}
+					The spot rates are
+					\begin{align*}
+						99.67 = \frac{100.3125}{1+s_{0.5}/2} \implies s_{0.5} = 1.289\% \\
+						100.30 = \frac{0.875}{1+s_{0.5}/2} + \frac{100.875}{(1+s_1/2)^2} \implies s_1 = 1.447\% \\
+						100.17 = \frac{0.8125}{1+s_{0.5}/2} + \frac{0.8125}{(1+s_1/2)^2} + \frac{100.8125}{(1+s_{1.5}/2)^3} \implies s_{1.5} = 1.511\% \\
+						99.36 = \frac{0.625}{1+s_{0.5}/2} + \frac{0.625}{(1+s_1/2)^2} + \frac{0.625}{(1+s_{1.5}/2)^3} + \frac{100.625}{(1+s_2/2)^4} \implies s_2 = 1.578\%
+					\end{align*}
+				\end{soln}
+
+			\item 
+				\begin{soln}
+					The forward rates are
+					\begin{align*}
+						f_{0.5, 1} &= 2\left(\frac{(1+1.447\%/2)^2}{1+1.289/2\%}-1\right) = 1.605\% \\
+						f_{1, 1.5} &= 2\left( \frac{(1+1.511\%/2)^3}{(1+1.447\%/2)^2}-1 \right) = 1.639\% \\
+						f_{1.5, 2} &= 2\left( \frac{(1+1.578\%/2)^4}{(1+1.511\%/2)^3}-1 \right) = 1.779\%
+					\end{align*}
+				\end{soln}
+		\end{enumerate}
+
+	\item 
+		\begin{enumerate}[(a)]
+			\item 
+				\begin{soln}
+					The forward discount factor is given by
+					\begin{align*}
+						d_{10, t} &= e^{-f_{10, t}\cdot(t-10)} = \boxed{e^{-0.05(t-10)}}
+					\end{align*}
+				\end{soln}
+
+			\item 
+				\begin{soln}
+					The discount factor is given by
+					\begin{align*}
+						d_t&=d_{0, t} = d_{0, 10} d_{10, t} = e^{-0.03\cdot 10} \cdot e^{-0.05(t-10)} \\
+						&= \boxed{e^{-0.05t+0.2}}
+					\end{align*}
+				\end{soln}
+
+			\item 
+				\begin{soln}
+					Using the forward rate, we have
+					\begin{align*}
+						f_{10, t} &= \frac{s_t\cdot t - s_{10}\cdot 10}{t-10} = \frac{s_t\cdot t - 0.03\cdot 10}{t-10} = 0.05 \\
+						\implies s_t &= \boxed{0.05 - \frac{0.2}{t}}
+					\end{align*}
+				\end{soln}
+
+			\item 
+				\begin{soln}
+					The present value of this perpetuity is
+					\begin{align*}
+						PV &= \sum_{t=11}^{\infty} \$1M\cdot d_t = \sum_{t=11}^{\infty} \$1M\cdot e^{-0.05t+0.2} \\
+						&= \$1M\cdot e^{0.2} \sum_{t=11}^{\infty} (e^{-0.05})^t \\
+						&= \$1M\cdot e^{0.2} \cdot \frac{e^{-0.55}}{1-e^{-0.05}} \\
+						&= \boxed{\$14.449M}
+					\end{align*}
+				\end{soln}
+				
+		\end{enumerate}
+
+	\item 
+		\begin{enumerate}[(a)]
+			\item 
+				\begin{soln}
+					Each coupon payment on this inverse floater is $\frac{10\%-2L_3}{4} = 2.5\% - \frac{L_3}{2}.$ 
+
+					Consider a portfolio with a long position in a 10-year coupon bond paying 2.5\% each coupon, a short position in $\frac{1}{2}$ of a 10-year floating bond paying $L_3$ each coupon, and a long position in $\frac{1}{2}$ of a 10-year ZCB. Then each net coupon payment is exactly $2.5\%-\frac{L_3}{2}$ and the net face value is 100, so this portfolio is equivalent to the inverse floater.
+
+					The quarterly rate is 1\%, so the price of the 10-year coupon bond is 
+					\begin{align*}
+						P_1 &= \sum_{i=1}^{40} \frac{2.5}{(1+1\%)^i} + \frac{100}{(1+1\%)^{40}} = \frac{2.5}{0.01}\left( 1-\frac{1}{1.01^{40}} \right) + \frac{100}{1.01^{40}} = 149.252
+					\end{align*}
+					The price of the ZCB is
+					\begin{align*}
+						P_2 &= \frac{100}{1.01^{40}} = 67.165
+					\end{align*}
+					and the price of the floating bond is 100. Thus, the price of the portfolio is
+					\begin{align*}
+						P_1 + \frac{1}{2} P_2 - \frac{1}{2}\cdot 100 = \boxed{132.835}
+					\end{align*}
+					which is the price of the inverse floater.
+				\end{soln}
+
+			\item 
+				\begin{soln}
+					Let $P(\lambda)$ be the price as a function of interest rate. Since the floating rate bond is always 100, we have
+					\begin{align*}
+						P(\lambda) = P_1(\lambda) + \frac{1}{2}P_2(\lambda) - \frac{1}{2}\cdot 100 
+					\end{align*}
+					where
+					\begin{align*}
+						P_1(\lambda) &= \sum_{i=1}^{40}\frac{2.5}{(1+\lambda)^i} + \frac{100}{(1+\lambda)^{40}} = \frac{2.5}{\lambda}\left( 1-\frac{1}{(1+\lambda)^{40}} \right) + \frac{100}{(1+\lambda)^{40}} \\
+						P_2(\lambda) &= \frac{100}{(1+\lambda)^{40}} \\
+						\implies P(\lambda) &= \frac{2.5}{\lambda}\left( 1-\frac{1}{(1+\lambda)^{40}} \right) + \frac{100}{(1+\lambda)^{40}} + \frac{50}{(1+\lambda)^{40}} - 50 \\
+						&= 2.5\lambda^{-1} - 2.5\lambda^{-1}(1+\lambda)^{-40} + 150(1+\lambda)^{-40} - 50
+					\end{align*}
+					Now, the modified duration is given by
+					\begin{align*}
+						D_M' &= -\frac{1}{P} \cdot \frac{\partial P}{\partial\lambda} \\
+						&= -\frac{1}{P}\left( -2.5\lambda^{-2}+2.5\lambda^{-2}(1+\lambda)^{-40} + 100\lambda^{-1}(1+\lambda)^{-41} - 6000(1+\lambda)^{-41} \right)
+					\end{align*}
+					and substituting $\lambda=1\%,$ we get
+					\begin{align*}
+						D_M' &= 41.771
+					\end{align*}
+					which is in quarters, so the modified duration in terms of years is \boxed{10.443.}
+				\end{soln}
+
+			\item 
+				\begin{soln}
+					The duration is longer than the maturity, which is not surprising. This bond has added sensitivity to interest rates due to the LIBOR component of its coupon.
+				\end{soln}
+
+		\end{enumerate}
+		
+\end{enumerate}
+
+\end{document}
