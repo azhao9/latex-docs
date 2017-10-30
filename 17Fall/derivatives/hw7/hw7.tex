@@ -1,0 +1,163 @@
+\documentclass{article}
+\usepackage[sexy, hdr, fancy]{evan}
+\setlength{\droptitle}{-4em}
+
+\lhead{Homework 7}
+\rhead{Introduction to Financial Derivatives}
+\lfoot{}
+\cfoot{\thepage}
+
+\newcommand{\var}{\mathrm{Var}}
+\newcommand{\cov}{\mathrm{Cov}}
+
+\begin{document}
+\title{Homework 7}
+\maketitle
+\thispagestyle{fancy}
+
+\section*{Chapter 11: Properties of Stock Options}
+
+\begin{itemize}
+	\item[7.] The price of a non-dividend-paying stock is \$19 and the price of a 3-month European call option on the stock with a strike price of \$20 is \$1. The risk-free rate is 4\% per annum. What is the price of a 3-month European put option with a strike price of \$20?
+		\begin{soln}
+			By put-call parity, we have
+			\begin{align*}
+				c + Ke^{-rT} &= p + S_0 \\
+				\implies p &= 1 + 20e^{-0.04\cdot \frac{1}{4}} - 19 \\
+				&= \boxed{\$1.801}
+			\end{align*}
+		\end{soln}
+
+	\item[14.] The price of a European call that expires in 6 months and has a strike price of \$30 is \$2. The underlying stock price is \$29, and a dividend of \$0.50 is expected in 2 months and again in 5 months. Interest rates (all maturities) are 10\%. What is the price of a European put option that expires in 6 months and has a strike price of \$30?
+		\begin{soln}
+			By put-call parity, we have
+			\begin{align*}
+				c+D+Ke^{-rT} &= p+S_0 \\
+				\implies p &= 2 + \left( 0.5e^{-0.10\cdot \frac{1}{6}} + 0.5e^{-0.10\cdot \frac{5}{12}} \right) + 30e^{-0.10\cdot \frac{1}{2}} - 29 \\
+				&= \boxed{\$2.508}
+			\end{align*}
+		\end{soln}
+ 
+	\item[15.] Explain the arbitrage opportunities in problem 11.14 if the European put price is \$3.
+		\begin{soln}
+			We short the put and the stock for $3+29=\$32,$ and buy the call for \$2, for a net of \$30, which matures to $30e^{0.10\cdot \frac{1}{2}} = \$31.538$ after 6 months. 
+			
+			If the price at maturity is less than 30, the counterparty will exercise the put, and we buy the stock at \$30 to close out the short position for a riskless profit of $31.538-30=\$1.538.$
+
+			If the price at maturity is greater than 30, we exercise the call to buy the stock at \$30 to close out the short position for a riskless profit of $31.538-30=\$1.538.$
+		\end{soln}
+
+	\item[18.] Prove the result in equation (11.7). (Hint: for the first part of the relationship, consider (a) a portfolio consisting of a European call plus an amount of cash equal to $K,$ and (b) a portfolio consisting of an American put option plus one share.)
+		\begin{proof}
+			From put-call parity of European options, and the fact that American options cost at least as much as European options, we have
+			\begin{align*}
+				p+S_0 &= c+Ke^{-rT} \\
+				\implies P + S_0 \ge p+S_0 &= c+Ke^{-rT} \\
+				\implies c - P \le C - P &\le S_0 - Ke^{-rT}
+			\end{align*}
+			
+			Next, consider portfolio A: a European call plus an amount of cash equal to $K,$ and portfolio B: an American put plus one share. At expiration, we have
+			\begin{center}
+				\begin{tabular}{c|cc}
+					A & $S_T>K$ & $S_T\le K$ \\
+					\hline
+					call & $S_T-K$ & 0 \\
+					cash & $Ke^{rT}$ & $Ke^{rT}$ \\
+					\hline
+					total & $S_T+(Ke^{rT}-K)$ & $Ke^{rT}$
+				\end{tabular}
+			\end{center}
+			\begin{center}
+				\begin{tabular}{c|cc}
+					B & $S_T>K$ & $S_T\le K$ \\
+					\hline
+					put & 0 & $K-S_T$ \\
+					share & $S_T$ & $S_T$ \\
+					\hline
+					total & $S_T$ & $K$
+				\end{tabular}
+			\end{center}
+			Thus, since $Ke^{rT}\ge K,$ at expiration, portfolio A is worth at least as much as portfolio B, so it is worth at least as much at any point in time, and thus
+			\begin{align*}
+				c + K &\ge P + S_0 \\
+				\implies S_0 - K &\le c - P \le C - P
+			\end{align*}
+			as desired.
+		\end{proof}
+
+	\item[19.] Prove the result in equation (11.11). (Hint: for .the first part of the relationship, consider (a) a portfolio consisting of a European call plus an amount of cash equal to $D+K,$ and (b) a portfolio consisting of an American put option plus one share.)
+		\begin{proof}
+			From put-call parity of European options, and the fact that American options cost at least as much as European options, we have
+			\begin{align*}
+				p+S_0 &= c+D+Ke^{-rT} \\
+				\implies P + S_0 \ge p+S_0 &\ge c+D+Ke^{-rT} \\
+				\implies c-P \le C-P &\le S_0-D-Ke^{-rT} \le S_0-Ke^{-rT}
+			\end{align*}
+
+			Next, consider portfolio A: a European call plus an amount of cash equal to $D+K,$ and portfolio B: an American put plus one share. At expiration, we have
+			\begin{center}
+				\begin{tabular}{c|cc}
+					A & $S_T>K$ & $S_T\le K$ \\
+					\hline
+					call & $S_T-K$ & 0 \\
+					cash & $(D+K)e^{rT}$ & $(D+K)e^{rT}$ \\
+					\hline
+					total & $S_T+(Ke^{rT}-K) + De^{rT}$ & $(D+K)e^{rT}$
+				\end{tabular}
+			\end{center}
+			\begin{center}
+				\begin{tabular}{c|cc}
+					B & $S_T>K$ & $S_T\le K$ \\
+					\hline
+					put & 0 & $K-S_T$ \\
+					share & $S_T + De^{rT}$ & $S_T + De^{rT}$ \\
+					\hline
+					total & $S_T + De^{rT}$ & $K + De^{rT}$
+				\end{tabular}
+			\end{center}
+			At expiration, portfolio A is worth at least as much as portfolio B, so it is worth as least as much at any point in time, and thus
+			\begin{align*}
+				c+D+K &\ge P+S_0 \\
+				\implies S_0-D-K &\le c-P \le C-P
+			\end{align*}
+			as desired.
+		\end{proof}
+
+	\item[25.] Suppose that $c_1, c_2,$ and $c_3$ are the prices of European call options with strike prices $K_1, K_2,$ and $K_3,$ respectively, where $K_3>K_2>K_1$ and $K_3-K_2=K_2-K_1.$ All options have the same maturity. Show that
+		\begin{align*}
+			c_2\le 0.5(c_1+c_3)
+		\end{align*}
+		(Hint: Consider a portfolio that is long one option with strike price $K_1,$ long one option with strike price $K_3,$ and short two options with strike price $K_2.$)
+		\begin{proof}
+			At maturity, if $S_T>K_3,$ then all 3 options are exercised. If $K_2<S_T\le K_3,$ then options 1 and 2 are exercised. If $K_1<S_T\le K_2$ then option 1 is exercised, and if $K_1\le S_T,$ then none are exercised. Thus, we have
+			\begin{center}
+				\begin{tabular}{c|cccc}
+					& $S_T>K_3$ & $K_2<S_T\le K_3$ & $K_1 < S_T\le K_2$ & $K_1\le S_T$ \\
+					\hline
+					call 1 & $S_T-K_1$ & $S_T-K_1$ & $ S_T-K_1$ & 0 \\
+					-2 $\times$ call 2: & $2(K_2-S_T)$ & $2(K_2-S_T)$ & 0 & 0 \\	
+					call 3 & $S_T-K_3$ & 0 & 0 & 0 \\
+					\hline
+					total & $-K_1+2K_2-K_3$ & $2K_2-K_1-S_T$ & $S_T-K_1$ & 0
+				\end{tabular}
+			\end{center}
+			In the first case, we have 
+			\begin{align*}
+				K_3-K_2=K_2-K_1\implies -K_3+2K_2-K_1=0
+			\end{align*}
+			In the second case, we have
+			\begin{align*}
+				2K_2-K_1-S_T &= (K_2-K_1)+K_2-S_T \\
+				&= (K_3-K_2)+K_2-S_T = K_3 - S_T \\
+				&\ge 0
+			\end{align*}
+			In the third case, $S_T-K_1\ge 0.$ Thus, in any scenario, the portfolio is worth at least 0, so at the outset,
+			\begin{align*}
+				c_1-2c_2+c_3 \ge 0 \implies c_2\le 0.5(c_1+c_3)
+			\end{align*}
+			as desired.
+		\end{proof}
+		
+\end{itemize}
+
+\end{document}

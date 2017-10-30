@@ -1,0 +1,64 @@
+\documentclass{article}
+\usepackage[sexy, hdr, fancy]{evan}
+\setlength{\droptitle}{-4em}
+
+\lhead{Homework 7}
+\rhead{Honors Analysis I}
+\lfoot{}
+\cfoot{\thepage}
+
+\begin{document}
+\title{Homework 7} 
+\maketitle
+\thispagestyle{fancy}
+
+\section*{Chapter 7: Completeness}
+
+\begin{itemize}
+	\item[35.] Prove that a normed vector space $X$ is complete if and only if its closed unit ball $B=\left\{ x\in X:\left\lVert x \right\rVert\le 1 \right\}$ is complete.
+		\begin{proof}
+			$(\implies):$ Let $y_n$ be a sequence in $B$ with $\sum_{n=1}^{\infty} \left\lVert y_n \right\rVert<\infty.$ Then since $X$ is complete and $y_n$ is also a sequence in $X,$ it follows that $\sum_{n=1}^{\infty} y_n$ converges in $X.$ 
+		\end{proof}
+
+	\item[40.] Extend the result in Example 7.15 as follows: Suppose that $F:[a, b]\to \RR$ is continuous on $[a, b],$ differentiable in $(a, b),$ and satisfies $F(a)<0, F(b)>0,$ and $0<K_1\le F'(x)\le K_2.$ Show that there is a unique solution to the equation $F(x)=0.$ (Hint: Consider the equation $f(x)=x,$ where $f(x)=x-\lambda F(x)$ for some suitably chosen $\lambda$.)
+
+	\item[47.] A function $f:(M, d)\to (n, \rho)$ is said to be uniformly continuous if $f$ is continuous and if, given $\varepsilon>0,$ there is always a single $\delta>0$ such that $\rho(f(x), f(y))<\varepsilon$ for any $x, y\in M$ with $d(x, y)<\delta.$ That is, $\delta$ is allowed to depend on $f$ and $\varepsilon$ but not on $x$ or $y.$ Prove that any Lipschitz map is uniformly continuous.
+		\begin{proof}
+			If $f$ is Lipschitz, then there exists $K>0$ such that $\rho(f(x), f(y))\le Kd(x, y)$ for all $x, y\in M.$ Given $\varepsilon>0,$ take $\delta=\varepsilon/K.$ Then for all $x, y\in M$ where $d(x, y)<\delta=\varepsilon/K,$ we have
+			\begin{align*}
+				\rho(f(x), f(y))\le Kd(x, y)< K\cdot \frac{\varepsilon}{K} = \varepsilon
+			\end{align*}
+			Since all Lipschitz maps are continuous, it follows that $f$ is uniformly continuous.
+		\end{proof}
+		
+\end{itemize}
+
+\section*{Chapter 8: Compactness}
+
+\begin{itemize}
+	\item[2.] Let $E=\left\{ x\in\QQ:2<x^2<3 \right\},$ considered as a subset of $\QQ$ (with its usual metric). Show that $E$ is closed and bounded but not compact.
+		\begin{proof}
+			Consider the sequence $1, 1.7, 1.73, 1.732, \cdots$ of rationals converging to $\sqrt{3}\in\RR\setminus\QQ.$ This is a sequence in $E,$ but any subsequence also converges to $\sqrt{3}$ and thus fails to converge in $E.$ Thus, $E$ is not compact.
+		\end{proof}<++>
+
+	\item[8.] Prove that the set $\left\{ x\in\RR^n:\left\lVert x \right\rVert_1=1 \right\}$ is compact in $\RR^n$ under the Euclidean norm.
+		\begin{proof}
+			Consider $B=\left\{ x\in\RR^n: \left\lVert x \right\rVert_1\le 1 \right\}.$ Then $B$ is a closed, bounded subset of $\RR^n,$ and therefore compact. Then $S = \left\{ x\in\RR^n:\left\lVert x \right\rVert_1=1 \right\}\subset B$ is closed in $B$ because $S^c=\left\{ x\in\RR^n:\left\lVert x \right\rVert_1<1 \right\}$ is open. Thus, since $B$ is compact and $S$ is closed in $B,$ it follows that $S$ is compact.
+		\end{proof}
+
+	\item[10.] Show that the Heine-Borel theorem (closed, bounded sets in $\RR$ are compact) implies the Bolzano-Weierstrass theorem. Conclude that the Heine-Borel theorem is equivalent to the completeness of $\RR.$
+
+	\item[37.] A real-valued function $f$ on a metric space $M$ is called lower semi-continuous if, for each real $\alpha,$ the set $\left\{ x\in M:f(x)>\alpha \right\}$ is open in $M.$ prove that $f$ is lower semi=continuous if and only if $f(x)\le \liminf_{n\to\infty} f(x_n)$ whenever $x_n\to x$ in $M.$
+
+	\item[40.] Let $M$ be compact and let $f:M\to M$ satisfy $d(f(x), f(y))=d(x, y)$ for all $x, y\in M.$ Show that $f$ is onto. (Hint: If $B_\varepsilon(x)\cap f(M)=\varnothing,$ consider the sequence $f^n(x).$)
+		\begin{proof}
+			Since $f$ is an isometry, it is continuous, so $f(M)\subset M$ is compact, and therefore closed. Suppose $f$ is not onto. Then there exists $x\in M\setminus f(M),$ so $B_\varepsilon(x)\cap f(M)=\varnothing$ for some $\varepsilon>0.$ Now, consider the sequence $(f(x), f(f(x)), f(f(f(x))), \cdots)=(f^n(x))$ in $f(M).$ Such a sequence cannot have a Cauchy subsequence because for any $n>m,$ we have
+			\begin{align*}
+				d(f^n(x), f^m(x)) = d(f^{n-m}(x), x) \ge \varepsilon
+			\end{align*}
+			since $B_\varepsilon(x)\cap f(M)=\varnothing.$ Thus, $f(M)$ is not totally bounded, and therefore not compact. Contradiction, so $f$ must be onto.
+		\end{proof}
+		
+\end{itemize}
+
+\end{document}
