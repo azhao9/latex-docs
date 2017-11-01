@@ -17,10 +17,36 @@
 \begin{itemize}
 	\item[35.] Prove that a normed vector space $X$ is complete if and only if its closed unit ball $B=\left\{ x\in X:\left\lVert x \right\rVert\le 1 \right\}$ is complete.
 		\begin{proof}
-			$(\implies):$ Let $y_n$ be a sequence in $B$ with $\sum_{n=1}^{\infty} \left\lVert y_n \right\rVert<\infty.$ Then since $X$ is complete and $y_n$ is also a sequence in $X,$ it follows that $\sum_{n=1}^{\infty} y_n$ converges in $X.$ 
+			$(\implies):$ Since $B$ is closed in $X$ and $X$ is complete, $B$ is also complete.
+
+			$(\impliedby):$ Suppose $(x_n)$ is a sequence in $X$ with $\sum_{n=1}^{\infty} \left\lVert x_n \right\rVert<\infty.$ Then there exists $K>0$ such that $\left\lVert x_n \right\rVert\le K$ for all $n.$ Now consider the sequence $y_n=x_n/K.$ Then $\left\lVert y_n \right\rVert = \left\lVert \frac{x_n}{K} \right\rVert \le 1,$ so $y_n$ is a sequence in $B.$ Since $B$ is a complete normed vector space, it follows that $\sum_{n=1}^{\infty} y_n$ converges to $y\in B.$ We have
+			\begin{align*}
+				y = \sum_{n=1}^{\infty} y_n &= \sum_{n=1}^{\infty} \frac{x_n}{K} \\
+				\implies \sum_{n=1}^{\infty} x_n &= Ky
+			\end{align*}
+			so $\sum_{n=1}^{\infty} x_n$ converges to $Ky\in X,$ so $X$ is complete, as desired.
 		\end{proof}
 
 	\item[40.] Extend the result in Example 7.15 as follows: Suppose that $F:[a, b]\to \RR$ is continuous on $[a, b],$ differentiable in $(a, b),$ and satisfies $F(a)<0, F(b)>0,$ and $0<K_1\le F'(x)\le K_2.$ Show that there is a unique solution to the equation $F(x)=0.$ (Hint: Consider the equation $f(x)=x,$ where $f(x)=x-\lambda F(x)$ for some suitably chosen $\lambda$.)
+		\begin{proof}
+			Let $f:[a, b]\to\RR$ by $x\mapsto x-\lambda F(x).$ Then $f'(x)=1-\lambda F'(x),$ and
+			\begin{align*}
+				0 < K_1\le F'(x) \le K_2 &\implies 1-\lambda K_2 \le 1-\lambda F'(x)\le 1-\lambda K_1 < 1 
+			\end{align*}
+			Thus, as long as $1-\lambda K_2>-1\implies \lambda < 2/K_2,$ we will have
+			\begin{align*}
+				\abs{f'(x)} = \abs{1-\lambda F'(x)} \le \alpha < 1
+			\end{align*}
+			and since $F$ is continuous on $[a, b]$ and differentiable on $(a, b),$ it follows that $f$ is as well. We have
+			\begin{align*}
+				f(a) &= a - \lambda F(a) > a \\
+				f(b) &= b - \lambda F(b) < b
+			\end{align*}
+			If we take $\lambda < 1/K_2,$ then $f'(x)=1-\lambda F'(x) > 0,$ so $f$ is monotone increasing, and thus $f([a, b])\subset [a, b].$ Thus, letting $f:[a, b]\to[a, b],$ by the mean value theorem we have $\abs{f(x)-f(y)}\le \alpha\abs{x-y},$ so $f$ is a strict contraction. Since every strict contraction has a unique fixed point, there exists a unique $x_0\in[a, b]$ such that 
+			\begin{align*}
+				f(x_0)=x_0-\lambda F(x_0) = x_0\implies F(x_0)=0
+			\end{align*}
+		\end{proof}
 
 	\item[47.] A function $f:(M, d)\to (n, \rho)$ is said to be uniformly continuous if $f$ is continuous and if, given $\varepsilon>0,$ there is always a single $\delta>0$ such that $\rho(f(x), f(y))<\varepsilon$ for any $x, y\in M$ with $d(x, y)<\delta.$ That is, $\delta$ is allowed to depend on $f$ and $\varepsilon$ but not on $x$ or $y.$ Prove that any Lipschitz map is uniformly continuous.
 		\begin{proof}
@@ -38,8 +64,21 @@
 \begin{itemize}
 	\item[2.] Let $E=\left\{ x\in\QQ:2<x^2<3 \right\},$ considered as a subset of $\QQ$ (with its usual metric). Show that $E$ is closed and bounded but not compact.
 		\begin{proof}
+			Consider the complement 
+			\begin{align*}
+				E^c &= \left\{ x\in\QQ: 0\le x^2 \le 2 \right\} \cup \left\{ x\in\QQ: 3\le x^2 \right\} \\
+				&= \left\{ x\in\QQ: x^2<2 \right\}\cup \left\{ 0<x\in\QQ: x^2 > 3 \right\}\cup \left\{ 0 > x\in\QQ: x^2 > 3 \right\}
+			\end{align*}
+			Since $\QQ$ is a subspace of $\RR,$ if $U\subset \RR$ is open in $\RR,$ then $U\cap\QQ$ is open in $\QQ.$ Then we have
+			\begin{align*}
+				\left\{ x\in\QQ: x^2<2 \right\} &= \left( -\sqrt{2}, \sqrt{2} \right)\cap \QQ \\
+				\left\{ 0<x\in\QQ: x^2>3 \right\} &= \left( \sqrt{3}, \infty \right) \cap \QQ \\
+				\left\{ 0 > x\in\QQ: x^2 > 3 \right\} &= \left( -\infty, -\sqrt{3} \right) \cap \QQ
+			\end{align*}
+			and each of their corresponding sets is open in $\RR,$ so each set is open in $\QQ.$ Thus, since unions of open sets are open, $E^c$ is open so $E$ is closed. It is obviously bounded above and below by 2 and -2, respectively.
+
 			Consider the sequence $1, 1.7, 1.73, 1.732, \cdots$ of rationals converging to $\sqrt{3}\in\RR\setminus\QQ.$ This is a sequence in $E,$ but any subsequence also converges to $\sqrt{3}$ and thus fails to converge in $E.$ Thus, $E$ is not compact.
-		\end{proof}<++>
+		\end{proof}
 
 	\item[8.] Prove that the set $\left\{ x\in\RR^n:\left\lVert x \right\rVert_1=1 \right\}$ is compact in $\RR^n$ under the Euclidean norm.
 		\begin{proof}
@@ -47,8 +86,20 @@
 		\end{proof}
 
 	\item[10.] Show that the Heine-Borel theorem (closed, bounded sets in $\RR$ are compact) implies the Bolzano-Weierstrass theorem. Conclude that the Heine-Borel theorem is equivalent to the completeness of $\RR.$
+		\begin{proof}
+			Consider a bounded, infinite set $A,$ so $A\subset [a, b]$ for some $a<b.$ Suppose $A$ has no limit points in $[a, b],$ so for each $x\in[a, b],$ there exists $\varepsilon_x>0$ such that $\left(B_{\varepsilon_x}(x)\setminus{x}\right)\cap A = \varnothing.$ Then take the open cover $\left\{ B_{\varepsilon_x}(x):x\in [a, b] \right\}.$ Since $[a, b]$ is compact by the Heine-Borel theorem, we can take a finite subcover, which necessarily covers $A,$ but since each of the $B_{\varepsilon_x}(x)$ only contains a single point $x,$ it follows that this subcover, and therefore $A,$ is finite. Contradiction, so $A$ must have a limit point in $[a, b],$ which is the Bolzano-Weierstrass theorem.
+		\end{proof}
 
-	\item[37.] A real-valued function $f$ on a metric space $M$ is called lower semi-continuous if, for each real $\alpha,$ the set $\left\{ x\in M:f(x)>\alpha \right\}$ is open in $M.$ prove that $f$ is lower semi=continuous if and only if $f(x)\le \liminf_{n\to\infty} f(x_n)$ whenever $x_n\to x$ in $M.$
+	\item[37.] A real-valued function $f$ on a metric space $M$ is called lower semi-continuous if, for each real $\alpha,$ the set $\left\{ x\in M:f(x)>\alpha \right\}$ is open in $M.$ prove that $f$ is lower semi-continuous if and only if $f(x)\le \liminf_{n\to\infty} f(x_n)$ whenever $x_n\to x$ in $M.$
+		\begin{proof}
+			$(\implies):$ Suppose $x_n\to x$ in $M$ but $f(x)>\liminf_{n\to\infty} f(x_n)=L.$ Then there exists $\alpha$ with $f(x)>\alpha>L.$ Then since $f\inv( (\alpha, \infty)) = \left\{ x\in M:f(x)>\alpha \right\}=S$ is open in $M$ and $x\in S,$ the sequence $x_n$ must eventually be in $S.$ Thus the sequence $f(x_n)$ must eventually be in $(\alpha, \infty),$ so $\liminf_{n\to\infty} f(x_n)\ge \alpha.$ Contradiction, since $\liminf_{n\to\infty}f(x_n)=L<\alpha.$ Thus $f(x)\le \liminf_{n\to\infty} f(x_n).$
+
+			$(\impliedby):$ Suppose $f(x)\le \liminf_{n\to\infty} f(x_n)$ for $x_n\to x$ in $M.$ Take $\alpha\in\RR,$ and let $T=f\inv( (\alpha, \infty)).$ Then for any $x\in S,$ we have $f(x)>\alpha,$ so 
+			\begin{align*}
+				\liminf_{n\to\infty} f(x_n)=\lim_{n\to\infty} \inf\left\{ f(x_k): k\ge n \right\}\ge f(x)>\alpha
+			\end{align*}
+			Thus, since the sequence $\inf\left\{ f(x_k):k\ge n \right\}$ is increasing, there exists $N$ such that $f(x_n)>\alpha$ for all $n\ge N,$ which means that $x_n$ is eventually in $S,$ so $S$ is open in $M.$
+		\end{proof}
 
 	\item[40.] Let $M$ be compact and let $f:M\to M$ satisfy $d(f(x), f(y))=d(x, y)$ for all $x, y\in M.$ Show that $f$ is onto. (Hint: If $B_\varepsilon(x)\cap f(M)=\varnothing,$ consider the sequence $f^n(x).$)
 		\begin{proof}
