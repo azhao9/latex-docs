@@ -1,0 +1,83 @@
+\documentclass{article}
+\usepackage[sexy, hdr, fancy]{evan}
+\setlength{\droptitle}{-4em}
+
+\lhead{Homework 8}
+\rhead{Intro Algorithms}
+\lfoot{}
+\cfoot{\thepage}
+
+\begin{document}
+\title{Homework 8}
+\maketitle
+\thispagestyle{fancy}
+
+\section{Matroids (40 points)}
+
+\begin{enumerate}[(a)]
+	\item Let $U$ be a finite set, let $k \geq 0$ be an integer, and let $\mathcal I = \{ S \subseteq U : |S| \leq k\}$.  Prove that $(U, \mathcal I)$ is a matroid.
+		\begin{proof}
+			We show that $(U, \mathcal I)$ satisfies the 3 properties of matroids.
+			\begin{enumerate}[(i)]
+				\ii Clearly $\varnothing\in\mathcal I$ because $\abs{\varnothing}=0\le k.$
+				\ii If $F\in\mathcal I,$ then $\abs{F}\le k.$ If $F'\subseteq F,$ then $\abs{F'}\le \abs{F}\le k,$ so $F'\in\mathcal I$ as well.
+				\ii If $F_1, F_2\in\mathcal I$ with $\abs{F_2}>\abs{F_1},$ then we have
+				\begin{align*}
+					\abs{F_2}\le k\implies \abs{F_1}\le k-1
+				\end{align*}
+				Since $F_2\setminus F_1\neq \varnothing,$ take $e\in F_2\setminus F_1,$ so 
+				\begin{align*}
+					\abs{F_1\cup \left\{ e \right\}} &= \abs{F_1} + 1 \le k \\
+					\implies F_1\cup\left\{ e \right\} &\in \mathcal I
+				\end{align*}
+			\end{enumerate}
+			Thus, $(U, \mathcal I)$ is a matroid.
+		\end{proof}
+
+	\item Let $U$ be a finite set and let $U_1, U_2, \dots, U_k$ be a partition of $U$ into nonempty disjoint subsets (where $k \geq 2$).  Let $r_1, r_2, \dots r_k$ be positive integers.  Let $\mathcal I = \{ S \subseteq U : |S \cap U_i| \leq r_i\}$ for all $i \in \{1,2,\dots k\}$.  Prove that $(U, \mathcal I)$ is a matroid.  
+		\begin{proof}
+			We show that $(U, \mathcal I)$ satisfies the 3 properties of matroids. 
+			\begin{enumerate}[(i)]
+				\ii Clearly $\varnothing\in\mathcal I$ because $\abs{\varnothing\cap U}=\abs{\varnothing}=0\le r_i$ for all $i$ since $r_i$ are positive.
+				\ii If $F\in \mathcal I,$ then $\abs{F\cap U_i}\le r_i$ for all $i.$ If $F'\subseteq F,$ then $F'\cap U_i\subseteq F\cap U_i$ because if $x\in F'\cap U_i,$ we have $x\in F'\implies x\in F$ and $x\in U_i,$ so $x\in F\cap U_i.$ Thus $\abs{F'\cap U_i}\le \abs{F\cap U_i}\le r_i,$ so $F'\in\mathcal I.$
+				\ii Let $F_1, F_2\in\mathcal I$ with $\abs{F_2}>\abs{F_1}.$ Since the $U_i$ partition $U,$ we have
+				\begin{align*}
+					\sum_{i=1}^{n} \abs{F_2\cap U_i} = \abs{F_2} > \abs{F_1} = \sum_{i=1}^{n} \abs{F_1\cap U_i}
+				\end{align*}
+				If $\abs{F_2\cap U_i}\le\abs{F_1\cap U_i}$ for all $i,$ then $\abs{F_2}\le \abs{F_1},$ a contradiction, so there exists some $k$ such that $\abs{F_2\cap U_k}>\abs{F_1\cap U_k}.$ Then $(F_2\cap U_k)\setminus(F_1\cap U_k)\neq\varnothing,$ so take some $e\in (F_2\cap U_k)\setminus(F_1\cap U_k).$ Because the $U_i$ are disjoint, $e\in U_k$ and $e\notin U_i$ for all $i\neq k.$ We have
+				\begin{align*}
+					\abs{\left( F_1\cup \left\{ e \right\} \right)\cap U_i} &= \abs{\left( F_1\cap U_i \right)\cup \left( \left\{ e \right\}\cap U_i \right)} \\
+					&= \begin{cases}
+						\abs{(F_1\cap U_i)\cup\varnothing} = \abs{F_1\cap U_i} \le r_i & \text{if }i\neq k \\
+						\abs{(F_1\cap U_k)\cup \left\{ e \right\}} \le \abs{F_2\cap U_k} \le r_k & \text{if } i=k
+					\end{cases} \\
+					\implies \abs{(F_1\cup \left\{ e \right\})\cap U_i} &\le r_i, \forall i \\
+					\implies F_1\cup \left\{ e \right\}&\in \mathcal I
+				\end{align*}
+			\end{enumerate}
+		\end{proof}
+
+\end{enumerate}
+
+\section{Cuts and Flows (60 points)}
+
+\begin{enumerate}[(a)]
+	\item Suppose you are given a directed graph $G = (V, E)$, two vertices $s$ and $t$, a capacity function $c: E \rightarrow \mathbb{R}^+$, and a second function $f : E \rightarrow \mathbb{R}$. Give an $O(m+n)$-time algorithm to determine whether $f$ is a maximum $(s,t)$-flow in $G$.  As always, prove running time and correctness.
+
+\end{enumerate}
+
+Cuts are sometimes defined as subsets of the edges of the graph, instead of as partitions of its vertices. We will sometimes go back and forth between these two definitions without making much of a distinction, so in this problem you will prove that these two definitions are almost equivalent.
+
+Let $G = (V, E)$ be a directed graph, and let $s,t \in V$.  We say that a set of edges $X \subseteq E$ \emph{separates} $s$ and $t$ if every directed path from $s$ to $t$ contains at least one edge in $X$.  For any subset $S$ of vertices, let $\delta(S)$ denote the set of edges leaving $S$, i.e., let $\delta(S) = \{(u,v) \in E : u \in S, v \not\in S\}$.  
+
+\begin{enumerate}[(a), resume]
+	\item Let $(S, \bar S)$ be an $(s,t)$ cut (i.e., $s \in S$ and $t \in \bar S$, where $\bar S = V \setminus S$).  Prove that $\delta(S)$ separates $s$ and $t$.
+
+	\item Let $X$ be an arbitrary subset of edges that separates $s$ and $t$. Prove that there is an $(s, t)$-cut $(S, \bar S)$ such that $\delta(S) \subseteq X$.
+
+	\item Let $X$ be a \emph{minimal} subset of edges that separates $s$ and $t$ (so for all $X' \subseteq X$, we know that $X'$ does not separate $s$ and $t$).  Prove that there is an $(s, t)$-cut $(S,\bar S)$ such that $\delta(S) = X$.
+
+\end{enumerate}
+
+
+\end{document}

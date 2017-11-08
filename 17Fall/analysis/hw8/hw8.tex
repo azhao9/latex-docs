@@ -1,0 +1,133 @@
+\documentclass{article}
+\usepackage[sexy, hdr, fancy]{evan}
+\setlength{\droptitle}{-4em}
+
+\lhead{Homework 8}
+\rhead{Honors Analysis I}
+\lfoot{}
+\cfoot{\thepage}
+
+\newcommand{\vertiii}[1]{ { \left\vert\kern-0.25ex\left\vert\kern-0.25ex\left\vert #1 \right\vert\kern-0.25ex\right\vert\kern-0.25ex\right\vert} }
+    
+\begin{document}
+\title{Homework 8}
+\maketitle
+\thispagestyle{fancy}
+
+\section*{Chapter 8: Compactness}
+
+\begin{itemize}
+	\item[48.] Prove that a uniformly continuous map sends Cauchy sequences into Cauchy sequences.
+		\begin{proof}
+			Let $f:(M, d)\to (N, \rho)$ be uniformly continuous, let $(x_n)\subset M$ be Cauchy, and let $\varepsilon>0.$ Since $f$ is uniformly continuous, there exists $\delta>0$ such that $\rho(f(x), f(y))<\varepsilon$ whenever $d(x, y)<\delta$ for $x, y\in M.$ Then since $(x_n)$ is Cauchy, $\exists N$ such that $d(x_n, x_m)<\delta$ whenever $n, m\ge N,$ which means $\rho(f(x_n), f(x_m))<\varepsilon$ for all $n, m\ge N,$ by uniform continuity of $f,$ so $f(x_n)\subset N$ is Cauchy.
+		\end{proof}
+
+	\item[77.] Fix $k\ge 1$ and define $f:\ell_\infty\to\RR$ by $f(x)=x_k.$ Show that $f$ is linear and has $\left\lVert f \right\rVert=1.$
+		\begin{proof}
+			Let $x, y\in \ell_\infty$ and $\alpha, \beta\in\RR.$ Then $\alpha x+\beta y = (\alpha x_i + \beta y_i)_{i=1}^\infty,$ so
+			\begin{align*}
+				f(\alpha x+\beta y) &= f\left[ (\alpha x_i + \beta y_i)_{i=1}^\infty \right] = \alpha x_k + \beta y_k \\
+				&= \alpha f(x) + \beta f(y)
+			\end{align*}
+			so $f$ is linear. We have $\abs{x_k}\le \sup_i \abs{x_i}$ for $x\in\ell_\infty,$ with equality if $x_k$ is the maximal element, so
+			\begin{align*}
+				\left\lVert f \right\rVert &= \inf\left\{ C:\abs{f(x)}=x_k\le C\sup_i\abs{x_i} \right\} = 1
+			\end{align*}
+		\end{proof}
+
+	\item[78.] Define a linear map $f:\ell_2\to\ell_2$ by $f(x)=(x_n/n)_{n=1}^\infty.$ Is $f$ bounded? If so, what is $\left\lVert f \right\rVert?$
+		\begin{proof}
+			We claim $f$ is bounded. Let $x\in \ell_2.$ Then since $\abs{x_n/n}\le \abs{x_n/1}=\abs{x_n},$ we have
+			\begin{align*}
+				\left\lVert f(x) \right\rVert_2 &= \left( \sum_{n=1}^{\infty} \abs{\frac{x_n}{n}}^2 \right)^{1/2} \le 1\cdot\left( \sum_{n=1}^{\infty} \abs{x_n}^2 \right)^{1/2} = \left\lVert x \right\rVert_2
+			\end{align*}
+			as desired. Equality occurs when $x_1\neq 0$ and $x_i=0, \forall i\ge 2,$ so no tighter bound exists, so $\left\lVert f \right\rVert=1.$
+		\end{proof}
+
+	\item[80.] Show that the definite integral $I(f)=\int_a^bf(t)\, dt$ is continuous from $C[a, b]$ into $\RR.$ What is $\left\lVert I \right\rVert?$
+		\begin{proof}
+			Let $\varepsilon>0,$ and let $f, g\in C[a, b].$ If we take $\left\lVert f \right\rVert=\int_a^b \abs{f(t)}\, dt,$ then let $\delta=\varepsilon.$ We have
+			\begin{align*}
+				\abs{\int_a^b(f(t)-g(t))\, dt} &\le \int_a^b \abs{f(t)-g(t)}\, dt \\
+				\implies \abs{\int_a^b(f(t)-g(t))\, dt}<\varepsilon&\text{ whenever } \int_a^b \abs{f(t)-g(t)}\, dt < \varepsilon \\
+				\implies \abs{I(f)-I(g)} < \varepsilon &\text{ whenever } \left\lVert f-g \right\rVert < \delta
+			\end{align*}
+			as desired. Equality occurs when $f(t)>g(t)$ over $[a, b],$ so no tighter bound exists, so $\left\lVert I \right\rVert = 1.$
+		\end{proof}
+
+	\item[81.] Prove that the indefinite integral, defined by $T(f)(x)=\int_a^x f(t)\, dt,$ is continuous as a map from $C[a, b]$ into $C[a, b].$ Estimate $\left\lVert T \right\rVert.$
+		\begin{proof}
+			Let $\varepsilon>0,$ and let $f, g\in C[a, b].$ If we take $\left\lVert f \right\rVert = \int_a^b \abs{f(t)}\, dt,$ then for $t\in[a, b],$ we have
+			\begin{align*}
+				\abs{\int_a^t (f(s)-g(s))\, ds} &\le \int_a^t \abs{f(s)-g(s)}\, ds \le \int_a^b \abs{f(s)-g(s)}\, ds
+			\end{align*}
+			so if we let $\delta = \varepsilon/(b-a),$ then if
+			\begin{align*}
+				\left\lVert f-g \right\rVert &= \int_a^b \abs{f(t)-g(t)}\, dt < \delta = \frac{\varepsilon}{b-a}
+			\end{align*}
+			we have
+			\begin{align*}
+				\left\lVert T(f)-T(g) \right\rVert &= \int_a^b \abs{\int_a^t (f(s)-g(s))\, ds}\, dt \\
+				&\le \int_a^b \left( \int_a^b \abs{f(s)-g(s)}\, ds \right)\, dt \\
+				&= (b-a) \int_a^b \abs{f(s)-g(s)}\, ds \\
+				&< (b-a)\cdot \frac{\varepsilon}{b-a} = \varepsilon
+			\end{align*}
+			Thus, $T$ is continuous, as desired. Let $h>0,$ and consider the function
+			\begin{align*}
+				f(t) = \begin{cases}
+					-\frac{2(t-a-h)}{h^2} & \text{if } a\le t<a+ h \\
+					0 & \text{if } t > a+h
+				\end{cases}
+			\end{align*}
+			Then  $f$ is continuous on $[a, b],$ and defines a triangle of width $h$ and height $2/h$, so $\left\lVert f \right\rVert = \int_a^b \abs{f(t)}\, dt = 1.$ 
+			\begin{align*}
+				\int_a^t f(s)\, ds &= \begin{cases}
+					\frac{(t-a)(a+2h-t)}{h^2} & \text{if } a\le t<a+h \\
+					1 & \text{if } t>a
+				\end{cases} \\
+				\implies\left\lVert T(f) \right\rVert &= \int_a^b \abs{\int_a^t f(s)\, ds}\, dt = \int_a^{a+h} \frac{(t-a)(a+2h-t)}{h^2}\, dt + \int_{a+h}^b 1\, dt \\
+				&= \frac{2h}{3} + (b-(a+h)) = b-a-\frac{h}{3}
+			\end{align*}
+			By the result of \#82, we have
+			\begin{align*}
+				\left\lVert T \right\rVert &= \sup\left\{ \left\lVert T(f) \right\rVert:\left\lVert f \right\rVert = 1 \right\} \\
+				&\ge \sup\left\{ b-a-\frac{h}{3}: h>0 \right\} = b-a
+			\end{align*}
+			but on the other hand, from earlier, we had
+			\begin{align*}
+				\left\lVert T(f)-T(g) \right\rVert&\le (b-a) \left\lVert f-g \right\rVert \\
+				\implies \left\lVert T \right\rVert &= \sup_{f\not\equiv g} \frac{\left\lVert T(f)-T(g) \right\rVert}{\left\lVert f-g \right\rVert} \le b-a
+			\end{align*}
+			so $\left\lVert T \right\rVert = b-a.$
+		\end{proof}
+
+	\item[82.] For $T\in B(V, W),$ prove that $\left\lVert T \right\rVert=\sup\left\{ \vertiii{Tx}:\left\lVert x \right\rVert=1 \right\}.$
+		\begin{proof}
+			We have
+			\begin{align*}
+				\sup_{y\neq 0} \frac{\vertiii{Ty}}{\left\lVert y \right\rVert} &= \sup_{y\neq 0} \vertiii{\frac{1}{\left\lVert y \right\rVert}\cdot Ty} = \sup_{x\neq 0} \vertiii{T\left( \frac{y}{\left\lVert y \right\rVert} \right)}
+			\end{align*}
+			Then if $x=y/\left\lVert y \right\rVert,$ we have $\left\lVert x \right\rVert =1,$ so
+			\begin{align*}
+				\sup_{y\neq 0} \frac{\vertiii{Ty}}{\left\lVert y \right\rVert } = \sup\left\{ \vertiii{Tx}:\left\lVert x \right\rVert = 1 \right\}
+			\end{align*}
+		\end{proof}
+
+	\item[84.] Prove that $B(V, W)$ is complete whenever $W$ is complete.
+		\begin{proof}
+			Let $(T_n)\subset B(V, W)$ be a sequence with $\sum_{n=1}^{\infty} \left\lVert T_n \right\rVert = C<\infty.$ Then we have
+			\begin{align*}
+				C &= \sum_{n=1}^{\infty} \left\lVert T_n \right\rVert = \sum_{n=1}^{\infty} \sup_{x\neq 0}\frac{\left\lVert T_n(x) \right\rVert_W}{\left\lVert x \right\rVert_V} \ge \sup_{x\neq 0} \sum_{n=1}^{\infty} \frac{\left\lVert T_n(x) \right\rVert_W}{\left\lVert x \right\rVert_V} \\
+				\implies C\left\lVert x \right\rVert_V &\ge \sum_{n=1}^{\infty} \left\lVert T_n(x) \right\rVert_W
+			\end{align*}
+			Here, $(T_n(x))$ is an absolutely summable sequence in $W$ since it is bounded, and $W$ is complete, so $\sum_{n=1}^{\infty} T_n(x)$ converges in $W.$ Since the sum of linear maps is linear, we have
+			\begin{align*}
+				\lim_{N\to\infty} \left( \sum_{n=1}^{N} T_n \right)(\alpha x + \beta y) &= \lim_{N\to\infty} \left( \alpha\sum_{n=1}^{N} T_n(x) + \beta \sum_{n=1}^{N} T_n(y) \right) \\
+				&= \alpha \lim_{N\to\infty} \sum_{n=1}^{N} T_n(x) + \beta \lim_{N\to\infty} \sum_{n=1}^{N} T_n(y)
+			\end{align*}
+			which converges in $W,$ so $\sum_{n=1}^{\infty} T_n$ is a linear map in $B(V, W),$ so $B(V, W)$ is complete.
+		\end{proof}
+		
+\end{itemize}
+
+\end{document}
