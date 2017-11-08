@@ -1,0 +1,126 @@
+\documentclass{article}
+\usepackage[sexy, hdr, fancy]{evan}
+\setlength{\droptitle}{-4em}
+
+\lhead{Homework 8}
+\rhead{Introduction to Financial Derivatives}
+\lfoot{}
+\cfoot{\thepage}
+
+\newcommand{\var}{\mathrm{Var}}
+\newcommand{\cov}{\mathrm{Cov}}
+
+\begin{document}
+\title{Homework 8}
+\maketitle
+\thispagestyle{fancy}
+
+\section*{Chapter 13: Binomial Trees}
+
+\begin{itemize}
+	\item[1.] A stock price is currently \$40. It is known that at the end of 1 month it will be either \$42 or \$38. The risk-free interest rate is 8\% per annum with continuous compounding. What is the value of a 1-month European call option with a strike price of \$39?
+		\begin{soln}
+			After 1 month, if the stock price is 42, the value of the option is 3, and if the price is 38, the value of the option is 0. If we have a portfolio of long $\Delta$ shares and short 1 option, after 1 month, we have
+			\begin{align*}
+				42\Delta - 3 = 38\Delta \implies \Delta = 0.75
+			\end{align*}
+			so the riskless portfolio has 0.75 shares of the stock and short 1 option. Then the value of this portfolio after 1 month is $42(0.75)-3 = 28.5.$ If $f$ is the option price today, the value of the portfolio is $42(0.75)-f = 31.5-f,$ so we have
+			\begin{align*}
+				(31.5-f)e^{0.08\cdot \frac{1}{12}} = 28.5 \implies f = \boxed{2.689}
+			\end{align*}
+			\end{soln}
+
+	\item[5.] A stock price is currently \$100. Over each of the next two 6-month periods it is expected to go up by 10\% or down by 10\%. The risk-free interest rate is 8\% per annum with continuous compounding. What is the value of a 1-year European call option with a strike price of \$100?
+		\begin{soln}
+			After 6 months, the price of the stock is either 110 or 90. If it is 90, then the option price at that time is 0 since the stock price can only go to either 99 or 81. Otherwise, if it goes to 110, then afterwards it can go to either 121 or 99. Then $f_{uu}=21$ and $f_{ud}=0.$ Using $u=1.1, d=0.9, r=0.08,$ and $T=0.5,$ we have 
+			\begin{align*}
+				f_u = e^{-rT} [pf_{uu} + (1-p) f_{ud}] = e^{-0.08\cdot 0.5}\cdot \frac{e^{0.08\cdot 0.5} - 0.9}{1.1-0.9}\cdot 21 = 14.205
+			\end{align*}
+			
+			Now, from the present till 6 months, we have $u=1.1, d=0.9, f_u=14.205, f_d=0,$ so we have
+			\begin{align*}
+				f = e^{-rT} [pf_u + (1-p) f_d] = e^{-0.08\cdot 0.5} \cdot \frac{e^{0.08\cdot 0.5}-0.9}{1.1-0.9}\cdot 14.205 = \boxed{9.609}
+			\end{align*}
+		\end{soln}
+
+	\item[6.] For the situation considered in Problem 13.5, what is the value of a 1-year European put option with a strike price of \$100? Verify that the European call and the European put prices satisfy put-call parity.
+		\begin{soln}
+			After 6 months, the price of the stock is either 110 or 90. If it is 90, then it can go to either 99 or 81. In this case, $f_{du} = 1$ and $f_{dd}=19.$ Using $u=1.1, d=0.9, r=0.08,$ and $T=0.5,$ we have
+			\begin{align*}
+				f_d &= e^{-rT}[pf_{du} + (1-p)f_{dd}] = e^{-0.08\cdot 0.5}\left[ \frac{e^{0.08\cdot 0.5}-0.9}{1.1-0.9}\cdot 1 + \left( 1-\frac{e^{0.08\cdot 0.5}-0.9}{1.1-0.9} \right)\cdot 19 \right] \\
+				&= 6.079
+			\end{align*}
+			If, after 6 months, it is 110, then it can go to either 121 or 99. In this case, $f_{uu}=0$ and $f_{ud}=1.$ We have
+			\begin{align*}
+				f_u &= e^{-rT}[pf_{uu}+(1-p)f_{ud}] = e^{-0.08\cdot 0.5}\cdot \left( 1-\frac{e^{0.08\cdot 0.5}-0.9}{1.1-0.9} \right)\cdot 1 = 0.284
+			\end{align*}
+			Now, from the present till 6 months, we have $u=1.1, d=0.9, f_u = 0.284, f_d=6.079,$ so we have
+			\begin{align*}
+				f &= e^{-rT}[pf_u + (1-p)f_d] = e^{-0.08\cdot 0.5}\left[ \frac{e^{0.08\cdot 0.5}-0.9}{1.1-0.9}\cdot 0.284 + \left( 1-\frac{e^{0.08\cdot 0.5}-0.9}{1.1-0.9} \right)\cdot 6.079 \right] \\
+				&= \boxed{1.921}
+			\end{align*}
+
+			We have
+			\begin{align*}
+				c + Ke^{-rT} &= 9.609 + 100e^{-0.08\cdot 1} = 101.921 \\
+				&= 1.921 + 100 = p + S_0
+			\end{align*}
+			so put-call parity is satisfied.
+		\end{soln}
+
+	\item[11.] A stock price is currently \$40. It is known that at the end of 3 months it will be either \$45 or \$35. The risk-free rate of interest with quarterly compounding is 8\% per annum. Calculate the value of a 3-month European put option on the stock with an exercise price of \$40. Verify that no-arbitrage arguments and risk-neutral valuation arguments give the same answers.
+		\begin{soln}
+			If the stock goes up to 45, then $f_u=0$ and if it goes down to 35, $f_d=5.$ We have $u=45/40 = 1.125, d = 35/40 = 0.875, r=0.08,$ and $T=0.25,$ so
+			\begin{align*}
+				f = e^{-rT}[pf_u + (1-p)f_d] = e^{-0.08\cdot 0.25} \left(1 - \frac{e^{0.08\cdot 0.25}-0.875}{1.125-0.875} \right) \cdot 5 = \boxed{2.054}
+			\end{align*}
+
+			For the risk-neutral valuation, if $p$ is the probability of an upward movement, then we have
+			\begin{align*}
+				45p + 35(1-p) = 40e^{0.08\cdot 0.25} \implies p = 0.581
+			\end{align*}
+			so the option has probability $p$ of being worth 0 and probability $1-p$ of being worth 5, so its expected value is $(1-p)\cdot 5 = 2.096.$ Discounting this at the risk-free rate, the value of the option today is $2.096e^{-0.08\cdot 0.25} = 2.054,$ so the risk-neutral and no-arbitrage valuations are the same.
+		\end{soln}
+
+	\item[25.] Consider a European call option on a non-dividend-paying stock where the stock price is \$40, the strike price is \$40, the risk-free rate is 4\% per annum, the volatility is 30\% per annum, and the time to maturity is 6 months. 
+		\begin{enumerate}[(a)]
+			\item Calculate $u, d,$ and $p$ for a two-step tree.
+				\begin{soln}
+					We have
+					\begin{align*}
+						u &= e^{\sigma\sqrt{\Delta t}} = e^{0.3\sqrt{0.25}} = 1.162 \\
+						d &= e^{-\sigma\sqrt{\Delta t}} = e^{-0.3\sqrt{0.25}} = 0.861 \\
+						p &= \frac{e^{r\Delta t}-d}{u-d} = \frac{e^{0.04\cdot 0.25}-0.861}{1.162-0.861} = 0.495
+					\end{align*}
+				\end{soln}
+
+			\item Value the option using a two-step tree.
+				\begin{soln}
+					After 3 months, the stock can go to either $40\cdot 1.162=46.48$ or $40\cdot 0.861 = 34.44.$ We have $f_{ud}=f_{du} = 0$ since the price would go back to 40, and $f_{dd}=0,$ so $f_d = 0.$ After 6 months, we have $f_{uu}=40\cdot 1.162^2 - 40 = 14.01.$ Thus,
+					\begin{align*}
+						f_u &= e^{-r\Delta t} [pf_{uu} + (1-p)f_{ud}] = e^{-0.04\cdot 0.25}\cdot 0.495\cdot 14.01 = 6.88 \\
+						\implies f &= e^{-r\Delta t}[pf_u+(1-p)f_d] = e^{-0.04\cdot 0.25} \cdot 0.495\cdot 6.88 = \boxed{3.378}
+					\end{align*}
+				\end{soln}
+
+			\item Verify that DerivaGem gives the same answer.
+				\begin{answer*}
+					DerivaGem gives the same answer.
+				\end{answer*}
+
+			\item Use DerivaGem to value the option with 5, 50, 100, and 500 time steps.
+				\begin{soln}
+					The values for 5, 50, 100, and 500 steps are
+					\begin{align*}
+						f_5 &= 3.923 \\
+						f_{50} &= 3.739 \\
+						f_{100} &= 3.748 \\
+						f_{500} &= 3.754
+					\end{align*}
+				\end{soln}
+				
+		\end{enumerate}
+
+\end{itemize}
+
+\end{document}
