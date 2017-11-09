@@ -55,6 +55,7 @@
 					\implies F_1\cup \left\{ e \right\}&\in \mathcal I
 				\end{align*}
 			\end{enumerate}
+			Thus, $(U, \mathcal I)$ is a matroid.
 		\end{proof}
 
 \end{enumerate}
@@ -63,6 +64,11 @@
 
 \begin{enumerate}[(a)]
 	\item Suppose you are given a directed graph $G = (V, E)$, two vertices $s$ and $t$, a capacity function $c: E \rightarrow \mathbb{R}^+$, and a second function $f : E \rightarrow \mathbb{R}$. Give an $O(m+n)$-time algorithm to determine whether $f$ is a maximum $(s,t)$-flow in $G$.  As always, prove running time and correctness.
+		\begin{soln}
+			First, check the capacity constraint, so we must have $f(e)\le c(e)$ for all $e\in E.$ Next, construct the residual graph $G_f.$ Then $f$ is a max $(s, t)$-flow in $G$ if an only if there is no $(s, t)$-path in $G_f,$ so perform a DFS from $s$ in $G_f.$ If $t$ is found, then $f$ not a max flow. If $t$ is not found, then $f$ is a max flow.
+
+			Checking the capacity takes $O(m)$ since we just need to iterate over all edges. Then the residual graph has at most $2m$ edges, one for each direction, so constructing it takes $O(n+2m)=O(n+m).$ Finally, DFS takes $O(n+2m)=O(n+m),$ so the total running time is $O(n+m).$ The algorithm is correct because a flow $f$ is a max $(s, t)$-flow if and only if there is no $(s, t)$-path in $G_f.$
+		\end{soln}
 
 \end{enumerate}
 
@@ -72,10 +78,19 @@ Let $G = (V, E)$ be a directed graph, and let $s,t \in V$.  We say that a set of
 
 \begin{enumerate}[(a), resume]
 	\item Let $(S, \bar S)$ be an $(s,t)$ cut (i.e., $s \in S$ and $t \in \bar S$, where $\bar S = V \setminus S$).  Prove that $\delta(S)$ separates $s$ and $t$.
+		\begin{proof}
+			Suppose there exists a path from $s$ to $t$ with no edge in $\delta(S).$ Then such a path must stay entirely within $S$ since it has no edges leaving $S,$ but $t\in \bar S=V\setminus S,$ which is a contradiction. Thus, every path must contain an edge in $\delta(S).$
+		\end{proof}
 
 	\item Let $X$ be an arbitrary subset of edges that separates $s$ and $t$. Prove that there is an $(s, t)$-cut $(S, \bar S)$ such that $\delta(S) \subseteq X$.
+		\begin{proof}
+			Consider $G'=(V, E\setminus X).$ Then $G'$ is disconnected, since any $(s, t)$-path in $G$ had an edge in $X.$ In particular, $s$ and $t$ are in separate connected components. Let $S$ be the component containing $s.$ Then if $e\in \delta(S),$ it is an edge in $G$ leaving $S,$ so it can't be in $G',$ since $S$ is a connected component, so $e\in X,$ and thus $\delta(S)\subset X.$
+		\end{proof}
 
 	\item Let $X$ be a \emph{minimal} subset of edges that separates $s$ and $t$ (so for all $X' \subseteq X$, we know that $X'$ does not separate $s$ and $t$).  Prove that there is an $(s, t)$-cut $(S,\bar S)$ such that $\delta(S) = X$.
+		\begin{proof}
+			Consider $G'=(V, E\setminus X).$ Then $G'$ is disconnected, and in particular must have exactly 2 connected components. If it has 3 or more, if we add an edge $e$ connecting any two of them, $G'$ is still disconnected since it has at least 2 connected components, so $(V, (E\setminus X)\cup \left\{ e \right\}) = (V, E\setminus(X\setminus \left\{ e \right\}))$ is disconnected, so $X\setminus\left\{ e \right\}$ is a separating set, but we assumed that $X$ was minimal. Contradiction, so there are exactly 2 connected components. $s$ and $t$ are in different components, so let $s\in S$ and $t\in V\setminus S = \bar S.$ Then $X$ is exactly the set of edges that start in $S$ and end in $\bar S,$ so $\delta(S)=X.$
+		\end{proof}
 
 \end{enumerate}
 
