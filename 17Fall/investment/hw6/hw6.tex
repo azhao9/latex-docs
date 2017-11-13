@@ -1,0 +1,109 @@
+\documentclass{article}
+\usepackage[sexy, hdr, fancy]{evan}
+\setlength{\droptitle}{-4em}
+
+\lhead{Homework 6}
+\rhead{Investment Science}
+\lfoot{}
+\cfoot{\thepage}
+
+\newcommand{\var}{\mathrm{Var}}
+\newcommand{\cov}{\mathrm{Cov}}
+
+\begin{document}
+\title{Homework 6}
+\maketitle
+\thispagestyle{fancy}
+
+\begin{enumerate}
+	\item 
+		\begin{soln}
+			If $X$ and $Y$ are the results of the two dice, then $Z=XY.$ The rolls are independent of each other, and we have
+			\begin{align*}
+				E[X] = E[Y] &= \frac{1}{6}(1+2+3+4+5+6) = \frac{7}{2} \\
+				E[X^2] = E[Y^2] &= \frac{1}{6}(1^2+2^2+3^2+4^2+5^2+6^2) = \frac{91}{6}
+			\end{align*}
+			Now, since $X$ and $Y$ are independent, it also holds that $X^2$ and $Y^2$ are independent, so
+			\begin{align*}
+				E[Z] &= E[XY] = E[X]E[Y] = \frac{7}{2}\cdot \frac{7}{2} = \frac{49}{4} \\
+				\var(Z) &= E[Z^2] - (E[Z])^2 = E[X^2Y^2] - (E[XY])^2 = E[X^2]E[Y^2]-(E[XY])^2 \\
+				&= \frac{91}{6}\cdot \frac{91}{6} - \left( \frac{49}{4} \right)^2 = \frac{11515}{144}
+			\end{align*}
+		\end{soln}
+
+	\item 
+		\begin{enumerate}[(a)]
+			\item 
+				\begin{soln}
+					We wish to find $\alpha$ that minimizes 
+					\begin{align*}
+						L &= \frac{1}{2}\var[\alpha r_A + (1-\alpha) r_B] = \frac{1}{2}\left(\var(\alpha r_A) + \var[(1-\alpha)r_B] + 2\cov(\alpha r_A, (1-\alpha) r_B)\right) \\
+						&= \frac{1}{2}\alpha^2 \sigma_A^2 + \frac{1}{2}(1-\alpha)^2\sigma_B^2 + \alpha(1-\alpha) \rho\sigma_A\sigma_B
+					\end{align*}
+					Taking the derivative with respect to $\alpha,$ we have
+					\begin{align*}
+						\frac{\partial L}{\partial \alpha} &= \alpha\sigma_A^2 - (1-\alpha)\sigma_B^2 + (1-2\alpha)\rho\sigma_A\sigma_B = 0 \\
+						\implies \alpha &= \frac{\sigma_B^2-\rho\sigma_A\sigma_B}{\sigma_A^2+\sigma_B^2-2\rho\sigma_A\sigma_B} = 0.8261 \\
+						\implies 1-\alpha &= 0.1739
+					\end{align*}	
+				\end{soln}
+
+			\item 
+				\begin{soln}
+					Evaluating at $\alpha,$ we have
+					\begin{align*}
+						\sigma &= \sqrt{2L(\alpha)} = 1.94\%
+					\end{align*}
+				\end{soln}
+
+			\item 
+				\begin{soln}
+					The expected return is
+					\begin{align*}
+						E[r] &= E[\alpha r_A + (1-\alpha)r_B] = \alpha \bar r_a + (1-\alpha)\bar r_B = 11.39\%
+					\end{align*}
+				\end{soln}
+				
+		\end{enumerate}
+
+	\item 
+		\begin{soln}
+			If $\alpha$ is the weight of asset 1 and $1-\alpha$ is the weight of asset 2, then from above, we have
+			\begin{align*}
+				\alpha = \frac{\sigma_2^2 - \rho\sigma_1\sigma_2}{\sigma_1^2+\sigma_2^2-2\rho\sigma_1\sigma_2} = \frac{\sigma_2^2 - \sigma_{12}}{\sigma_1^2+\sigma_2^2-2\sigma_{12}}
+			\end{align*}
+			minimizes the variance of the portfolio. The expected return is
+			\begin{align*}
+				E[r] &= E[\alpha r_1+(1-\alpha) r_2] = \alpha \bar r_1 + (1-\alpha)\bar r_2 \\
+				&= \bar r_1 + \frac{\sigma_2^2-\sigma_{12}}{\sigma_1^2+\sigma_2^2-2\sigma_{12}}(\bar r_1-\bar r_2)
+			\end{align*}
+		\end{soln}
+
+	\item
+		\begin{enumerate}[(a)]
+			\item 
+				\begin{soln}
+					Each asset has the same return $\bar r_0,$ so if the portfolio was entirely a single asset, all of these points would lie on the horizontal line $\bar r = \bar r_0.$ Since they are uncorrelated, this line is exactly the minimum variance set, and the efficient frontier is the entire line.
+				\end{soln}
+
+			\item 
+				\begin{soln}
+					We have the Lagrangian
+					\begin{align*}
+						L &= \frac{1}{2} \sum_{i=1}^{n} w_i^2\sigma_i^2 - \lambda\left( \sum_{i=1}^{n} w_i \bar r_0 - \bar r \right) - \mu\left( \sum_{i=1}^{n} w_i - 1 \right)
+					\end{align*}
+					Taking the partial derivatives with respect to each of the $w_i,$ we have
+					\begin{align*}
+						\frac{\partial L}{\partial w_i} &= w_i\sigma_i^2 - \lambda \bar r_0 - \mu = 0 \\
+						\implies w_i &= \frac{\lambda \bar r_0 + \mu}{\sigma_i^2}
+					\end{align*}
+					The constraints are thus
+					\begin{align*}
+						\sum_{i=1}^{n} w_i &= \sum_{i=1}^{n} \frac{\lambda \bar r_0 + \mu}{\sigma_i^2} = (\lambda \bar r_0 + \mu)\bar \sigma^2  = 1 \\
+						\sum_{i=1}^{n} w_i \bar r_i &= \sum_{i=1}^{n} w_i \bar r_0 = r_0 = \bar r
+					\end{align*}<++>
+				\end{soln}<++>
+		\end{enumerate}<++>
+\end{enumerate}<++>
+
+\end{document}

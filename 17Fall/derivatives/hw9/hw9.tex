@@ -1,0 +1,88 @@
+\documentclass{article}
+\usepackage[sexy, hdr, fancy]{evan}
+\setlength{\droptitle}{-4em}
+
+\lhead{Homework 9}
+\rhead{Introduction to Financial Derivatives}
+\lfoot{}
+\cfoot{\thepage}
+
+\newcommand{\var}{\mathrm{Var}}
+\newcommand{\cov}{\mathrm{Cov}}
+
+\begin{document}
+\title{Homework 9}
+\maketitle
+\thispagestyle{fancy}
+
+\section*{Chapter 14: Wiener Processes and Ito's Lemma}
+
+\begin{itemize}
+	\item[3.] A company's cash position, measured in millions of dollars, follows a generalized Wiener process with a drift rate of 0.5 per quarter and a variance rate of 4.0 per quarter. How high does the company's initial cash position have to be for the company to have a less than 5\% chance of negative cash position by the end of 1 year?
+		\begin{soln}
+			After 4 quarters, the company will have a position that follows a normal distribution with mean $4\cdot 0.5=2$ and variance $4.0\cdot 4 = 4^2.$ If $X$ is the distribution of their position, we have
+			\begin{align*}
+				P(X<0) &= P\left( \frac{X-2}{4} < -\frac{0-2}{4} \right) = \Phi\left( -\frac{1}{2} \right)
+			\end{align*}
+		\end{soln}
+
+	\item[5.] Consider a variable $S$ that follows the process
+		\begin{align*}
+			dS = \mu \, dt + \sigma \, dz
+		\end{align*}
+		For the first three years, $\mu=2$ and $\sigma=3;$ for the next three years, $\mu=3$ and $\sigma=4.$ If the initial value of the variable is 5, what is the probability distribution of the value of the variable at the end of year 6?
+		\begin{soln}
+			After the first 3 years, $S$ has normal distribution with mean $3\cdot 2=6$ and variance $3\cdot 3 = 9.$ After the next 3 years, $S$ has normal distribution with mean $6+3\cdot 3=15$ and variance $9+3\cdot 4 = 21.$
+		\end{soln}
+
+	\item[9.] It has been suggested that the short-term interest rate $r$ follows the stochastic process
+		\begin{align*}
+			dr = a(b-r)\, dt + rc\, dz
+		\end{align*}
+		where $a, b, c$ are positive constants and $dz$ is a Wiener process. Describe the nature of this process.
+		\begin{soln}
+			When $r<b,$ the drift rate is positive, while when $r>b,$ the drift rate is negative, so the rate is attracted to $b.$ The larger the value of $a,$ the faster the rate approaches $b.$ Then $c$ is a volatility rate.
+		\end{soln}
+
+	\item[11.] Suppose that $x$ is the yield to maturity with continuous compounding on a zero-coupon bond that pays off \$1 at time $T.$ Assume that $x$ follows the process
+		\begin{align*}
+			dx = a(x_0-x)\, dt + sx\, dz
+		\end{align*}
+		where $a, x_0,$ and $s$ are positive constants and $dz$ is a Wiener process. What is the process followed by the bond price?
+		\begin{soln}
+			The bond price is $G(x, t)=e^{-x(T-t)}.$ Here $a(x, t)=a(x_0-x)$ and $b(x, t)=sx,$ so by Ito's lemma we have
+			\begin{align*}
+				dG &= \left( \frac{\partial G}{\partial x}a(x, t) + \frac{\partial G}{\partial t} + \frac{1}{2}\frac{\partial^2 G}{\partial x^2}b^2(x, t) \right)\, dt + \frac{\partial G}{\partial x}b(x, t)\, dz \\
+				&= \left( -(T-t)e^{-x(T-t)}\cdot a(x_0-x) + xe^{-x(T-t)} + \frac{1}{2}(T-t)^2 e^{-x(T-t)}s^2x^2 \right)\, dt - (T-t)e^{-x(T-t)}sx\, dz
+			\end{align*}
+		\end{soln}
+
+	\item[13.] Suppose that a stock price has an expected return of 16\% per annum and a volatility of 30\% per annum. When the stock price at the end of a certain day is \$50, calculate the following:
+		\begin{enumerate}[(a)]
+			\item The expected stock price at the end of the next day.
+				\begin{soln}
+					Using $t=1/365,$ we have
+					\begin{align*}
+						\Delta S &= \mu S\Delta t + \sigma S\varepsilon\sqrt{\Delta t} = 0.16\cdot 50\cdot \frac{1}{365} + 0.30\cdot 50 \varepsilon\sqrt{\frac{1}{365}} = 0.0219 + 0.7851\varepsilon
+					\end{align*}
+					so the expected stock price at the end of the next day is $50+0.0219=50.0219.$
+				\end{soln}
+
+			\item The standard deviation of the stock price at the end of the next day
+				\begin{soln}
+					The standard deviation of the stock price at the end of the next day is 0.7851.
+				\end{soln}
+
+			\item The 95\% confidence limits for the stock price at the end of the next day
+				\begin{soln}
+					For the 95\% confidence interval, we have $z_{5/2}=1.96,$ so the confidence interval is
+					\begin{align*}
+						(50.0219-z_{5/2}\cdot 0.7851, 50.0219 + z_{5/2}\cdot 0.7851) = (48.4830, 51.5608)
+					\end{align*}
+				\end{soln}
+				
+		\end{enumerate}
+		
+\end{itemize}
+
+\end{document}
