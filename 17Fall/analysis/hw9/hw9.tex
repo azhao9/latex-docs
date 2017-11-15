@@ -16,20 +16,72 @@
 
 \begin{itemize}
 	\item[5.] If $A$ is a subset of $\RR$ and if $x$ is in the interior of $A,$ show that $x$ is a point of continuity for $\chi_A$ (the characteristic function of $A$). Are there any other points of continuity?
+		\begin{proof}
+			Since $x\in A^\circ,$ there exists $\delta>0$ such that $B_\delta(x)\subset A.$ Then let $\varepsilon>0.$ Since $x\in A$ as well, 
+			\begin{align*}
+				\chi_A\left( B_\delta(x) \right) &= \left\{ 1 \right\} \subset B_\varepsilon(\chi_A(x)) = B_\varepsilon(1)
+			\end{align*}
+			so $\chi_A$ is continuous at $x.$ Then $\chi_A$ is also continuous on $A^c$ by a similar argument.
+		\end{proof}
 
 	\item[9.] If $E$ is a closed set in $\RR,$ show that $E=D(f)$ for some bounded function $f.$ (Hint: A sum of two characteristic functions will do the trick.)
+		\begin{proof}
+			Let $f=\chi_{\partial E} + \chi_{E^\circ}.$ Then the points of discontinuity are exactly $\partial E$ and $E^\circ,$ and since $E$ is closed, $E=\overline{E}=\partial E \cup E^\circ.$
+		\end{proof}
 
 	\item[12.] More generally, in any metric space, show that every open set is an $F_\sigma$ and that every close set is a $G_\delta.$
 
 	\item[14.] Prove that $A$ has an empty interior in $M$ if and only if $A^c$ is dense in $M.$
+		\begin{proof}
+			$(\implies):$ If $A^\circ=\varnothing,$ then $(A^\circ)^c=M=\overline{A^c},$ so $A^c$ is dense in $M.$
+
+			$(\impliedby):$ If $A^c$ is dense in $M,$ then $\overline{A^c}=M=(A^\circ)^c$ so $A^\circ=\varnothing.$
+		\end{proof}
 
 	\item[28.] In a metric space $M,$ show that any subset of a first category set is still first category, and that a countable union of first category sets is again first category.
+		\begin{proof}
+			Let $A\subset M$ be first category, so $A=\bigcup_{n=1}^\infty E_n$ for nowhere dense sets $E_n\subset M.$ Then if $B\subset A,$
+			\begin{align*}
+				B &= A\cap B = \left( \bigcup_{n=1}^\infty E_n \right)\cap B = \bigcup_{n=1}^\infty (E_n\cap B)
+			\end{align*}
+			Now, since $E_n$ is nowhere dense, we have $\left( \overline{E_n} \right)^\circ=\varnothing,$ so
+			\begin{align*}
+				\left( \overline{E_n\cap B} \right)^\circ &= \left( \overline{E_n}\cap \overline{B} \right)^\circ = \left( \overline{E_n} \right)^\circ\cap \overline{B}^\circ = \varnothing
+			\end{align*}
+			so $E_n\cap B$ is also nowhere dense, so $B$ is a countable union of nowhere dense sets, thus first category.
+
+			If $A_1, A_2, \cdots$ are first category sets, then write $A_i=\bigcup_{n=1}^\infty E_{in}$ for all $i$ where $E_{in}$ is nowhere dense. Then we have
+			\begin{align*}
+				\bigcup_{m=1}^\infty A_m &= \bigcup_{m=1}^\infty \left( \bigcup_{n=1}^\infty E_{nm} \right)
+			\end{align*}
+			is also a countable union of nowhere dense sets, so the union is first category as well.
+		\end{proof}
 		
 	\item[30.] Show that $\NN$ is first category in $\RR$ but second category in itself.
+		\begin{proof}
+			For any point $n\in \NN,$ we have $\left( \overline{ \left\{ n \right\}} \right)^\circ=\varnothing,$ so each point is a nowhere dense set in $\RR.$ Then we have $\NN = \bigcup_{n=1}^\infty \left\{ n \right\}$ is a countable union of nowhere dense sets in $\RR,$ so $\NN$ is first category in $\RR.$
+
+			Since every subset of $\NN$ is open in $\NN,$ there are no nowhere dense subsets, since $(\overline E)^\circ=\overline E\neq\varnothing$ for any $E\subset \NN.$ Thus, $\NN$ is second category in itself.
+		\end{proof}
 
 	\item[32.] In $\RR,$ show that any open interval (and hence any nonempty, open set) is a second category set.
+		\begin{proof}
+			Let $a<b$ and suppose $(a, b)$ is first category. Then since $\RR$ is complete, $(a, b)^c$ must be dense, but it is clearly not, since it does not intersect $(a, b).$ Thus, $(a, b)$ is second category.
+		\end{proof}
 
 	\item[47.] Let $\mathcal P$ be the vector space of all polynomials supplied with the norm $\left\lVert p \right\rVert = \max_{0\le i\le n} \abs{a_i},$ where $p(x)=a_0+a_1x+\cdots+a_n x^n\in\mathcal P.$ Show that $P$ is not complete.
+		\begin{proof}
+			Let $E_n\subset\mathcal P$ be the subset of all polynomials of degree at most $n.$ Then $E_n$ is closed since any sequence of polynomials in $E$ has degree at most $n,$ so if it converges in $\mathcal P,$ the result must have degree at most $n$ and thus be in $E_n.$ 
+			
+			Now, suppose $E_n^\circ \ni p=a_0+a_1x+\cdots+a_k x^k.$ Then that means $B_\varepsilon(p)\subset E_n$ for some $\varepsilon.$ Let $q:=a_0+a_1x+\cdots+a_kx^k + \frac{\varepsilon}{2}x^{n+k+1}.$ Then
+			\begin{align*}
+				\left\lVert p-q \right\rVert &= \left\lVert -\frac{\varepsilon}{2} x^{n+k+1} \right\rVert = \frac{\varepsilon}{2} \\
+				\implies q&\in B_\varepsilon(p)
+			\end{align*}
+			but $q\notin E_n$ since it has degree $n+k+1>n.$ Thus, $B_\varepsilon(p)\not\subset E_n$ for any $\varepsilon,$ so $E_n^\circ=\varnothing,$ and thus $E_n$ is nowhere dense in $\mathcal P.$
+
+			Now, we have $\mathcal P = \bigcup_{n=0}^\infty E_n,$ which is a countable union of nowhere dense sets, so $\mathcal P$ is first category. By the Baire Category theorem, all complete spaces are category two in themselves, so $\mathcal P$ is not complete.
+		\end{proof}
 		
 \end{itemize}
 
