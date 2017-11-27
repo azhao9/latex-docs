@@ -1,0 +1,114 @@
+\documentclass{article}
+\usepackage[sexy, hdr, fancy]{evan}
+\setlength{\droptitle}{-4em}
+
+\lhead{Homework 10}
+\rhead{Honors Analysis I}
+\lfoot{}
+\cfoot{\thepage}
+
+\begin{document}
+\title{Homework 10}
+\maketitle
+\thispagestyle{fancy}
+
+\section*{Chapter 10: Sequences of Functions}
+
+\begin{itemize} 
+	\item[7.] Let $(f_n)$ and $(g_n)$ be real-valued functions on a set $X,$ and suppose that $(f_n)$ and $(g_n)$ converge uniformly on $X.$ Show that $(f_ n+g_n)$ converges uniformly on $X.$ Give an example showing that $(f_ng_n)$ need not converge uniformly on $X.$
+		\begin{proof}
+			Suppose $f_n\to f$ and $g_n\to g$ uniformly. Then we claim that $(f_n+g_n)\to f+g$ uniformly. Take $\varepsilon>0,$ so there exists $N$ and $M$ such that $\abs{f_n(x)-f(x)}<\varepsilon/2$ and $\abs{g_n(x)-g(x)}<\varepsilon/2$ for $n\ge N$ and $n\ge M,$ respectively. Take $K=\max\left\{ N, M \right\},$ so we have
+			\begin{align*}
+				\abs{(f_n(x)+g_n(x))-(f(x)+g(x))} &\le \abs{f_n(x)-f(x)} + \abs{g_n(x)-g(x)} < \frac{\varepsilon}{2} + \frac{\varepsilon}{2} < \varepsilon
+			\end{align*}
+			for all $n\ge K,$ so $(f_n+g_n)$ is uniformly convergent.
+
+			Take $f_n(x)=1/x$ and $g_n(x)=1/n$ over $(0, 1).$ Then $f_n\to 1/x$ and $g_n\to 0$ uniformly. Suppose $f_ng_n\to fg=0$ uniformly. Then let $\varepsilon>0$ and there exists $N$ such that
+			\begin{align*}
+				\abs{\frac{1}{nx}-0}<\varepsilon
+			\end{align*}
+			for all $n\ge N.$ However, this is clearly impossible since given any $n,$ if $0<x<1/n,$ then $\abs{\frac{1}{nx}}>1$ so $(f_ng_n)$ does not converge uniformly.
+		\end{proof}
+
+	\item[12.] Prove that a sequence of functions $f_n:X\to \RR,$ where $X$ is any set, is uniformly convergent if and only if it is uniformly Cauchy. That is, prove that there exists some $f:X\to\RR$ such that $f_n\Rightarrow f$ on $X$ if and only if, for each $\varepsilon>0,$ there exists an $N\ge 1$ such that $\sup_{x\in X}\abs{f_n(x)-f_m(x)}<\varepsilon$ whenever $m, n\ge N.$ (Hint: Notice that if $(f_n)$ is uniformly Cauchy, then it is also pointwise Cauchy. That is, if $\sup_{x\in X}\abs{f_n(x)-f_m(x)}\to 0$ as $m, n\to \infty,$ then $(f_n(x))$ is Cauchy in $\RR$ for each $x\in X.$)
+		\begin{proof}
+			$(\implies):$ If there is an $f$ such that $f_n\Rightarrow f,$ then for any $\varepsilon>0,$ there exists $N$ such that $\abs{f_n(x)-f(x)}<\varepsilon/2$ and $\abs{f(x)-f_m(x)}<\varepsilon/2$ for all $n, m\ge N$ and $x\in X.$ Then
+			\begin{align*}
+				\abs{f_n(x)-f_m(x)} &\le \abs{f_n(x)-f(x)} + \abs{f(x)-f_m(x)} < \frac{\varepsilon}{2} + \frac{\varepsilon}{2} = \varepsilon \\
+				\implies \sup_{x\in X} \abs{f_n(x)-f_m(x)} &< \varepsilon
+			\end{align*}
+			so $(f_n)$ is uniformly Cauchy.
+
+			$(\impliedby):$ If $(f_n)$ is uniformly Cauchy, then it is also pointwise Cauchy, so $(f_n(x))$ is Cauchy in $\RR$ for any $x,$ and therefore convergent since $\RR$ is complete. Thus, set $f(x):=\lim_{n\to\infty} f_n(x)$ to be this limit. Then $\abs{f_n(x)-f(x)}\to 0$ as $n\to\infty$ so $f_n\Rightarrow r.$
+		\end{proof}
+
+	\item[18.] Here is a partial converse to Theorem 10.4, called Dini's theorem. Let $X$ be a compact metric space, and suppose that the sequence $(f_n)$ in $C(X)$ increases pointwise to a continuous function $f\in C(X);$ that is, $f_n(x)\le f_{n+1}(x)$ for each $n$ and $x,$ and $f_n(x)\to f(x)$ for each $x.$ Prove that the convergence is actually uniform. The same is true if $(f_n)$ decreases pointwise to $f.$ (Hint: First reduce to the case where $(f_n)$ decreases pointwise to 0. Now, given $\varepsilon>0,$ consider the (open) sets $U_n=\left\{ x\in X:f_n(x)<\varepsilon \right\}.$) Give an example showing that $f\in C(X)$ is necessary.
+		\begin{proof}
+			Since $f_n$ converges pointwise to $f,$ let $g_n(x):=f(x)-f_n(x).$ Since $f_n$ is increasing pointwise, $g_n$ is decreasing pointwise, and converges pointwise to 0. Now given $\varepsilon>0,$ consider the open set $U_n=\left\{ x\in X:g_n(x)<\varepsilon \right\}.$ We have $U_n\subset U_{n+1}$ since $g_n(x)\ge g_{n+1}(x),$ and $g_n(x)\to 0,$ so $\bigcup_{n=1}^\infty U_n=X.$ Since this is an open cover and $X$ is compact, there exists a finite subcover, and since $U_n\subset U_{n+1},$ there exists some $N$ such that $U_N=X.$ Thus, $g_N(x)<\varepsilon$ for all $x,$ and therefore $g_n(x)<\varepsilon$ for all $x$ and $n\ge N,$ so $g_n$ is uniformly convergent to 0. Thus, $f_n$ is uniformly convergent to $f.$
+
+			If $X=[0, 1]$ and $f_n(x)=x^{1/n},$ then $f_n\to g$ where $g(0)=0$ and $g(x)=1$ for $x\in(0, 1].$ Here, the convergence is not uniform, but $g$ is also not continuous.
+		\end{proof}
+
+	\item[19.] Suppose that $(f_n)$ is a sequence of functions in $C[0, 1]$ and that $f_n\Rightarrow f$ on $[0, 1].$ True or false? $\int_0^{1-(1/n)} f_n\to \int_0^1 f.$
+		\begin{soln}
+			This is false. We have
+			\begin{align*}
+				\abs{\int_0^1 f - \int_0^{1-(1/n)} f_n} &= \abs{\int_0^1 f-\int_0^1 f_n + \int_{1-(1/n)}^1 f_n} \le \abs{\int_0^1 f - \int_0^1 f_n} + \abs{\int_{1-(1/n)}^1 f_n}
+			\end{align*}
+			The left hand absolute value tends to 0 because $f_n\Rightarrow f,$ but we can construct $f_n$ such that the right hand absolute value does not tend to 0.
+		\end{soln}
+
+	\item[21.] Use Dini's theorem to conclude that the sequence $(1+(x/n))^n$ converges uniformly to $e^x$ on every compact interval in $\RR.$ How does this explain the findings in Example 10.1 (a)?
+		\begin{proof}
+			Fix some $x.$ Consider the numbers $x_1=1, x_2=x_3=\cdots=x_{n+1}=1+\frac{x}{n}.$ Since these are all non-negative, by the AM-GM inequality, we have
+			\begin{align*}
+				\sqrt[n+1]{x_1x_2\cdots x_{n+1}} &\le \frac{x_1+x_2+\cdots+x_{n+1}}{n+1} \\
+				\implies \left( 1+\frac{x}{n} \right)^{\frac{n}{n+1}} &\le \frac{1+n\left( 1+\frac{x}{n} \right)}{n+1} = \frac{n+1+x}{n+1} \\
+				\implies \left( 1+\frac{x}{n} \right)^n &\le \left( 1+\frac{x}{n+1} \right)^{n+1}
+			\end{align*}
+			Thus, the sequence $(1+(x/n))^n$ is increasing in $n.$ It is well known that it converges to $e^x,$ so by Dini's theorem, it is uniformly convergent to $e^x.$ Since the sequence is uniformly convergent to $e^x,$ the sequences of derivatives and integrals also converge to the derivatives and integrals of $e^x.$
+		\end{proof}
+
+	\item[23.] Show that $B(X)$ is an algebra of functions; that is, if $f, g\in B(X),$ then so is $fg$ and $\left\lVert fg \right\rVert_\infty\le \left\lVert f \right\rVert_\infty\left\lVert g \right\rVert_\infty.$ Moreover, if $f_n\to f$ and $g_n\to g$ in $B(X),$ show that $f_ng_n\to fg$ in $B(X).$ 
+		\begin{proof}
+			We have $\abs{f(x)}\le M$ and $\abs{g(x)}\le N$ for all $x\in X$ and some $M, N.$ Then $\abs{f(x)g(x)}\le MN$ for all $x,$ so $fg\in B(X).$ We have $\sup_{x\in X} \abs{f(x)}\ge f(x)$ and $\sup_{x\in X}\abs{g(x)}\ge g(x)$ for all $x,$ so
+			\begin{align*}
+				\sup_{x\in X}\abs{f(x)} \cdot \sup_{x\in X} \abs{g(x)}\ge f(x)g(x), \quad\forall x\in X \implies \left\lVert f \right\rVert_\infty \left\lVert g \right\rVert_\infty \ge \left\lVert fg \right\rVert_\infty
+			\end{align*}
+
+			Now, $f_n$ and $g_n$ are bounded, so suppose $\abs{f_n(x)}\le M_f$ and $\abs{g_n(x)}\le M_g$ for all $n$ and $x$ and some $M_f, M_g.$ Let $M=\max\left\{ M_f, M_g \right\}.$ Then since $f_n$ and $g_n$ are also uniformly convergent to $f$ and $g,$ respectively, for $\varepsilon>0,$ we have $\abs{f_n(x)-f(x)}<\frac{\varepsilon}{2M}$ and $\abs{g_n(x)-g(x)}<\frac{\varepsilon}{2M}.$ Next, $\abs{f_n(x)}\le M$ and $\abs{g(x)}\le M,$ so
+			\begin{align*}
+				\abs{f_n(x)g_n(x)-f(x)g(x)} &= \abs{f_n(x)g_n(x)-f_n(x)g(x)+f_n(x)g(x)-f(x)g(x)} \\
+				&\le \abs{f_n(x)}\abs{g_n(x)-g(x)} + \abs{g(x)}\abs{f_n(x)-f(x)} \\
+				&< M\cdot \frac{\varepsilon}{2M} + M\cdot \frac{\varepsilon}{2M} = \varepsilon
+			\end{align*}
+			so $f_ng_n\to fg.$
+		\end{proof}
+
+	\item[29.]
+		\begin{enumerate}[(a)]
+			\item For which values of $x$ does $\sum_{n=1}^{\infty} ne^{-nx}$ converge? On which intervals is the convergence uniform?
+				\begin{soln}
+					For any interval $[a, \infty)$ with $a>0,$ we have $ne^{-nx}\le ne^{-na}$ for all $x\in [a, b],$ so by the $M$-test, we have
+					\begin{align*}
+						\sum_{n=1}^{\infty}ne^{-nx}\le \sum_{n=1}^{\infty} ne^{-na} = \frac{e^{-a}}{(1-e^{-a})^2}
+					\end{align*}
+					It is also uniformly convergent on $[a, \infty)$ since $\sup_{x\in [a, \infty)} ne^{-nx} = ne^{-na} \to 0$ as $n\to 0.$
+				\end{soln}
+
+			\item Conclude that $\int_1^2\sum_{n=1}^{\infty} ne^{-nx}\, dx = e/(e^2-1)$
+				\begin{soln}
+					Since it is uniformly convergent, we may switch the order of summation and integration:
+					\begin{align*}
+						\int_1^2 \sum_{n=1}^{\infty} ne^{-nx}\, dx &= \sum_{n=1}^{\infty}\int_1^2 ne^{-nx}\, dx = \sum_{n=1}^{\infty} (-e^{-nx})\big\vert_1^2 \\
+						&= \sum_{n=1}^{\infty} \left( e^{-n}-e^{-2n} \right) = \sum_{n=1}^{\infty} e^{-n} - \sum_{n=1}^{\infty}e^{-2n} \\
+						&= \frac{\frac{1}{e}}{1-\frac{1}{e}} - \frac{\frac{1}{e^2}}{1-\frac{1}{e^2}} = \frac{1}{e-1} - \frac{1}{e^2-1} \\
+						&= \frac{e}{e^2-1}
+					\end{align*}
+				\end{soln}
+				
+		\end{enumerate}
+		
+\end{itemize}
+
+\end{document}
