@@ -93,12 +93,11 @@ Now consider an incoming freshman interested in finding the \emph{minimum} numbe
 		\begin{soln}
 			Consider the following algorithm:
 			\begin{enumerate}[(1)]
-				\ii Initialize $C=\varnothing$
 				\ii Compute the size of the largest clique in $G.$ Suppose it is $k.$
-				\ii Pick an arbitrary vertex $v,$ remove $v$ from $G$ and compute the size of the largest clique in $G-v.$
+				\ii Pick an arbitrary vertex $v,$ and compute the size of the largest clique in $G-v.$
 				\begin{enumerate}[(a)]
-					\ii If this returns $k,$ then $v$ was not part of the largest clique. 
-					\ii If this returns $k-1,$ then $v$ was part of the largest clique. Add $v$ back to $G.$
+					\ii If this returns $k,$ then $v$ was not part of the largest clique. Remove $v$ from $G.$
+					\ii If this returns $k-1,$ then $v$ was part of the largest clique.
 				\end{enumerate}
 				\ii Repeat the process with each remaining vertex.
 				\ii Return $G.$
@@ -109,7 +108,9 @@ Now consider an incoming freshman interested in finding the \emph{minimum} numbe
 			Correctness:  If there is a single clique of size $k,$ then during the algorithm the black box will return $k-1$ on $G-v$ if and only if $v$ is in this clique of size $k.$ To see this, if $v$ is in the clique, then removing it will reduce the size of the largest clique by 1, and if the largest clique in $G-v$ has size $k-1,$ then $v$ must have been part of that max clique. Thus, these vertices will all be added to $C,$ which is the largest clique.
 
 			If there are multiple cliques of size $k,$ then during the algorithm the black box will return $k$ on $G-v$ until there is only one remaining clique of size $k$ because at each step we remove a vertex from $G.$ Now, this is the same scenario as when there was one clique of size $k.$
-		\end{soln}
+
+			At termination, the remaining vertices must be the largest clique. If not, then we could remove another and not change the size of the largest clique, since that largest clique would still be intact. Vertices were only removed from $G$ when they were not part of the initial largest clique.
+		 \end{soln}
 
 	\item Suppose you are given a magic black box that can determine in polynomial time, given an arbitrary boolean circuit $\Phi$ (with one output and no loops, like in \textsc{Circuit-SAT}), whether $\Phi$ is satisfiable. Describe a polynomial-time algorithm that either computes a satisfying input for a given boolean circuit or correctly reports that no such input exists, using the magic black box as a subroutine.  Prove polynomial running time and correctness.
 		\begin{soln}
