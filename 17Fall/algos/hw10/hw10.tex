@@ -1,0 +1,113 @@
+\documentclass{article}
+\usepackage[sexy, hdr, fancy]{evan}
+\setlength{\droptitle}{-4em}
+
+\lhead{Homework 10}
+\rhead{Intro Algorithms}
+\lfoot{}
+\cfoot{\thepage}
+
+\begin{document}
+\title{Homework 10}
+\maketitle
+\thispagestyle{fancy}
+
+\section{Minimum Subgraph (33 points)}
+Consider the following decision problem, which we will call \textsc{Minimum Subgraph}.  The input is a graph $G = (V, E)$, a subset of nodes $M \subseteq V$ known as the \emph{marked} nodes, and an integer $k$.  A YES instance is one in which there is a connected subgraph $H = (V_H, E_H)$ of $G$ so that $M \subseteq V_H$ and $|V_H| \leq k$.  Otherwise it is a NO instance.  Less formally: can we connect all of the vertices in $M$ using at most $k$ vertices (including $M$)?
+
+\begin{enumerate}[(a)]
+	\item Prove that \textsc{Minimum Subgraph} is in NP.
+		\begin{proof}
+			Here, the witness $X$ is the subgraph $H=(V_H, E_H)$ and the verifier checks that $\abs{V_H}\le k,$ that $M\subset V_H,$ and that $H$ is connected. Checking $\abs{V_H}\le k$ using a counter takes $O(n)$ time since $V_H\subset V.$ Checking $M\subset V_H$ takes $O(n^2)$ by simply iterating over all $v\in M$ and iterating through $V_H$ searching for $v.$ Finally, we can perform a DFS in $H$ to check for connectedness in $O(n+m)$ time. This algorithm takes $O(n^2+m)$ time.
+
+			This algorithm is correct because if $(G, M, k)$ is a YES instance, $H$ is a witness that yields YES from the algorithm, due to correctness of DFS in determining connectedness. If $G$ was a NO instance, then such a subgraph does not exist, and any witness would fail one or more of the checks.
+		\end{proof}
+
+\end{enumerate}
+
+To prove that \textsc{Minimum Subgraph} is NP-hard, we will do a reduction from \textsc{Vertex Cover}.  Suppose that we are given an instance $(G = (V, E), k)$ of \textsc{Vertex Cover} (so this is a YES instance if there is a vertex cover of $G$ of size at most $k$, and is a NO instance otherwise).  We construct a new graph $H = (V', E')$ as follows:
+\begin{itemize}
+	\item $V' = V \cup E \cup \{z\}$
+	\item $E' = \{ \{v,e\} : v \in V \text{ is an endpoint of } e \in E\} \cup \{\{v,z\} : v \in V\}$
+\end{itemize}  
+
+In other words, we construct $H$ by subdividing each edge in $G$ with a new vertex, and then connect all of the original vertices to a new \emph{apex} vertex $z$.  
+
+\begin{enumerate}[(a), resume]
+	\item Prove that if $G$ has a vertex cover of size at most $k$, then there is a connected subgraph of $H$ which contains all vertices in $E \cup \{z\}$ and has at most $k+|E|+1$ vertices total.
+		\begin{proof}
+			If $S\subset V$ is a vertex cover of size at most $k,$ then $v\cap E\neq \varnothing$ for all $v\in S$ and $\abs{S}\le k.$ Then let $V_H=S\cup E\cup\left\{ z \right\},$ which has $\abs{S}+\abs{E}+1\le k+\abs{E}+1$ vertices and $E_H=\left\{ \left\{ v, z \right\}: v\in S \right\}\cup\left\{ \left\{ v, e \right\}: v\in S \text{ is an endpoint of } e\in E \right\}.$ The claim is that $H'=(V_H, E_H)$ is connected.
+
+			Suppose there was an unreachable vertex in $H',$ which must be of the form $\left\{ u, v \right\}$ for $u, v\in V$ since all vertices in $S$ are connected to $z.$ Since $\left\{ u, v \right\}$ can only be connected to $u$ or $v$ in $H',$ this means that neither $u$ nor $v$ is in $S,$ but then $S$ is not a vertex cover of $G$ since $\left\{ u, v \right\}\in E$ has no incident vertices. Contradiction, so $H'$ is connected.
+		\end{proof}
+
+	\item Prove that if $G$ does not have a vertex cover of size at most $k$, then there is no connected subgraph of $H$ which contains all vertices in $E \cup \{z\}$ and has at most $k + |E| + 1$ vertices total.  Hint: prove the contrapositive.
+		\begin{proof}
+			Suppose there was a connected subgraph $H'=(V_H, E_H)$ of $H$ containing all vertices in $E\cup \left\{ z \right\}$ and has at most $k+\abs{E}+1$ vertices total. Then $V_H$ contains at most $k$ elements from $V,$ say $S\subset V.$ The claim is that $S$ is a vertex cover of $G.$
+
+			Since $H'$ is connected, each $\left\{ u, v \right\}\in E$ has either $u\in S$ or $v\in SS.$ If not, it would be unreachable since the only vertices connected to $\left\{ u, v \right\}$ in $H'$ are $u$ and $v.$ This is exactly the condition that $S$ is a vertex cover of $G.$
+		\end{proof}
+		
+	\item Using the previous two parts, prove that \textsc{Minimum Subgraph} is NP-hard. 
+		\begin{proof}
+			We perform a reduction from \textsc{Vertex Cover} to \textsc{Minimum Subgraph}. Given an instance $(G=(V, E), k)$ of \textsc{Vertex Cover}, take $f(G=(V, E), k)=(H, E\cup \left\{ z \right\}, k+\abs{E}+1)$ where $H$ is constructed as before. 
+			
+			From part (b), if $G$ has a vertex cover of size at most $k,$ then there is a connected subgraph of $H$ containing all of $M=E\cup \left\{ z \right\}$ and having at most $k+\abs{E}+1$ vertices, so $(H, E\cup \left\{ z \right\}, k+\abs{E}+1)$ is a YES instance of \textsc{Minimum Subgraph}. From part (c), if $G$ does not have a vertex cover of size at most $k,$ then $H$ does not have the desired connected subgraph. Thus, YES and NO instances are mapped to YES and NO instances, respectively.
+
+			Finally, by part (a), we can compute $f$ in polynomial time. Since \textsc{Vertex Cover} is NP-hard, it follows that \textsc{Minimum Subgraph} is also NP-hard.
+		\end{proof}
+
+\end{enumerate}
+
+\section{Graduation Requirements Revisited (34 points)}
+
+John Hopskins has switched to a more lenient policy for graduation requirements than it had in Homework 9.  As in the previous homework, there is a list of requirements $r_1, r_2, \dots, r_m$ where each requirement $r_i$ is of the form ``you must take at least $k_i$ courses from set $S_i$".  However, under the new policy a student \emph{may} use the same course to fulfill multiple requirements.  For example, if there was a requirement that a student must take at least one course from $\{A,B,C\}$, and another required at least one course from $\{C,D,E\}$, and a third required at least one course from $\{A,F,G\}$, then a student would only have to take $A$ and $C$ to graduate.  
+
+Now consider an incoming freshman interested in finding the \emph{minimum} number of courses required to graduate.  You will prove that the problem faced by this freshman is NP-complete, even if each $k_i$ is equal to $1$.  More formally, consider the following decision problem: given $n$ items (say $a_1, \dots a_n$), given $m$ subsets of these items $S_1, S_2, \dots, S_m$, and given an integer $k$, does there exist a set $S$ of at most $k$ items such that $|S \cap S_i| \geq 1$ for all $i \in \{1, \dots, m\}$.  
+
+\begin{enumerate}[(a)]
+	\item Prove that this problem is in NP.
+		\begin{proof}
+			Here, the witness $X$ is the set $S$ and the verifier checks that $\abs{S}\le k$ and $\abs{S\cap S_i}\ge 1$ for all $i=1, 2, \cdots, m.$ Checking $\abs{S}\le k$ using a counter takes $O(n)$ since $\abs{S}\le n.$ Checking $\abs{S\cap S_i}\ge 1$ takes $O(\abs{S}\abs{S_i})=O(n^2)$ by iterating over all elements of $S$ and checking if $S_i$ contains it, because $\abs{S_i}\le n.$ Then doing this for each $i$ takes a total of $O(mn^2)$ time, so the total time for this algorithm is $O(mn^2),$ which is polynomial time.
+
+			This algorithm is correct because if $(\left\{ a_1, \cdots, a_n \right\}, \left\{ S_1, \cdots, S_m \right\}, k)$ is a YES instance, $S$ is a witness that yields YES from the algorithm. If it is a NO instance, then such an $S$ does not exist, and any witness will fail one or more of the checks.
+		\end{proof}
+
+	\item Prove that this problem is NP-hard.
+		\begin{proof}
+			We perform a reduction from \textsc{Vertex Cover}. 
+		\end{proof}<++>
+		
+\end{enumerate}
+
+
+\section{Magic Subroutines (33 points)}
+\begin{enumerate}[(a)]
+	\item Suppose you are given a magic black box that can determine in polynomial time, given an arbitrary graph $G$, the number of vertices in the largest clique in $G$. Describe a polynomial-time algorithm that computes, given an arbitrary graph $G$, a clique of $G$ of maximum size, using this magic black box as a subroutine.  Prove polynomial running time and correctness.  
+		\begin{soln}
+			Consider the following algorithm:
+			\begin{enumerate}[(1)]
+				\ii Initialize $C=\varnothing$
+				\ii Compute the size of the largest clique in $G.$ Suppose it is $k.$
+				\ii Pick an arbitrary vertex $v,$ remove $v$ from $G$ and compute the size of the largest clique in $G-v.$
+				\begin{enumerate}[(a)]
+					\ii If this returns $k,$ then $v$ was not part of the largest clique. 
+					\ii If this returns $k-1,$ then $v$ was part of the largest clique. Add $v$ back to $G.$
+				\end{enumerate}
+				\ii Repeat the process with each remaining vertex.
+				\ii Return $G.$
+			\end{enumerate}
+
+			Running time: Step (2) takes polynomial time. The process of computing largest clique size at each step takes polynomial time, with a total of $n$ iterations, one for each vertex, so the total running time is still polynomial in $n$ and $m.$
+
+			Correctness:  If there is a single clique of size $k,$ then during the algorithm the black box will return $k-1$ on $G-v$ if and only if $v$ is in this clique of size $k.$ To see this, if $v$ is in the clique, then removing it will reduce the size of the largest clique by 1, and if the largest clique in $G-v$ has size $k-1,$ then $v$ must have been part of that max clique. Thus, these vertices will all be added to $C,$ which is the largest clique.
+
+			If there are multiple cliques of size $k,$ then during the algorithm the black box will return $k$ on $G-v$ until there is only one remaining clique of size $k$ because at each step we remove a vertex from $G.$ Now, this is the same scenario as when there was one clique of size $k.$
+		\end{soln}
+
+	\item Suppose you are given a magic black box that can determine in polynomial time, given an arbitrary boolean circuit $\Phi$ (with one output and no loops, like in \textsc{Circuit-SAT}), whether $\Phi$ is satisfiable. Describe a polynomial-time algorithm that either computes a satisfying input for a given boolean circuit or correctly reports that no such input exists, using the magic black box as a subroutine.  Prove polynomial running time and correctness.
+
+\end{enumerate}
+
+
+\end{document}

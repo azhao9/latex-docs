@@ -1,0 +1,174 @@
+\documentclass{article}
+\usepackage[sexy, hdr, fancy]{evan}
+\setlength{\droptitle}{-4em}
+
+\lhead{Homework 7}
+\rhead{Investment Science}
+\lfoot{}
+\cfoot{\thepage}
+
+\newcommand{\var}{\mathrm{Var}}
+\newcommand{\cov}{\mathrm{Cov}}
+
+\begin{document}
+\title{Homework 7}
+\maketitle
+\thispagestyle{fancy}
+
+\begin{enumerate}
+	\item 
+		\begin{enumerate}[(a)]
+			\item 
+				\begin{soln}
+					We have
+					\begin{align*}
+						\sigma_M^2 &= \var\left( \frac{1}{2} r_A + \frac{1}{2} r_B \right) = \frac{1}{4} \sigma_A^2 + \frac{1}{4} \sigma_B^2 + \frac{1}{4} \sigma_{AB} \\
+						\beta_A &= \frac{\cov\left( r_A, \frac{1}{2} r_A + \frac{1}{2} r_B \right)}{\sigma_M^2} = \frac{\frac{1}{2}\sigma_A^2 + \frac{1}{2} \sigma_{AB}}{\frac{1}{4} \sigma_A^2 + \frac{1}{4}\sigma_B^2 + \frac{1}{4}\sigma_{AB}} = \frac{2\sigma_A^2 + 2\sigma_{AB}}{\sigma_A^2+\sigma_B^2+\sigma_{AB}} \\
+						\beta_b &= \frac{2\sigma_B^2 + 2\sigma_{AB}}{\sigma_A^2+\sigma_B^2+\sigma_{AB}}
+					\end{align*}
+				\end{soln}
+
+			\item 
+				\begin{soln}
+					According to the CAPM, we have
+					\begin{align*}
+						\bar r_A &= r_f + \beta_A(\bar r_M - r_f) = 0.10 + \frac{2\cdot 0.04 + 2\cdot 0.01}{0.04+0.02+0.01} (0.18-0.10) = 21.4\% \\
+						\bar r_B &= r_f + \beta_B(\bar r_M-r_f) = 0.10 + \frac{2\cdot 0.02 + 2\cdot 0.01}{0.04+0.02+0.01}(0.18-0.10) = 16.9\%
+					\end{align*}
+				\end{soln}
+
+		\end{enumerate}
+
+	\item 
+		\begin{enumerate}[(a)]
+			\item 	
+				\begin{soln}
+					Since the market portfolio is efficient, its weights can be represented as a linear combination of the two portfolios on the minimum variance set
+					\begin{align*}
+						\alpha\begin{bmatrix}
+							0.60 \\ 0.20 \\ 0.20
+						\end{bmatrix} + (1-\alpha)\begin{bmatrix}
+							0.80 \\ -0.20 \\ 0.40
+						\end{bmatrix} = \begin{bmatrix}
+							0.8-0.2\alpha \\ -0.2+0.4\alpha \\ 0.4-0.2\alpha
+						\end{bmatrix}
+					\end{align*}
+					Market portfolio weights must be non-negative, so from the above, we get the bounds $0.5\le \alpha \le 2.$ The expected return of the market portfolio is bounded by
+					\begin{align*}
+						\begin{bmatrix}
+							0.8-0.2\alpha \\ -0.2+0.4\alpha \\ 0.4-0.2\alpha 
+						\end{bmatrix}^T\begin{bmatrix}
+							0.10 \\ 0.20 \\ 0.10
+						\end{bmatrix} = 0.08 + 0.04\alpha \\
+						\implies 0.10 = 0.08+0.04\cdot 0.5 \le \bar r_M \le 0.08 + 0.04\cdot 2 = 0.16
+					\end{align*}
+				\end{soln}
+
+			\item 
+				\begin{soln}
+					We have 
+					\begin{align*}
+						r_w &= 0.6\cdot 0.1 + 0.2\cdot 0.2 + 0.2\cdot 0.1 = 12\% \\
+					\end{align*}
+					Since $w$ is the minimum variance point and the market portfolio is efficient, its lower bound is 12\%, and the upper bound is still 16\%.
+				\end{soln}
+
+		\end{enumerate}
+
+	\item 
+		\begin{soln}
+			If $r_i$ is the rate of return for asset $i,$ then we have
+			\begin{align*}
+				\sigma_M^2 &= \var\left( \sum_{i=1}^{n} x_ir_i \right) = \sum_{i=1}^{n} x_i\sigma_i^2
+			\end{align*}
+			since the assets are uncorrelated. We also have
+			\begin{align*}
+				\sigma_{jM} &= \cov\left( r_j, \sum_{i=1}^{n} x_i r_i \right) = \sum_{n=1}^{n} \cov(r_j, x_i r_i) = x_j\sigma_j^2
+			\end{align*}
+			so then 
+			\begin{align*}
+				\beta_j = \frac{\sigma_{jM}}{\sigma_M^2} = \frac{x_j\sigma_j^2}{\sum_{i=1}^{n} x_i\sigma_i^2}
+			\end{align*}
+		\end{soln}
+
+	\item 
+		\begin{enumerate}[(a)]
+			\item 
+				\begin{soln}
+					The market consists of 40\% stock A and 60\% stock B, so we have
+					\begin{align*}
+						\bar r_M &= 40\%\cdot 15\% + 60\%\cdot 12\% = 13.2\%
+					\end{align*}
+				\end{soln}
+
+			\item 
+				\begin{soln}
+					As above, the market portfolio is 0.4 stock and 0.6 stock B, so we have
+					\begin{align*}
+						\sigma_M &= \sqrt{\var(0.4r_A + 0.6r_B)} = \sqrt{0.16\sigma_A^2 + 0.36\sigma_B^2 + 0.24\sigma_{AB}} \\
+						&= \sqrt{0.16\cdot 0.15^2 + 0.36\cdot 0.09^2 + 0.24\cdot 0.15\cdot 0.09\cdot \frac{1}{3}} = 8.72\%
+					\end{align*}
+				\end{soln}
+
+			\item 
+				\begin{soln}
+					We have
+					\begin{align*}
+						\beta_A &= \frac{\cov(r_A, r_M)}{\sigma_M^2} = \frac{\cov(r_A, 0.4r_A + 0.6r_B)}{\sigma_M^2} = \frac{0.4\sigma_A^2 + 0.6\sigma_{AB}}{\sigma_M^2} \\
+						&= \frac{0.4\cdot 0.15^2 + 0.6\cdot 0.15\cdot 0.09\cdot \frac{1}{3}}{0.007596} = 4.74
+					\end{align*}
+				\end{soln}
+
+			\item 
+				\begin{soln}
+					According to CAPM, we have 
+					\begin{align*}
+						\bar r_A -r_f &= \beta_A(\bar r_M-r_f) \implies r_f = \frac{\beta_A\bar r_M - \bar r_A}{\beta_A-1} = 11.2\%
+					\end{align*}
+				\end{soln}
+		\end{enumerate}
+
+	\item 
+		\begin{enumerate}[(a)]
+			\item 
+				\begin{soln}
+					Consider the portfolio $(1-\alpha)w_0 + \alpha w_1.$ The variance of its return is
+					\begin{align*}
+						\sigma^2 &= \var( (1-\alpha)r_0 + \alpha r_1) = (1-\alpha)^2 \sigma_0^2 + \alpha^2 \sigma_1^2 + 2\alpha(1-\alpha)\sigma_{01}
+					\end{align*}
+					Taking its derivative with respect to $\alpha$ and evaluating at $\alpha=0,$ we have
+					\begin{align*}
+						\frac{\partial \sigma^2}{\partial \alpha} &= -2(1-\alpha)\sigma_0^2 + 2\alpha\sigma_1^2 + (2-4\alpha)\sigma_{01} = -2\sigma_0^2 + 2\sigma_{01} = 0 \\
+						\implies \sigma_{01} &= \sigma_0^2 \implies A = 1
+					\end{align*}
+				\end{soln}
+
+			\item 
+				\begin{soln}
+					Using $w_z=(1-\alpha)w_0+\alpha w_1,$ we have
+					\begin{align*}
+						\sigma_{1, z} &= \cov\left( r_1, (1-\alpha)r_0 + \alpha r_1 \right) = 0 \\
+						\implies (1-\alpha) \sigma_{01} + \alpha\sigma_1^2 &= 1-\alpha\sigma_0^2 + \alpha\sigma_1^2 = 0 \\
+						\implies \alpha &= \frac{1}{\sigma_0^2-\sigma_1^2}
+					\end{align*}
+				\end{soln}
+
+			\item 
+				\begin{soln}
+					Shown below.
+				\end{soln}
+
+			\item 
+				\begin{soln}
+					We have
+					\begin{align*}
+						\bar r_i &= \bar r_z + \beta_{iM}(\bar r_M-\bar r_z) = \bar r_z+ \frac{\rho_{iM}\sigma_i\sigma_M}{\sigma_M^2}(\bar r_M-\bar r_z) \\
+						&= 0.09 + \frac{0.5\cdot 0.15\cdot 0.05}{0.15^2}(0.15-0.09) = 10\%
+					\end{align*}
+				\end{soln}
+
+		\end{enumerate}
+		
+\end{enumerate}
+
+\end{document}
