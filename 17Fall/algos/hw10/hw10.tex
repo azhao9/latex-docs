@@ -75,8 +75,14 @@ Now consider an incoming freshman interested in finding the \emph{minimum} numbe
 
 	\item Prove that this problem is NP-hard.
 		\begin{proof}
-			We perform a reduction from \textsc{Vertex Cover}. 
-		\end{proof}<++>
+			We perform a reduction from \textsc{Vertex Cover}. Given an instance $(G=(V, E), k)$ of \textsc{Vertex Cover}, construct an instance of this problem as follows: Let $\left\{ a_1, \cdots, a_n \right\}=V.$ Label the edges $S_1, \cdots, S_m.$ Clearly $S_i\subset \left\{ a_1, \cdots, a_n \right\}$ since $S_i$ is a subset containing 2 vertices. 
+
+			If $(G=(V, E), k)$ is a YES instance of \textsc{Vertex Cover}, then there exists a vertex cover with size at most $k.$ The claim is that this vertex cover is also the set $S$ that satisfies this problem, that is, $\abs{S\cap S_i}\ge 1$ for each $i.$ Suppose not, that for some $k$ the intersection is empty: $\abs{S\cap S_k}=\varnothing.$ Then if $S_k=\left\{ u, v \right\},$ in particular $S$ does not contain either $u$ or $v,$ which means that edge $S_k$ has no incident vertices, so $S$ is not a vertex cover. Contradiction, so since $\abs{S}\le k,$ this vertex cover $S$ is also a witness for this problem.
+
+			If $(G=(V, E), k)$ is a NO instance of \textsc{Vertex Cover}, then there does not exist a vertex cover with size at most $k.$ The claim is that there is no subset $S\subset\left\{ a_1, \cdots, a_n \right\}$ with $\abs{S}\le k$ such that $\abs{S\cap S_i}\ge 1$ for all $i.$ Suppose there is such a subset $S.$ Then this same subset of vertices in the graph is a vertex cover of size at most $k$ since $S$ intersects each edge $S_i,$ contradiction.
+
+			Since \textsc{Vertex Cover} is NP-hard, it follows that this problem is NP-hard.
+		\end{proof}
 		
 \end{enumerate}
 
@@ -106,6 +112,24 @@ Now consider an incoming freshman interested in finding the \emph{minimum} numbe
 		\end{soln}
 
 	\item Suppose you are given a magic black box that can determine in polynomial time, given an arbitrary boolean circuit $\Phi$ (with one output and no loops, like in \textsc{Circuit-SAT}), whether $\Phi$ is satisfiable. Describe a polynomial-time algorithm that either computes a satisfying input for a given boolean circuit or correctly reports that no such input exists, using the magic black box as a subroutine.  Prove polynomial running time and correctness.
+		\begin{soln}
+			Consider the following algorithm:
+			\begin{enumerate}[(1)]
+				\ii Check if $\Phi$ is satisfiable. If not, return NO.
+				\ii Pick an input $x_0$ and set it to 0. 
+				\begin{enumerate}[(a)]
+					\ii Check for satisfiability. If the circuit is not satisfiable, then set $x_0$ to 1.
+				\end{enumerate}
+				\ii Continue the process with every input variable.
+				\ii Return the input.
+			\end{enumerate}
+
+			Running time: Step (1) takes polynomial time. The process of checking for satisfiability at each input also takes polynomial time, and there are $n$ inputs to check total, so the total running time is still polynomial in $n.$
+
+			Correctness: At step (1), if the circuit is not satisfiable, we return NO immediately. Otherwise, it must be satisfiable, so hard coding either $x_0=0$ or $x_0=1,$ the circuit must still be satisfiable. As a base case, if there is a single input value, then the algorithm will determine if 0 satisfies the circuit, or if not, then 1 must satisfy the circuit.
+			
+			If $\Phi$ is satisfiable with $x_0=0,$ then we have reduced the problem to finding a satisfying input on the remaining $n-1$ inputs, so by induction the algorithm is correct. If it is not satisfiable with $x_0=0,$ then $\Phi$ must be satisfiable with $x_0=1,$ and we continue with input of size $n-1.$
+		\end{soln}
 
 \end{enumerate}
 
