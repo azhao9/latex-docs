@@ -1,0 +1,300 @@
+\documentclass{article}
+\usepackage[sexy, hdr, fancy]{evan}
+\setlength{\droptitle}{-4em}
+
+\lhead{Homework 10}
+\rhead{Introduction to Financial Derivatives}
+\lfoot{}
+\cfoot{\thepage}
+
+\newcommand{\var}{\mathrm{Var}}
+\newcommand{\cov}{\mathrm{Cov}}
+
+\begin{document}
+\title{Homework 10}
+\maketitle
+\thispagestyle{fancy}
+
+\section*{Chapter 15: The Black-Scholes-Merton Model}
+
+\begin{itemize}
+	\item[4.] Calculate the price of a 3-month European put option on a non-dividend-paying stock with a strike price of \$50 when the current stock price is \$50, the risk-free interest rate is 10\% per annum, and the volatility is 30\% per annum.
+		\begin{soln}
+			We have
+			\begin{align*}
+				d_1 &= \frac{\ln(S_0/K) + (r+\sigma^2/2)T}{\sigma\sqrt{T}} = \frac{\ln(50/50) + (0.10+0.30^2/2)\sqrt{\frac{1}{4}}}{0.30\sqrt{\frac{1}{4}}} = 0.483 \\
+				d_2 &= d_1 - \sigma\sqrt{T} = 0.333
+			\end{align*}
+			so the price of the put option is
+			\begin{align*}
+				p &= Ke^{-rT}N(-d_2)-S_0N(-d_1) = 50e^{-0.10\cdot \frac{1}{4}}N(-0.333) - 50N(-0.483) = \boxed{2.295}
+			\end{align*}
+		\end{soln}
+
+	\item[5.] What difference does it make to your calculation in Problem 15.4 if a dividend of \$1.50 is expected in 2 months?
+		\begin{soln}
+			The present value of the dividend is $1.50e^{-0.10\cdot \frac{1}{6}}=1.475,$ so using $S_0=50-1.475=48.525,$
+			\begin{align*}
+				d_1 &= \frac{\ln(48.525/50) + (0.10+0.30^2/2)\sqrt{\frac{1}{4}}}{0.30\sqrt{\frac{1}{4}}} = 0.234 \\ 
+				d_2 &= d_1 - 0.30\sqrt{\frac{1}{4}} = 0.084
+			\end{align*}
+			so the price of the put option is
+			\begin{align*}
+				p &= Ke^{-rT}N(-d_2) - S_0N(-d_1) = 50e^{-0.10\cdot \frac{1}{4}} N(-0.084) - 48.525N(-0.234) = \boxed{2.977}
+			\end{align*}
+		\end{soln}
+
+	\item[11.] Assume that a non-dividend-paying stock has an expected return of $\mu$ and a volatility of $\sigma.$ An innovative financial institution has just announced that it will trade a security that pays off a dollar amount equal to $\ln S_T$ at time $T,$ where $S_T$ denotes the value of the stock price at time $T.$
+		\begin{enumerate}[(a)]
+			\item Use risk-neutral valuation to calculate the price of the security at time $t$ in terms of the stock price, $S,$ at time $T.$
+				\begin{soln}
+					The risk-free rate is $\mu,$ so the price of the security at time $T$ is is $e^{-\mu (T-t)}\ln S_T.$
+				\end{soln}
+
+			\item Confirm that your price satisfies the differential equation (15.16).
+				\begin{soln}
+					If $f=e^{-\mu(T-t)}\ln S_T,$ then the price of the derivative does not depend on $S,$ so
+					\begin{align*}
+						\frac{\partial f}{\partial t} + rS\frac{\partial f}{\partial S} + \frac{1}{2}\sigma^2S^2\frac{\partial^2 f}{\partial S^2} = \mu e^{-\mu(T-t)} \ln S_T = rf
+					\end{align*}
+					so the differential equation is satisfied, as desired.
+				\end{soln}
+				
+		\end{enumerate}
+
+	\item[13.] What is the price of a European call option on a non-dividend-paying stock when the stock price is \$52, the strike price is \$50, the risk-free interest rate is 12\% per annum, the volatility is 30\% per annum, and the time to maturity is 3 months?
+		\begin{soln}
+			We have
+			\begin{align*}
+				d_1 &= \frac{\ln(S_0/K) + (r+\sigma^2/2)T}{\sigma\sqrt{T}} = \frac{\ln(52/50) + (0.12^2+0.30^2/2)\sqrt{\frac{1}{4}}}{0.30\sqrt{\frac{1}{4}}} = 0.811 \\
+				d_2 &= d_1 - \sigma\sqrt{T} = 0.811-0.30\sqrt{\frac{1}{4}} = 0.661
+			\end{align*}
+			so the price of the call option is
+			\begin{align*}
+				c &= S_0N(d_1) - Ke^{-rT}N(d_2) = 52N(0.811) - 50e^{-0.12\cdot \frac{1}{4}}N(0.661) = \boxed{4.966}
+			\end{align*}
+		\end{soln}
+
+	\item[15.] Consider an American call option on a stock. The stock price is \$70, the time to maturity is 8 months, the risk-free rate of interest is 10\% per annum, the exercise price is \$65, and the volatility is 32\%. A dividend of \$1 is expected after 3 months and again after 6 months. Show that it can never be optimal to exercise the option on either of the two dividend dates. Use DerivaGem to calculate the price of the option.
+		\begin{proof}
+			We have $D_1 = 1$ and $D_2=1,$ with $t_1=1/4$ and $t_2=1/2.$ Then we have
+			\begin{align*}
+				1 &\le 1.605 = 65\left[ 1-e^{-0.10\left(\frac{1}{2}-\frac{1}{4}\right)} \right] 
+			\end{align*}
+			so it is not optimal to exercise immediately prior to time $t=1/4.$ We also have
+			\begin{align*}
+				1 &\le 1.074 = 65\left[ 1-e^{-0.10\left( \frac{2}{3}-\frac{1}{2} \right)} \right]
+			\end{align*}
+			so it is not optimal exercise immediately prior to time $t=1/2$ either.
+
+			According to DerivaGem, the price of the option is \$12.363.
+		\end{proof}
+
+	\item[17.] With the notation used in this chapter:
+		\begin{enumerate}[(a)]
+			\item What is $N'(x)?$
+				\begin{soln}
+					We have
+					\begin{align*}
+						N(x) &= \int_{-\infty}^x \frac{1}{\sqrt{2\pi}}e^{-t^2/2}\, dt \\
+						\implies N'(x) &= \frac{1}{\sqrt{2\pi}}e^{-x^2/2}
+					\end{align*}
+				\end{soln}
+
+			\item Show that $SN'(d_1)=Ke^{-r(T-t)}N'(d_2)$ where $S$ is the stock price at time $t$ and
+				\begin{align*}
+					d_1=\frac{\ln(S/K)+(r+\sigma^2/2)(T-t)}{\sigma\sqrt{T-t}}, \quad d_2 = \frac{\ln(S/K)+(r-\sigma^2/2)(T-t)}{\sigma\sqrt{T-t}}
+				\end{align*}
+				\begin{proof}
+					We have
+					\begin{align*}
+						\frac{SN'(d_1)}{Ke^{-r(T-t)}N'(d_2)} &= \frac{S\cdot \frac{1}{\sqrt{2\pi}}\exp\left\{ -\frac{\ln^2(S/K) + (r+\sigma^2/2)^2(T-t)^2 + 2\ln(S/K)(r+\sigma^2/2)(T-t)}{2\sigma^2(T-t)} \right\}}{Ke^{-r(T-t)}\cdot \frac{1}{\sqrt{2\pi}}\exp\left\{ -\frac{\ln^2(S/K) + (r-\sigma^2/2)^2(T-t)^2 + 2\ln(S/K)(r-\sigma^2/2)(T-t)}{2\sigma^2(T-t)} \right\}} \\
+						&= \frac{S\exp\left\{ -\frac{(r^2+r\sigma^2+\sigma^4/4)(T-t) + 2\ln(S/K)(r+\sigma^2/2)}{2\sigma^2} \right\}}{Ke^{-r(T-t)}\exp\left\{ -\frac{(r^2-r\sigma^2+\sigma^4/4)(T-t) + 2\ln(S/K)(r-\sigma^2/2)}{2\sigma^2} \right\}} \\
+						&= \frac{S\exp\left\{ -\frac{r\sigma^2(T-t) + 2\ln(S/K)\sigma^2/2}{2\sigma^2} \right\}}{Ke^{-r(T-t)}\exp\left\{ -\frac{-r\sigma^2(T-t)-2\ln(S/K)\sigma^2/2}{2\sigma^2} \right\}} \\
+						&= \frac{S}{K}e^{r(T-t)}e^{-r(T-t)-\ln(S/K)} \\
+						&= \frac{S}{K}e^{r(T-t)}e^{-r(T-t)}\frac{K}{S} = 1
+					\end{align*}
+					so the two are equal, as desired.
+				\end{proof}
+
+			\item Calculate $\partial d_1/\partial S$ and $\partial d_2/\partial S.$
+				\begin{soln}
+					We have
+					\begin{align*}
+						\frac{\partial d_1}{\partial S} &= \frac{1}{S\sigma\sqrt{T-t}} = \frac{\partial d_2}{\partial S}
+					\end{align*}
+				\end{soln}
+
+			\item Show that when $c=SN(d_1)-Ke^{-r(T-t)}N(d_2),$ it follows that
+				\begin{align*}
+					\frac{\partial c}{\partial t}=-rKe^{-r(T-t)}N(d_2)-SN'(d_1)\frac{\sigma}{2\sqrt{T-t}}
+				\end{align*}
+				where $c$ is the price of a call option on a non-dividend-paying stock.
+				\begin{proof}
+					We have
+					\begin{align*}
+						\frac{\partial d_1}{\partial t} &= -\frac{r+\sigma^2/2}{2\sigma\sqrt{T-t}} \\
+						\frac{\partial d_2}{\partial t} &= -\frac{r-\sigma^2/2}{2\sigma\sqrt{T-t}} \\
+						\implies \frac{\partial c}{\partial t} &= S\frac{\partial d_1}{\partial t}N'(d_1) + \frac{\partial S}{\partial t}N(d_1)- rKe^{-r(T-t)}N(d_2) - Ke^{-r(T-t)}\frac{\partial d_2}{\partial t}N'(d_2) \\
+						&= S\frac{\partial d_1}{\partial t}N'(d_1) - rKe^{-r(T-t)} N(d_2) - S\frac{\partial d_2}{\partial t} N'(d_1) \\
+						&= -rKe^{-r(T-t)}N(d_2) - SN'(d_1) \left( -\frac{r-\sigma^2/2}{2\sigma\sqrt{T-t}} + \frac{r+\sigma^2/2}{2\sigma\sqrt{T-t}} \right) \\
+						&= -rKe^{-r(T-t)}N(d_2) - SN'(d_1)\frac{\sigma}{2\sqrt{T-t}}
+					\end{align*}
+					as desired.
+				\end{proof}
+
+			\item Show that $\partial c/\partial S=N(d_1).$
+				\begin{proof}
+					We have
+					\begin{align*}
+						\frac{\partial c}{\partial S} &= N(d_1) + S\frac{\partial d_1}{\partial S} N'(d_1) - Ke^{-r(T-t)}\frac{\partial d_2}{\partial S} N'(d_2) = N(d_1)
+					\end{align*}
+					since $\partial d_1/\partial S = \partial d_2/\partial S$ and by the result of part (b).
+				\end{proof}
+
+			\item Show that $c$ satisfies the Black-Scholes-Merton differential equation.
+				\begin{proof}
+					We have
+					\begin{align*}
+						\frac{\partial ^2 c}{\partial S^2} &= \frac{\partial d_1}{\partial S} N'(d_1) = \frac{1}{S\sigma\sqrt{T-t}} N'(d_1) \\
+						&\implies \frac{\partial c}{\partial t} + rS\frac{\partial c}{\partial S} + \frac{1}{2}\sigma^2 S^2 \frac{\partial^2 c}{\partial S^2}\\
+						&= -rKe^{-r(T-t)}N(d_2)-SN'(d_1)\frac{\sigma}{2\sqrt{T-t}}+ rSN(d_1) + \frac{1}{2}\sigma^2S^2 \frac{1}{S\sigma\sqrt{T-t}}N'(d_1) \\
+						&= -rKe^{-r(T-t)}N(d_2) + rSN(d_1) \\
+						&= rc
+					\end{align*}
+					as desired.
+				\end{proof}
+
+			\item Show that $c$ satisfies the boundary condition for a European call option, i.e., that $c=\max(S_T-K, 0)$ as $t\to T.$
+				\begin{proof}
+					If $S>K,$ then 
+					\begin{align*}
+						\lim_{t\to T} d_1 &= \lim_{t\to T}\frac{\ln(S/K) + (r+\sigma^2/2)(T-t)}{\sigma\sqrt{T-t}} \to\infty \\
+						\lim_{t\to T} d_2 &\to \infty \\
+						\implies \lim_{t\to T} N(d_1)&=\lim_{t\to T} N(d_2) = 1
+					\end{align*}
+					so then $c=S_T-K.$ If $S<K,$ then $d_1\to -\infty$ and $d_2\to -\infty,$ so $N(d_1)\to 0$ and $N(d_2)\to 0,$ so $c\to 0.$ Thus, $c\to \max\left\{ S_T-K, 0 \right\}.$
+				\end{proof}
+
+		\end{enumerate}
+
+		\newpage
+	\item[28.] Suppose that observations on a stock price (in dollars) at the end of each of 15 consecutive weeks are as follows:
+		\begin{align*}
+			30.2, 32.0, 31.1, 30.1, 30.2, 30.3, 30.6, 33.0, 32.9, 33.0, 33.5, 33.5, 33.7, 33.5, 33.2
+		\end{align*}
+		Estimate the stock price volatility. What is the standard error of your estimate?
+		\begin{soln}
+			The log-returns are given by $u_i=\ln(S_i/S_{i-1}).$ We have
+			\begin{align*}
+				u_1 &= \ln\left( \frac{S_1}{S_0} \right) = \ln\left( \frac{32.0}{30.2} \right) = 0.058 \\
+				u_2 &= \ln\left( \frac{S_2}{S_1} \right) = \ln\left( \frac{31.1}{32.0} \right) = -0.029 \\
+				u_3 &= \ln\left( \frac{S_3}{S_2} \right) = \ln\left( \frac{30.1}{31.1} \right) = -0.033 \\
+				u_4 &= \ln\left( \frac{S_4}{S_3} \right)=\ln\left(\frac{30.2}{30.1} \right) = 0.003 \\
+				u_5 &= \ln\left( \frac{S_5}{S_4} \right) = \ln\left( \frac{30.3}{30.2} \right) = 0.003 \\
+				u_6 &= \ln\left( \frac{S_6}{S_5} \right) = \ln\left( \frac{30.6}{30.3} \right) = 0.010 \\
+				u_7 &= \ln\left( \frac{S_7}{S_6} \right) = \ln\left( \frac{33.0}{30.6} \right) = 0.076 \\
+				u_8 &= \ln\left( \frac{S_8}{S_7} \right) = \ln\left( \frac{32.9}{33.0} \right) = -0.003 \\
+				u_9 &= \ln\left( \frac{S_9}{S_8} \right) = \ln\left( \frac{33.0}{32.9} \right) = 0.003 \\
+				u_{10} &= \ln\left( \frac{S_{10}}{S_9} \right) = \ln\left( \frac{33.5}{33.0} \right) = 0.015 \\
+				u_{11} &= \ln\left( \frac{S_{11}}{S_{10}} \right) = \ln\left( \frac{33.7}{33.5} \right) = 0.006 \\
+				u_{12} &= \ln\left( \frac{S_{12}}{S_{11}} \right) = \ln\left( \frac{33.5}{33.5} \right) = 0 \\
+				u_{13} &= \ln\left( \frac{S_{13}}{S_{12}} \right) = \ln\left( \frac{33.5}{33.7} \right) = -0.006 \\
+				u_{14} &= \ln\left( \frac{S_{14}}{S_{13}} \right) = \ln\left( \frac{33.2}{33.5} \right) = -0.009
+			\end{align*}
+			The sample standard deviation of these values is 2.9\%, so using $\tau=1/52,$ the stock price volatility is $2.9/\sqrt{1/52} = 40.2\%.$
+		\end{soln}
+	
+\end{itemize}
+
+\newpage
+\section*{Chapter 17: Options on Stock Indices and Currencies}
+
+\begin{itemize}
+	\item[4.] A currency is currently worth \$0.80 and has a volatility of 12\%. The domestic and foreign risk-free interest rates are 6\% and 8\%, respectively. Use a two-step binomial tree to value
+		\begin{enumerate}[(a)]
+			\item a European four-month call option with a strike price of 0.79
+				\begin{soln}
+					We have
+					\begin{align*}
+						u &= e^{\sigma\sqrt{\Delta t}} = e^{0.12\sqrt{1/6}} = 1.05 \\
+						d &= e^{-\sigma\sqrt{\Delta t}}  = e^{-0.12\sqrt{1/6}} = 0.952 \\
+						p &= \frac{e^{(r_d-r_f)\Delta t}-d}{u-d} = \frac{e^{(0.06-0.08)\cdot 1/6} - 0.952}{1.05-0.952} = 0.454
+					\end{align*}
+					Then we have
+					\begin{align*}
+						f_{uu} &= 0.80u^2-0.79 = 0.092 \\
+						f_{ud} &= f_{du} = 0.80ud-0.79=0.01 \\
+						f_{dd} &= 0 \\
+						\implies f_u &= e^{-r_dT} \left[ pf_{uu} + (1-p)f_{ud} \right] = 0.0468 \\
+						f_d &= e^{-r_dT}\left[ pf_{du}+(1-p)f_{dd} \right] = 0.0045 \\
+						\implies f &= e^{-r_d T}\left[ pf_u + (1-p)f_d \right] = 0.0235
+					\end{align*}
+				\end{soln}
+
+			\item an American four-month call option with the same strike price.
+				\begin{soln}
+					After 2 months, the price of the currency can be either $0.80u=0.84$ or $0.80d =0.7616.$ If it went up, the payoff from early exercise is $0.84-0.79=0.05,$ whereas the price of the option at that point was 0.0468, so it would be optimal to exercise early. Thus, $f_u=0.05$ in this case, and $f_d=0.0045$ still, so 
+					\begin{align*}
+						f &= e^{-r_d T}\left[ pf_u + (1-p)f_d \right] = 0.0249
+					\end{align*}
+				\end{soln}
+				
+		\end{enumerate}
+
+	\item[22.] Can an option on the yen/euro exchange rate be created from two options, one on the dollar/euro exchange rate, and the other on the dollar/yen exchange rate? Explain your answer.
+		\begin{soln}
+			This is not possible. There are scenarios in which one option will be exercised and not the other, so they cannot accurately model a single option.
+		\end{soln}
+
+	\item[23.] The Dow Jones Industrial Average on January 12, 2007 was 12,556 and the price of the March 126 call was \$2.25. Use the DerivaGem software to calculate the implied volatility of this option. Assume the risk-free rate was 5.3\% and the dividend yield was 3\%. The option expires on March 20, 2007. Estimate the price of a March 126 put. What is the volatility implied by the price you estimate for this option? (Note that options are on the Dow Jones index divided by 100.)
+		\begin{soln}
+			According to DerivaGem, the implied volatility is 10.34\%. By put-call parity, we have
+			\begin{align*}
+				c + Ke^{-rT} &= p + S_0e^{-qT} \\
+				\implies p &= 2.25 + 126e^{-0.053\cdot \frac{67}{365}} - 125.56e^{-0.03\cdot \frac{67}{365}} = 2.16
+			\end{align*}
+			According to DerivaGem, the implied volatility is also 10.34\%.
+		\end{soln}
+		
+\end{itemize}
+
+\section*{Chapter 18: Futures Options}
+
+\begin{itemize}
+	\item[7.] Calculate the value of a five-month European put futures option when the futures price is \$19, the strike price is \$20, the risk-free interest rate is 12\% per annum, and the volatility of the futures price is 20\% per annum.
+		\begin{soln}
+			We have
+			\begin{align*}
+				d_1 &= \frac{\ln(F_0/K)+\sigma^2T/2}{\sigma\sqrt{T}} = \frac{\ln(19/20) + 0.20^2\cdot \frac{5}{12}\cdot \frac{1}{2}}{0.20\sqrt{\frac{5}{12}}} = -0.333 \\
+				d_2 &= d_1-\sigma\sqrt{T} = -0.462 \\
+				\implies p &= e^{-rT}\left[ KN(-d_2)-F_0N(-d_1) \right] = 1.504
+			\end{align*}
+		\end{soln}
+
+	\item[8.] Suppose you buy a put option contract on October gold futures with a strike price of \$1400 per ounce. Each contract is for the delivery of 100 ounces. What happens if you exercise when the October futures price is \$1380?
+		\begin{soln}
+			I receive a cash amount of $100(1400-1380)=\$2000$ and a short position in the contract.
+		\end{soln}
+
+	\item[15.] A futures price is currently 70, its volatility is 20\% per annum, and the risk-free interest rate is 6\% per annum. What is the value of a five-month European put on the futures with a strike price of 65?
+		\begin{soln}
+			We have
+			\begin{align*}
+				d_1 &= \frac{\ln(F_0/K)+\sigma^2T/2}{\sigma\sqrt{T}} = \frac{\ln(70/65)+\sigma^2T/2}{\sigma\sqrt{T}} = 0.639 \\
+				d_2 &= d_1-\sigma\sqrt{T} = 0.509 \\
+				\implies p &= e^{-rT}\left[ KN(-d_2)-F_0N(-d_1) \right] = 1.512
+			\end{align*}
+		\end{soln}
+
+	\item[22.] A futures price is currently 40. It is known that at the end of three months the price will be either 35 or 45. What is the value of a three-month European call option on the futures with a strike price of 42 if the risk-free interest rate is 7\% per annum?
+		\begin{soln}
+			We have $u=45/40=1.125$ and $d=35/40=0.875.$ Then $p-\frac{1-d}{u-d} = 0.5.$ Then $f_u=3$ and $f_d=0,$ so we have
+			\begin{align*}
+				f= e^{-rT}\left[ pf_u + (1-p)f_d \right] -= e^{-0.07\cdot \frac{1}{4}}\left[ 0.5\cdot 3 \right] = 1.474
+			\end{align*}
+		\end{soln}
+		
+\end{itemize}
+
+\end{document}
