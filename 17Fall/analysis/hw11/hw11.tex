@@ -15,21 +15,67 @@
 \section*{Chapter 11: The Space of Continuous Functions}
 
 \begin{itemize}
-	\item[1.] For each $n,$ let $Q_n$ be the set of all polygonal functions that have nodes at $k/n, k=0, \cdots, n.,$ and that take on only rational values at those points. Check that $Q_n$ is a countable set, and hence tha the union of the $Q_n$'s is a countable dense set in $C[0, 1].$
+	\item[1.] For each $n,$ let $Q_n$ be the set of all polygonal functions that have nodes at $k/n, k=0, \cdots, n.,$ and that take on only rational values at those points. Check that $Q_n$ is a countable set, and hence that the union of the $Q_n$'s is a countable dense set in $C[0, 1].$
+		\begin{proof}
+			If $f\in Q_n,$ then $f$ has $n+1$ nodes. These nodes uniquely define $f$ and each node can take on any value in $\QQ,$ so there is a natural bijection between $Q_n$ and $\QQ^{n+1}.$ Since $\QQ^{n+1}$ is countable, it follows that $Q_n$ is countable.
+
+			Then $Q=\bigcup_{n=0}^\infty Q_n$ is a countable union of countable sets, and thus countable.
+		\end{proof}
 
 	\item[7.] If $p$ is a polynomial and $\varepsilon>0,$ prove that there is a polynomial $q$ with rational coefficients such that $\left\lVert p-q \right\rVert_\infty<\varepsilon$ on $[0, 1].$
+		\begin{proof}
+			Suppose $p=a_0+a_1x+\cdots+a_n x^n$ where $a_i\in\RR$ for each $i.$ Let $\varepsilon>0.$ Then since $\QQ$ is dense in $\RR,$ we can find $b_0, b_1, \cdots, b_n\in\QQ$ such that $0<a_i-b_i<\frac{\varepsilon}{n+1}$ for each $i.$ Let $q=b_0+b_1x+\cdots+b_n x^n.$ Since $x\in[0, 1],$ the max of the polynomial occurs at $x=1,$ so
+			\begin{align*}
+				\left\lVert p-q \right\rVert_\infty &= \left\lVert (a_0-b_0) + (a_1-b_1)x+\cdots+(a_n-b_n)x^n \right\rVert_\infty \\
+				&= (a_0-b_0) + (a_1-b_1)+\cdots+(a_n-b_n) \\
+				&< (n+1)\cdot \frac{\varepsilon}{n+1} = \varepsilon
+			\end{align*}
+			as desired.
+		\end{proof}
 
 	\item[9.] Let $\mathcal P_n$ denote the set of polynomials of degree at most $n,$ considered as a subset of $C[a, b]).$ Clearly $\mathcal P_n$ is a subspace of $C[a, b]$ of dimension $n+1.$ Also, $\mathcal P_n$ is closed in $C[a, b].$ How do you know that $\mathcal P,$ the union of all of the $P_n,$ is not all of $C[a, b]?$ That is, why are there necessarily non-polynomial elements in $C[a, b]?$
+		\begin{soln}
+			If $\mathcal P$ was all of $C[a, b],$ then there are no continuous functions that aren't polynomials. However, $\sin x$ cannot be represented as a polynomial. If it could, then it would have finitely many roots, since polynomials are finite degree, but the roots of $\sin x$ are $2\pi k$ for $k\in\ZZ.$ Thus, $\mathcal P$ is not all of $C[a, b].$
+		\end{soln}
 
 	\item[12.] Let $p_n$ be a polynomial of degree $m_n,$ and suppose that $p_n\Rightarrow f$ on $[a, b],$ where $f$ is not a polynomial. Show that $m_n\to \infty.$
 
 	\item[14.] Let $f\in C[a, b]$ be continuously differentiable, and let $\varepsilon>0.$ Show that there is a polynomial $p$ such that $\left\lVert f-p \right\rVert_\infty<\varepsilon$ and $\left\lVert f'-p' \right\rVert_\infty<\varepsilon.$ Conclude that $C^{(1)}[a, b]$ is separable.
+		\begin{proof}
+			Given $f,$ there exists a polynomial $q$ such that $\left\lVert f'-q \right\rVert_\infty<\varepsilon/(b-a)$ by WAT. Let $p$ be the anti-derivative of $q,$ with $p(a)=q(a).$ Then
+			\begin{align*}
+				\left\lVert f-p \right\rVert_\infty &= \sup_{x\in[a, b]} \abs{f(x)-p(x)} = \sup_{x\in [a, b]} \abs{\int_a^x (f'(t)-q(t))\, dt} \\
+				&\le \sup_{x\in [a, b]} \int_a^x \abs{f'(t)-q(t)}\, dt \le (b-a)\left\lVert f'-q \right\rVert_\infty \\
+				&< (b-a)\cdot \frac{\varepsilon}{b-a} = \varepsilon
+			\end{align*}
+			as desired.
+		\end{proof}
 
 	\item[27.] Let $T$ be a trig polynomial. Prove:
 		\begin{enumerate}[(a)]
-			\item If $T$ is an odd function, then $T$ can be written using only cosines.
+			\item If $T$ is an even function, then $T$ can be written using only cosines.
+				\begin{proof}
+					If $T$ is even, then we have
+					\begin{align*}
+						T(x) &= a_0 + \sum_{k=1}^{n} (a_k \cos kx + b_k \sin kx) \\
+						T(-x) &= a_0 + \sum_{k=1}^{n} (a_k\cos (-kx) + b_k\sin(-kx)) = a_0 + \sum_{k=1}^{n} (a_k\cos kx - b_k\sin kx) \\
+						T(x) &= T(-x) \implies \sum_{k=1}^{n} b_k\sin kx = -\sum_{k=1}^{n} b_k\sin kx \implies \sum_{k=1}^{n} b_k\sin kx = 0 \\
+						\implies T(x) &= a_0 + \sum_{k=1}^{n} a_k\cos kx
+					\end{align*}
+					Thus $T$ can be written using only cosines.
+				\end{proof}
 
-			\item If $T$ is an even function, then $T$ can be written using only sines.
+			\item If $T$ is an odd function, then $T$ can be written using only sines.
+				\begin{proof}
+					If $T$ is even, then we have
+					\begin{align*}
+						T(x) &= a_0 + \sum_{k=1}^{n} (a_k\cos kx + b_k \sin kx) \\
+						-T(-x) &= -a_0 - \sum_{k=1}^{n} (a_k \cos (-kx) + b_k \sin(-kx)) = -a_0 + \sum_{k=1}^{n} (-a_k \cos kx + b_k\sin kx) \\
+						T(x) &= -T(x) \implies a_0 + \sum_{k=1}^{n} a_k \cos kx = -\left(a_0 + \sum_{k=1}^{n} a_k\cos kx\right) \implies a_0 + \sum_{k=1}^{n} a_k\cos kx = 0 \\
+						\implies T(x) = \sum_{k=1}^{n} b_k \sin kx
+					\end{align*}
+					Thus $T$ can be written using only sines.
+				\end{proof}
 				
 		\end{enumerate}
 		
