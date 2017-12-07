@@ -17,6 +17,9 @@ Suppose that we are given a set of $n$ objects, where the size $s_i$ of the $i$t
 
 \begin{enumerate}[(a)]
 	\item Prove that the optimal number of bins required is at least $\lceil S \rceil$.  
+		\begin{proof}
+			If the optimal number of bins was less than $\left\lceil S \right\rceil,$ then the total amount of space in the bins would be $\left\lceil S \right\rceil-1.$ If $S$ is an integer, then this is $S-1<S,$ which would not be enough space to hold every object. If $S$ is not an integer, then this is $\left\lfloor S \right\rfloor<S,$ and would not be enough space. Contradiction, so the optimal number of bins is at least $\left\lceil S \right\rceil.$
+		\end{proof}
 
 \end{enumerate}
 
@@ -24,8 +27,22 @@ The \emph{first-fit algorithm} considers each object in turn (from $1$ to $n$) a
 
 \begin{enumerate}[(a), resume]
 	\item Prove that the first-fit algorithm leaves at most one bin at most half full.  In other words, all bins but one are more than half full.
+		\begin{proof}
+			Suppose at termination there are at least 2 bins that are at most half full. Suppose two of them are $B_1$ and $B_2,$ with $B_1$ created before $B_2.$ Let $x_i$ be the first object that was added to $B_2$ and let $s_i$ be its size. Then $s_i\le 0.5$ since the total size of $B_2$ was at most 0.5 at termination. Since the total size of $B_1$ at termination was at most 0.5, that means the size of $B_1$ at that iteration was at most 0.5, so $x_i$ would have fit in $B_1.$ Since $B_1$ was created before $B_2,$ the algorithm would have placed $x_i$ in $B_1$ instead of $B_2.$ Contradiction, so at termination there is at most 1 bin that is at most half full.
+		\end{proof}
 
 	\item Prove that the first-fit algorithm is a $2$-approximation to bin packing.
+		\begin{proof}
+			If the algorithm produces $m$ bins at termination, then by part (b), at least $n-1$ are more than half full. Thus, the total size of all the objects is at least
+			\begin{align*}
+				\sum_{i=1}^{n} s_i = S > \frac{1}{2} (n-1) \implies 2S > n-1 \implies 2S \ge n \implies S\ge \frac{n}{2}
+			\end{align*}
+			Since the optimal number of bins is at least $S,$ we have
+			\begin{align*}
+				\frac{ALG}{OPT} \le \frac{n}{n/2} = 2
+			\end{align*}
+			so this is a 2-approximation, as desired.
+		\end{proof}
 
 \end{enumerate}
 
@@ -35,6 +52,21 @@ You are currently standing on an east-west road next to a sign.  This sign tells
 
 \begin{enumerate}[(a)]
 	\item Design a deterministic $O(1)$-competitive algorithm for this problem.  That is, design an algorithm which finds the treasure and involves walking a total distance of at most $O(1) \cdot x = O(x)$.  Prove the competitive ratio of your algorithm.
+		\begin{soln}
+			Consider the algorithm that begins by walking 1 unit east. If the treasure is not found, turn around back to the center, and walk 2 units west. If the treasure is not found, turn around back to the center, and walk 4 units east, and continue this process. Thus, at iteration $2i,$ you move as far east as $2^{2i}$ units, and at iteration $2i+1,$ you move as far west as $2^{2i+1}$ for $i\ge 0.$
+
+			If $2^{2i}<x\le 2^{2i+2}$ east for some $i,$ then you will proceed by the algorithm until you walk out to $2^{2i+1}$ west, then walk out to $x$ east. The total distance traveled is
+			\begin{align*}
+				2(1+2+\cdots+2^{2i+1})+x = 2(2^{2i+2}-1) = 2^{2i+3}-2 + x < 8x - 2 + x = O(x)
+			\end{align*}
+
+			If $2^{2i-1}<x\le 2^{2i+1}$ west for some $i,$ then you will proceed by the algorithm until you walk out to $2^{2i}$ east, then walk out to $x$ west. The total distance traveled is
+			\begin{align*}
+				2(1+2+\cdots+2^{2i}) + x = 2(2^{2i+1}-1) + x = 2^{2i+2}-2+X < 8x - 2 + x = O(x)
+			\end{align*}
+
+			Thus, the total distance traveled is $O(x),$ so the algorithm is $O(1)$-competitive.
+		\end{soln}
 
 \end{enumerate}
 
@@ -42,8 +74,30 @@ Now suppose that instead of the sign being located somewhere along an east-west 
 
 \begin{enumerate}[(a), resume]
 	\item Design a deterministic $O(m)$-competitive algorithm for this problem (and prove that it is $O(m)$-competitive).
+		\begin{soln}
+			Let the directions be numbered 0, 1, \ldots, $m-1.$ Then consider the algorithm that examines the directions in order from 0 to $m-1$ then wrapping around to 0 and continuing. Then at iteration $i,$ we are examining along direction $i\pmod m$ for a distance of $\left( 1+\frac{1}{m-1} \right)^i,$ similar to part (a).
+
+			The worst case is when the treasure is just out of reach of some iteration $k,$ so when $x=\left( 1+\frac{1}{m-1} \right)^k +\varepsilon.$ Then it won't be found in that iteration, and will take until iteration $k+m$ to find again. The total amount of searching will be
+			\begin{align*}
+				\sum_{i=0}^{k+m}\left( 1+\frac{1}{m-1} \right)^i + \varepsilon = \frac{\left( 1+\frac{1}{m-1} \right)^{k+m+1}-1}{\left( 1+\frac{1}{m-1} \right) - 1} + \varepsilon = m\left( 1+\frac{1}{m-1} \right)^{k+m}-m+1+\varepsilon
+			\end{align*}
+			The optimal algorithm will search along the correct direction and take $x=\left( 1+\frac{1}{m-1} \right)^k + \varepsilon,$ so the competitive ratio is
+			\begin{align*}
+				\frac{ALG}{OPT} = \frac{m\left( 1+\frac{1}{m-1} \right)^{k+m}-m+1+\varepsilon}{\left( 1+\frac{1}{m-1} \right)^k+\varepsilon} = O\left( m\left( 1+\frac{1}{m-1} \right)^m \right)
+			\end{align*}
+			Since $\left( 1+\frac{1}{m-1} \right)^{m-1} \approx e,$ it follows that the competitive ratio is $O(m).$
+		\end{soln}
 
 	\item Prove that for any deterministic algorithm, there is an input (location of the treasure) so that the competitive ratio of the algorithm is $\Omega(m)$.  
+		\begin{proof}
+			Suppose the algorithm examines directions sequentially $d_0, d_1, \cdots$ with $d_i\in\left\{ 0, 1, \cdots, m-1 \right\}$ and for distances $x_0, x_1, \cdots.$ If some direction is never examined in the algorithm, placing the input along that direction leads to a competitive ratio of $\infty.$
+			
+			Otherwise, every direction is examined at least once in the algorithm. WLOG 0 is the last examined direction at iteration $m.$ Then consider
+			\begin{align*}
+				x = \min_{1\le i\le m-1} \sum_{k:d_k=i}^{k<m} x_k
+			\end{align*}
+			as the minimum of the total distance examined along each direction before direction 0 is examined. Then let the treasure be a distance $x$ in direction 0. The total distance examined before direction 0 is examined is at least $(m-1)x$ and at least $x$ more must be examined along direction 0 to find the treasure, so the total distance examined is at least $mx.$ The optimal algorithm takes only $x,$ so the competitive ratio is at least $\Omega(m).$
+		\end{proof}
 
 \end{enumerate}
 
