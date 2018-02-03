@@ -1,0 +1,46 @@
+\documentclass{article}
+\usepackage[sexy, hdr, fancy]{evan}
+\setlength{\droptitle}{-4em}
+
+\lhead{Homework 1}
+\rhead{Honors Analysis II}
+\lfoot{}
+\cfoot{\thepage}
+
+\begin{document}
+\title{Homework 1}
+\maketitle
+\thispagestyle{fancy}
+
+\section*{Chapter 13: Functions of Bounded Variation}
+
+\begin{itemize}
+	\item[1.] Show that $V_a^b(\chi_\QQ)=+\infty$ on any interval $[a, b].$
+
+	\item[3.] If $f$ has a bounded derivative on $[a, b],$ show that $V_a^b f\le \left\lVert f' \right\rVert_\infty(b-a).$
+
+	\item[5.] Complete the proof of Lemma 13.3.
+
+	\item[6.] We can test several of the inclusions explicit in our discussion up to this point by means of a single family of functions. For $\alpha\in\RR,$ and $\beta>0,$ set $f(x)=x^\alpha \sin(x^{-\beta}),$ for $0<x\le 1,$ and $f(0)=0.$ Show that
+		.\begin{enumerate}[(a)]
+			\item $f$ is bounded if and only if $\alpha\ge 0$
+
+			\item $f$ is continuous if and only if $\alpha>0$
+
+			\item $f'(0)$ exists if and only if $\alpha>1$
+
+			\item $f'$ is bounded if and only if $\alpha\ge 1+\beta$
+
+			\item If $\alpha>0,$ then $f\in BV[0, 1]$ for $0<\beta<\alpha$ and $f\not\in BV[0, 1]$ for $\beta\ge \alpha.$ (Hint: Try a few easy cases first, say $\alpha=\beta=2.$)
+
+		\end{enumerate}
+
+	\item[11.] If $f_n\to f$ pointwise on $[a, b],$ show that $V(f_n, P)\to V(f, P)$ for any partition $P$ of $[a, b].$ In particular, if we also have $V_a^b f_n \le K$ for all $n,$ then $V_a^b f\le K$ too.
+
+	\item[14.] Let $I(x)=0$ if $x<0$ and $I(x)=1$ if $x\ge 0.$ Given a sequence of scalars $(c_n)$ with $\sum_{n=1}^{\infty}\abs{c_n}<\infty$ and a sequence of distinct points $(x_n)$ in $(a, b],$ define $f(x)=\sum_{n=1}^{\infty} c_nI(x-x_n)$ for $x\in[a, b].$ Show that $f\in BV[a, b]$ and that $V_a^bf=\sum_{n=1}^{\infty} \abs{c_n}.$
+
+	\item[15.] Show that $f\in C[a, b]\cap BV[a, b]$ if and only if $f$ can be written as the difference of two strictly increasing continuous functions.
+		
+\end{itemize}
+
+\end{document}

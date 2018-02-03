@@ -1,0 +1,52 @@
+\documentclass{article}
+\usepackage[sexy, hdr, fancy]{evan}
+\setlength{\droptitle}{-4em}
+
+\lhead{Homework 1}
+\rhead{Automata and Computation Theory}
+\lfoot{}
+\cfoot{\thepage}
+
+\begin{document}
+\title{Homework 1}
+\maketitle
+\thispagestyle{fancy}
+
+\begin{enumerate}
+	\item Show that for any three sets $A, B, C,$ we have that
+		\begin{align*}
+			(A\cap B)\cup C = (A\cup C)\cap(B\cup C)
+		\end{align*}
+		\begin{proof}
+			$(\subset):$ Let $x\in (A\cap B)\cup C.$ Then $x\in (A\cap B)$ or $x\in C.$ If $x\in (A\cap B),$ then $x\in A$ and $x\in B,$ so $x\in (A\cup C)$ and $x\in (B\cup C),$ so $x\in (A\cup C)\cap (B\cup C),$ as desired. Otherwise, if $x\in C,$ it follows that $x\in (A\cup C)$ and $x\in (B\cup C),$ and the conclusion follows.
+
+			$(\supset):$ If $x\in (A\cup C)\cap(B\cup C),$ then $x\in (A\cup C)$ and $x\in (B\cup C).$ Thus $x\in A$ or $x\in C$, and $x\in B$ or $x\in C.$ If $x\in C,$ then $x\in (A\cap B)\cup C,$ as desired. Otherwise, if $x\not\in C,$ then we must have $x\in A$ and $x\in B,$ so $x\in (A\cap B),$ and thus $x\in (A\cap B)\cup C,$ as desired.
+
+			Thus, the two sets are equal.
+		\end{proof}
+
+	\item Show that every undirected graph with 2 or more nodes contains two nodes with the same degree.
+		\begin{proof}
+			Suppose the graph has $n$ nodes of all different degrees. The maximum possible degree is $n-1,$ so the degrees of the nodes are $0, 1, \cdots, n-1.$ Then consider the graph obtained by removing the vertex of degree 0. We now have a graph with $n-1$ nodes, and one node having degree $n-1,$ which is a contradiction. Thus, the nodes cannot all have different degree, so there must exist two nodes with the same degree.
+		\end{proof}
+
+	\item Show that there exist no integers $x, y, z$ such that $x^2+y^2=3z^2,$ except $x=y=z=0.$
+		\begin{proof}
+			Clearly $x=y=z=0$ is a solution. WLOG $x\neq 0.$ Let $g=\gcd(x, y),$ and let $x=ga$ and $y=gb.$ Then $x^2+y^2=g^2(a^2+b^2)=3z^2.$ Since $g^2$ divides the LHS, it must divide the RHS, so $g\mid z,$ and let $z=gc.$
+
+			Then $g^2(a^2+b^2)=3g^2c^2\implies a^2+b^2=3c^2.$ Now, squares modulo 4 have residues 0 and 1 (since every integer is either $2k$ or $2k+1$ for some $k\in\ZZ$). We have $3c^2\equiv0$ or $3c^2\equiv3$ modulo 4, but only the former has a possible solution for $a$ and $b,$ in which case $a^2\equiv b^2\equiv 0\pmod 4.$ This means $a$ and $b$ are both even, but from above, we assumed $g$ was the GCD of $x$ and $y,$ so $\gcd(a, b)=1.$ Contradiction, so there are no other solutions.
+		\end{proof}
+
+	\item Let $r$ be a number such that $r+1/r$ is an integer. Use induction to show that for every positive integer $n, r^n+1/r^n$ is an integer.
+		\begin{proof}
+			The base case is $n=1,$ and $r^1+1/r^1$ is an integer by the premise. Suppose $r^k+1/r^k$ is an integer for all integers up to arbitrary $k.$ Then
+			\begin{align*}
+				\left( r+\frac{1}{r} \right)\left( r^k+\frac{1}{r^k} \right) &= r^{k+1}+\frac{1}{r^{k-1}} + r^{k-1} + \frac{1}{r^{k+1}} \\
+				&= \left( r^{k+1}+\frac{1}{r^{k+1}} \right) + \left( r^{k-1} + \frac{1}{r^{k-1}} \right)
+			\end{align*}
+			Since $r+1/r$ and $r^k+1/r^k$ are both integers by assumption, their product is also an integer. Since $r^{k-1}+1/r^{k-1}$ is also an integer by assumption, it follows that $r^{k+1}+1/r^{k+1}$ is also an integer, as desired.
+		\end{proof}
+		
+\end{enumerate}
+
+\end{document}
