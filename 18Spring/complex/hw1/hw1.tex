@@ -1,5 +1,7 @@
 \documentclass{article}
 \usepackage[sexy, hdr, fancy]{evan}
+\usepackage{graphicx}
+\graphicspath{.}
 \setlength{\droptitle}{-4em}
 
 \DeclareMathOperator{\re}{Re}
@@ -155,18 +157,55 @@
 				
 		\end{enumerate}
 
+		\newpage
 	\item[18.] Sketch the curves that are given for $0\le t\le 2\pi$ by
 		\begin{enumerate}[(a)]
 			\item $z(t)=e^{(1+i)t}$ 
+				\begin{answer*}
+					Plots all created in MATLAB.
+
+					This is $e^{(1+i)t} = e^t e^{it} = e^t \cos t + i e^t\sin t,$ so we may model this parametrically in $\RR^2.$
+					\begin{figure}[h!]
+						\centering
+						\includegraphics[width=10cm]{18a.png}
+						\caption{Plot of $e^{(1+i)t}, t\in[0, 2\pi]$}
+					\end{figure}
+				\end{answer*}
 				
 			\item $z(t)=e^{(1-i)t}$ 
+				\begin{answer*}
+					Similar to above, $e^{(1-i)t} = e^t e^{-it} = e^t \cos (-t) + i e^t\sin (-t)=e^t \cos t - ie^t\sin t.$
+					\begin{figure}[h!]
+						\centering
+						\includegraphics[width=10cm]{18b.png}
+						\caption{Plot of $e^{(1-i)t}, t\in[0, 2\pi]$}
+					\end{figure}
+				\end{answer*}
+				\newpage
 
 			\item $z(t)=e^{(-1+i)t}$
+				\begin{answer*}
+					Similar to above, $e^{(-1+i)t} = e^{-t} e^{it} = e^{-t} \cos t + i e^{-t}\sin t.$
+					\begin{figure}[h!]
+						\centering
+						\includegraphics[width=10cm]{18c.png}
+						\caption{Plot of $e^{(-1+i)t}, t\in[0, 2\pi]$}
+					\end{figure}
+				\end{answer*}
 
 			\item $z(t)=e^{(-1-i)t}$
+				\begin{answer*}
+					Similar to above, $e^{(-1-i)t} = e^{-t} e^{-it} = e^{-t} \cos t - i e^{-t}\sin t.$
+					\begin{figure}[h!]
+						\centering
+						\includegraphics[width=10cm]{18d.png}
+						\caption{Plot of $e^{(-1-i)t}, t\in[0, 2\pi]$}
+					\end{figure}
+				\end{answer*}
 				
 		\end{enumerate}
 
+		\newpage
 	\item[22.] Show that if $n$ is an integer then
 		\begin{align*}
 			\int_0^{2\pi} e^{in\theta}\, d\theta = \int_0^{2\pi}\cos(n\theta)\, d\theta + i\int_0^{2\pi}\sin(n\theta)\, d\theta = \begin{cases}
@@ -181,13 +220,12 @@
 			\end{align*}
 			If $n=0,$ then this is
 			\begin{align*}
-				\int_0^{2\pi} \cos 0\, d\theta + i\int_0^{2\pi}\sin 0\, d\theta = 2\pi
+				\int_0^{2\pi} \cos 0\, d\theta + i\int_0^{2\pi}\sin 0\, d\theta = \int_0^{2\pi}1\, d\theta + i\int_0^{2\pi} 0\, d\theta = 2\pi
 			\end{align*}
 			Otherwise, this is
 			\begin{align*}
 				\frac{1}{n}\sin(n\theta)\bigg\vert_0^{2\pi} - i\cdot \frac{1}{n}\cos(n\theta)\bigg\vert_0^{2\pi} = 0
 			\end{align*}
-			as desired.
 		\end{proof}
 		
 \end{itemize}
@@ -199,31 +237,27 @@
 		\begin{enumerate}[(a)]
 			\item $(\sqrt{3}-i)^7=-64\sqrt{3}+64i$
 				\begin{soln}
-					We have
 					\begin{align*}
 						\sqrt{3}-i &= 2\left( \frac{\sqrt{3}}{2} - \frac{1}{2}i \right) = 2\left[ \cos\left( -\frac{\pi}{6} \right) + i\sin\left( -\frac{\pi}{6} \right) \right] \\
 						\implies \left( \sqrt{3}-i \right)^7 &= 2^7 \left[ \cos \left( -\frac{7\pi}{6} \right) + i\sin\left( -\frac{7\pi}{6} \right) \right] = 128\left( -\frac{\sqrt{3}}{2} + \frac{1}{2}i \right) \\
 						&= -64\sqrt{3} + 64i
 					\end{align*}
-					as desired.
 				\end{soln}
 
 			\item $(1+i)^{95}=2^{47}(1-i)$
 				\begin{soln}
-					We have
 					\begin{align*}
 						1+i &= \sqrt{2}\left( \frac{1}{\sqrt{2}} + \frac{1}{\sqrt{2}}i \right) = \sqrt{2}\left( \cos\frac{\pi}{4} + i\sin\frac{\pi}{4} \right) \\
 						\implies (1+i)^{95} &= \sqrt{2}^{95}\left( \cos \frac{95\pi}{4} + i\sin\frac{95\pi}{4} \right) = 2^{47}\sqrt{2}\left( \frac{1}{\sqrt{2}} - \frac{1}{\sqrt{2}}i \right) \\
 						&= 2^{47}(1-i)
 					\end{align*}
-					as desired.
 				\end{soln}
 				
 		\end{enumerate}
+		\newpage
 
 	\item[5.] (f) Find the value of $\left( \frac{2i}{1+i} \right)^{1/6}$
 		\begin{soln}
-			We have
 			\begin{align*}
 				\frac{2i}{1+i} &= \frac{2i(1-i)}{1^2+1^2} = 1 + i = \sqrt{2}e^{i\pi/4} \\
 				\implies \left( \frac{2\pi}{1+i} \right)^{1/6} &= 2^{1/12} \exp\left\{ i\left( \frac{\pi/4+2k\pi}{6}\right) \right\} = \boxed{2^{1/12}\exp\left\{ i\left( \frac{\pi}{24} + \frac{k\pi}{3} \right) \right\}, k\in\ZZ}
