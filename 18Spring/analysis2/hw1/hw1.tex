@@ -16,30 +16,195 @@
 
 \begin{itemize}
 	\item[1.] Show that $V_a^b(\chi_\QQ)=+\infty$ on any interval $[a, b].$
+		\begin{proof}
+			Let $P=\left\{ a=x_0<x_1<\cdots<x_n=b \right\}$ be a partition. If there exists a pair $x_k, x_{k+1}$ that are both rational, we can refine $P$ by adding $x_k<y<x_{k+1}$ to the partition, with $y$ irrational. This is possible because $\QQ$ is dense in $\RR.$ Similarly if there exists a consecutive pair of irrational numbers, we can refine by inserting a rational between them. 
+
+			Iterating this process, we end up with a partition of alternating rational and irrational numbers, say $Q=\left\{ a=y_0<y_1<\cdots<y_m = b \right\}.$ Then $\abs{\chi_\QQ(x_i)-\chi_\QQ(x_{i-1})}=1$ for all $i,$ so
+			\begin{align*}
+				V_a^b (\chi_\QQ) &\ge V(\chi_\QQ, Q) = \sum_{i=1}^{m} \abs{\chi_\QQ(x_i)-\chi_\QQ(x_{i-1})} = m
+			\end{align*}
+			However, given $Q,$ we can always refine $Q$ by inserting a pair of rational and irrational numbers between any consecutive terms, which increases the variation by 1. Thus, the variation is arbitrarily large.
+		\end{proof}
 
 	\item[3.] If $f$ has a bounded derivative on $[a, b],$ show that $V_a^b f\le \left\lVert f' \right\rVert_\infty(b-a).$
+		\begin{proof}
+			For any $x<y\in [a, b],$ we have $\frac{f(y)-f(x)}{y-x} = f'(c)$ for some $c\in [a, b]$ by the mean value theorem. Since $f$ has a bounded derivative, it follows that 
+			\begin{align*}
+				\abs{\frac{f(y)-f(x)}{y-x}} =\abs{f'(c)} \le \left\lVert f' \right\rVert_\infty \implies \abs{f(y)-f(x)}\le \left\lVert f' \right\rVert_\infty \abs{y-x}
+			\end{align*}
+			for any $x, y\in [a, b].$ Thus, given any partition $P=\left\{ a=x_0<x_1<\cdots < x_n=b \right\},$ we have
+			\begin{align*}
+				V(f, P) &= \sum_{i=1}^{n} \abs{f(x_i)-f(x_{i-1})} \le \sum_{i=1}^{n} \left\lVert f' \right\rVert_\infty\abs{x_i-x_{i-1}} \\
+				&= \left\lVert f' \right\rVert_\infty \sum_{i=1}^{n} (x_i-x_{i-1}) = \left\lVert f' \right\rVert_\infty (b-a)
+			\end{align*}
+			Since this is true for all $P,$ it holds that $V_a^b f = \sup_P V(f, P)\le \left\lVert f' \right\rVert_\infty (b-a).$
+		\end{proof}
 
 	\item[5.] Complete the proof of Lemma 13.3.
+		\begin{itemize}
+			\item[(i)] $V_a^bf=0$ if and only if $f$ is constant
+				\begin{proof}
+					$(\implies):$ If $V_a^b f = 0,$ then for any partition $P=\left\{ a=x_0<x_1<\cdots<x_n=b \right\},$ we have
+					\begin{align*}
+						V(f, P) &= \sum_{i=1}^{n} \abs{f(x_i)-f(x_{i-1})} = 0
+					\end{align*}
+					so $f(x_i)=f(x_{i-1})$ for all $i,$ and thus $f(x_i)=f(a)$ for all $i.$ Any refinement will keep the total variation at 0, so it follows that $f(x)=f(a)$ for all $x\in [a, b].$
+
+					$(\impliedby):$ If $f$ is constant, then its variation is trivially 0.
+				\end{proof}
+
+			\item[(ii)] $V_a^b (cf) = \abs{c}V_a^b f$
+				\begin{proof}
+					Given a partition $P=\left\{ a=x_0<x_1<\cdots<x_n=b \right\},$ we have
+					\begin{align*}
+						V(cf, P) &= \sum_{i=1}^{n} \abs{cf(x_i)-cf(x_{i-1})} = c\cdot \sum_{i=1}^{n}\abs{f(x_i)-f(x_{i-1})} = cV(f, P)
+					\end{align*}
+					so taking supremums over $P,$ it follows that $V_a^b (cf)=cV_a^b f.$
+				\end{proof}
+
+			\item[(iv)] $V_a^b(fg)\le \left\lVert f \right\rVert_\infty V_a^b g + \left\lVert g \right\rVert_\infty V_a^b f$
+				\begin{proof}
+					Given a partition $P=\left\{ a=x_0<x_1<\cdots<x_n=b \right\},$ we have
+					\begin{align*}
+						V(fg, P) &= \sum_{i=1}^{n} \abs{f(x_i)g(x_i)-f(x_{i-1})g(x_{i-1})} \\
+						&= \sum_{i=1}^{n} \abs{f(x_i)g(x_i) - f(x_i)g(x_{i-1}) + f(x_i)g(x_{i-1}) - f(x_{i-1})g(x_{i-1})} \\
+						&\le \sum_{i=1}^{n} \abs{f(x_i)g(x_i)-f(x_i)g(x_{i-1})} + \sum_{i=1}^{n} \abs{f(x_i)g(x_{i-1}) - f(x_{i-1})g(x_{i-1})} \\
+						&= \sum_{i=1}^{n} \abs{f(x_i)}\abs{g(x_i)-g(x_{i-1})} + \sum_{i=1}^{n} \abs{g(x_{i-1})}\abs{f(x_i)-f(x_{i-1})} \\
+						&\le \sum_{i=1}^{n} \left\lVert f \right\rVert_\infty\abs{g(x_i)-g(x_{i-1})} + \sum_{i=1}^{n}\left\lVert g \right\rVert_\infty\abs{f(x_i)-f(x_{i-1})} \\
+						&= \left\lVert f \right\rVert_\infty V(g, P) + \left\lVert g \right\rVert_\infty V(f, P)
+					\end{align*}
+					so taking supremums over $P,$ the result follows.
+				\end{proof}
+
+			\item[(v)] $V_a^b \abs{f} \le V_a^b f$
+				\begin{proof}
+					For $x, y\in\RR,$ it holds that $\abs{x}-\abs{y}\le x-y.$ Check by casework on the signs of $x, y.$
+
+					Given a partition $P=\left\{ a=x_0<x_1<\cdots<x_n=b \right\},$ we have
+					\begin{align*}
+						V(\abs{f}, P) &= \sum_{i=1}^{n} \abs{\abs{f(x_i)}-\abs{f(x_{i-1})}} \le \sum_{i=1}^{n} \abs{f(x_i)-f(x_{i-1})} = V(f, P)
+					\end{align*}
+					so taking supremums of $P,$ the result follows.
+				\end{proof}
+				
+		\end{itemize}
 
 	\item[6.] We can test several of the inclusions explicit in our discussion up to this point by means of a single family of functions. For $\alpha\in\RR,$ and $\beta>0,$ set $f(x)=x^\alpha \sin(x^{-\beta}),$ for $0<x\le 1,$ and $f(0)=0.$ Show that
-		.\begin{enumerate}[(a)]
+		\begin{enumerate}[(a)]
 			\item $f$ is bounded if and only if $\alpha\ge 0$
+				\begin{proof}
+					$(\implies):$ If $f$ is bounded, then we must have
+					\begin{align*}
+						\abs{x^\alpha\sin(x^{-\beta})} \le \abs{x^\alpha} \le K
+					\end{align*}
+					for some $K.$ If $\alpha<0,$ then this grows arbitrarily large as $x\to0,$ so it must be that $\alpha\ge 0.$
+
+					$(\impliedby):$ If $\alpha\ge 0,$ then $\abs{x^\alpha\sin(x^{-\beta})}\le 1,$ so $f$ is bounded.
+				\end{proof}
 
 			\item $f$ is continuous if and only if $\alpha>0$
+				\begin{proof}
+					$(\implies):$ If $\alpha=0,$ then $f(x)= \sin(x^{-\beta})$ is discontinuous at 0, since $f$ is oscillating between -1 and 1. If $\alpha<0,$ then $f(x)=\frac{\sin(x^{-\beta})}{x^{-\alpha}}$ diverges as $x\to 0,$ so $f$ would not be continuous. Thus we must have $\alpha>0.$
+
+					$(\impliedby):$ If $\alpha>0,$ then $x^\alpha \sin(x^{-\beta})\to 0$ as $x\to 0$ since $\sin(x^{-\beta})\in[-1, 1]$ and $x^{\alpha}\to 0.$
+				\end{proof}
 
 			\item $f'(0)$ exists if and only if $\alpha>1$
+				\begin{proof}
+					We have the limit
+					\begin{align*}
+						f'(0)=\lim_{x\to 0+} \frac{f(x)-f(0)}{x-0} = \lim_{x\to0+} \frac{x^\alpha\sin(x^{-\beta})}{x} = \lim_{x\to0+} x^{\alpha-1}\sin(x^{-\beta})
+					\end{align*}
+					must exist. From above, this limit exists and is continuous if and only if $\alpha-1>0\implies \alpha>1.$
+
+				\end{proof}
 
 			\item $f'$ is bounded if and only if $\alpha\ge 1+\beta$
+				\begin{proof}
+					We have 
+					\begin{align*}
+						f'(x)&=x^\alpha\cos(x^{-\beta})\cdot (-\beta x^{-\beta-1}) + \alpha x^{\alpha-1}\sin(x^{-\beta}) \\
+						&= -\beta x^{\alpha-\beta-1}\cos (x^{-\beta}) + \alpha x^{\alpha-1}\sin x^{-\beta}
+					\end{align*}
+					everywhere except 0. From (a), this is bounded if and only if the exponent of $x$ is non-negative, so $\alpha-\beta-1\ge 0\implies \alpha \ge 1+\beta.$ Then $f'(0)$ is bounded because it exists whenever $\alpha>1,$ which is true because $\beta>0.$
+				\end{proof}
 
 			\item If $\alpha>0,$ then $f\in BV[0, 1]$ for $0<\beta<\alpha$ and $f\not\in BV[0, 1]$ for $\beta\ge \alpha.$ (Hint: Try a few easy cases first, say $\alpha=\beta=2.$)
+				\begin{proof}
+					Consider the partition
+					\begin{align*}
+						t_0 &= 0 \\
+						t_k &= \left[ \frac{2}{[2(n-k)-1]\pi} \right]^{1/\beta}, k=0, 1, \cdots, n-1 \\
+						t_n &= 1
+					\end{align*}
+					Then we have
+					\begin{align*}
+						f(t_k) &= \left[ \frac{2}{[2(n-k)-1]\pi} \right]^{\alpha/\beta} \sin\left( \frac{[2(n-k)-1]\pi}{2} \right) \\
+						f(t_{k-1}) &= \left[ \frac{2}{[2(n-k)+1]\pi} \right]^{\alpha/\beta}\sin\left( \frac{[2(n-k)+1]\pi}{2} \right)
+					\end{align*}
+					which have opposite signs because the sine terms are $\pm 1.$ Then we have
+					\begin{align*}
+						\abs{f(t_k)-f(t_{k-1})} &= \left( \frac{2}{\pi} \right)^{\alpha/\beta} \left[ \left( \frac{1}{2(n-k)-1} \right)^{\alpha/\beta} + \left( \frac{1}{2(n-k)+1} \right)^{\alpha/\beta} \right] \\
+						&\ge 2\cdot \left( \frac{2}{\pi} \right)^{\alpha/\beta} \left( \frac{1}{2(n-k)-1} \right)^{\alpha/\beta}
+					\end{align*}
+					for $k=2, \cdots, n-1.$ Then we have
+					\begin{align*}
+						\sum_{k=2}^{n-1} \abs{f(t_k)-f(t_{k-1})} &\ge 2\cdot \left( \frac{2}{\pi} \right)^{\alpha/\beta} \sum_{k=2}^{n-1} \left( \frac{1}{2(n-k)-1} \right)^{\alpha/\beta} \\
+						&= \frac{2}{\pi^{\alpha/\beta}} \sum_{i=1}^{n-2} \left( \frac{2}{2i-1} \right)^{\alpha/\beta} \ge \frac{2}{\pi^{\alpha/\beta}}\sum_{i=1}^{n-2} \left( \frac{2}{2i} \right)^{\alpha/\beta}
+					\end{align*}
+					If $\beta\ge\alpha,$ this is a divergent series as $n\to\infty$ since $\alpha/\beta\le1.$ Thus, $f\not\in BV[0, 1]$ for $\beta\ge \alpha.$ If $0<\beta<\alpha,$ this series converges, so $f\in BV[0, 1]$ in that case (the differences $\abs{f(t_1)-f(t_0)}$ and $\abs{f(t_n)-f(t_{n-1})}$ are clearly finite).
+				\end{proof}
 
 		\end{enumerate}
 
 	\item[11.] If $f_n\to f$ pointwise on $[a, b],$ show that $V(f_n, P)\to V(f, P)$ for any partition $P$ of $[a, b].$ In particular, if we also have $V_a^b f_n \le K$ for all $n,$ then $V_a^b f\le K$ too.
+		\begin{proof}
+			Let $P=\left\{ a=x_0<x_1<\cdots<x_m=b \right\}.$ Fix $\varepsilon>0.$ Then since $f_n\to f$ pointwise, we have $\abs{f_n(x_i)-f(x_i)}<\frac{\varepsilon}{2m}$ for $n\ge N_i, i=0, 1, \cdots, m.$ Taking $N=\max_i N_i,$ we have
+			\begin{align*}
+				\abs{V(f_n, P)-V(f, P)} &= \abs{\sum_{i=1}^{m} \bigg( \abs{f_n(x_i)-f_n(x_{i-1})} - \abs{f(x_i) - f(x_{i-1})} \bigg)} \\
+				&\le \abs{\sum_{i=1}^{m} \abs{f_n(x_i)-f_n(x_{i-1}) - f(x_i) + f(x_{i-1})}} \\
+				&\le \abs{\sum_{i=1}^{m} \abs{f_n(x_i)-f(x_i)} + \sum_{i=1}^{m} \abs{f_n(x_i) - f(x_{i-1})}} \\
+				&< \abs{\sum_{i=1}^{m} \frac{\varepsilon}{2m} + \sum_{i=1}^{m} \frac{\varepsilon}{2m}} \\
+				&= \varepsilon
+			\end{align*}
+			whenever $n\ge N.$ Thus, $V(f_n, P)\to V(f, P)$ for arbitrary $P.$
+
+			If $V_a^b f>K,$ then $V(f, Q)>K$ for some $Q.$ But $V(f_n, Q)\le K$ for all $n,$ so $V(f_n, Q)\not\to V(f, Q).$
+		\end{proof}
 
 	\item[14.] Let $I(x)=0$ if $x<0$ and $I(x)=1$ if $x\ge 0.$ Given a sequence of scalars $(c_n)$ with $\sum_{n=1}^{\infty}\abs{c_n}<\infty$ and a sequence of distinct points $(x_n)$ in $(a, b],$ define $f(x)=\sum_{n=1}^{\infty} c_nI(x-x_n)$ for $x\in[a, b].$ Show that $f\in BV[a, b]$ and that $V_a^bf=\sum_{n=1}^{\infty} \abs{c_n}.$
+		\begin{proof}
+			Let $P=\left\{ a=y_0<y_1<\cdots<y_m=b \right\}$ be a partition. Then we have
+			\begin{align*}
+				V(f, P) &= \sum_{i=1}^{m} \abs{\sum_{n=1}^{\infty} c_n I(y_i-x_n) - \sum_{n=1}^{\infty} c_nI(y_{i-1}-x_n)} \\
+				&= \sum_{i=1}^{m} \abs{\sum_{n=1}^{\infty} c_n\bigg[ I(y_i-x_n) - I(y_{i-1}-x_n)\bigg]} \\ 
+				&\le \sum_{i=1}^{m} \sum_{n=1}^{\infty} \abs{c_n\bigg[I(y_i-x_n)-I(y_{i-1}-x_n)\bigg]} \\
+				&= \sum_{n=1}^{\infty} \abs{c_n}\sum_{i=1}^{m} \abs{I(y_i-x_n)-I(y_{i-1}-x_n)}
+			\end{align*}
+			Now, for any $n,$ the difference $I(y_i-x_n)-I(y_{i-1}-x_n)$ is non-zero only when $y_{i-1}<x_n\le y_i,$ where it equals 1. This can only happen once, since the sequence of $y_i$ is increasing. Everywhere else the difference is 0. Thus, we have
+			\begin{align*}
+				V(f, P)\le \sum_{n=1}^{\infty} \abs{c_n} < \infty
+			\end{align*}
+			Since this holds for arbitrary $P,$ it follows that $f\in BV[a, b].$
+
+			We have equality
+			\begin{align*}
+				\abs{\sum_{n=1}^{\infty} c_n\bigg[I(y_i-x_n)-I(y_{i-1}-x_n)\bigg]} = \sum_{n=1}^{\infty} \abs{c_n\bigg[I(y_i-x_n)-I(y_{i-1}-x_n)\bigg]}
+			\end{align*}
+			if and only if all of the $c_n\bigg[I(y_i-x_n)-I(y_{i-1}-x_n)\bigg]$ have the same sign, which can happen if
+			\begin{align*}
+				I(y_i-x_n)-I(y_{i-1}-x_n)=\begin{cases}
+					0 &\text{if }c_n<0 \\
+					1 &\text{if }c_n\ge 0
+				\end{cases}
+			\end{align*}
+			This construction is relatively easy to do, and produces equality of $V(f, P)=\sum_{n=1}^{\infty} \abs{c_n},$ so since $V_a^b f\ge V(f, P)$ for all $P,$ we have $V_a^b f= \sum_{n=1}^{\infty} \abs{c_n}.$
+		\end{proof}
 
 	\item[15.] Show that $f\in C[a, b]\cap BV[a, b]$ if and only if $f$ can be written as the difference of two strictly increasing continuous functions.
+		\begin{proof}
+			From Corollary 13.10, $f$ can be written as the difference of two increasing continuous functions $f_1$ and $f_2$ as $f=f_1-f_2.$ Then let $g_1(x)=f_1(x)+x$ and $g_2(x)=f_2(x)+x.$ Then $g_1$ and $g_2$ are both strictly continuous functions since $x$ is strictly increasing. Thus $f=g_1-g_2$ is the difference of two strictly increasing continuous functions.
+		\end{proof}
 		
 \end{itemize}
 
