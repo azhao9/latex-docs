@@ -1,0 +1,46 @@
+\documentclass{article}
+\usepackage[sexy, hdr, fancy]{evan}
+\setlength{\droptitle}{-4em}
+
+\lhead{Homework 2}
+\rhead{Honors Analysis II}
+\lfoot{}
+\cfoot{\thepage}
+
+\begin{document}
+\title{Homework 2}
+\maketitle
+\thispagestyle{fancy}
+
+\section*{Chapter 14: The Riemann-Stieltjes Integral}
+
+\begin{itemize}
+	\item[1.] If $f, g\in \mathcal R_\alpha[a, b]$ with $f\le g,$ show that $\int_a^b f\, d\alpha \le \int_a^b g\, d\alpha.$
+
+	\item[3.] If $f\in\mathcal R_\alpha[a, b],$ show that $\abs{f}\in \mathcal R_\alpha[a, b]$ and that $\abs{\int_a^b f\, d\alpha}\le\int_a^b\abs{f}\, d\alpha.$ (Hint: $U(\abs{f}, P)-L(\abs{f}, P)\le U(f, P)-L(f, P).$ Why?)
+
+	\item[6.] Define increasing functions $\alpha, \beta,$ and $\gamma$ on $[-1, 1]$ by $\alpha=\chi_{(0, 1]}, \beta=\chi_{[0, 1]},$ and $\gamma=\frac{1}{2}(\alpha+\beta).$ Given $f\in B[-1, 1],$ show that:
+		\begin{enumerate}[(a)]
+			\item $f\in\mathcal R_\alpha[-1, 1]$ if and only if $f(0+)=f(0).$
+
+			\item $f\in\mathcal R_\beta[-1, 1]$ if and only if $f(0-)=f(0).$
+
+			\item $f\in\mathcal R_\gamma[-1, 1]$ if and only if $f$ is continuous at 0.
+
+			\item If $f\in\mathcal R_\gamma[-1, 1],$ then $\int_{-1}^1 f\, d\alpha=\int_{-1}^1 f\, d\beta = \int_{-1}^1 f\, d\gamma = f(0).$
+				
+		\end{enumerate}
+
+	\item[7.] Let $P=\left\{ x_0, \cdots, x_n \right\}$ be a (fixed) partition of $[a, b],$ and let $\alpha$ be an increasing step function on $[a, b]$ that is constant on each of the open intervals $(x_{i-1}, x_i)$ and has jumps of size $\alpha_i=\alpha(x_i+)-\alpha(x_i-)$ at each of the $x_i,$ where $\alpha_0=\alpha(a+)-\alpha(a)$ and $\alpha_n=\alpha(b)-\alpha(b-).$ If $f\in B[a, b]$ is continuous at each of the $x_i,$ show that $f\in\mathcal R_\alpha$ and $\int_a^b f\, d\alpha=\sum_{i=1}^{n} f(x_i)\alpha_i.$
+
+	\item[9.] If $f$ is monotone and $\alpha$ is continuous (and still increasing), show that $f\in \mathcal R_\alpha[a, b].$
+
+	\item[10.] If $f\in\mathcal R_\alpha[a, b],$ show that $f\in \mathcal R_\alpha[c, d]$ for every subinterval $[c, d]$ of $[a, b].$ Moreover, $\int_a^b f\, d\alpha = \int_a^c f\, d\alpha + \int_c^b f\, d\alpha$ for every $a<c<b.$ In fact, if any two of these integrals exist, then so does the third and the equation above still holds.
+
+	\item[23.] Suppose that $\varphi$ is a strictly increasing continuous function from $[c, d]$ onto $[a, b].$ Given $f\in\mathcal R_\alpha[a, b],$ show that $g=f\circ \varphi\in \mathcal R_\beta[c, d],$ where $\beta=\alpha\circ\varphi.$ Moreover, $\int_c^d g\, d\beta=\int_a^b f\, d\alpha.$
+
+	\item[27.] Give an example of a sequence of Riemann integrable functions on $[0, 1]$ that converges pointwise to a non-integrable function.
+		
+\end{itemize}
+
+\end{document} 

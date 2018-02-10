@@ -1,0 +1,109 @@
+\documentclass{article}
+\usepackage[sexy, hdr, fancy]{evan}
+\usepackage{graphicx}
+\graphicspath{.}
+\setlength{\droptitle}{-4em}
+
+\DeclareMathOperator{\re}{Re}
+\DeclareMathOperator{\im}{Im}
+
+\lhead{Homework 2}
+\rhead{Complex Analysis}
+\lfoot{}
+\cfoot{\thepage}
+
+\begin{document}
+\title{Homework 2}
+\maketitle
+\thispagestyle{fancy}
+
+\section*{Section 1.6}
+
+\begin{enumerate}[(a)]
+		\ii $\abs{z-1+i}\le 3$
+		\ii $\abs{\arg z} < \pi/4$
+		\ii $0<\abs{z-2}<3$
+		\ii $-1<\im z\le 1$
+		\ii $\abs{z}\ge 2$
+		\ii $(\re z)^2>1$
+\end{enumerate}
+
+\begin{itemize}
+	\item[2.] Sketch each of the given sets.
+
+	\item[3.] Which of the given sets are open?
+
+	\item[4.] Which of the given sets are domains?
+
+	\item[6.] Describe the boundary of each of the given sets.
+
+	\item[extra.] Which of the sets are closed?
+		
+\end{itemize}
+
+\section*{Section 2.1}
+
+\begin{itemize}
+	\item[3.] Describe the range of each of the following functions.
+		\begin{enumerate}[(a)]
+			\item $f(z)=z+5$ for $\re z>0$
+
+			\item $g(z)=z^2$ for $z$ in the first quadrant, $\re z\ge 0, \im z\ge 0.$
+
+			\item $h(z)=\frac{1}{z}$ for $0<\abs{z}\le 1$
+
+			\item $p(z)=-2z^3$ for $z$ in the quarter-disk $\abs{z}<1, 0<\arg z<\pi/2.$
+				
+		\end{enumerate}
+
+	\item[5.] (e) For the complex exponential function $f(z)=e^z$ defined in Sec 1.4, describe the image of the infinite strip $0\le \im z\le \pi/4.$
+
+	\item[6.] The Joukowski mapping is defined by
+		\begin{align*}
+			w=J(z) = \frac{1}{2}\left( z+\frac{1}{z} \right)
+		\end{align*}
+		Show that
+		\begin{enumerate}[(a)]
+			\item $J(z)=J(1/z)$
+
+			\item $J$ maps the unit circle $\abs{z}=1$ onto the real interval $[-1, 1].$
+
+			\item $J$ maps the circle $\abs{z}=r\quad (r>0, r\neq 1)$ onto the ellipse
+				\begin{align*}
+					\frac{u^2}{\left[ \frac{1}{2}\left( r+\frac{1}{r} \right) \right]^2} + \frac{v^2}{\left[ \frac{1}{2}\left( r-\frac{1}{r} \right) \right]^2} = 1
+				\end{align*}
+				which has foci at $\pm 1.$
+
+		\end{enumerate}
+		
+\end{itemize}
+
+\section*{Section 2.2}
+
+\begin{itemize}
+	\item[2.] Sketch the first five terms of the sequence $(2i)^n, n=1, 2, 3, \cdots$ and then describe the divergence of this sequence.
+
+	\item[7.] Decide whether each of the following sequences converges, and if so, find its limit.
+		\begin{enumerate}[(a)]
+			\item $z_n=\frac{i}{n}$
+
+			\item $z_n=i(-1)^n$
+
+			\item $z_n=\arg\left( -1+\frac{i}{n} \right)$
+
+			\item $z_n=\frac{n(2+i)}{n+i}$
+
+			\item $z_n=\left( \frac{1-i}{4} \right)^n$
+				
+			\item $z_n=\exp\left( \frac{2n\pi i}{5} \right)$
+				
+		\end{enumerate}
+
+	\item[21.] (d) Find the limit
+		\begin{align*}
+			\lim_{z\to-\pi i} \exp\left( \frac{z^2+\pi^2}{z+\pi i} \right)
+		\end{align*}
+		
+\end{itemize}
+
+\end{document}

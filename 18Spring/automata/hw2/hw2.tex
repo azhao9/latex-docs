@@ -1,0 +1,35 @@
+\documentclass{article}
+\usepackage[sexy, hdr, fancy]{evan}
+\setlength{\droptitle}{-4em}
+
+\lhead{Homework 2}
+\rhead{Automata and Computation Theory}
+\lfoot{}
+\cfoot{\thepage}
+
+\begin{document}
+\title{Homework 2}
+\maketitle
+\thispagestyle{fancy}
+
+\begin{enumerate}
+	\item Give the state diagram of a DFA recognizing the following language. The alphabet is $\left\{ 0, 1 \right\}.$
+		\begin{align*}
+			\left\{ w:w\text{ has length exactly 3 and its last symbol is different from its first symbol} \right\}
+		\end{align*}
+
+	\item Give a DFA (both a state diagram and a formal description) recognizing the following language. The alphabet is $\left\{ 0, 1 \right\}.$
+		\begin{align*}
+			\left\{ w:w\text{ has odd length or contains an even number of 0s} \right\}
+		\end{align*}
+
+	\item Show that the following language is regular, where the alphabet is $\left\{ 0, 1 \right\}.$
+		\begin{align*}
+			\left\{ w:w\text{ contains an equal number of occurrences of the substrings 01 and 10} \right\}
+		\end{align*}
+
+	\item For any string $w=w_1w_2\cdots w_n,$ the reverse of $w,$ written as $w^{\mathcal R},$ is the string $w$ in reverse order $w_n\cdots w_2 w_1.$ For any language $A,$ let $A^{\mathcal R}=\left\{ w^{\mathcal R}:w\in A \right\}.$ Show that if $A$ is regular, so is $A^{\mathcal R}.$
+		
+\end{enumerate}
+
+\end{document}
