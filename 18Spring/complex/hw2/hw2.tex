@@ -32,12 +32,35 @@
 	\item[2.] Sketch each of the given sets.
 
 	\item[3.] Which of the given sets are open?
+		\begin{answer*}
+			(b), (c), (f) are open.
+		\end{answer*}
 
 	\item[4.] Which of the given sets are domains?
+		\begin{answer*}
+			(b), (c) are domains.
+		\end{answer*}
 
 	\item[6.] Describe the boundary of each of the given sets.
+		\begin{answer*}
+			(a) Solid boundary circle of radius 3 centered at $z=1-i.$
+
+			(b) Two dotted rays from the origin, $\theta=\pi/4$ and $\theta=-\pi/4.$
+
+			(c) Dotted boundary circle of radius 3 centered at $z=2,$ and a hole at $z=2.$
+			
+			(d) Solid boundary line at $\im z=1$ and dotted boundary line at $\im z=-1.$
+
+			(e) Solid boundary circle of radius 2 centered at the origin.
+
+			(f) Two dotted boundary lines at $\re z = 1$ and $\re z = -1.$
+
+		\end{answer*}
 
 	\item[extra.] Which of the sets are closed?
+		\begin{answer*}
+			(a), (e) are closed.
+		\end{answer*}
 		
 \end{itemize}
 
@@ -47,16 +70,31 @@
 	\item[3.] Describe the range of each of the following functions.
 		\begin{enumerate}[(a)]
 			\item $f(z)=z+5$ for $\re z>0$
+				\begin{soln}
+					The range is $\left\{ z:\re z>5 \right\},$ all complex numbers with real part greater than 5.
+				\end{soln}
 
 			\item $g(z)=z^2$ for $z$ in the first quadrant, $\re z\ge 0, \im z\ge 0.$
+				\begin{soln}
+					Here, $z=re^{\theta i}$ with $0\le \theta\le \pi/2.$ Then $g(z)=z^2=r^2e^{2\theta i}$ where $0\le 2\theta \le \pi/2.$ Thus the range is the all of the first two quadrants.
+				\end{soln}
 
 			\item $h(z)=\frac{1}{z}$ for $0<\abs{z}\le 1$
+				\begin{soln}
+					The range is $\left\{ z:\abs{z}\ge 1 \right\},$ all complex numbers at least 1 away from the origin.
+				\end{soln}
 
 			\item $p(z)=-2z^3$ for $z$ in the quarter-disk $\abs{z}<1, 0<\arg z<\pi/2.$
+				\begin{soln}
+					Here, $z=re^{i\theta}$ with $0<\theta<\pi/2$ and $r<1.$ Then $p(z)=-2z^3=-2r^3 e^{3\theta i},$ where $0<3\theta <3\pi/2,$ and $\abs{-2r^3 e^{3\theta i}}<2.$ Thus the range is the 3/4-disk of radius 2 centered at the origin, with $0<\varphi<3\pi/2.$
+				\end{soln}
 				
 		\end{enumerate}
 
 	\item[5.] (e) For the complex exponential function $f(z)=e^z$ defined in Sec 1.4, describe the image of the infinite strip $0\le \im z\le \pi/4.$
+		\begin{soln}
+			For $z$ in this strip, we have $z=a+bi$ where $0\le b\le \pi/4.$ Then $e^z=e^{a+bi}=e^a e^{bi},$ where $e^{bi}$ lies between the rays $\theta=0$ and $\theta=\pi/4$ in the complex plane. Then $e^a$ can be any positive number, so the image is is all complex numbers with $0\le \theta\le \pi/4$ excluding 0.
+		\end{soln}
 
 	\item[6.] The Joukowski mapping is defined by
 		\begin{align*}
@@ -65,8 +103,21 @@
 		Show that
 		\begin{enumerate}[(a)]
 			\item $J(z)=J(1/z)$
+				\begin{proof}
+					We have
+					\begin{align*}
+						J\left( \frac{1}{z} \right) &= \frac{1}{2} \left( \frac{1}{z} + \frac{1}{1/z} \right) = \frac{1}{2}\left( \frac{1}{z} + z \right) = J(z)
+					\end{align*}
+				\end{proof}
 
 			\item $J$ maps the unit circle $\abs{z}=1$ onto the real interval $[-1, 1].$
+				\begin{proof}
+					We have
+					\begin{align*}
+						J(z) &= \frac{1}{2}\left( z+\frac{1}{z} \right) = \frac{1}{2} \left( z+\frac{\overline z}{\abs{z}^2} \right) = \frac{1}{2}\left( z+\overline z \right) = \re z
+					\end{align*}
+					for $z$ on the unit circle, which is the range $[-1, 1].$
+				\end{proof}
 
 			\item $J$ maps the circle $\abs{z}=r\quad (r>0, r\neq 1)$ onto the ellipse
 				\begin{align*}
@@ -86,16 +137,48 @@
 	\item[7.] Decide whether each of the following sequences converges, and if so, find its limit.
 		\begin{enumerate}[(a)]
 			\item $z_n=\frac{i}{n}$
+				\begin{soln}
+					This sequence converges to 0.
+				\end{soln}
 
 			\item $z_n=i(-1)^n$
+				\begin{soln}
+					This sequence does not converge because it oscillates between $i$ and $-i.$
+				\end{soln}
 
 			\item $z_n=\arg\left( -1+\frac{i}{n} \right)$
+				\begin{soln}
+					We have 
+					\begin{align*}
+						z_n &= \arg\left( -1+\frac{i}{n} \right) = \tan\inv\left( \frac{1}{n} \right) \to 0
+					\end{align*}
+					Since the complex number is in the second quadrant, $z_n\to \pi.$
+				\end{soln}
 
 			\item $z_n=\frac{n(2+i)}{n+i}$
+				\begin{soln}
+					We have
+					\begin{align*}
+						z_n &= \frac{n(2+i)}{n+i} = \frac{(2n+ni)(n-i)}{n^2+1} = \frac{(2n^2+n) + (n^2-2n)i}{n^2+1} \\
+						&= \frac{2n^2+n}{n^2+1} + \frac{n^2-2n}{n^2+1}i \to 2 + i
+					\end{align*}
+					so the sequence converges to $2+i.$
+				\end{soln}
 
 			\item $z_n=\left( \frac{1-i}{4} \right)^n$
+				\begin{soln}
+					We have
+					\begin{align*}
+						z_n &= \left( \frac{1}{4} \right)^n (1-i)^n = \left( \frac{\sqrt{2}}{4} \right)^n \left( \frac{1}{\sqrt{2}} - \frac{1}{\sqrt{2}}i \right)^n \\
+						&= \left( \frac{\sqrt{2}}{4} \right)^n e^{-n\pi i/4} \to 0
+					\end{align*}
+					so this sequence converges to 0.
+				\end{soln}
 				
 			\item $z_n=\exp\left( \frac{2n\pi i}{5} \right)$
+				\begin{soln}
+					This sequence does not converge because it oscillates between 10 distinct values.
+				\end{soln}
 				
 		\end{enumerate}
 
@@ -103,6 +186,13 @@
 		\begin{align*}
 			\lim_{z\to-\pi i} \exp\left( \frac{z^2+\pi^2}{z+\pi i} \right)
 		\end{align*}
+		\begin{soln}
+			We have
+			\begin{align*}
+				\lim_{z\to-\pi i} \exp\left( \frac{z^2+\pi^2}{z+\pi i} \right) &= \lim_{z\to-\pi i} \exp\left( \frac{(z+\pi i)(z-\pi i)}{z + \pi i} \right) \\
+				&= \lim_{z\to-\pi i} e^{z-\pi i} = e^{-2\pi i} = 1
+			\end{align*}
+		\end{soln}
 		
 \end{itemize}
 
