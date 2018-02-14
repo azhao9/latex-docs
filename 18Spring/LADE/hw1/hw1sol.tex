@@ -43,7 +43,7 @@
 			\begin{align*}
 				\frac{\partial}{\partial y} \left[ x\sin y + y\sin x + g(y) \right] &= x\cos y + \sin x + g'(y) \\
 				&= \sin x + x\cos y \\ 
-				\implies g(y) &= C_1 \\
+				\implies g'(y) &= 0\implies g(y) = C_1 \\
 				\implies F(x, y) &= x\sin y + y\sin x + C_1
 			\end{align*}
 			so the general solution of the ODE is given implicitly by the equation
@@ -65,8 +65,49 @@
 			(\cos y)\, dx = \left[ 2(x-y)\sin y + \cos y \right]\, dy
 		\end{align*}
 		NOTE: $\cos 2\theta = 2\cos^2\theta-1.$
-		\begin{soln}
-			This ODE is equivalent to
+		\begin{soln}	
+			Moving everything to one side, this differential equation is
+			\begin{align*}
+				\cos y\, dx + \left[ 2(y-x)\sin y - \cos y \right]\, dy &= 0
+			\end{align*}
+			Here,
+			\begin{align*}
+				M(x, y) &= \cos y \implies M_y = -\sin y \\
+				N(x, y) &= 2(y-x)\sin y - \cos y \implies N_x = -2\sin y
+			\end{align*}
+			so the equation is not exact as written, but we notice that
+			\begin{align*}
+				\frac{N_x-M_y}{M} = \frac{-2\sin y -(-\sin y)}{\cos y} = -\tan y
+			\end{align*}
+			is a function of just $y,$ so we can multiply by the integrating factor
+			\begin{align*}
+				\exp\left( \int -\tan y\, dy \right) = \exp\left( \ln \cos\abs{y} \right) = \cos y
+			\end{align*}
+			which gives the equation
+			\begin{align*}
+				\cos^2 y \, dx + \left[ 2(y-x)\sin y\cos y - \cos ^2 y \right]\, dy &= M_1(x, y)\, dx + N_1(x, y)\, dy = 0
+			\end{align*}
+			Now, the equation is exact, so to solve for the solution, we integrate to solve for $F:$
+			\begin{align*}
+				F(x, y) &= \int M_1(x, y)\, dy = \int \cos^2y\, dx = x\cos^2y + g(y)
+			\end{align*}
+			We also have the condition $\frac{\partial}{\partial y} F(x, y) = N_1(x, y),$ so
+			\begin{align*}
+				\frac{\partial}{\partial y} \left[ x\cos^2 y + g(y) \right] &= -2x\sin y\cos y + g'(y) = N_1(x, y) \\
+				&= 2y\sin y\cos y - 2x\sin y \cos y - \cos^2 y \\
+				\implies g'(y) &= 2y\sin y\cos y - \cos^2 y \\
+				&= y\sin 2y - \frac{1}{2}(\cos 2y + 1) \\
+				\implies g(y) &= \int \left[ y\sin 2y - \frac{1}{2}(\cos 2y + 1) \right]\, dy \\
+				&= \int y\sin 2y\, dy - \int \frac{1}{2}\cos 2y\, dy - \int \frac{1}{2}\, dy \\
+				&= -\frac{y}{2}\cos 2y - \int \left( -\frac{1}{2}\cos 2y \right)\, dy - \int \frac{1}{2}\cos 2y\, dy - \frac{y}{2} \\
+				&= -y\left( \frac{\cos 2y + 1}{2} \right) = -y\cos^2 y
+			\end{align*}
+			Where we integrated $g(y)$ using integration by parts. Thus the general solution is given implicitly by
+			\begin{align*}
+				F(x, y) = \boxed{x\cos^2y - y\cos^2y = C} \\
+			\end{align*}
+			
+			Alternatively, this ODE is equivalent to
 			\begin{align*}
 				\frac{dx}{dy} &= \frac{2(x-y)\sin y + \cos y}{\cos y} = 2x\tan y - 2y\tan y + 1 \\
 				\implies \frac{dx}{dy} + (-2\tan y) x &= -2y\tan y + 1
@@ -96,7 +137,8 @@
 				&= \frac{y}{2}\left( 2\cos^2y-1+1 \right) + C = y\cos^2y + C \\
 				\implies x(y) &= \boxed{y + \frac{C}{\cos^2 y}}
 			\end{align*}
-			is the general solution to the ODE.
+			is the general solution to the ODE, which agrees with the first solution.
+
 		\end{soln}
 
 	\item (E\&P Problem 1.3.24) Use a computer algebra system to plot and print out a slope field for the given differential equation. Then sketch the solution curve corresponding to the given initial condition. If you wish (and know how), you can check your manually sketched solution curve by plotting it with the computer. Use this solution curve to estimate the desired value of the solution $y(x).$
@@ -111,8 +153,47 @@
 					k\frac{dx}{dt} = \frac{1}{t}
 				\end{align*}
 				where $k$ is a constant.
+				\begin{soln}
+					Suppose snow falls at a rate $c_1$ and the plow clears snow at a rate $c_2.$ Let $s(t)$ be the amount of snow on the ground at time $t$ (suppose we are talking about the height of the snow at the untouched parts of the road). Then since the plow clears snow at a constant amount of snow, we have the relation
+					\begin{align*}
+						c_2 &= s(t) \frac{d}{dt} x(t) \\
+						\implies \frac{dx}{dt} &= \frac{c_2}{s(t)}
+					\end{align*}
+					Since it snows at a constant rate, we have $s(t)=c_1t,$ and thus
+					\begin{align*}
+						\frac{dx}{dt} &= \frac{c_2}{c_1t} \implies \frac{c_1}{c_2}\frac{dx}{dt} = k\frac{dx}{dt} = \frac{1}{t}
+					\end{align*}
+					where $k$ is a constant.
+				\end{soln}
 
 			\item What time did it start snowing? (Answer: 6 A.M.)
+				\begin{soln}
+					The differential equation above is separable, so solving it, we have
+					\begin{align*}
+						k\, dx &= \frac{1}{t}\, dt \implies \int k\, dx = \int \frac{1}{t}\, dt \\
+						\implies kx &= \ln t + C
+					\end{align*}
+					Suppose it started snowing at $T$ o'clock. Then at 7 o'clock, $t=7-T,$ and the snow plow has not moved yet. At 8 o'clock, $t=8-T,$ and the snow plow has moved 2 miles. At 10 o'clock, $t=10-T,$ and the snow plow has moved a total of 4 miles. Thus, the initial conditions are
+					\begin{align*}
+						x(7-T) &= 0 \\
+						x(8-T) &= 2 \\
+						x(10-T) &= 4
+					\end{align*}
+					Using these initial conditions, we have the system of equations
+					\begin{align*}
+						0 &= \ln (7-T) + C \\
+						2k &= \ln (8-T) + C \\
+						4k &= \ln(10-T) + C
+					\end{align*}
+					Subtracting the 1st from the 2nd, and the 2nd from the 3rd, we have
+					\begin{align*}
+						2k &= \ln (8-T) - \ln (7-T) = \ln \frac{8-T}{7-T} \\
+						2k &= \ln (10-T) - \ln(8-T) = \ln \frac{10-T}{8-T} \\
+						\implies \frac{8-T}{7-T} &= \frac{10-T}{8-T} \implies (8-T)^2 = (7-T)(10-T) \\
+						\implies 64-16T+T^2 &= 70-17T+T^2 \implies T = 6
+					\end{align*}
+					Thus, it started snowing at \boxed{6 \text{ A.M.}}
+				\end{soln}
 				
 		\end{enumerate}
 
@@ -171,7 +252,7 @@
 					\end{align*}
 					Using a numerical equation solver, we find $\boxed{\alpha\approx0.3915}$ and the limiting population is
 					\begin{align*}
-						P_\infty &= P_0 e^{\beta_0/\alpha} = 10^6 \exp\left( \frac{0.3}{0.3915} \right) \approx \boxed{2.1518\times 10^5}
+						P_\infty &= P_0 e^{\beta_0/\alpha} = 10^6 \exp\left( \frac{0.3}{0.3915} \right) \approx \boxed{2.1518\times 10^6}
 					\end{align*}
 				\end{soln}
 				

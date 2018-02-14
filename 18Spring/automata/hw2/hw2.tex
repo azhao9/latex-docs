@@ -1,6 +1,8 @@
 \documentclass{article}
 \usepackage[sexy, hdr, fancy]{evan}
 \setlength{\droptitle}{-4em}
+\usepackage{tikz}
+\usetikzlibrary{automata, arrows}
 
 \lhead{Homework 2}
 \rhead{Automata and Computation Theory}
@@ -17,19 +19,142 @@
 		\begin{align*}
 			\left\{ w:w\text{ has length exactly 3 and its last symbol is different from its first symbol} \right\}
 		\end{align*}
+		\begin{soln}
+			Let $q_0$ be the start state.
+			\begin{center}
+				\begin{tikzpicture}[->, >=stealth', shorten >=1pt, auto, node distance=2cm, thick, main node/.style={circle, draw, font=\sffamily\Large\bfseries}]
 
+					\node[initial, state] (0) {$q_0$};
+					\node[state] (1) [above right of = 0] {$q_1$};
+					\node[state] (2) [right of = 1] {$q_2$};
+					\node[state, accepting] (3) [right of = 2] {$q_3$};
+					\node[state] (4) [below right of = 0] {$q_4$};
+					\node[state] (5) [right of = 4] {$q_5$};
+					\node[state, accepting] (6) [right of = 5] {$q_6$};
+					\node[state] (7) [above of = 3] {$q_7$};
+					\node[state] (8) [below of = 6] {$q_8$};
+
+					\path[every node/.style={font=\sffamily\small}]
+					(0) edge node {1} (1)
+					edge node {0} (4)
+					(1) edge node {0, 1} (2)
+					(2) edge node {0} (3)
+					edge node {1} (7)
+					(3) edge [right] node {0, 1} (7)
+					(4) edge node {0, 1} (5)
+					(5) edge node {1} (6)
+					edge node {0} (8)
+					(6) edge node {0, 1} (8)
+					(7) edge [loop right] node {0, 1} (7)
+					(8) edge [loop right] node {0, 1} (8);
+				\end{tikzpicture}
+			\end{center}
+		\end{soln}
+
+		\newpage
 	\item Give a DFA (both a state diagram and a formal description) recognizing the following language. The alphabet is $\left\{ 0, 1 \right\}.$
 		\begin{align*}
 			\left\{ w:w\text{ has odd length or contains an even number of 0s} \right\}
 		\end{align*}
+		\begin{soln}
+			Let $q_0$ be the start state. Then let
+			\begin{align*}
+				q_1 &:= \text{ odd length, even number of 0s} \\
+				q_2 &:= \text{ odd length, odd number of 0s} \\
+				q_3 &:= \text{ even length, even number of 0s} \\
+				q_4 &:= \text{ even length, odd number of 0s}
+			\end{align*}
+			Thus, states $q_1, q_2, q_3$ are accepting states. Then $M=(Q, \Sigma, \delta, q_0, F)$ where
+			\begin{align*}
+				Q &= \left\{ q_0, q_1, q_2, q_3, q_4 \right\} \\
+				F &= \left\{ q_1, q_2, q_3 \right\}
+			\end{align*}
+			and the transition function is described as
+			\begin{center}
+				\begin{tabular}{c|cc}
+					$\delta$ & 0 & 1 \\
+					\hline
+					$q_0$ & $q_2$ & $q_1$ \\
+					$q_1$ & $q_4$ & $q_3$ \\
+					$q_2$ & $q_3$ & $q_4$ \\
+					$q_3$ & $q_2$ & $q_1$ \\
+					$q_4$ & $q_1$ & $q_2$
+				\end{tabular}
+			\end{center}
+			Thus, the state diagram is given by
 
+			\begin{center}
+				\begin{tikzpicture}[->, >=stealth', shorten >=1pt, auto, node distance=3cm, thick, main node/.style={circle, draw, font=\sffamily\Large\bfseries}]
+
+					\node[initial, state] (0) {$q_0$};
+					\node[state, accepting] (1) [above right of = 0] {$q_1$};
+					\node[state, accepting] (2) [below right of = 0] {$q_2$};
+					\node[state, accepting] (3) [right of = 1] {$q_3$};
+					\node[state] (4) [right of = 2] {$q_4$};
+
+					\path[every node/.style={font=\sffamily\small}]
+					(0) edge node {1} (1)
+					edge node {0} (2)
+					(1) edge [bend left] node  {1} (3)
+					edge [bend left] node {0} (4)
+					(2) edge [bend left] node {1} (4)
+					edge [bend left] node {0} (3)
+					(3) edge node {1} (1)
+					edge node [left] {0} (2)
+					(4) edge node {1} (2)
+					edge node [right] {0} (1);
+				\end{tikzpicture}
+			\end{center}
+		\end{soln}
+
+		\newpage
 	\item Show that the following language is regular, where the alphabet is $\left\{ 0, 1 \right\}.$
 		\begin{align*}
 			\left\{ w:w\text{ contains an equal number of occurrences of the substrings 01 and 10} \right\}
 		\end{align*}
+		\begin{soln}
+			Let $q_0$ be the start state. The DFA represented by the following state diagram accepts this language, so it is regular, as desired.
+			\begin{center}
+				\begin{tikzpicture}[->, >=stealth', shorten >=1pt, auto, node distance=3cm, thick, main node/.style={circle, draw, font=\sffamily\Large\bfseries}]
 
+					\node[initial, state, accepting] (0) {$q_0$};
+					\node[state, accepting] (1) [above right of = 0] {$q_1$};
+					\node[state, accepting] (2) [below right of = 0] {$q_2$};
+					\node[state] (3) [right of = 1] {$q_3$};
+					\node[state] (4) [right of = 2] {$q_4$};
+
+					\path[every node/.style={font=\sffamily\small}]
+					(0) edge node {1} (1) 
+					edge node {0} (2)
+					(1) edge [loop above] node {0} (1)
+					edge [bend left] node {1} (3)
+					(2) edge [loop below] node {1} (2)
+					edge [bend right] node  {0} (4)
+					(3) edge [loop above] node {1} (3)
+					edge [bend left] node {0} (1)
+					(4) edge [loop below] node {0} (4)
+					edge [bend right] node {1} (2);
+				\end{tikzpicture}
+			\end{center}
+		\end{soln}
+
+		\newpage
 	\item For any string $w=w_1w_2\cdots w_n,$ the reverse of $w,$ written as $w^{\mathcal R},$ is the string $w$ in reverse order $w_n\cdots w_2 w_1.$ For any language $A,$ let $A^{\mathcal R}=\left\{ w^{\mathcal R}:w\in A \right\}.$ Show that if $A$ is regular, so is $A^{\mathcal R}.$
-		
+		\begin{proof}
+			Since $A$ is regular, it is accepted by some DFA $M=(Q, \Sigma, \delta, q_0, F).$ Construct the following NFA $N=(Q', \Sigma', \delta', q_0', F')$ where
+			\begin{align*}
+				Q' &= Q \cup \left\{ q \right\}\\
+				\Sigma' &= \Sigma \\
+				\delta'(q_i, w_j) &= \left\{ q:\delta(q, w_j)=q_i \right\} , \forall q_i\in Q \\
+				\delta'(q, \varepsilon) &= F \\
+				q_0' &= q \\
+				F' &= q_0
+			\end{align*}
+			In this NFA $N,$ we have reversed the direction of every transition in $M.$ We created a new dummy start state that transitions to each of the original accept states under $\varepsilon,$ and the old start state became the new accept state. 
+			
+			By construction, $N$ accepts $A^{\mathcal R}$ because if $M$ accepts $w_1w_2\cdots w_n\in A,$ then the series of transitions from $q_0$ ends up in $F.$ Then in $N,$ starting at $q,$ we can go to any of the original accept states under $\varepsilon,$ then all the transitions are done in reverse order, so we will end up at $q_0,$ which is the accept state in $N.$ Since every NFA is equivalent to some DFA, it follows that a DFA accepts $A^{\mathcal R},$ so it is regular, as desired.
+		\end{proof}
+
 \end{enumerate}
 
 \end{document}
