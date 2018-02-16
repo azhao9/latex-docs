@@ -16,30 +16,245 @@
 
 \begin{itemize}
 	\item[1.] If $f, g\in \mathcal R_\alpha[a, b]$ with $f\le g,$ show that $\int_a^b f\, d\alpha \le \int_a^b g\, d\alpha.$
+		\begin{proof}
+			We first show that $L(f, P)\le L(g, P)$ for any fixed partition $P.$ We have
+			\begin{align*}
+				L(f, P) &= \sum_{i=1}^{n} \inf\left\{ f(x):x_{i-1}\le x\le x_i \right\}\Delta\alpha_i \\
+				&\le \sum_{i=1}^{n} \inf\left\{ g(x):x_{i-1}\le x\le x_i \right\}\Delta\alpha_i = L(g, P)
+			\end{align*}
+			as desired. Now, fix partitions $P$ and $Q.$ We have
+			\begin{align*}
+				L(f, P) \le L(f, P\cup Q) \le U(g, P\cup Q) \le U(g, Q)
+			\end{align*}
+			Since $P$ and $Q$ were arbitrary, and since $f, g\in \mathcal R_\alpha[a, b],$ we have
+			\begin{align*}
+				\int_a^b f\, d\alpha = \underline{\int_a^b} f\, d\alpha = \sup_P L(f, P) \le \inf_Q U(g, Q) = \overline{\int_a^b} g\, d\alpha = \int_a^b g\, d\alpha
+			\end{align*}
+		\end{proof}
 
 	\item[3.] If $f\in\mathcal R_\alpha[a, b],$ show that $\abs{f}\in \mathcal R_\alpha[a, b]$ and that $\abs{\int_a^b f\, d\alpha}\le\int_a^b\abs{f}\, d\alpha.$ (Hint: $U(\abs{f}, P)-L(\abs{f}, P)\le U(f, P)-L(f, P).$ Why?)
+		\begin{proof}
+			Since $f\in\mathcal R_\alpha[a, b],$ given any $\varepsilon>0,$ we can find a partition $P$ such that $U(f, P)-L(f, P)<\varepsilon.$ Let $P$ be such a partition of $[a, b].$ We have
+			\begin{align*}
+				U(\abs{f}, P) &= \sum_{i=1}^{n} \sup\left\{ \abs{f(x)}:x_{i-1}\le x\le x_i \right\}\Delta\alpha_i \\
+				L(\abs{f}, P) &= \sum_{i=1}^{n} \inf\left\{ \abs{f(x)}:x_{i-1}\le x\le x_i \right\}\Delta\alpha_i
+			\end{align*}
+			Now, on any interval $[x_{i-1}, x_i],$ we have
+			\begin{align*}
+				\sup \abs{f(x)}-\inf \abs{f(x)} \le \sup f(x) - \inf f(x)
+			\end{align*}
+			which is clear by checking signs. Thus,
+			\begin{align*}
+				U(\abs{f}, P)-L(\abs{f}, P)\le U(f, P)-L(f, P)<\varepsilon
+			\end{align*}
+			so $\abs{f}$ is RS-integrable by Riemann's condition.
+		\end{proof}
 
 	\item[6.] Define increasing functions $\alpha, \beta,$ and $\gamma$ on $[-1, 1]$ by $\alpha=\chi_{(0, 1]}, \beta=\chi_{[0, 1]},$ and $\gamma=\frac{1}{2}(\alpha+\beta).$ Given $f\in B[-1, 1],$ show that:
 		\begin{enumerate}[(a)]
 			\item $f\in\mathcal R_\alpha[-1, 1]$ if and only if $f(0+)=f(0).$
+				\begin{proof}
+					$(\implies):$ If $f\in\mathcal R_\alpha[-1, 1],$ then given $\varepsilon>0,$ there exists a partition $P$ WLOG with $x_k=0$ such that
+					\begin{align*}
+						U(f, P)-L(f, P)<\varepsilon
+					\end{align*}
+					Now, $\Delta\alpha_i=1$ only when $i=k+1,$ so we havee
+					\begin{align*}
+						U(f, P) &= \sup_{[0, x_{k+1}]} f(x) \\
+						L(f, P) &= \inf_{[0, x_{k+1}]} f(x) \\
+						U(f, P)-L(f, P) <\varepsilon &\implies \abs{f(x)-f(0)}<\varepsilon, \forall x\in [0, x_{k+1}]
+					\end{align*}
+					Thus, given $\varepsilon,$ we have $\abs{f(x)-f(0)}<\varepsilon$ whenever $0<x<\frac{x_{k+1}}{2},$ so $f(0+)=f(0).$
+
+					$(\impliedby):$ If $f(0+)=f(0),$ then given $\varepsilon>0,$ there exists a $\delta>0$ such that $f(0)-\frac{\varepsilon}{2}<f(x)<f(0)+\frac{\varepsilon}{2}$ whenever $0<x<\delta.$ Let $P$ be a partition of $[-1, 1],$ with $0=x_k\in P$ and $\delta/2=x_{k+1}.$ Then $\Delta\alpha_i=1$ only when $i=k+1,$ so
+					\begin{align*}
+						U(f, P) &= \sup_{[0, \delta/2]} f(x) < f(0)+\frac{\varepsilon}{2} \\
+						L(f, P) &= \inf_{[0, \delta/2]} f(x) > f(0) - \frac{\varepsilon}{2} \\
+						\implies U(f, P) - L(f, P) &< \left( f(0)+\frac{\varepsilon}{2} \right) - \left( f(0)-\frac{\varepsilon}{2} \right) = \varepsilon
+					\end{align*}
+					so $f\in\mathcal R_\alpha[-1, 1].$
+				\end{proof}
 
 			\item $f\in\mathcal R_\beta[-1, 1]$ if and only if $f(0-)=f(0).$
+				\begin{proof}
+					$(\implies):$ If $f\in\mathcal R_\beta[-1, 1],$ then given $\varepsilon>0,$ there exists a partition $P$ WLOG with $x_k=0$ such that
+					\begin{align*}
+						U(f, P)-L(f, P)<\varepsilon
+					\end{align*}
+					Now, $\Delta\beta_i=1$ only when $i=k,$ so we havee
+					\begin{align*}
+						U(f, P) &= \sup_{[x_{k-1}, 0]} f(x) \\
+						L(f, P) &= \inf_{[x_{k-1}, 0]} f(x) \\
+						U(f, P)-L(f, P) <\varepsilon &\implies \abs{f(x)-f(0)}<\varepsilon, \forall x\in [x_{k-1}, 0]
+					\end{align*}
+					Thus, given $\varepsilon,$ we have $\abs{f(x)-f(0)}<\varepsilon$ whenever $\frac{x_{k-1}}{2}<x<0,$ so $f(0-)=f(0).$
+	
+					$(\impliedby):$ If $f(0-)=f(0),$ then given $\varepsilon>0,$ there exists a $\delta>0$ such that $f(0)-\frac{\varepsilon}{2}<f(x)<f(0)+\frac{\varepsilon}{2}$ whenever $-\delta<x<0.$ Let $P$ be a partition of $[-1, 1],$ with $0=x_k\in P$ and $-\delta/2=x_{k-1}.$ Then $\Delta\beta_i=1$ only when $i=k,$ so
+					\begin{align*}
+						U(f, P) &= \sup_{[-\delta/2, 0]} f(x) < f(0)+\frac{\varepsilon}{2} \\
+						L(f, P) &= \inf_{[-\delta/2, 0]} f(x) > f(0) - \frac{\varepsilon}{2} \\
+						\implies U(f, P) - L(f, P) &< \left( f(0)+\frac{\varepsilon}{2} \right) - \left( f(0)-\frac{\varepsilon}{2} \right) = \varepsilon
+					\end{align*}
+					so $f\in\mathcal R_\beta[-1, 1].$
+				\end{proof}
 
 			\item $f\in\mathcal R_\gamma[-1, 1]$ if and only if $f$ is continuous at 0.
+				\begin{proof}
+					$(\implies):$ If $f\in \mathcal R_\gamma[-1, 1],$ then given $\varepsilon>0,$ there exists a partition $P$ WLOG with $x_k=0$ such that 
+					\begin{align*}
+						U(f, P)-L(f, P) < \varepsilon
+					\end{align*}
+					Now, $\Delta\gamma_i=\frac{1}{2}$ when $i=k, k+1,$ so we have
+					\begin{align*}
+						U(f, P) &= \frac{1}{2} \left( \sup_{[x_{k-1}, 0]}f(x) + \sup_{[0, x_{k+1}]} f(x) \right) \le \sup_{[x_{k-1}, x_{k+1}]}f(x) \\
+						L(f, P) &= \frac{1}{2} \left(  \inf_{[x_{k-1}, 0]}f(x) + \inf_{[0, x_{k+1}]} f(x)\right) \ge \inf_{[x_{k-1}, x_{k+1}]} f(x) \\
+						U(f, P)-L(f, P) < \varepsilon &\implies \abs{f(x)-f(0)}<\varepsilon, \forall x\in [x_{k-1}, x_{k+1}]
+					\end{align*}
+					If we let $\delta=\frac{1}{2}\min\left\{ \abs{x_{k-1}}, \abs{x_{k+1}} \right\},$ we get the necessary condition for continuity of $f$ at 0.
+
+					$(\impliedby):$ If $f$ is continuous at 0, then given $\varepsilon>0,$ there exists a $\delta>0$ such that $\abs{f(x)-f(0)}<\frac{\varepsilon}{2}$ whenever $\abs{x}<\delta.$ Let $P$ be a partition of $[-1, 1],$ with $0=x_k\in P$ and $-\delta/2=x_{k-1}$ and $\delta/2=x_{k+1}.$ Then $\Delta\gamma_i=\frac{1}{2}$ when $i=k, k+1,$ so
+					\begin{align*}
+						U(f, P) &= \frac{1}{2}\left(\sup_{[-\delta/2, 0]} f(x) + \sup_{[0, \delta/2]} f(x) \right)\le \sup_{[-\delta/2, \delta/2]}f(x)< f(0) + \frac{\varepsilon}{2} \\
+						L(f, P) &= \frac{1}{2}\left(\inf_{[-\delta/2, 0]} f(x) + \inf_{[0, \delta/2]} f(x) \right)\ge \inf_{[-\delta/2, \delta/2]}f(x)> f(0) - \frac{\varepsilon}{2} \\ 
+						\implies U(f, P)-L(f, P) &< \left( f(0)+\frac{\varepsilon}{2} \right) - \left( f(0)-\frac{\varepsilon}{2} \right) = \varepsilon
+					\end{align*}
+					so $f\in\mathcal R_\gamma[-1, 1].$
+				\end{proof}
 
 			\item If $f\in\mathcal R_\gamma[-1, 1],$ then $\int_{-1}^1 f\, d\alpha=\int_{-1}^1 f\, d\beta = \int_{-1}^1 f\, d\gamma = f(0).$
+				\begin{proof}
+					If $f\in\mathcal R_\gamma[-1, 1],$ then $f$ is continuous at 0 by part (c), so it is right and left continuous at 0, so all three integrals exist by parts (a) and (b).
+
+					Let $P$ be a partition WLOG with $0=x_k.$ Then
+					\begin{align*}
+						L_\alpha (f, P) &= \inf_{[0, x_{k+1}]}f(x) \implies \int_{-1}^1 f\, d\alpha = \sup_{x_{k+1}} \left( \inf_{[0, x_{k+1}]}f(x) \right) \ge \inf_{[0, 0]}f(x) = f(0) \\
+						U_\alpha(f, P) &= \sup_{[0, x_{k+1}]}f(x) \implies \int_{-1}^1 f\, d\alpha = \inf_{x_{k+1}} \left( \sup_{[0, x_{k+1}]}f(x) \right) \le \sup_{[0, 0]}f(x) = f(0) \\
+						\implies \int_{-1}^1 f\, d\alpha &= f(0)
+					\end{align*}
+					Where we can take any sequence $x_{k+1}\to 0.$ Similarly, $\int_{-1}^1 f\, d\beta = f(0).$ For $\int_{-1}^1f\, d\gamma,$ we have
+					\begin{align*}
+						L_\gamma(f, P) &= \frac{1}{2}\left( \inf_{[x_{k-1}, 0]}f(x) + \inf_{[0, x_{k+1}]}f(x) \right) \ge \inf_{[x_{k-1}, x_{k+1}]}f(x) \\ 
+						\implies \int_{-1}^1 f\, d\gamma &= \sup_{x_{k-1}, x_{k+1}}\left( \inf_{[x_{k-1}, x_{k+1}]}f(x) \right) \ge \inf_{[0, 0]}f(x) = f(0)
+					\end{align*}
+					and similarly with $U_\gamma(f, P),$ so we get $\int_{-1}^1 f\, d\gamma=f(0).$
+				\end{proof}
 				
 		\end{enumerate}
 
 	\item[7.] Let $P=\left\{ x_0, \cdots, x_n \right\}$ be a (fixed) partition of $[a, b],$ and let $\alpha$ be an increasing step function on $[a, b]$ that is constant on each of the open intervals $(x_{i-1}, x_i)$ and has jumps of size $\alpha_i=\alpha(x_i+)-\alpha(x_i-)$ at each of the $x_i,$ where $\alpha_0=\alpha(a+)-\alpha(a)$ and $\alpha_n=\alpha(b)-\alpha(b-).$ If $f\in B[a, b]$ is continuous at each of the $x_i,$ show that $f\in\mathcal R_\alpha$ and $\int_a^b f\, d\alpha=\sum_{i=1}^{n} f(x_i)\alpha_i.$
+		\begin{proof}
+			We have
+			\begin{align*}
+				L(f, P) &= \sum_{i=1}^{n} \inf\left\{ f(x):x_{i-1}\le x\le x_i \right\}\alpha_i = \sum_{i=1}^{n} f(x_i)\alpha_i \\
+				U(f, P) &= \sum_{i=1}^{n} \sup\left\{ f(x):x_{i-1}\le x\le x_i \right\}\alpha_i = \sum_{i=1}^{n} f(x_i)\alpha_i
+			\end{align*}
+			since $f(x)$ is constant on each interval $[x_{i-1}, x_i].$ Thus, for any $\varepsilon>0,$ we have $U(f, P)-L(f, P)=0<\varepsilon$ so $f\in\mathcal R_\alpha[a, b]$ by Riemann's condition.
+
+			If $\sup_Q L(f, Q)> L(f, P)=U(f, P),$ then we would have a contradiction since $L(f, P)\le U(f, Q)$ for any partitions $P$ and $Q.$ Thus, $\sup_Q L(f, Q) = L(f, P)=\int_a^b f\, d\alpha=\sum_{i=1}^{n} f(x_i)\alpha_i.$
+		\end{proof}
 
 	\item[9.] If $f$ is monotone and $\alpha$ is continuous (and still increasing), show that $f\in \mathcal R_\alpha[a, b].$
+		\begin{proof}
+			Let $P$ be a partition of $[a, b].$ Then WLOG $f$ is monotone increasing, so we have
+			\begin{align*}
+				L(f, P) &= \sum_{i=1}^{n} \inf\left\{ f(x):x_{i-1}\le x\le x_i \right\}\Delta\alpha_i = \sum_{i=1}^{n} f(x_{i-1}) \left( \alpha(x_i)-\alpha(x_{i-1}) \right) \\
+				U(f, P) &= \sum_{i=1}^{n} \sup\left\{ f(x):x_{i-1}\le x\le x_i \right\}\Delta\alpha_i = \sum_{i=1}^{n} f(x_i)\left( \alpha(x_i)-\alpha(x_{i-1}) \right) \\
+				\implies U(f, P)-L(f, P) &= f(x_n)\left( \alpha(x_n)-\alpha(x_{n-1}) \right) = f(b)\left( \alpha(b)-\alpha(x_{n-1}) \right)
+			\end{align*}
+			Since $\alpha$ is continuous, given $\varepsilon>0,$ we can find $\delta$ such that
+			\begin{align*}
+				\abs{b-x_{n-1}}<\delta\implies \abs{\alpha(b)-\alpha(x_{n-1})} < \frac{\varepsilon}{f(b)}
+			\end{align*}
+			Thus, as long as the partition $P$ has $\abs{b-x_{n-1}}<\delta,$ we will have
+			\begin{align*}
+				U(f, P)-L(f, P) = f(b)\left( \alpha(b)-\alpha(x_{n-1}) \right) < f(b)\cdot \frac{\varepsilon}{f(b)} = \varepsilon
+			\end{align*}
+			so $f\in \mathcal R_\alpha[a, b]$ by Riemann's condition.
+		\end{proof}
 
 	\item[10.] If $f\in\mathcal R_\alpha[a, b],$ show that $f\in \mathcal R_\alpha[c, d]$ for every subinterval $[c, d]$ of $[a, b].$ Moreover, $\int_a^b f\, d\alpha = \int_a^c f\, d\alpha + \int_c^b f\, d\alpha$ for every $a<c<b.$ In fact, if any two of these integrals exist, then so does the third and the equation above still holds.
+		\begin{proof}
+			Fix $\varepsilon>0.$ Since $f\in \mathcal R_\alpha[a, b],$ there exists a partition $P$ of $[a, b]$ with $U(f, P)-L(f, P)<\varepsilon.$	Now, let $P'=P\cup\left\{ c, d \right\}$ and $Q=P'\cap[c, d],$ so $P'$ is a refinement of $P$ and $Q$ is a partition of $[c, d].$ Then we have
+			\begin{align*}
+				U(f, P')-L(f, P')\le U(f, P)-L(f, P) <\varepsilon
+			\end{align*}
+			since $P'\supset P.$ Then since $Q$ is a partition of $[c, d]$ contained in $P',$ we have
+			\begin{align*}
+				U(f, Q)-L(f, Q) \le U(f, P')+L(f, P')<\varepsilon\implies f\in \mathcal R_\alpha[c, d]
+			\end{align*}
+			Let $P, Q$ be partitions of $[a, c]$ and $[c, b],$ respectively. Then $P\cup Q$ is a partition of $[a, b].$ We have
+			\begin{align*}
+				L(f, P)+L(f, Q) = L(f, P\cup Q)\le \int_a^b f\, d\alpha
+			\end{align*}
+			Taking supremums over $P$ and $Q,$ we find that $\int_a^c f\, d\alpha + \int_c^b f\, d\alpha\le\int_a^b f\, d\alpha.$
+
+			If $R$ is a partition of $[a, b],$ then let $R'=R\cup\left\{ c \right\}$ be a refinement. Then if $P=R'\cap [a, c]$ and $Q=R'\cap [c, b],$ we have
+			\begin{align*}
+				L(f, R)\le L(f, R') = L(f, P) + L(f, Q)
+			\end{align*}
+			then taking supremums, we have $\int_a^b f\, d\alpha \le \int_a^c f\, d\alpha + \int_c^b f\, d\alpha,$ so combining with the inequality from above, we have equality.
+
+			Suppose $\int_a^c f\, d\alpha$ and $\int_c^b f\, d\alpha$ exist, so $f\in \mathcal R_\alpha[a, c]$ and $f\in \mathcal R_\alpha[c, b].$ Fix $\varepsilon>0.$ Then there exist partitions $P, Q$ of $[a, c]$ and $[c, b],$ respectively, such that
+			\begin{align*}
+				U(f, P)-L(f, P) &< \frac{\varepsilon}{2} \\
+				U(f, Q)-L(f, Q) &< \frac{\varepsilon}{2} \\
+				\implies \left[ U(f, P) + U(f, Q) \right] - \left[ L(f, P) + L(f, Q) \right] &= U(f, P\cup Q) - L(f, P\cup Q) \\
+				&< \varepsilon
+			\end{align*}
+			Thus, since $P\cup Q$ is a partition of $[a, b],$ it follows that $f\in\mathcal R_\alpha[a, b],$ so $\int_a^b f\, d\alpha$ exists.
+
+			If $\int_a^c f\, d\alpha$ and $\int_a^b f\, d\alpha$ exist, then for a fixed $\varepsilon>0,$ there exists a partition $P$ of $[a, b]$ and $Q$ partition of $[a, c]$ such that
+			\begin{align*}
+				U(f, P)-L(f, P) &< \varepsilon \\
+				U(f, Q)-L(f, Q) &< \varepsilon
+			\end{align*}
+			Then let $Q'=(P\cap [a, c])\cup Q$ be a partition of $[a, c]$ refining $Q.$ Then we have
+			\begin{align*}
+				U(f, Q')-L(f, Q')\le U(f, Q)-L(f, Q) < \varepsilon
+			\end{align*}
+			Now, take $R=P\setminus Q' \cup \left\{ c \right\}$ be a partition of $[c, b].$ We have
+			\begin{align*}
+				\left[ U(f, R) + U(f, Q') \right] - \left[ L(f, R) + L(f, Q') \right] &= U(f, P) - L(f, P) \\
+				\implies U(f, R) - L(f, R) &= \left[ U(f, P) - L(f, P) \right] - \left[ U(f, Q') - L(f, Q') \right] \\
+				&<\varepsilon
+			\end{align*}
+			so $f\in\mathcal R_\alpha[c, b],$ so the integral exists. A similar argument shows that $f\in\mathcal R_\alpha[a, c]$ when the other two integrals exist.
+		\end{proof}
 
 	\item[23.] Suppose that $\varphi$ is a strictly increasing continuous function from $[c, d]$ onto $[a, b].$ Given $f\in\mathcal R_\alpha[a, b],$ show that $g=f\circ \varphi\in \mathcal R_\beta[c, d],$ where $\beta=\alpha\circ\varphi.$ Moreover, $\int_c^d g\, d\beta=\int_a^b f\, d\alpha.$
+		\begin{proof}
+			Fix $\varepsilon>0.$ Since $f\in\mathcal R_\alpha[a, b],$ there exists a partition $P=\left\{ a=x_0<\cdots<x_n=b \right\}$ of $[a, b]$ such that $U_\alpha(f, P)-L_\alpha(f, P)<\varepsilon.$ Then since $\varphi$ is strictly increasing and continuous and onto $[a, b],$ it has a well defined inverse $\varphi\inv,$ and $Q=\left\{ c=\varphi\inv(x_0)<\cdots<\varphi\inv(x_n)=d \right\}$ is a partition of $[c, d].$
+
+			Now, we have
+			\begin{align*}
+				U_\beta(f\circ\varphi, Q) &= \sum_{i=1}^{n} \sup\left\{ f(\varphi(y)):\varphi\inv(x_{i-1}))\le y\le \varphi\inv(x_i) \right\}\left[ \alpha\circ\varphi\circ\varphi\inv(x_i) - \alpha\circ\varphi\circ\varphi\inv(x_{i-1}) \right] \\
+				&= \sum_{i=1}^{n} \sup\left\{ f(x): x_{i-1}\le x \le x_i\right\}\left( \alpha(x_i)-\alpha(x_{i-1}) \right) = U_\alpha(f, P) 
+			\end{align*}
+			and similarly, $L_\beta(f\circ\varphi, Q) = L_\alpha(f, P),$ so
+			\begin{align*}
+				U_\beta(f\circ\varphi, Q) - L_\beta(f\circ\varphi, Q) = U_\alpha(f, P) - L_\alpha(f, P) < \varepsilon
+			\end{align*}
+			so $g=f\circ\varphi\in\mathcal R_\beta[c, d].$ 
+
+			Suppose the integrals were not equal, and WLOG $\int_c^d g\, d\beta>\int_a^b f\, d\alpha.$ That is, 
+			\begin{align*}
+				\sup_P L_\alpha(f, P)&<\sup_Q L_\beta(f\circ \varphi, Q) \\
+				\implies \sup_P L_\alpha(f, P) &< L_\beta(f\circ\varphi, Q)
+			\end{align*}
+			for some partition $Q$ of $[c, d].$ But then applying $\varphi$ to every element of $Q,$ we will obtain a partition $Q'$ of $[a, b],$ with $L_\alpha(f, Q')=L_\beta(f\circ\varphi, Q).$ This is a contradiction, because then $L_\alpha (f, Q') > \sup_P L_\alpha(f, P),$ so we cannot have $\int_c^d g\, d\beta>\int_a^b f\, d\alpha.$ By a similar argument, we cannot have the reverse inequality, so the two integrals must be equal.
+		\end{proof}
 
 	\item[27.] Give an example of a sequence of Riemann integrable functions on $[0, 1]$ that converges pointwise to a non-integrable function.
+		\begin{soln}
+			Let $f_n=x^n$ on $[0, 1].$ Each of these is RS integrable. Then $f_n\to f$ where
+			\begin{align*}
+				f(x) = \begin{cases}
+					0 & \text{ if } x\in[0, 1) \\
+						1 & \text{ if } x= 1
+				\end{cases}
+			\end{align*}
+			which is not RS-integrable because the greatest value on the final interval including 1 is 1, while the smallest value is 0, and the greatest and smallest values everywhere else are all 0.
+		\end{soln}
 		
 \end{itemize}
 
