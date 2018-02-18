@@ -1,5 +1,9 @@
 \documentclass{article}
 \usepackage[sexy, hdr, fancy]{evan}
+\usepackage{listings}
+\usepackage{graphicx}
+\graphicspath{.}
+\lstset{language=Matlab}
 \setlength{\droptitle}{-4em}
 
 \lhead{Homework 1 Solutions}
@@ -43,7 +47,7 @@
 			\begin{align*}
 				\frac{\partial}{\partial y} \left[ x\sin y + y\sin x + g(y) \right] &= x\cos y + \sin x + g'(y) \\
 				&= \sin x + x\cos y \\ 
-				\implies g'(y) &= 0\implies g(y) = C_1 \\
+				\implies g(y) &= C_1 \\
 				\implies F(x, y) &= x\sin y + y\sin x + C_1
 			\end{align*}
 			so the general solution of the ODE is given implicitly by the equation
@@ -65,7 +69,7 @@
 			(\cos y)\, dx = \left[ 2(x-y)\sin y + \cos y \right]\, dy
 		\end{align*}
 		NOTE: $\cos 2\theta = 2\cos^2\theta-1.$
-		\begin{soln}	
+		\begin{soln}
 			Moving everything to one side, this differential equation is
 			\begin{align*}
 				\cos y\, dx + \left[ 2(y-x)\sin y - \cos y \right]\, dy &= 0
@@ -104,9 +108,9 @@
 			\end{align*}
 			Where we integrated $g(y)$ using integration by parts. Thus the general solution is given implicitly by
 			\begin{align*}
-				F(x, y) = \boxed{x\cos^2y - y\cos^2y = C} \\
+				F(x, y) = \boxed{(x-y)\cos^2y = C} \\
 			\end{align*}
-			
+
 			Alternatively, this ODE is equivalent to
 			\begin{align*}
 				\frac{dx}{dy} &= \frac{2(x-y)\sin y + \cos y}{\cos y} = 2x\tan y - 2y\tan y + 1 \\
@@ -145,6 +149,16 @@
 		\begin{align*}
 			y'=x+\frac{1}{2} y^2, \quad y(-2)=0; \quad y(2)=?
 		\end{align*}
+		\begin{soln}
+			Using the following block of code, we produce the slope field and solution curve below:
+			\begin{lstlisting}
+				f = @(t, y) t + 0.5 * y.^2;
+				dirfield(f, -2:0.5:2, -5:0.5:5);
+				hold on
+				ode45(f, [-2, 2], 0);
+			\end{lstlisting}
+			
+		\end{soln}<++>
 
 	\item (E\&P Problem 1.4.66) Early one morning it began to snow at a constant rate. At 7 A.M. a snowplow set off to clear a road. By 8 A.M. it had traveled 2 miles, but it took two more hours (until 10 A.M.) for the snowplow to go an additional 2 miles.
 		\begin{enumerate}[(a)]
@@ -194,7 +208,7 @@
 					\end{align*}
 					Thus, it started snowing at \boxed{6 \text{ A.M.}}
 				\end{soln}
-				
+
 		\end{enumerate}
 
 	\item (E\&P Application 1.4) As in Eq (7) of this section, the solution of a separable differential equation reduces to the evaluation of two indefinite integrals. It is tempting to use a symbolic algebra system for this purpose. We illustrate this approach using the logistic differential equation
@@ -208,7 +222,7 @@
 			\item Next use a computer algebra system to solve the differential equation symbolically; then use the symbolic solution to find the limit of $x(t)$ as $t\to+\infty.$ Was your graphically based inference correct?
 
 			\item Finally, state and solve a numerical problem using the symbolic solution. For instance, how long does it take $x$ to grow from a selected initial value $x_0$ to a given target value $x_1?$
-				
+
 		\end{enumerate}
 
 	\item Tumor Growth
@@ -255,7 +269,7 @@
 						P_\infty &= P_0 e^{\beta_0/\alpha} = 10^6 \exp\left( \frac{0.3}{0.3915} \right) \approx \boxed{2.1518\times 10^6}
 					\end{align*}
 				\end{soln}
-				
+
 		\end{enumerate}
 
 	\item (E\&P 2.2.10) First solve the equation $f(x)=0$ to find the critical points of the given autonomous differential equation $dx/dt=f(x).$ Then analyze the sign of $f(x)$ to determine whether each critical point is stable or unstable, and construct the corresponding phase diagram for the differential equation. Next, solve the differential equation explicitly for $x(t)$ in terms of $t.$ Finally, use either the exact solution or a computer-generated slope field to sketch typical solution curves for the given differential equation, and verify visually the stability of each critical point.
@@ -266,7 +280,24 @@
 			We first solve $f(x)=-x^2+7x-10 = 0$ to get the critical points of the autonomous differential equation. Factoring, $f(x)=-(x-2)(x-5)$ so the critical points are $x=2$ and $x=5.$
 
 			Since this is a downward opening parabola, $f(x)$ is non-negative on $[2, 5]$ and negative elsewhere. Thus, according to the phase diagram below, $x=2$ is unstable, and $x=5$ is stable.
+			\begin{center}
+				\begin{asy}
+					import graph;
 
+					path xaxis = (-10, 0) -- (18, 0);
+					Label xlabel = Label('$x$', position=EndPoint);
+					draw(xaxis, arrow=Arrows, L=xlabel);
+
+					dot( (-2, 0) );
+					dot( (10, 0) );
+					label('2', (-2, 0), S);
+					label('5', (10, 0), S);
+
+					draw( (-3, 0) -- (-8, 0), arrow=Arrow(TeXHead), blue+linewidth(1.5));
+					draw( (-1, 0) -- (9, 0), arrow=Arrow(TeXHead), blue+linewidth(1.5));
+					draw( (16, 0) -- (11, 0), arrow=Arrow(TeXHead), blue+linewidth(1.5));
+				\end{asy}
+			\end{center}
 			The ODE is separable, so bringing separating (and a little reformatting), 
 			\begin{align*}
 				\frac{-1}{x^2-7x+10} \, dx &= dt 
@@ -298,14 +329,67 @@
 				\begin{align*}
 					y'=2xy^2, \quad y(0)=1; \quad y(x)=\frac{1}{1-x^2}
 				\end{align*}
+				\begin{soln}
+					Here, $f(x, y)=2xy^2.$ Using $h=0.25,$ we have
+					\begin{align*}
+						y_1 &= y_0 + h\cdot f(x_0, y_0) = 1 + 0.25(2\cdot 0\cdot 1^2) = 1 \\
+						y_2 &= y_1 + h\cdot f(x_1, y_1) = 1 + 0.25(2\cdot 0.25\cdot 1^2) = 1.125
+					\end{align*}
+
+					Using $h=0.1,$ we have
+					\begin{align*}
+						y_1 &= y_0 + h\cdot f(x_0, y_0) = 1 + 0.1(2\cdot 0\cdot 1^2) = 1 \\
+						y_2 &= y_1 + h\cdot f(x_1, y_1) = 1+0.1(2\cdot 0.1\cdot 1^2)=1.02 \\
+						y_3 &= y_2 + h\cdot f(x_2, y_2) = 1.02 + 0.1(2\cdot 0.2\cdot 1.02^2) = 1.062 \\
+						y_4 &= y_3 + h\cdot f(x_3, y_3) = 1.062 + 0.1(2\cdot 0.3\cdot 1.062^2) = 1.129 \\
+						y_5 &= y_4 + h\cdot f(x_4, y_4) = 1.129 + 0.1(2\cdot 0.4\cdot 1.129^2) = 1.231
+					\end{align*}
+
+					Using the actual solution, we have $y(0.5)=\frac{1}{1-0.5^2} \approx 1.33.$
+				\end{soln}
 
 			\item (E\&P Problem 2.5.10) Apply the improved Euler method to approximate this solution on the interval $[0, 0.5]$ with step size $h=0.1$ Construct a table showing four-decimal-place values of the approximate solution and actual solution at the points $x=0.1, 0.2, 0.3, 0.4, 0.5.$
 				\begin{align*}
 					y'=2xy^2, \quad y(0)=1; \quad y(x)=\frac{1}{1-x^2}
 				\end{align*}
+				\begin{soln}
+					Here, $f(x, y)=2xy^2.$ Using $h=0.1,$ we have
+					\begin{align*}
+						k_{1, 1} &= f(x_0, y_0) = 2\cdot 0\cdot 1^2 = 0 \\
+						u_1 &= y_0 + h\cdot k_{1, 1} = 1 + 0.1\cdot 0 = 1 \\
+						k_{1, 2} &= f(x_1, u_1) = 2\cdot 0.1\cdot 1^2 = 0.2 \\
+						y_1 &= y_0 + h\cdot \frac{1}{2}\left( k_{1, 1}+k_{1, 2} \right) = 1 + 0.1\cdot \frac{1}{2}(0+0.2) = 1.01 \\
+						k_{2, 1} &= f(x_1, y_1) = 2\cdot 0.1\cdot 1.01^2 = 0.204 \\
+						u_2 &= y_1 + h\cdot k_{2, 1} = 1.01 + 0.1\cdot 0.204 = 1.0304 \\
+						k_{2, 2} &= f(x_2, u_2) = 2\cdot 0.2\cdot 1.0304^2 = 0.4247 \\
+						y_2 &= y_1 + h\cdot \frac{1}{2}\left( k_{2, 1} + k_{2, 2} \right) = 1.01 + 0.1\cdot \frac{1}{2}\left( 0.204+0.4247 \right) = 1.0414 \\
+						k_{3, 1} &= f(x_2, y_2) = 2\cdot 0.2\cdot 1.0414^2 = 0.4338 \\
+						u_3 &= y_2 + h\cdot k_{3, 1} = 1.0414+0.1\cdot 0.4338 = 1.0848 \\
+						k_{3, 2} &= f(x_3, u_2) = 2\cdot 0.3\cdot 1.0848^2 = 0.7061 \\
+						y_3 &= y_2 + h\cdot \frac{1}{2}\left( k_{3, 1} + k_{3, 2} \right) = 1.0414 + 0.1\cdot \frac{1}{2}\left( 0.4338 + 0.7061 \right) = 1.0984 \\
+						k_{4, 1} &= f(x_3, y_3) = 2\cdot 0.3\cdot 1.0984^2 = 0.7239 \\
+						u_4 &= y_3 + h\cdot k_{4, 1} = 1.0984 + 0.1\cdot 0.7239 = 1.1708 \\
+						k_{4, 2} &= f(x_4, u_4) = 2\cdot 0.4\cdot 1.1708^2 = 1.0966 \\
+						y_4 &= y_3 + h\cdot \frac{1}{2}\left( k_{4, 1} + k_{4, 2} \right) = 1.0984 + 0.1\cdot \frac{1}{2}\left( 0.7239 + 1.0966 \right) = 1.1894 \\
+						k_{5, 1} &= f(x_4, y_4) = 2\cdot 0.4\cdot 1.1894^2 = 1.1318 \\
+						u_5 &= y_4 + h\cdot k_{5, 1} = 1.1894 + 0.1\cdot 1.1318 = 1.3026 \\
+						k_{5, 2} &= f(x_5, u_5) = 2\cdot 0.5\cdot 1.3026^2 = 1.6967 \\
+						y_5 &= y_4 + h\cdot \frac{1}{2}\left( k_{5, 1} + k_{5, 2} \right) = 1.1894 + 0.1\cdot \frac{1}{2}\left( 1.1318 + 1.6967 \right) = 1.3309
+					\end{align*}
+					Thus, the table of approximate and exact values at the points $0.1, 0.2, 0.3, 0.4, 0.5$ are
+					\begin{center}
+						\begin{tabular}{c||c|c|c|c|c}
+							$x$ & 0.1 & 0.2 & 0.3 & 0.4 & 0.5 \\
+							\hline
+							$y_i$ & 1.01 & 1.0414 & 1.0984 & 1.1894 & 1.3309 \\
+							\hline 
+							$y(x)$ & 1.0101 & 1.0417 & 1.0989 & 1.1905 & 1.3333
+						\end{tabular}
+					\end{center}
+				\end{soln}
 
 		\end{enumerate}
-		
+
 \end{enumerate}
 
 \end{document}
