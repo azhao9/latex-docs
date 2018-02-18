@@ -64,6 +64,7 @@
 			\end{align*}
 		\end{soln}
 
+		\newpage
 	\item Find a suitable integrating factor, if possible, and use it to find a general solution of the following ODE.
 		\begin{align*}
 			(\cos y)\, dx = \left[ 2(x-y)\sin y + \cos y \right]\, dy
@@ -108,15 +109,15 @@
 			\end{align*}
 			Where we integrated $g(y)$ using integration by parts. Thus the general solution is given implicitly by
 			\begin{align*}
-				F(x, y) = \boxed{(x-y)\cos^2y = C} \\
+				F(x, y) = x\cos^2y -y\cos^2y = \boxed{(x-y)\cos^2y = C} \\
 			\end{align*}
 
-			Alternatively, this ODE is equivalent to
+			As an alternative solution, this ODE is equivalent to
 			\begin{align*}
 				\frac{dx}{dy} &= \frac{2(x-y)\sin y + \cos y}{\cos y} = 2x\tan y - 2y\tan y + 1 \\
 				\implies \frac{dx}{dy} + (-2\tan y) x &= -2y\tan y + 1
 			\end{align*}
-			This is a linear first-order equation with $P(y)=-2\tan y$ and $Q(y) = -2y\tan y + 1.$ Thus, the integrating factor is
+			This is a linear first-order differential equation in $x$ with $P(y)=-2\tan y$ and $Q(y) = -2y\tan y + 1.$ Thus, the integrating factor is
 			\begin{align*}
 				p(y) &= \exp\left( \int P(y)\, dy \right) = \exp\left( \int -2\tan y\, dy \right) \\ 
 				&= \exp\left( 2\ln\abs{\cos y} \right)= \cos^2 y
@@ -145,6 +146,7 @@
 
 		\end{soln}
 
+		\newpage
 	\item (E\&P Problem 1.3.24) Use a computer algebra system to plot and print out a slope field for the given differential equation. Then sketch the solution curve corresponding to the given initial condition. If you wish (and know how), you can check your manually sketched solution curve by plotting it with the computer. Use this solution curve to estimate the desired value of the solution $y(x).$
 		\begin{align*}
 			y'=x+\frac{1}{2} y^2, \quad y(-2)=0; \quad y(2)=?
@@ -152,14 +154,20 @@
 		\begin{soln}
 			Using the following block of code, we produce the slope field and solution curve below:
 			\begin{lstlisting}
-				f = @(t, y) t + 0.5 * y.^2;
-				dirfield(f, -2:0.5:2, -5:0.5:5);
-				hold on
-				ode45(f, [-2, 2], 0);
+			f = @(t, y) t + 0.5 * y.^2;
+			dirfield(f, -2:0.5:2, -5:0.5:5);
+			hold on
+			ode45(f, [-2, 2], 0);
 			\end{lstlisting}
-			
-		\end{soln}<++>
+			\begin{figure}[h]
+				\centering
+				\includegraphics[width=10cm]{3slopefield}
+				\caption{Slope field and solution curve of $y'=x+\frac{1}{2}y^2, y(-2)=0$}
+			\end{figure}
+			Examining the solution curve, we approximate $\boxed{y(2)\approx 1.5.}$
+		\end{soln}
 
+		\newpage
 	\item (E\&P Problem 1.4.66) Early one morning it began to snow at a constant rate. At 7 A.M. a snowplow set off to clear a road. By 8 A.M. it had traveled 2 miles, but it took two more hours (until 10 A.M.) for the snowplow to go an additional 2 miles.
 		\begin{enumerate}[(a)]
 			\item Let $t=0$ when it began to snow, and let $x$ denote the distance traveled by the snowplow at time $t.$ Assuming that the snowplow clears snow from the road at a constant rate (in cubic feet per hour, say), show that
@@ -177,7 +185,6 @@
 					\begin{align*}
 						\frac{dx}{dt} &= \frac{c_2}{c_1t} \implies \frac{c_1}{c_2}\frac{dx}{dt} = k\frac{dx}{dt} = \frac{1}{t}
 					\end{align*}
-					where $k$ is a constant.
 				\end{soln}
 
 			\item What time did it start snowing? (Answer: 6 A.M.)
@@ -203,14 +210,14 @@
 					\begin{align*}
 						2k &= \ln (8-T) - \ln (7-T) = \ln \frac{8-T}{7-T} \\
 						2k &= \ln (10-T) - \ln(8-T) = \ln \frac{10-T}{8-T} \\
-						\implies \frac{8-T}{7-T} &= \frac{10-T}{8-T} \implies (8-T)^2 = (7-T)(10-T) \\
-						\implies 64-16T+T^2 &= 70-17T+T^2 \implies T = 6
+						\implies \frac{8-T}{7-T} &= \frac{10-T}{8-T} \implies T=6
 					\end{align*}
 					Thus, it started snowing at \boxed{6 \text{ A.M.}}
 				\end{soln}
 
 		\end{enumerate}
 
+		\newpage
 	\item (E\&P Application 1.4) As in Eq (7) of this section, the solution of a separable differential equation reduces to the evaluation of two indefinite integrals. It is tempting to use a symbolic algebra system for this purpose. We illustrate this approach using the logistic differential equation
 		\begin{align*}
 			\frac{dx}{dt} = ax-bx^2 \tag{1}
@@ -218,13 +225,86 @@
 		For your own personal logistic equation, take $a=m/n$ and $b=1/n$ in Eq (1), with $m$ and $n$ being the largest two distinct digits (in either order) in your student ID number.
 		\begin{enumerate}[(a)]
 			\item First generate a slope field for your differential equation and include a sufficient number of solution curve that you can see what happens to the population as $t\to+\infty.$ State your inference plainly.
+				\begin{soln}
+					For my ID number, $m=7$ and $n=6,$ so $a=7/6$ and $n=1/6.$ Thus, $\frac{dx}{dt} = \frac{7}{6}x - \frac{1}{6}x^2.$ Using the following block of MATLAB code, we generate the slope field and a couple solution curves:
+					\begin{lstlisting}
+					f = @(t, x) 7*x/6 - x.^2/6;
+					ode45(f, [0, 10], -0.5);
+					ode45(f, [3, 10], -0.5);
+					ode45(f, [6, 10], -0.5);
+					ode45(f, [1, 10], 0.5);
+					ode45(f, [4, 10], 0.5);
+					ode45(f, [7, 10], 0.5);
+					ode45(f, [2, 10], 8.5);
+					ode45(f, [5, 10], 8.5);
+					ode45(f, [8, 10], 8.5);
+					ode45(f, [0, 10], 0);
+					ode45(f, [0, 10], 7);
+					\end{lstlisting}
+					\begin{figure}[ht]
+						\centering
+						\includegraphics[width=10cm]{5aslopefield}
+						\caption{Slope field and solution curves of $x'=\frac{7}{6}x-\frac{1}{6}x^2$}
+					\end{figure}
+					From the slope field, 0 and 7 are unstable and stable equilibrium points, respectively. As $t\to\infty,$ 
+					\begin{align*}
+						x(t) \to \begin{cases}
+							7 & \text{ if } x_0 > 0 \\
+							0 & \text{ if } x_0 = 0 \\
+							-\infty & \text{ if } x_0 < 0
+						\end{cases}
+					\end{align*}
+				\end{soln}
 
-			\item Next use a computer algebra system to solve the differential equation symbolically; then use the symbolic solution to find the limit of $x(t)$ as $t\to+\infty.$ Was your graphically based inference correct?
+			\item Next use a computer algebra system to solve the differential equation symbolically; then use the symbolic solution to find the limit of $x(t)$ as $t\to+\infty.$ Was your graphically based inference correct? 
+				\begin{soln}
+					We could use a computer algebra system, or we could just solve this by hand since it's separable\ldots Clearly $\frac{7}{6}x-\frac{1}{6}x^2 =  \frac{1}{6}x(7-x),$ so $x=0$ and $x=7$ are critical points. Suppose $x(0)=x_0$ is the initial condition. Then
+					\begin{align*}
+						\frac{6}{7x-x^2}\, dx &= dt \\
+						\implies \int\frac{6}{x(7-x)}\, dx &= \int dt \\
+						\implies \int \frac{7}{6}\left( \frac{1}{x} + \frac{1}{7-x} \right)\, dx &= t + C \\
+						\implies \frac{6}{7} \left( \ln \abs{x}-\ln\abs{7-x} \right) &= t+C \\
+						\implies \ln \frac{\abs{x}}{\abs{7-x}} &= \frac{7}{6}t + C \\
+						\implies \abs{\frac{x}{7-x}} &= Ce^{7t/6} \\
+						\implies \abs{\frac{x_0}{7-x_0}} &= C \\
+						\implies \abs{\frac{x}{7-x}} &= \abs{\frac{x_0}{7-x_0}}e^{7t/6}
+					\end{align*}
+					Now, we can drop the absolute value signs because for $x$ near $x_0,$ the two ratios have the same sign. If $x_0,$ then we trivially have $x(t)\equiv0.$ Otherwise, letting $K=\frac{7-x_0}{x_0},$ we can solve for $x(t)$ to get
+					\begin{align*}
+						x(t) = \frac{7}{1+Ke^{-7t/6}}
+					\end{align*}
+					Now, when $x_0>7,$ we have $-1<K<0,$ so $1+Ke^{-7t/6}<1\implies \frac{7}{1+Ke^{-7t/6}}>7.$ As $t\to\infty, e^{-7t/6}\to 0,$ so $x(t)\to 7$ from above.
+
+					When $0<x_0<7,$ we have $K>0,$ so $1+Ke^{-7t/6}>1\implies \frac{7}{1+Ke^{-7t/6}}<7.$ Thus, $x(t)\to 7$ from below. Clearly, when $x_0=7,$ the solution is $x(t)\equiv 7.$
+
+					When $x_0<0,$ we have $K<-1.$ Thus, as $t\to \frac{6}{7}\ln(-K),$ we have
+					\begin{align*}
+						1+Ke^{-7t/6}\to 1+Ke^{-\ln(-K)} = 1 + K\left( \frac{1}{-K} \right) = 0
+					\end{align*}
+					from below since $1+Ke^{-7t/6}<0.$ Thus, $\frac{7}{1+Ke^{-6t/7}}\to-\infty$ That is, the solution tends towards $-\infty$ as $t$ grows. These results all agree with the graphical inference.
+				\end{soln}
+				\newpage
 
 			\item Finally, state and solve a numerical problem using the symbolic solution. For instance, how long does it take $x$ to grow from a selected initial value $x_0$ to a given target value $x_1?$
+				\begin{soln}
+					As an example, for the sake of simplicity, suppose we start at $x(0)=1=x_0$ and let $x_1=2.$ From above, we have
+					\begin{align*}
+						K &= \frac{7-x_0}{x_0} = \frac{7-1}{1} = 6 \\
+						\implies x(t) &= \frac{7}{1+6e^{-7t/6}}
+					\end{align*}
+					We wish to solve for $t_1$ when $x(t_1)=2,$ so
+					\begin{align*}
+						x(t_1) &= \frac{7}{1+6e^{-7t_1/6}} = 2 \\
+						\implies \frac{7}{2} &= 1+6e^{-7t_1/6} \\
+						\implies e^{-7t_1/6} &= \frac{5}{12} \\
+						\implies t_1 &= \frac{6}{7}\ln\frac{12}{5}
+					\end{align*}
+					Thus, at $t_1=\frac{6}{7}\ln\frac{12}{5},$ the solution will have grown from 1 to 2.
+				\end{soln}
 
 		\end{enumerate}
 
+		\newpage
 	\item Tumor Growth
 		\begin{enumerate}[(a)]
 			\item (E\&P Problem 2.1.30) A tumor may be regarded as a population of multiplying cells. It is found empirically that the "birth rate" of the cells in a tumor decreases exponentially with time, so that $\beta(t)=\beta_0e^{-\alpha t}$ (where $\alpha$ and $\beta_0$ are positive constants), and hence
@@ -272,6 +352,7 @@
 
 		\end{enumerate}
 
+		\newpage
 	\item (E\&P 2.2.10) First solve the equation $f(x)=0$ to find the critical points of the given autonomous differential equation $dx/dt=f(x).$ Then analyze the sign of $f(x)$ to determine whether each critical point is stable or unstable, and construct the corresponding phase diagram for the differential equation. Next, solve the differential equation explicitly for $x(t)$ in terms of $t.$ Finally, use either the exact solution or a computer-generated slope field to sketch typical solution curves for the given differential equation, and verify visually the stability of each critical point.
 		\begin{align*}
 			\frac{dx}{dt} = 7x-x^2-10
@@ -321,8 +402,32 @@
 				\implies \frac{x-2}{x-5} &= Ce^{3t} \\
 				\implies x(t) &= \boxed{\frac{3}{Ce^{3t}-1} + 5}
 			\end{align*}
-		\end{soln}<++>
+			Using the following block of MATLAB code, we generate the slope field and a couple solution curves:
+			\begin{lstlisting}
+			f = @(t, x) 7*x - x.^2 - 10;
+			dirfield(f, 0:0.5:10, -1:0.5:9);
+			hold on;
+			ode45(f, [0, 10], 1.5);
+			ode45(f, [3, 10], 1.5);
+			ode45(f, [6, 10], 1.5);
+			ode45(f, [1, 10], 2.5);
+			ode45(f, [4, 10], 2.5);
+			ode45(f, [7, 10], 2.5);
+			ode45(f, [2, 10], 8.5);
+			ode45(f, [5, 10], 8.5);
+			ode45(f, [8, 10], 8.5);
+			ode45(f, [0, 10], 2);
+			ode45(f, [0, 10], 5);
+			\end{lstlisting}
+			\begin{figure}[ht]
+				\centering
+				\includegraphics[width=10cm]{7slopefield}
+				\caption{Slope field and solution curves of $x'=7x-x^2-10$}
+			\end{figure}
+			As shown by the slope field, 2 is an unstable equilibrium point, and 5 is a stable equilibrium point.
+		\end{soln}
 
+		\newpage
 	\item Euler's Methods for First-Order ODEs
 		\begin{enumerate}[(a)]
 			\item (E\&P Problem 2.4.10) Apply Euler's method twice to approximate this solution on the interval $\left[ 0, \frac{1}{2} \right],$ first with step size $h=0.25,$ then with step size $h=0.1.$ compare the three-decimal-place values of the two approximations at $x=\frac{1}{2}$ with the value $y\left( \frac{1}{2} \right)$ of the actual solution.
@@ -348,6 +453,7 @@
 					Using the actual solution, we have $y(0.5)=\frac{1}{1-0.5^2} \approx 1.33.$
 				\end{soln}
 
+				\newpage
 			\item (E\&P Problem 2.5.10) Apply the improved Euler method to approximate this solution on the interval $[0, 0.5]$ with step size $h=0.1$ Construct a table showing four-decimal-place values of the approximate solution and actual solution at the points $x=0.1, 0.2, 0.3, 0.4, 0.5.$
 				\begin{align*}
 					y'=2xy^2, \quad y(0)=1; \quad y(x)=\frac{1}{1-x^2}
