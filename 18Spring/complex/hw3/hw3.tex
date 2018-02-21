@@ -1,0 +1,140 @@
+\documentclass{article}
+\usepackage[sexy, hdr, fancy]{evan}
+\usepackage{graphicx}
+\graphicspath{.}
+\setlength{\droptitle}{-4em}
+
+\DeclareMathOperator{\re}{Re}
+\DeclareMathOperator{\im}{Im}
+
+\lhead{Homework 1}
+\rhead{Complex Analysis}
+\lfoot{}
+\cfoot{\thepage}
+
+\begin{document}
+\title{Homework 1}
+\maketitle
+\thispagestyle{fancy}
+
+\section*{Section 2.3}
+
+\begin{itemize}
+	\item[4.] Using Definition 4, show that each of the following functions is nowhere differentiable.
+		\begin{itemize}
+			\item[(a)] $\re z$
+				\begin{proof}
+					Suppose $\re z$ was differentiable at $z_0=a_0+b_0i.$ Then
+					\begin{align*}
+						\frac{d(\re z)}{dz} (z_0) &= \lim_{h\to 0}\frac{\re(z_0+h)-\re z}{h} = \lim_{a+bi\to 0}\frac{\re\left[ (a_0+b_0i)+(a+bi) \right] - \re(a_0+b_0i)}{a+bi} \\
+						&= \lim_{a+bi\to 0}\frac{(a_0+a)-a_0}{a+bi} = \lim_{a+bi\to 0} \frac{a}{a+bi}
+					\end{align*}
+					This limit does not exist because if we go along the real axis, the limit is 1, but if we go along the imaginary axis, the limit is 0. Thus, $\re z$ is not differentiable at any point.
+				\end{proof}
+
+			\item[(c)] $\abs{z}$
+				\begin{proof}
+					Suppose $\abs{z}$ was differentiable at $z_0=a_0+b_0i.$ Then
+					\begin{align*}
+						\frac{d(\abs z)}{dz} (z_0) &= \lim_{h\to 0}\frac{\abs{z_0+h}-\abs{z_0}}{z} = \lim_{a+bi\to 0}\frac{\abs{(a_0+b_0i)+(a+bi)} - \abs{a_0+b_0i}}{a+bi} \\
+						&= \lim_{a+bi\to 0} \frac{\sqrt{(a_0+a)^2+(b_0+b)^2}-\sqrt{a_0^2+b_0^2}}{a+bi}
+					\end{align*}
+					If we approach along the real axis, $b=0,$ so the limit is
+					\begin{align*}
+						\lim_{a\to 0} \frac{\sqrt{(a_0+a)^2+b_0^2}-\sqrt{a_0^2}}{a} \to\infty
+					\end{align*}
+					so the limit does not exist.
+				\end{proof}
+				
+		\end{itemize}
+
+	\item[8.] Suppose that $f$ is analytic at $z_0$ and $f'(z_0)\neq 0.$ Show that
+		\begin{align*}
+			\lim_{z\to z_0} \frac{\abs{f(z)-f(z_0)}}{\abs{z-z_0}} = \abs{f'(z_0)}
+		\end{align*}
+		and
+		\begin{align*}
+			\lim_{z\to z_0} \left\{ \arg\left[ f(z)-f(z_0) \right]-\arg(z-z_0) \right\} = \arg f'(z_0)
+		\end{align*}
+
+	\item[11.] Discuss the analyticity of each of the following functions.
+		\begin{itemize}
+			\item[(b)] $\frac{x}{\overline z+2}$
+
+			\item[(f)] $\left( x+\frac{x}{x^2+y^2} \right)+i\left( y-\frac{y}{x^2+y^2} \right)$
+
+			\item[(g)] $\abs{z}^2+2z$
+				
+		\end{itemize}
+		
+\end{itemize}
+
+\section*{Section 2.4}
+
+\begin{itemize}
+	\item[3.] Use Theorem 5 to show that $g(z)=3x^2+2x-3y^2-1+i(6xy+2y)$ is entire. Write this function in terms of $z.$
+		\begin{proof}
+			Here, $u=3x^2+2x-3y^2-1$ and $v=6xy+2y.$ We have
+			\begin{align*}
+				\frac{\partial u}{\partial x} &= 6x + 2 \\
+				\frac{\partial v}{\partial y} &= 6x + 2 \\
+				\frac{\partial u}{\partial y} &= -6y \\
+				\frac{\partial v}{\partial x} &= 6y
+			\end{align*}
+			so the Cauchy-Riemann equations are satisfied, and they are satisfied at all points in $\CC.$ The first partials are also all continuous, so $g$ is entire.
+		\end{proof}<++>
+
+	\item[5.] Show that the function $f(z)=e^{x^2-y^2}\left[ \cos(2xy)+i\sin(2xy) \right]$ is entire, and find its derivative.
+		\begin{proof}
+			Here, $u=e^{x^2-y^2}\cos(2xy)$ and $v=e^{x^2-y^2}\sin(2xy).$ We have
+			\begin{align*}
+				\frac{\partial u}{\partial x} &= 2xe^{x^2-y^2}\cos(2xy) -2ye^{x^2-y^2}\sin(2xy) \\
+				\frac{\partial v}{\partial y} &= -2ye^{x^2-y^2}\sin(2xy) + 2xe^{x^2-y^2}\cos(2xy) \\
+				\frac{\partial u}{\partial y} &= -2ye^{x^2-y^2}\cos(2xy) - 2xe^{x^2-y^2}\sin(2xy) \\
+				\frac{\partial v}{\partial x} &= 2xe^{x^2-y^2}\sin(2xy) + 2ye^{x^2-y^2}\cos(2xy) 
+			\end{align*}
+			so the Cauchy-Riemann equations are satisfied, the first partials are continuous, and thus $f$ is analytic at every point in $\CC,$ so $f$ is also entire. By De Moivre's theorem, the derivative is
+			\begin{align*}
+				f(z) &= e^{x^2-y^2}\left[ \cos(2xy)+i\sin(2xy) \right] = e^{x^2-y^2}e^{2xyi} \\
+				&= e^{x^2+2xyi - y^2} = e^{(x+yi)^2} = e^{z^2} \\
+				\implies f'(z) &= 2ze^{z^2}
+			\end{align*}
+		\end{proof}
+
+	\item[8.] Show that if $f$ is analytic in a domain $D$ and either $\re f(x)$ or $\im f(x)$ is constant in $D,$ then $f(z)$ must be constant in $D.$
+
+	\item[15.] The Jacobian of a mapping 
+		\begin{align*}
+			u=u(x, y), \quad v=v(x, y)
+		\end{align*}
+		from the $xy$-plane to the $uv$-plane is defined to be the determinant
+		\begin{align*}
+			J(x_0, y_0) := \det{\begin{bmatrix}
+				\frac{\partial u}{\partial x} & \frac{\partial u}{\partial y} \\
+				\frac{\partial v}{\partial x} & \frac{\partial v}{\partial y}
+		\end{bmatrix}}
+		\end{align*}
+		where the partial derivatives are all evaluated at $(x_0, y_0).$ Show that if $f=u+iv$ is analytic at $z_0=x_0+iy_0,$ then $J(x_0, y_0)=\abs{f'(z_0)}^2.$
+		
+\end{itemize}
+
+\section*{Section 2.5}
+
+\begin{itemize}
+	\item[8.] Suppose that the functions $u$ and $v$ are harmonic in a domain $D.$
+		\begin{enumerate}[(a)]
+			\item Is the sum $u+v$ necessarily harmonic in $D?$
+
+			\item Is the product $uv$ necessarily harmonic in $D?$
+
+			\item Is $\partial u/\partial x$ harmonic in $D?$
+				
+		\end{enumerate}
+
+	\item[12.] Prove that if $r$ and $\theta$ are polar coordinates, then the functions $r^n \cos n\theta$ and $r^n\sin n\theta,$ where $n$ is an integer, are harmonic as functions of $x$ and $y.$
+
+	\item[13.] Find a function harmonic inside the wedge bounded by the non-negative $x$-axis and the half-line $y=x\quad(x\ge 0)$ that goes to 0 on these sides but is not identically zero. 
+		
+\end{itemize}
+
+\end{document}

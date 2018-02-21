@@ -1,0 +1,68 @@
+\documentclass{article}
+\usepackage[sexy, hdr, fancy]{evan}
+\setlength{\droptitle}{-4em}
+
+\lhead{Homework 2}
+\rhead{Honors Analysis II}
+\lfoot{}
+\cfoot{\thepage}
+
+\begin{document}
+\title{Homework 2}
+\maketitle
+\thispagestyle{fancy}
+
+\section*{Chapter 14: The Riemann-Stieltjes Integral}
+
+\begin{itemize}
+	\item[29.] Show that $\abs{S_\alpha(f, P, T)}\le \left\lVert f \right\rVert_\infty V(\alpha, P).$
+		\begin{proof}
+			We have $V(\alpha, P)\ge \abs{\alpha(b)-\alpha(a)}\ge \alpha(b)-\alpha(a)$ for any partition $P.$ Thus,
+			\begin{align*}
+				S_\alpha(f, P, T) &= \sum_{i=1}^{n} f(t_i)\left[ \alpha(x_i)-\alpha(x_{i-1} \right] \le \sum_{i=1}^{n} \left\lVert f \right\rVert_\infty \left[ \alpha(x_i)-\alpha(x_{i-1})\right] \\
+				&= \left\lVert f \right\rVert_\infty \sum_{i=1}^{n} \left[ \alpha(x_i)-\alpha(x_{i-1}) \right] = \left\lVert f \right\rVert_\infty \left[ \alpha(b)-\alpha(a) \right] \\
+				&\le \left\lVert f \right\rVert_\infty V(\alpha, P)
+			\end{align*}
+		\end{proof}
+
+	\item[31.] Let $a<c<b,$ and suppose that $f\in\mathcal R_\alpha[a, c]\cap \mathcal R_\alpha[c, b].$ Show that $f\in\mathcal R_\alpha[a, b]$ and that $\int_a^bf\, d\alpha=\int_a^c f\, d\alpha + \int_c^b f\, d\alpha.$ In fact, if any two of these integrals exist, then so does the third and the equation above still holds.
+		\begin{proof}
+			Since $f\in \mathcal R_\alpha[a, c]$ and $f\in\mathcal R_\alpha[c, b],$ let $I_1$ and $I_2$ be $\int_a^c f\, d\alpha$ and $\int_c^b f\, d\alpha,$ respectively. Let $\varepsilon>0.$ There exists partitions $P^*$ and $Q^*$ of $[a, c]$ and $[c, b]$ such that
+			\begin{align*}
+				\abs{S_\alpha(f, P, T_1)-I_1} &< \frac{\varepsilon}{2} \\
+				\abs{S_\alpha(f, Q, T_2) - I_2} &< \frac{\varepsilon}{2}
+			\end{align*}
+			for all $P\supset P^*$ and $Q\supset Q^*$ and all choices $T_1$ and $T_2.$ Then let $R^*=P^*\cup Q^*$ be a partition of $[a, b].$ Then for any $R\supset R^*,$
+			\begin{align*}
+				\abs{S_\alpha(f, R, T_3) - (I_1+I_2)} &
+				\abs{\bigg[S_\alpha(f, P, T_1)+S_\alpha(f, P, T_2)\bigg] - (I_1+I_2)} &\le \abs{S_\alpha(f, P, T_1)-I_1} + \abs{S_\alpha(f, Q, T_2) - I_2}
+			\end{align*}<++>
+		\end{proof}<++>
+
+	\item[36.] If $\alpha\in BV[a, b]$ and $f\in \mathcal R_\alpha[a, b],$ show that $f\in \mathcal R_\alpha[c, d]$ for every subinterval $[c, d]\subset[a, b].$
+
+	\item[39.] Given $\alpha\in BV[a, b],$ let $p$ and $n$ be the positive and negative variations of $\alpha.$ Show that $\mathcal R_\alpha = \mathcal R_p \cap \mathcal R_n$ and that $\int_a^b f\, d\alpha = \int_a^b f\, dp - \int_a^b f\, dn$ for any $f\in\mathcal R_\alpha.$
+		\begin{proof}
+			Since $\alpha=p+n,$ it follows that $R_p\cap R_n\subset R_{p+n}=R_{\alpha}.$
+		\end{proof}<++>
+
+	\item[41.] Suppose that $(\alpha_n)$ is a sequence in $BV[a, b]$ and that $V_a^b(\alpha_n-\alpha)\to 0.$ Show that $\int_a^b f\, d\alpha_n\to\int_a^b f\, d\alpha$ for all $f\in C[a, b].$
+		\begin{proof}
+			Since $f\in C[a, b],$ it is integrable, $f\in \mathcal R_\alpha\cap \mathcal R_{\alpha_n},$ so
+			\begin{align*}
+				\abs{\int_a^b f\, d\alpha_n - \int_a^b f\, d\alpha} = \abs{\int_a^b f\, d(\alpha_n-\alpha)} 
+			\end{align*}
+			From the result of Problem 29, we have
+			\begin{align*}
+				\abs{S_{\alpha_n-\alpha}(f, P, T)} &\le \left\lVert f \right\rVert_\infty V(\alpha_n-\alpha, P)\le \left\lVert f \right\rVert_\infty V_a^b (\alpha_n-\alpha) \to 0
+			\end{align*}
+			Thus, $\abs{\int_a^b f\, d(\alpha_n-\alpha)}\to 0,$ so $\abs{\int_a^b f\, d\alpha_n-\int_a^b f\, d\alpha} \to 0.$
+		\end{proof}
+
+	\item[42.] Suppose that $\varphi$ is a strictly increasing continuous function from $[c, d]$ onto $[a, b].$ Given $\alpha\in BV[a, b]$ and $f\in \mathcal R_\alpha[a, b],$ show that $\beta=\alpha\circ\varphi\in BV[c, d]$ and that $g=f\circ \varphi\in \mathcal R_\beta[c, d].$ Moreover, $\int_c^d g\, d\beta=\int_a^b f\, d\alpha.$
+
+	\item[50.] If $f$ is continuous on $[a, b],$ and if $\int_a^b\abs{f(x)}\, dx=0,$ show that $f=0.$
+		
+\end{itemize}
+
+\end{document}
