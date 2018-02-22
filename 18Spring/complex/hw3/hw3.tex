@@ -56,6 +56,18 @@
 		\begin{align*}
 			\lim_{z\to z_0} \left\{ \arg\left[ f(z)-f(z_0) \right]-\arg(z-z_0) \right\} = \arg f'(z_0)
 		\end{align*}
+		\begin{proof}
+			If $f$ is analytic at $z_0,$ then using the substitution $z=z_0+h\implies h=z-z_0$ we have
+			\begin{align*}
+				\abs{f'(z_0)} &= \abs{\lim_{h\to 0}\frac{f(z_0+h)-f(z_0)}{h}} = \lim_{z\to z_0} \frac{\abs{f(z)-f(z_0)}}{\abs{z-z_0}}
+			\end{align*}
+			as desired. Since $\arg z_1-\arg z_2 = \arg \frac{z_1}{z_2},$ we have
+			\begin{align*}
+				\lim_{z\to z_0} \left\{ \arg\left[ f(z)-f(z_0) \right] - \arg(z-z_0) \right\} &= \lim_{z\to z_0} \arg\left( \frac{f(z)-f(z_0)}{z-z_0} \right) \\
+				&= \arg \left( \lim_{z\to z_0} \frac{f(z)-f(z_0)}{z-z_0} \right) = \arg f'(z_0)
+			\end{align*}
+			by the same substitution.
+		\end{proof}
 
 	\item[11.] Discuss the analyticity of each of the following functions.
 		\begin{itemize}
@@ -95,6 +107,7 @@
 
 \end{itemize}
 
+\newpage
 \section*{Section 2.4}
 
 \begin{itemize}
