@@ -7,13 +7,13 @@
 \DeclareMathOperator{\re}{Re}
 \DeclareMathOperator{\im}{Im}
 
-\lhead{Homework 1}
+\lhead{Homework 3}
 \rhead{Complex Analysis}
 \lfoot{}
 \cfoot{\thepage}
 
 \begin{document}
-\title{Homework 1}
+\title{Homework 3}
 \maketitle
 \thispagestyle{fancy}
 
@@ -36,7 +36,7 @@
 				\begin{proof}
 					Suppose $\abs{z}$ was differentiable at $z_0=a_0+b_0i.$ Then
 					\begin{align*}
-						\frac{d(\abs z)}{dz} (z_0) &= \lim_{h\to 0}\frac{\abs{z_0+h}-\abs{z_0}}{z} = \lim_{a+bi\to 0}\frac{\abs{(a_0+b_0i)+(a+bi)} - \abs{a_0+b_0i}}{a+bi} \\
+						\frac{d(\abs z)}{dz} (z_0) &= \lim_{h\to 0}\frac{\abs{z_0+h}-\abs{z_0}}{h} = \lim_{a+bi\to 0}\frac{\abs{(a_0+b_0i)+(a+bi)} - \abs{a_0+b_0i}}{a+bi} \\
 						&= \lim_{a+bi\to 0} \frac{\sqrt{(a_0+a)^2+(b_0+b)^2}-\sqrt{a_0^2+b_0^2}}{a+bi}
 					\end{align*}
 					If we approach along the real axis, $b=0,$ so the limit is
@@ -45,7 +45,7 @@
 					\end{align*}
 					so the limit does not exist.
 				\end{proof}
-				
+
 		\end{itemize}
 
 	\item[8.] Suppose that $f$ is analytic at $z_0$ and $f'(z_0)\neq 0.$ Show that
@@ -59,14 +59,40 @@
 
 	\item[11.] Discuss the analyticity of each of the following functions.
 		\begin{itemize}
-			\item[(b)] $\frac{x}{\overline z+2}$
+			\item[(b)] $\frac{z}{\overline z+2}$
+				\begin{soln}
+					We have the derivative at point $z$ given by
+					\begin{align*}
+						\lim_{h\to 0}\frac{f(z+h)-f(z)}{h} &= \lim_{h\to 0} \frac{\frac{z+h}{\overline{z+h}+2} - \frac{z}{\overline z + 2}}{h} = \lim_{h\to 0} \frac{(z+h)(\overline z + 2) - z(\overline z+\overline h + 2)}{h(\overline z+\overline h + 2)(\overline z + 2)} \\
+						&= \lim_{h\to 0} \frac{z\overline z + 2z +h\overline z + 2h - z\overline z - z\overline h - 2z}{h(\overline z + \overline h + 2)(\overline z + 2)} = \lim_{h\to 0} \frac{h\overline z + 2h - z\overline h}{h(\overline z + \overline h + 2)(\overline z + 2)}
+					\end{align*}
+					At $z=0,$ the limit is
+					\begin{align*}
+						\lim_{h\to 0} \frac{2h}{h(\overline h+2)(2)} = \lim_{h\to 0} \frac{1}{\overline h + 2} = \frac{1}{2}
+					\end{align*}
+					Otherwise if $z\neq 0,$ then if we approach along the real axis, $\overline h=h,$ so this limit is
+					\begin{align*}
+						\lim_{h\to 0} \frac{h(\overline z + 2 - z)}{h(\overline z + \overline h + 2)(\overline z + 2)} = \lim_{h\to 0} \frac{\overline z + 2 - z}{(\overline z + h + 2)(\overline z + 2)} = \frac{\overline z + 2 - z}{(\overline z+2)^2}
+					\end{align*}
+					but if we approach along the imaginary axis, $\overline h = -h,$ so this limit is
+					\begin{align*}
+						\lim_{h\to 0}\frac{h(\overline z + 2+ z)}{h(\overline z - h + 2)(\overline z + 2)} = \frac{\overline z + 2 + z}{(\overline z+2)^2}
+					\end{align*}
+					These two limits are not equal as long as $z\neq 0,$ so this function is not differentiable except at 0. Since 0 is not an open set in $\CC,$ this function is nowhere analytic.
+				\end{soln}
 
 			\item[(f)] $\left( x+\frac{x}{x^2+y^2} \right)+i\left( y-\frac{y}{x^2+y^2} \right)$
+				\begin{soln}
+					If $z=x+yi,$ then $ z+\frac{1}{z} = (x+yi) + \frac{x-yi}{x^2+y^2} = \left( x+\frac{x}{x^2+y^2} \right) + i\left( y-\frac{y}{x^2+y^2} \right).$ Since $z$ is analytic everywhere and $1/z$ is analytic everywhere except 0, this is analytic everywhere but 0.
+				\end{soln}
 
 			\item[(g)] $\abs{z}^2+2z$
-				
+				\begin{soln}
+					Since $\abs{z}$ is nowhere analytic, this is also nowhere analytic.
+				\end{soln}
+
 		\end{itemize}
-		
+
 \end{itemize}
 
 \section*{Section 2.4}
@@ -82,7 +108,15 @@
 				\frac{\partial v}{\partial x} &= 6y
 			\end{align*}
 			so the Cauchy-Riemann equations are satisfied, and they are satisfied at all points in $\CC.$ The first partials are also all continuous, so $g$ is entire.
-		\end{proof}<++>
+
+			Using the identities $x=\frac{z+\bar z}{2}$ and $y=\frac{z-\bar z}{2i},$ we have
+			\begin{align*}
+				g(z) &= \left[ 3\left( \frac{z+\bar z}{2} \right)^2 + 2\left( \frac{z+\bar z}{2} \right) - 3\left( \frac{z-\bar z}{2i} \right)^2 - 1 \right] + i\left[ 6\left( \frac{z+\bar z}{2} \right)\left( \frac{z-\bar z}{2i} \right) + 2\left( \frac{z-\bar z}{2i} \right) \right] \\
+				&= \left[ 3\left( \frac{z^2+2z\bar z + \bar z^2}{4} \right) + (z+\bar z) - 3\left( \frac{z^2-2z\bar z+\bar z^2}{-4} \right) - 1 \right] + \frac{3}{2}(z^2-\bar z^2) + (z-\bar z) \\
+				&= \frac{3}{2}z^2 + \frac{3}{2}\bar z^2 + z + \bar z - 1 + \frac{3}{2}z^2 - \frac{3}{2}\bar z^2 + z - \bar z \\
+				&= 3z^2+2z-1
+			\end{align*}
+		\end{proof}
 
 	\item[5.] Show that the function $f(z)=e^{x^2-y^2}\left[ \cos(2xy)+i\sin(2xy) \right]$ is entire, and find its derivative.
 		\begin{proof}
@@ -102,6 +136,13 @@
 		\end{proof}
 
 	\item[8.] Show that if $f$ is analytic in a domain $D$ and either $\re f(x)$ or $\im f(x)$ is constant in $D,$ then $f(z)$ must be constant in $D.$
+		\begin{proof}
+			Here, $u=\re f(x)$ and $v=\im f(x).$ If $f$ is analytic, and $u\equiv c_1$ is constant, then $u$ and $v$ must satisfy the Cauchy-Riemann equations:
+			\begin{align*}
+				\frac{\partial u}{\partial x} = 0 = \frac{\partial v}{\partial y} \implies v \equiv c_2
+			\end{align*}
+			Similarly, if $v\equiv c_2,$ we get $u\equiv c_1$ in order to satisfy the Cauchy-Riemann equations, and thus $f(x)=c_1+c_2i,$ which is a constant function.
+		\end{proof}
 
 	\item[15.] The Jacobian of a mapping 
 		\begin{align*}
@@ -112,10 +153,22 @@
 			J(x_0, y_0) := \det{\begin{bmatrix}
 				\frac{\partial u}{\partial x} & \frac{\partial u}{\partial y} \\
 				\frac{\partial v}{\partial x} & \frac{\partial v}{\partial y}
-		\end{bmatrix}}
+			\end{bmatrix}}
 		\end{align*}
 		where the partial derivatives are all evaluated at $(x_0, y_0).$ Show that if $f=u+iv$ is analytic at $z_0=x_0+iy_0,$ then $J(x_0, y_0)=\abs{f'(z_0)}^2.$
-		
+		\begin{proof}
+			If $f=u +iv$ is analytic at $(x_0, y_0)$ then by the Cauchy-Riemann equations, we must have $\frac{\partial u}{\partial x} = \frac{\partial v}{\partial y}$ and $\frac{\partial u}{\partial y} = -\frac{\partial v}{\partial x}$ where the partials are evaluated at $(x_0, y_0).$ The Jacobian is
+			\begin{align*}
+				\det \begin{bmatrix}
+					\frac{\partial u}{\partial x} & \frac{\partial u}{\partial y} \\
+					\frac{\partial v}{\partial x} & \frac{\partial v}{\partial y}
+				\end{bmatrix} &= \frac{\partial u}{\partial x} \cdot \frac{\partial v}{\partial y} - \frac{\partial u}{\partial y}\cdot \frac{\partial v}{\partial x} = \left( \frac{\partial u}{\partial x} \right)^2 + \left( \frac{\partial v}{\partial x} \right)^2 \\ 
+				&= \left( \sqrt{\left( \frac{\partial u}{\partial x} \right)^2 + \left( \frac{\partial v}{\partial x} \right)^2} \right)^2 = \abs{\frac{\partial u}{\partial x} + i\cdot\frac{\partial v}{\partial x}}^2 \\
+				&= \abs{f'(z_0)}^2
+			\end{align*}
+			as desired.
+		\end{proof}
+
 \end{itemize}
 
 \section*{Section 2.5}
@@ -124,17 +177,48 @@
 	\item[8.] Suppose that the functions $u$ and $v$ are harmonic in a domain $D.$
 		\begin{enumerate}[(a)]
 			\item Is the sum $u+v$ necessarily harmonic in $D?$
+				\begin{soln}
+					We have
+					\begin{align*}
+						\frac{\partial^2}{\partial x^2}(u+v) + \frac{\partial^2}{\partial y^2}(u+v) &= \frac{\partial^2u}{\partial x^2} + \frac{\partial^2v}{\partial x^2} + \frac{\partial^2u}{\partial y^2} + \frac{\partial^2 v}{\partial y^2} \\
+						&= \left( \frac{\partial^2u}{\partial x^2} + \frac{\partial^2u}{\partial y^2} \right) + \left( \frac{\partial^2 v}{\partial x^2} + \frac{\partial^2v}{\partial y^2} \right) = 0
+					\end{align*}
+					by the linearity of the differential operator, so $u+v$ is also harmonic in $D.$
+				\end{soln}
 
 			\item Is the product $uv$ necessarily harmonic in $D?$
+				\begin{soln}
+					This is not necessarily true. Take $u=y=xy.$ Then $\frac{\partial^2u}{\partial x^2}+\frac{\partial^2u}{\partial y^2} = 0$ so $u$ and $v$ are both harmonic, but
+					\begin{align*}
+						\frac{\partial^2(uv)}{\partial x^2} + \frac{\partial^2 (uv)}{\partial y^2} = \frac{\partial^2 (x^2y^2)}{\partial x^2} + \frac{\partial^2 (x^2y^2)}{\partial y^2} = 2y^2 + 2x^2\neq 0
+					\end{align*}
+				\end{soln}
 
 			\item Is $\partial u/\partial x$ harmonic in $D?$
-				
+				\begin{soln}
+					We have
+					\begin{align*}
+						\frac{\partial^2}{\partial x^2} \left( \frac{\partial u}{\partial x} \right) + \frac{\partial^2}{\partial y^2} \left( \frac{\partial u}{\partial x} \right) &= \frac{\partial}{\partial x} \left( \frac{\partial^2u}{\partial x^2} \right) + \frac{\partial}{\partial x} \left( \frac{\partial^2u}{\partial y^2} \right) = \frac{\partial}{\partial x} \left( \frac{\partial^2u}{\partial x^2} + \frac{\partial^2 u}{\partial y^2} \right) = \frac{\partial}{\partial x} [0] = 0
+					\end{align*}
+					because we can take partial derivatives in any order, so $\partial u/\partial x$ is also harmonic in $D.$
+				\end{soln}
+
 		\end{enumerate}
 
 	\item[12.] Prove that if $r$ and $\theta$ are polar coordinates, then the functions $r^n \cos n\theta$ and $r^n\sin n\theta,$ where $n$ is an integer, are harmonic as functions of $x$ and $y.$
+		\begin{proof}
+			If $x=r\cos \theta$ and $y=r\sin \theta,$ then we have 
+			\begin{align*}
+				r^n\cos n\theta + i \cdot r^n\sin n\theta = \left( re^{i\theta} \right)^n = z^n
+			\end{align*}
+			Thus, since $f(z)=z^n$ is analytic, it follows that $\re f(z)=r^n\cos n\theta$ and $\im f(z) = r^n\sin n\theta$ are both harmonic.
+		\end{proof}
 
 	\item[13.] Find a function harmonic inside the wedge bounded by the non-negative $x$-axis and the half-line $y=x\quad(x\ge 0)$ that goes to 0 on these sides but is not identically zero. 
-		
+		\begin{soln}
+			If $z=re^{i\theta},$ then $f(z)=\im z^4=\im (r^4e^{4\theta i})= r^4\sin 4\theta=0$ exactly on the half lines $\theta=0$ and $\theta=\pi/4,$ but it is not identically zero. 
+		\end{soln}
+
 \end{itemize}
 
 \end{document}
