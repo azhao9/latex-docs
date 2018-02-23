@@ -2,13 +2,13 @@
 \usepackage[sexy, hdr, fancy]{evan}
 \setlength{\droptitle}{-4em}
 
-\lhead{Homework 2}
+\lhead{Homework 3}
 \rhead{Honors Analysis II}
 \lfoot{}
 \cfoot{\thepage}
 
 \begin{document}
-\title{Homework 2}
+\title{Homework 3}
 \maketitle
 \thispagestyle{fancy}
 
@@ -32,19 +32,37 @@
 				\abs{S_\alpha(f, P, T_1)-I_1} &< \frac{\varepsilon}{2} \\
 				\abs{S_\alpha(f, Q, T_2) - I_2} &< \frac{\varepsilon}{2}
 			\end{align*}
-			for all $P\supset P^*$ and $Q\supset Q^*$ and all choices $T_1$ and $T_2.$ Then let $R^*=P^*\cup Q^*$ be a partition of $[a, b].$ Then for any $R\supset R^*,$
+			for all $P\supset P^*$ and $Q\supset Q^*$ and all choices $T_1$ and $T_2.$ Then let $R^*=P^*\cup Q^*$ be a partition of $[a, b].$ Then for any $R\supset R^*,$ we have $R=A\cup B$ for $A\supset P^*$ and $B\supset Q^*,$ so
 			\begin{align*}
-				\abs{S_\alpha(f, R, T_3) - (I_1+I_2)} &
-				\abs{\bigg[S_\alpha(f, P, T_1)+S_\alpha(f, P, T_2)\bigg] - (I_1+I_2)} &\le \abs{S_\alpha(f, P, T_1)-I_1} + \abs{S_\alpha(f, Q, T_2) - I_2}
-			\end{align*}<++>
-		\end{proof}<++>
+				\abs{S_\alpha(f, R, T_3)-(I_1+I_2)} &= \abs{\bigg[S_\alpha(f, A, T_1)+S_\alpha(f, B, T_2)\bigg] - (I_1+I_2)} \\
+				&\le \abs{S_\alpha(f, A, T_1)-I_1} + \abs{S_\alpha(f, B, T_2) - I_2}\\
+				&< \varepsilon
+			\end{align*}
+			so the integral is equal to $I_1+I_2,$ as desired.
+		\end{proof}
 
 	\item[36.] If $\alpha\in BV[a, b]$ and $f\in \mathcal R_\alpha[a, b],$ show that $f\in \mathcal R_\alpha[c, d]$ for every subinterval $[c, d]\subset[a, b].$
+		\begin{proof}
+			Let $\beta(x)=V_a^x\alpha,$ so $\beta$ and $\beta-\alpha$ are increasing functions. Then since $f\in \mathcal R_\alpha[a, b],$ it follows that
+			\begin{align*}
+				f\in \mathcal R_\beta[a, b]\cap\mathcal R_{\beta-\alpha}[a, b] \implies f\in \mathcal R_\beta[a, b] \text{ and } f\in\mathcal R_{\beta-\alpha}[a, b]
+			\end{align*}
+			From HW2, since $\beta$ and $\beta-\alpha$ are increasing, it follows that $f\in \mathcal R_\beta[c, d]$ and $f\in\mathcal R_{\beta-\alpha}[c, d],$ so $f\in \mathcal R_{\beta}[c, d]\cap\mathcal R_{\beta-\alpha}[c, d] = R_\alpha[c, d],$ as desired.
+		\end{proof}
 
 	\item[39.] Given $\alpha\in BV[a, b],$ let $p$ and $n$ be the positive and negative variations of $\alpha.$ Show that $\mathcal R_\alpha = \mathcal R_p \cap \mathcal R_n$ and that $\int_a^b f\, d\alpha = \int_a^b f\, dp - \int_a^b f\, dn$ for any $f\in\mathcal R_\alpha.$
 		\begin{proof}
-			Since $\alpha=p+n,$ it follows that $R_p\cap R_n\subset R_{p+n}=R_{\alpha}.$
-		\end{proof}<++>
+			Since $\alpha(x)=\alpha(a)+p(x)-n(x),$ we have
+			\begin{align*}
+				\mathcal R_{\alpha} = \mathcal R_{\alpha(a)+p-n} \supset \mathcal R_p\cap \mathcal R_n
+			\end{align*}
+			We wish to show the reverse inclusion. Let $f\in \mathcal R_\alpha$ and fix $\varepsilon>0.$ Let $I=\int_a^b f\, d\alpha.$ Then there exists a partition $P^*$ such that
+			\begin{align*}
+				\abs{S_\alpha(f, P, T)-I} &= \abs{\sum_{i=1}^{m} f(t_i)\left[ \alpha(x_i)-\alpha(_{i-1}) \right]- I} \\
+				&= \abs{\sum_{i=1}^{m} f(t_i)\bigg(\left[ \alpha(a)+p(x_i)-n(x_i) \right] - \left[ \alpha(a)+p(x_{i-1}) - n(x_{i-1}) \right]\bigg)-I} \\ 
+				&= \abs{\sum_{i=1}^{m} f(t_i)\left[ p(x_i)-p(x_{i-1}) \right] - \sum_{i=1}^{m} f(t_i)\left[ n(x_i)-n(x_{i-1}) \right] - I} < \varepsilon
+			\end{align*}
+		\end{proof}
 
 	\item[41.] Suppose that $(\alpha_n)$ is a sequence in $BV[a, b]$ and that $V_a^b(\alpha_n-\alpha)\to 0.$ Show that $\int_a^b f\, d\alpha_n\to\int_a^b f\, d\alpha$ for all $f\in C[a, b].$
 		\begin{proof}
@@ -60,8 +78,36 @@
 		\end{proof}
 
 	\item[42.] Suppose that $\varphi$ is a strictly increasing continuous function from $[c, d]$ onto $[a, b].$ Given $\alpha\in BV[a, b]$ and $f\in \mathcal R_\alpha[a, b],$ show that $\beta=\alpha\circ\varphi\in BV[c, d]$ and that $g=f\circ \varphi\in \mathcal R_\beta[c, d].$ Moreover, $\int_c^d g\, d\beta=\int_a^b f\, d\alpha.$
+		\begin{proof}
+			Let $P=\left\{ c=x_0<x_1<\cdots<x_n=d \right\}$ be a partition of $[c, d].$ Then since $\varphi$ is strictly increasing and onto $[a, b],$ it follows that $Q=\left\{ a=\varphi(x_0)<\varphi(x_1)<\cdots<\varphi(x_n)=b \right\}$ is a partition of $[a, b].$ Then
+			\begin{align*}
+				V(\beta, P) &= \sum_{i=1}^{n} \abs{\alpha\circ\varphi\circ(x_i)-\alpha\circ\varphi(x_{i-1})} = V(\alpha, Q)
+			\end{align*}
+			and since $\alpha\in BV[a, b],$ it follows that $\beta\in BV[c, d]$ since $P$ was arbitrary.
+
+			Let $I=\int_a^b f\, d\alpha$ and let $\varepsilon>0.$ Since $f\in \mathcal R_\alpha[a, b],$ there exists a partition $P^*=\left\{ a=x_0<\cdots<x_n=b \right\}$ such that
+			\begin{align*}
+				\abs{S_\alpha(f, P, T)-I}<\varepsilon
+			\end{align*}
+			for all $P\supset P^*$ and all choices of points $T.$ Then $Q^*=\left\{ c=\varphi\inv(x_0)<\cdots<\varphi\inv(x_n)=d \right\}$ is a partition of $[c, d].$ Let $Q=\left\{ c=y_0<\cdots<y_m=d \right\}\supset Q^*$ and let $T$ be an arbitrary selection of points under $Q.$ We have
+			\begin{align*}
+				\abs{S_\beta(g, Q, T_1)-I} &= \abs{\sum_{i=1}^{m} g(t_i) \left[ \beta(y_i)-\beta(y_{i-1}) \right]-I} = \abs{\sum_{i=1}^{m} \alpha(\varphi(t_i)) \left[ \alpha(\varphi(y_i))-\alpha(\varphi(y_{i-1})) \right]-I}
+			\end{align*}
+			Now, since $Q$ is a partition of $[c, d]$ containing $Q^*,$ it follows that $\varphi(Q)=\left\{ \varphi(y):y\in Q \right\}$ is a partition of $[a, b]$ containing $P^*,$ and $\varphi(T)=\left\{ \varphi(t):t\in T \right\}$ is a selection of points, so from above, we have
+			\begin{align*}
+				\abs{S_\alpha(f, \varphi(Q), \varphi(T)) - I} &= \abs{\sum_{i=1}^{m}\alpha(\varphi(t_i))\left[ \alpha(\varphi(y_i))\alpha(\varphi(y_{i-1})) \right] - I} < \varepsilon
+			\end{align*}
+			and thus $g\in\mathcal R_\beta[c, d]$ and $\int_c^d g\, d\beta = I=\int_a^b f\, d\alpha.$
+		\end{proof}
 
 	\item[50.] If $f$ is continuous on $[a, b],$ and if $\int_a^b\abs{f(x)}\, dx=0,$ show that $f=0.$
+		\begin{proof}
+			Suppose $f\not\equiv0,$ so there exists $c\in (a, b)$ such that $\abs{f(c)}>0.$ Then since $f$ is continuous, it follows that $\abs{f}$ is continuous by the $\varepsilon-\delta$ definition since $\abs{\abs{f(x)}-\abs{f(y)}}\le \abs{f(x)-f(y)}.$ Thus for a fixed $\varepsilon=\frac{f(c)}{2},$ there exists $\delta>0$ such that
+			\begin{align*}
+				\abs{x-c} < \delta \implies \abs{f(x)-f(c)}<\frac{f(c)}{2} \implies f(x)>\frac{f(c)}{2}
+			\end{align*}
+			Thus, $f(x)>f(c)/2$ on the interval $[c-\delta, c+\delta]\subset [a, b],$ so $\int_a^b f\, dx \ge 2\delta\cdot \frac{f(c)}{2} > 0,$ a contradiction.
+		\end{proof}
 		
 \end{itemize}
 
