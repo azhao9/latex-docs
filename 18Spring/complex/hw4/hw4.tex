@@ -1,0 +1,243 @@
+\documentclass{article}
+\usepackage[sexy, hdr, fancy]{evan}
+\usepackage{graphicx}
+\graphicspath{.}
+\setlength{\droptitle}{-4em}
+
+\DeclareMathOperator{\re}{Re}
+\DeclareMathOperator{\im}{Im}
+\DeclareMathOperator{\Log}{Log}
+
+\lhead{Homework 4}
+\rhead{Complex Analysis}
+\lfoot{}
+\cfoot{\thepage}
+
+\begin{document}
+\title{Homework 4}
+\maketitle
+\thispagestyle{fancy}
+
+\section*{Section 3.1}
+
+\begin{itemize}
+	\item[1.] A polynomial $p(z)$ of degree 4 has zeros at the points $-1, 3i,$ and $-3i$ of respective multiplicities 2, 1, and 1. If $p(1)=80,$ find $p(z).$
+		\begin{soln}
+			Since $p$ has degree 4, we have $p(z)=c(z+1)^2(z-3i)(z+3i)$ for some $c\in\CC.$ We are given $p(1)=80,$ which means
+			\begin{align*}
+				p(1) &= c(1+1)^2(1-3i)(1+3i) = c(2^2)(1^2+3^2) = 40c = 80 \\
+				\implies c &= 2 \\
+				\implies p(z) &= 2(z+1)^2(z-3i)(z+3i)
+			\end{align*}
+		\end{soln}
+
+	\item[4.] Show that if $p(z)=z^n+a_{n-1}z^{n-1}+\cdots+a_0$ is a polynomial of degree $n\ge 1$ and $\abs{a_0}>1,$ then $p(z)$ has at least one zero outside the unit circle. (Hint: Notice that the leading coefficient $a_n=1$ and consider the factored form of $p.$)
+		\begin{proof}
+			We have $p(z)=(z-r_1)(z-r_2)\cdots (z-r_n)$ since polynomials of degree $n$ have $n$ complex roots. Suppose all roots lied within the unit circle, that is $\abs{r_i}\le 1$ for all $i.$ Then
+			\begin{align*}
+				\abs{\prod_{i=1}^{n} r_i} = \prod_{i=1}^{n} \abs{r_i} \le 1
+			\end{align*}
+			but $a_0=\prod_{i=1}^{n} r_i$ and $\abs{a_0}>1,$ a contradiction, so there must exist a root outside the unit circle.
+		\end{proof}
+
+	\item[5.] Write the following polynomials in the Taylor form, centered at $z=2:$
+		\begin{enumerate}[(a)]
+			\item $z^5+3z+4$
+				\begin{soln}
+					We have
+					\begin{align*}
+						p(2) &= 2^5+3\cdot 2 + 4 = 42 \\
+						p'(z) &= 5z^4+3\implies p'(2) = 5\cdot 2^4 + 3 = 83 \\
+						p''(z) &= 20z^3 \implies p''(2) = 20\cdot 2^3 = 160 \\
+						p^{(3)}(z) &= 60z^2 \implies p^{(3)}(2) = 60\cdot 2^2 = 240 \\
+						p^{(4)}(z) &= 120z \implies p^{(4)}(2) = 120\cdot 2 = 240 \\
+						p^{(5)}(z) &= 120 \implies p^{(5)}(2) = 120 \\
+						\implies p(z) &= \frac{42}{0!} + \frac{83}{1!}(z-2) + \frac{160}{2!}(z-2)^2 + \frac{240}{3!}(z-2)^3 + \frac{240}{4!}(z-2)^4 + \frac{120}{5!}(z-2)^5 \\
+						&= 42 + 83(z-2) + 80(z-2)^2 + 40(z-3)^3 + 15(z-2)^4 + (z-2)^5
+					\end{align*}
+				\end{soln}
+
+			\item $z^{10}$
+				\begin{soln}
+					We have
+					\begin{align*}
+						z^{10} &= [(z-2)+2]^{10} = \binom{10}{0}2^{10} + \binom{10}{1} 2^{9}(z-2) + \binom{10}{2} 2^8(z-2)^2 + \binom{10}{3} 2^7(z-2)^3 \\
+						&+ \binom{10}{4}2^6(z-2)^4 + \binom{10}{5}2^5(z-2)^5 + \binom{10}{6}2^4(z-2)^6 + \binom{10}{7}2^3(z-2)^7 + \binom{10}{8} 2^2(z-2)^8 \\
+						&+ \binom{10}{9}2^1(z-2)^9 + \binom{10}{10}(z-2)^{10} \\
+						&= 1024 + 5120(z-2) + 11520(z-2)^2 + 15360(z-2)^3 + 13440(z-2)^4 + 8064(z-2)^5 \\
+						&+ 3360(z-2)^6 + 960(z-2)^7 + 180(z-2)^8 + 20(z-2)^9 + (z-2)^{10}
+					\end{align*}
+				\end{soln}
+
+			\item $(z-1)(z-2)^3$
+				\begin{soln}
+					We have
+					\begin{align*}
+						p(z) &= (z-1)(z-2)^3 = (z-2+1)(z-2)^3 = (z-2)^4 + (z-2)^3
+					\end{align*}
+				\end{soln}
+				
+		\end{enumerate}
+
+	\item[7.] Prove that if the polynomial $p(z)$ has a zero of order $m$ at $z_0,$ then $p'(z)$ has a zero of order $m-1$ at $z_0.$
+		\begin{proof}
+			If $p(z)$ has a zero of order $m$ at $z_0,$ then $p$ factorizes as $p(z)=(z-z_0)^m q(z)$ where $z_0$ is not a root of $q(z).$ Then
+			\begin{align*}
+				p'(z) &= m(z-z_0)^{m-1} q(z) + (z-z_0)^m q'(z) \\
+				&= (z-z_0)^{m-1} \left[ mq(z) + (z-z_0)q'(z) \right]
+			\end{align*}
+			Here, if $r(z) = mq(z) + (z-z_0)q'(z),$ we have $r(z_0) = mq(z_0) \neq 0,$ so $z_0$ is not a factor of $r(z).$ Thus, $z_0$ is a root of multiplicity $m-1$ of $p'(z).$
+		\end{proof}
+
+	\item[10.] Show that if $p_n(z)$ has degree $n,$ then for all $z$ with $\abs{z}$ sufficiently large, there are positive constants $c_1$ and $c_2$ such that $c_1\abs{z}^n<\abs{p_n(z)}<c_2\abs{z}^n.$
+		\begin{proof}
+			Let $p_n(z) = a_0 + a_1z + \cdots + a_nz^n.$ Then
+			\begin{align*}
+				\abs{p_n(z)} &= \abs{a_0 + a_1z+\cdots+a_n z^n} = \abs{z}^n \abs{\frac{a_0}{z^n} + \frac{a_1}{z^{n-1}} + \cdots + a_n} \le \abs{z}^n \left( \frac{\abs{a_0}}{\abs{z}^n} + \frac{\abs{a_1}}{\abs{z}^{n-1}} + \cdots + \abs{a_n} \right)
+			\end{align*}
+			by the triangle inequality. If we take $\abs{z}\ge K$ for some $K,$ we have
+			\begin{align*}
+				\abs{p_n(z)} \le \abs{z}^n \left( \frac{\abs{a_0}}{K^n} + \frac{\abs{a_1}}{K^{n-1}} + \cdots + \abs{a_n} \right) = c_2\abs{z}^n
+			\end{align*}
+			Similarly, by the triangle inequality, we have
+			\begin{align*}
+				\abs{p_n(z)} &=\abs{a_0 + a_1z + \cdots + a_nz^n} \ge \abs{a_nz^n} - \abs{a_0+a_1z+\cdots+a_{n-1}z^{n-1}} \\
+				&= \abs{z}^n \left( \abs{a_n} - \abs{\frac{a_0}{z^n} + \frac{a_1}{z^{n-1}} + \cdots + \frac{a_{n-1}}{z}} \right) \\
+				&\ge \abs{z}^n \left[ \abs{a_n} - \left( \frac{\abs{a_0}}{\abs{z}^n} + \frac{\abs{a_1}}{\abs{z}^{n-1}} + \cdots + \frac{\abs{a_{n-1}}}{\abs{z}} \right) \right] \\
+				&= c_1\abs{z}^n
+			\end{align*}
+			since we can pick $z$ with $\abs{z}$ suitably large such that the expression within the bracket is positive. 
+		\end{proof}
+
+	\item[13.] Use formula (21) to find the partial fraction decompositions of each of the following rational functions:
+		\begin{enumerate}[(a)]
+			\item $\frac{3+i}{z(z+1)(z+2)}$
+				\begin{soln}
+					Here, $r_1=0, r_2=-1, r_3=-2,$ and $d_1=d_2=d_3=1.$ Thus,
+					\begin{align*}
+						A_0^{(1)} &=  \lim_{z\to0} \frac{1}{0!} (z-0) \cdot \frac{3+i}{z(z+1)(z+2)} = \lim_{z\to 0} \frac{3+i}{(z+1)(z+2)} = \frac{3+i}{2} \\
+						A_1^{(1)} &= \lim_{z\to-1} \frac{1}{0!}(z-(-1))\cdot \frac{3+i}{z(z+1)(z+2)} = \lim_{z\to -1} \frac{3+i}{z(z+2)} = -(3+i) \\
+						A_{2}^{(1)} &= \lim_{z\to-2} \frac{1}{0!} (z-(-2))\cdot \frac{3+i}{z(z+1)(z+2)} = \lim_{z\to-2} \frac{3+i}{z(z+1)} = \frac{3+i}{2}
+					\end{align*}
+					so the partial fraction decomposition is given by
+					\begin{align*}
+						\frac{(3+i)/2}{z} - \frac{3+i}{z+1} + \frac{(3+i)/2}{z+2}
+					\end{align*}
+				\end{soln}
+
+			\item $\frac{2z+i}{z^3+z}$
+				\begin{soln}
+					This fraction is equal to $\frac{2z+i}{z(z+i)(z-i)},$ so $r_1=0, r_2=-i, r_3=i,$ and $d_1=d_2=d_3=1.$ Thus,
+					\begin{align*}
+						A_0^{(1)} &= \lim_{z\to 0} \frac{1}{0!} (z-0)\cdot \frac{2z+i}{z(z+i)(z-i)} = \lim_{z\to 0} \frac{2z+i}{(z+i)(z-i)} = i \\
+						A_1^{(1)} &= \lim_{z\to -i} \frac{1}{0!} (z-(-i))\cdot \frac{2z+i}{z(z+i)(z-i)} = \lim_{z\to-i} \frac{2z+i}{z(z-i)} = \frac{i}{2} \\
+						A_2^{(1)} &= \lim_{z\to i} \frac{1}{0!} (z-i)\cdot \frac{2z+i}{z(z+i)(z-i)} = \lim_{z\to i} \frac{2z+i}{z(z+i)} = -\frac{3i}{2}
+					\end{align*}
+					so the partial fraction decomposition is given by
+					\begin{align*}
+						\frac{i}{z} + \frac{i/2}{z+i} - \frac{3i/2}{z-i}
+					\end{align*}
+				\end{soln}
+
+			\item $\frac{z}{(z^2+z+1)^2}$
+				\begin{soln}
+					The roots of $z^2+z+1$ are $r_1=-\frac{1}{2} + \frac{\sqrt{3}}{2}i$ and $r_2=-\frac{1}{2} - \frac{\sqrt{3}}{2}i,$ and $d_1=d_2=2.$ Thus,
+					\begin{align*}
+						A_0^{(1)} &= \lim_{z\to r_1} \frac{1}{0!} (z-r_1)^2 \cdot \frac{z}{(z-r_1)^2(z-r_2)^2} = \lim_{z\to r_1} \frac{z}{(z-r_2)^2} = \frac{r_1}{(r_1-r_2)^2} = \frac{1}{6}-\frac{\sqrt{3}}{6} i \\
+						A_1^{(1)} &= \lim_{z\to r_1} \frac{1}{1!} \frac{d}{dz}\left[(z-r_1)^2\cdot \frac{z}{(z-r_1)^2(z-r_2)^2}\right] = \lim_{z\to r_1} \frac{d}{dz} \left[ \frac{z}{(z-r_2)^2} \right] \\
+						&= \lim_{z\to r_1} \frac{-z-r_2}{(z-r_2)^3} = \frac{-r_1-r_2}{(r_1-r_2)^3} = \frac{1}{-3\sqrt{3}i} = \frac{\sqrt{3}i}{9} \\
+						A_0^{(2)} &= \lim_{z\to r_2} \frac{1}{0!} (z-r_2)^2 \cdot \frac{z}{(z-r_1)^2(z-r_2)^2} = \lim_{z\to r_2} \frac{z}{(z-r_1)^2} = \frac{r_2}{(r_2-r_1)^2} = \frac{1}{6} + \frac{\sqrt{3}}{6}i \\
+						A_1^{(2)} &= \lim_{z\to r_2} \frac{1}{1!} \frac{d}{dz} \left[ (z-r_2)^2\cdot \frac{z}{(z-r_1)^2(z-r_2)^2} \right] = \lim_{z\to r_2} \frac{d}{dz} \left[ \frac{z}{(z-r_1)^2} \right] \\
+						&= \lim_{z\to r_2} \frac{-z-r_1}{(z-r_1)^3} = \frac{-r_2-r_1}{ (r_2-r_1)^3} = \frac{1}{3\sqrt{3}i} = -\frac{\sqrt{3}i}{9}
+					\end{align*}
+					so the partial fraction decomposition is given by
+					\begin{align*}
+						\left( \frac{1}{6}-\frac{\sqrt{3}}{2}i \right)\cdot \frac{1}{z-r_1} + \frac{\sqrt{3}i}{9}\cdot \frac{1}{(z-r_1)^2} + \left( \frac{1}{6}+\frac{\sqrt{3}}{6}i \right)\cdot \frac{1}{z-r_2} - \frac{\sqrt{3}i}{9}\cdot \frac{1}{(z-r_2)^2}
+					\end{align*}
+				\end{soln}
+
+			\item $\frac{5z^4+3z^2+1}{2z^2+3z+1}$
+				\begin{soln}
+					After long division, we have
+					\begin{align*}
+						\frac{5z^4+3z^2+1}{2z^2+3z+1} = \frac{5z^2}{2} -\frac{15z}{4} + \frac{47}{8} - \frac{\frac{111}{8}z + \frac{39}{8}}{(z+1)(2z+1)} = \frac{5z^2}{2} - \frac{15z}{4} + \frac{47}{8} - \frac{\frac{111}{16}z + \frac{39}{16}}{(z+1)\left( z+\frac{1}{2} \right)}
+					\end{align*}
+					From here, we have $r_1=-1, r_2=-1/2,$ and $d_1=d_2=1.$ Thus,
+					\begin{align*}
+						A_0^{(1)} &= \lim_{z\to-1} \frac{1}{0!} (z+1)\cdot \frac{\frac{111}{16}z + \frac{39}{16}}{(z+1)\left( z+\frac{1}{2} \right)} = \lim_{z\to -1} \frac{\frac{111}{16}z + \frac{39}{16}}{z+\frac{1}{2}} = 9 \\
+						A_1^{(1)} &= \lim_{z\to -1/2} \frac{1}{0!} \left( z+\frac{1}{2} \right)\cdot \frac{\frac{111}{16}z + \frac{39}{16}}{(z+1)\left( z+\frac{1}{2} \right)} = \lim_{z\to-1/2} \frac{\frac{111}{16}z + \frac{39}{16}}{z+1} = -\frac{33}{16}
+					\end{align*}
+					so the partial fraction decomposition is given by
+					\begin{align*}
+						\frac{5z^2}{2} - \frac{15z}{4} + \frac{47}{8} - \left( \frac{9}{z+1} - \frac{33/16}{z+\frac{1}{2}} \right) = \frac{5z^2}{2} - \frac{15z}{4} + \frac{47}{8} - \frac{9}{z+1} + \frac{33}{8(2z+1)}
+					\end{align*}
+				\end{soln}
+
+		\end{enumerate}
+		
+\end{itemize}
+
+\section*{Section 3.3}
+
+\begin{itemize}
+	\item[5.] Solve the following equations.
+		\begin{enumerate}[(a)]
+			\item $e^z=2i$
+				\begin{soln}
+					We have
+					\begin{align*}
+						2i &= e^{\ln 2}\left( 0 + i \right) = e^{\ln 2} e^{i\pi/2}e^{2i\pi k}, \quad k\in\ZZ \\
+						&= e^{\ln 2 + i\pi/2 + 2i\pi k}, \quad k\in\ZZ
+					\end{align*}
+					so the solution is the set $\left\{ \ln 2+\frac{i\pi}{2} + 2i\pi k:k\in\ZZ \right\}.$
+				\end{soln}
+
+			\item $\log(z^2-1)=\frac{i\pi}{2}$
+				\begin{soln}
+					We have
+					\begin{align*}
+						\log(z^2-1) &= \frac{i\pi}{2} \implies z^2-1 = e^{i\pi/2} = i \\
+						\implies z^2 &= 1 + i = \sqrt{2} e^{i\pi/4} \\
+						\implies z &= 2^{1/4} \exp\left( \frac{i\pi}{8} + \frac{2i\pi k}{2} \right) = 2^{1/4}\exp\left( \frac{i\pi}{8} + i\pi k \right), \quad k\in\ZZ
+					\end{align*}
+				\end{soln}
+
+			\item $e^{2z}+e^z+1=0$
+				\begin{soln}
+					Using the quadratic formula, we have
+					\begin{align*}
+						e^z &= -\frac{1}{2} + \frac{\sqrt{3}}{2} i = e^{2i\pi/3} e^{2i\pi k} = \exp\left( \frac{2i\pi}{3} + 2i\pi k \right), \quad k\in\ZZ \\
+						e^{z} &= -\frac{1}{2} - \frac{\sqrt{3}}{2} i = e^{-2i\pi/3}e^{2i\pi k} = \exp\left( -\frac{2i\pi}{3} + 2i\pi k \right), \quad k\in\ZZ \\
+						\implies z &\in \left\{ \pm \frac{2i\pi}{3} + 2i\pi k: k\in\ZZ \right\}
+					\end{align*}
+				\end{soln}
+				
+		\end{enumerate}
+	
+	\item[8.] Without directly verifying Laplace's equation, explain why the function $\log\abs{z}$ is harmonic in every domain that does not contain the origin.
+		\begin{answer*}
+			We have $\log z = \log\abs{z} + i\cdot\arg(z) + 2i\pi k.$ On the principal branch, $\log\abs{z}=\re(\log z),$ where $\log z$ is analytic on $\CC\setminus\left\{ z:\re z\le 0, \im z = 0 \right\}.$ We can also choose a different branch, where $\log z$ is analytic on $\CC\setminus\left\{ z:\re z \ge 0, \im z = 0 \right\}.$ The intersection of these two set exclusions is $\left\{ 0 \right\},$ so it follows that $\log z$ is analytic on $\CC\setminus\left\{ 0 \right\},$ so $\log\abs{z}=\re (\log z)$ is harmonic on $\CC\setminus\left\{ 0 \right\},$ or any domain not containing the origin.
+		\end{answer*}
+
+	\item[12.] Find a branch of $\log(z^2+1)$ that is analytic at $z=0$ and takes the value $2\pi i$ there.
+		\begin{soln}
+			This is the composition of the logarithm with $g(z)=z^2+1,$ which is analytic. Thus, the branch of the logarithm must be analytic at $g(0)=1.$ We can choose $\mathcal L_{\pi/4}(g(z))$ because then $\arg_{\pi/4}(z)\in\left[ \frac{\pi}{4}, \frac{\pi}{4}+2\pi \right],$ so
+			\begin{align*}
+				F(0) &= \mathcal L_{\pi/4}(0^2+1) = \log 1 + 2i\pi = 2i\pi
+			\end{align*}
+		\end{soln}
+		
+	\item[15.] Find a one-to-one analytic mapping of the upper half plane $\im z>0$ onto the infinite horizontal strip
+		\begin{align*}
+			\mathcal H:=\left\{ u+iv:-\infty<u<\infty, 0<v<1 \right\}
+		\end{align*}
+		Hint: Start by considering $w=\log z.$
+		\begin{soln}
+			We have $\log z = \Log\abs{z} + i\arg(z) + 2i\pi k.$ If we consider only the principal branch $\Log z,$ we have $\Log z = \Log \abs{z} + i\arg(z)$ where $\arg z\in[-\pi, \pi].$ When $z$ is in the upper half plane, then $\arg z\in[0, \pi].$ Thus, $f(z) = \frac{1}{\pi} \Log(z) = \frac{1}{\pi}\Log\abs{z} + \frac{i}{\pi}\arg(z)$ lies entirely in the horizontal strip, and is analytic because the domain excludes the negative real axis, which is already not in the upper half plane. It is injective because of how we have defined the logarithm.
+		\end{soln}
+
+	\item[19.] How would you construct a branch of $\log z$ that is analytic in the domain $D$ consisting of all points in the plane except those lying on the half parabola $\left\{ x+iy: x\ge 0, y=\sqrt{x} \right\}?$
+		
+\end{itemize}
+
+\end{document}
