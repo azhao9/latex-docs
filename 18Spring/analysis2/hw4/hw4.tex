@@ -1,0 +1,141 @@
+\documentclass{article}
+\usepackage[sexy, hdr, fancy]{evan}
+\setlength{\droptitle}{-4em}
+
+\lhead{Homework 4} 
+\rhead{Honors Analysis II}
+\lfoot{}
+\cfoot{\thepage}
+
+\begin{document}
+\title{Homework 4}
+\maketitle
+\thispagestyle{fancy}
+
+\section*{Chapter 16: Lebesgue Measure}
+
+\begin{itemize}
+	\item[2.] Prove statements (i) and (ii) of Proposition 16.2.
+		\begin{enumerate}[(i)]
+			\item $0\le m^*(E)\le \infty$
+				\begin{proof}
+					Let $\varepsilon>0.$ Then there exists a sequence of intervals $(I_n)$ covering $E$ such that
+					\begin{align*}
+						\sum_{n=1}^{\infty} \ell(I_n) < m^*(E) + \varepsilon
+					\end{align*}
+					Since $\ell(I_n)\ge 0,$ it follows that $m^*(E)+\varepsilon>0\implies m^*(E)\ge 0.$ Then if $E=\RR,$ any covering must include an unbounded interval, so $m^*(E) = \infty,$ so the upper bound can be achieved.
+				\end{proof}
+
+			\item If $E\subset F,$ then $m^*(E)\le m^*(F).$
+				\begin{proof}
+					Let $\varepsilon>0.$ Then there exists a sequence of intervals $(I_n)$ covering $F$ such that
+					\begin{align*}
+						\sum_{n=1}^{\infty} \ell(I_n) < m^*(F) + \varepsilon
+					\end{align*}
+					Then since $E\subset F,$ this sequence also covers $E,$ so
+					\begin{align*}
+						m^*(E) &\le \sum_{n=1}^{\infty} \ell(I_n) < m^*(F) + \varepsilon \\
+						\implies m^*(E) &\le m^*(F)
+					\end{align*}
+				\end{proof}
+
+		\end{enumerate}
+
+	\item[3.] Earlier attempts at defining the measure of a (bounded) set were similar to Lebesgue's, except that the infimum was typically taken over finite unions of intervals covering the set. Show that if $\QQ\cap[0, 1]$ is contained in a finite union of open intervals $\bigcup_{i=1}^n (a_i, b_i),$ then $\sum_{i=1}^{n} (b_i-a_i)\ge 1.$ Thus, $\QQ\cap[0, 1]$ would have "measure" 1 by this definition.
+		\begin{proof}
+			Suppose $\sum_{i=1}^{n} (b_i-a_i)<1.$ Then these intervals would not cover $[0, 1],$ so there must exist some open interval. Since rationals are dense in $\RR,$ there must exist a rational $q$ in this interval, and thus these intervals would not cover $\QQ\cap [0, 1].$ Contradiction, so $\sum_{i=1}^{n} (b_i-a_i)\ge 1.$
+		\end{proof}
+
+		\newpage
+	\item[5.] If we define $rE=\left\{ rx:x\in E \right\},$ what is $m^*(rE)$ in terms of $m^*(E)?$
+		\begin{soln}
+			We claim that $m^*(rE) = \abs{r}m^*(E).$ If $E$ has measure $\infty,$ then it is clear that $rE$ also has measure $\infty.$ Otherwise, they are both bounded. Let $\varepsilon>0.$ Then there exists a sequence of intervals $(a_n, b_n)$ covering $E$ such that
+			\begin{align*}
+				\sum_{n=1}^{\infty} (b_n-a_n)< m^*(E) + \frac{\varepsilon}{\abs{r}}
+			\end{align*}
+			Then if $r\ge 0,$ it follows that $(ra_n, rb_n)$ covers $rE,$ and likewise if $r<0,$ the intervals $(rb_n, ra_n)$ covers $rE.$ In either case, we have
+			\begin{align*}
+				m^*(rE) &\le \sum_{n=1}^{\infty} \abs{r}(b_n-a_n) < \abs{r}m^*(E) + \varepsilon \\
+				\implies m^*(rE) &\le \abs{r} m^*(E)
+			\end{align*}
+			By a similar argument, there exists a sequence of intervals $(c_k, d_k)$ covering $rE$ such that
+			\begin{align*}
+				\sum_{k=1}^{\infty} (d_k-c_k) < m^*(rE) + \varepsilon
+			\end{align*}
+			Then if $r\ge 0,$ the intervals $\left( \frac{c_k}{r}, \frac{d_k}{r} \right)$ covers $E$ and if $r<0,$ the intervals $\left( \frac{d_k}{r}, \frac{c_k}{r} \right)$ cover $E.$ Thus
+			\begin{align*}
+				m^*(E) &\le \sum_{k=1}^{\infty} \frac{1}{\abs{r}} (d_k-c_k) < \frac{1}{\abs{r}} m^*(rE) + \frac{1}{\abs{r}}\varepsilon \\
+				\implies \abs{r} m^*(E) &\le m^*(rE)
+			\end{align*}
+			so in fact $m^*(rE) = rm^*(E).$
+		\end{soln}
+
+	\item[8.] Given $\delta>0,$ show that $m^*(E)=\inf\sum_{n=1}^{\infty} \ell(I_n)$ where the infimum is taken over all coverings of $E$ by sequences of intervals $(I_n),$ where each $I_n$ has diameter less than $\delta.$
+		\begin{proof}
+			We trivially have $m^*(E)\le \inf\sum_{n=1}^{\infty} \ell(I_n).$ Let $\varepsilon>0.$ Then there exists a sequence of intervals $(J_k)$ covering $E$ such that
+			\begin{align*}
+				\sum_{k=1}^{\infty} \ell(J_k)<m^*(E)+\varepsilon
+			\end{align*}
+			Now, for each interval $J_k,$ we can write $J_k = \bigcup_{i=1}^\infty I_{k, i}$ where $I_{k, i}$ are pairwise disjoint and $\ell(I_{k, i})<\delta.$ Thus,
+			\begin{align*}
+				\inf\sum_{n=1}^{\infty} \ell(I_n) &\le \sum_{k=1}^{\infty} \sum_{i=1}^{\infty} \ell(I_{k, i}) = \sum_{k=1}^{\infty} \ell(J_k) < m^*(E) + \varepsilon \\
+				\implies \inf\sum_{n=1}^{\infty} \ell(I_n) &\le m^*(E)
+			\end{align*}
+			so we have $m^*(E)=\inf \sum_{n=1}^{\infty} \ell(I_n)$ as desired.
+		\end{proof}
+
+		\newpage
+	\item[13.] Show that $m^*(E\cup F)\le m^*(E) + m^*(F)$ for any sets $E, F.$
+		\begin{proof}
+			If $E$ or $F$ has measure $\infty,$ the inequality trivially holds. Otherwise, they both have bounded measure. Let $\varepsilon>0.$ Then there exist sequences of intervals $(I_n)$ and $(J_k)$ covering $E$ and $F,$ respectively, such that
+			\begin{align*}
+				\sum_{n=1}^{\infty} \ell(I_n) &< m^*(E) + \frac{\varepsilon}{2} \\
+				\sum_{k=1}^{\infty} \ell(J_k) &< m^*(F) + \frac{\varepsilon}{2}
+			\end{align*}
+			Since $E\cup F\subset \left( \bigcup_{n=1}^\infty I_n \right) \cup \left( \bigcup_{k=1}^\infty J_k \right),$ we have
+			\begin{align*}
+				m^*(E\cup F) &\le \sum_{n=1}^{\infty} \ell(I_n) + \sum_{k=1}^{\infty} \ell(J_k) < \left( m^*(E) + \frac{\varepsilon}{2} \right) + \left( m^*(F) + \frac{\varepsilon}{2} \right) = m^*(E) + m^*(F) + \varepsilon \\
+				\implies m^*(E\cup F) &\le m^*(E) + m^*(F)	
+			\end{align*}
+		\end{proof}
+
+	\item[15.] Prove that a subset of a set of outer measure zero is again a set of outer measure zero. Prove that a finite union of sets of outer measure zero has outer measure zero.
+		\begin{proof}
+			Let $F\subset E$ where $E$ has measure 0. Then by property (ii), we have $m^*(F)\le m^*(E)=0,$ but since measure is at least, 0, it follows that $m^*(F)=0.$
+
+			If $E_1$ and $E_2$ are sets of outer measure zero, then by the result of 13, we have
+			\begin{align*}
+				m^*(E_1\cup E_2) \le m^*(E_1) + m^*(E_2) = 0
+			\end{align*}
+			and since measure is at least 0, it follows that $m^*(E_1\cup E_2)=0.$ By induction, it follows that any finite union of measure zero sets has measure 0.
+		\end{proof}
+
+	\item[16.] If $m^*(E)=0,$ show that $m^*(E\cup A)=m^*(A)=m^*(A\setminus E)$ for any $A.$
+		\begin{proof}
+			By countable subadditivity, we have $m^*(E\cup A) \le m^*(E) + m^*(A) = m^*(A).$ Since $A\subset E\cup A,$ we also have $m^*(A)\le m^*(E\cup A),$ so it follows that $m^*(E\cup A) = m^*(A).$
+
+			Similarly, we have
+			\begin{align*}
+				m^*(A) &\le m^*(A\setminus E) + m^*(E) = m^*(A\setminus E) \\
+				A\setminus E \subset A &\implies m^*(A\setminus E) \le m^*(A) \\
+				\implies m^*(A) &= m^*(A\setminus E)
+			\end{align*}
+		\end{proof}
+
+	\item[21.] If $f:\RR\to\RR$ satisfies $\abs{f(x)-f(y)}\le K\abs{x-y}$ for all $x$ and $y,$ show that $m^*(f(E))\le Km^*(E)$ for any $E\subset \RR.$
+		\begin{proof}
+			If $E$ has measure $\infty,$ the inequality trivially holds. Otherwise, $m^*(E)<\infty.$ Let $\varepsilon>0.$ Then there exists a sequence of intervals $(a_n, b_n)$ such that $E\subset \bigcup_{n=1}^\infty (a_n, b_n).$ Then we have $\sum_{n=1}^{\infty} (b_n-a_n) < m^*(E) + \frac{\varepsilon}{K}.$ We also have that $f(E) \subset \bigcup_{n=1}^\infty f\left[ (a_n, b_n) \right],$ where
+			\begin{align*}
+				f[(a_n, b_n)] = (f(c_n), f(d_n)), \quad c_n, d_n\in (a_n, b_n)
+			\end{align*}
+			since Lipschitz functions are continuous. Then since $f[(a_n, b_n)]$ is a covering of $f(E),$ we have
+			\begin{align*}
+				m^*(f(E)) &\le \sum_{n=1}^{\infty}\ell\bigg(f[(a_n, b_n)]\bigg) = \sum_{n=1}^{\infty} (f(d_n)-f(c_n))\le \sum_{n=1}^{\infty} K(d_n-c_n)\le \sum_{n=1}^{\infty} K(b_n-a_n) \\
+				&< Km^*(E) + \varepsilon \\ 
+				\implies m^*(f(E)) &\le Km^*(E)
+			\end{align*}
+		\end{proof}
+
+\end{itemize}
+
+\end{document}
