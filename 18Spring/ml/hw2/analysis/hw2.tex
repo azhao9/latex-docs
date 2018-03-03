@@ -1,0 +1,88 @@
+\documentclass{article}
+\usepackage[sexy, hdr, fancy]{evan}
+\setlength{\droptitle}{-4em}
+
+\lhead{Homework 2}
+\rhead{Machine Learning}
+\lfoot{}
+\cfoot{\thepage}
+
+\begin{document}
+\title{Homework 2}
+\maketitle
+\thispagestyle{fancy}
+
+\section*{Analytical (50 points)}
+
+\paragraph{1) Decision Tree and Logistic Regression (10 points)}
+Consider a binary classification task (label $y$) with four features ($x$):
+
+\begin{tabular}{ |l|l|l|l|l| }
+	\hline
+	$x_1$ & $x_2$ & $x_3$ & $x_4$ & $y$ \\
+	\hline
+	0& 1 & 1& -1 & 1 \\
+	0&  1 & 1& 1 & 0 \\
+	0&  -1 & 1& 1 & 1 \\
+	0&  -1 & 1& -1 & 0 \\
+	\hline
+\end{tabular}
+
+\begin{enumerate}[(a)]
+	\item Can this function be learned using a decision tree? If so, provide such a tree (describe each node in the tree). If not, prove it.
+
+	\item Can this function be learned using a logistic regression classifier? If yes, give some example parameter weights. If not, why not.
+
+	\item For the models above where you can learn this function, the learned model may over-fit the data. Propose a solution for each model on how to avoid over-fitting.
+\end{enumerate}
+
+\paragraph{2) Stochastic Gradient Descent (10 points)}
+In the programming part of this assignment you implemented Gradient Descent. A stochastic variation of that method (Stochastic Gradient Descent) takes an estimate of the gradient based on a single sampled example, and takes a step based on that gradient. This process is repeated many times until convergence. To summarize:
+\begin{enumerate}
+	\item Gradient descent: compute the gradient over all the training examples, take a gradient step, repeat until convergence.
+	\item Stochastic gradient descent: sample a single training example, compute the gradient over that training example, take a gradient step, repeat until convergence.
+\end{enumerate}
+
+In the limit, will both of these algorithms converge to the same optimum or different optimum? Answer this question for both convex and non-convex functions. Prove your answers.
+
+\paragraph{3) Kernel Trick (10 points)}
+The kernel trick extends SVMs to learn nonlinear functions. However, an improper use of a kernel function can cause serious over-fitting. Consider the following kernels.
+\begin{enumerate}[(a)]
+	\item Inverse Polynomial kernel: given $\|x\|_2\leq 1$ and $\|x'\|_2\leq 1$, we define $K(x, x') = 1/(d-x^\top x')$, where $d\geq 2$. Does increasing $d$ make over-fitting more or less likely?
+
+	\item Chi squared kernel: Let $x_j$ denote the $j$-th entry of $x$. Given $x_j>0$ and $x_j'>0$ for all $j$, we define $K(x, x') = \exp\left(-\sigma\sum_j\frac{(x_j-x'_j)^2}{x_j+x'_j}\right)$, where $\sigma>0$. Does increasing $\sigma$ make over-fitting more or less likely?
+
+\end{enumerate}
+We say $K$ is a kernel function, if there exists some transformation $\phi:\mathbb{R}^m\rightarrow \mathbb{R}^{m'}$ such that $K(x_i,x_{i'}) = \left<\phi(x_i),\phi(x_{i'})\right>$.
+\begin{enumerate}[(c)]
+	\item Let $K_1$ and $K_2$ be two kernel functions. Prove that $K(x_i,x_{i'}) = K_1(x_i,x_{i'}) + K_2(x_i,x_{i'})$ is also a kernel function.
+\end{enumerate}
+
+\paragraph{4) Dual Perceptron (8 points)} 
+\begin{enumerate}[(c)]
+	\item You train a Perceptron classifier in the primal form on an infinite stream of data. This stream of data is not-linearly separable. Will the Perceptron have a bounded number of prediction errors?
+	\item Switch the primal Perceptron in the previous step to a dual Perceptron with a linear kernel. After observing $T$ examples in the stream, will the two Perceptrons have learned the same prediction function?
+	\item What computational issue will you encounter if you continue to run the dual Perceptron and allow $T$ to approach $\infty$? Will this problem happen with the primal Percepton? Why or why not?
+\end{enumerate}
+
+
+\paragraph{5) Convex Optimization (12 points)}
+Jenny at Acme Inc. is working hard on her new machine learning algorithm. She starts by writing an objective function
+that captures her thoughts about the problem. However, after writing the program that optimizes the objective
+and getting poor results, she returns to the objective function in frustration. Turning to her colleague Matilda,
+who took CS 475 at Johns Hopkins, she asks for advice. ``Have you checked that your function is convex?'' asks Matilda.
+``How?'' asks Jenny.
+\begin{enumerate}[(a)]
+	\item Jenny's function can be written as $f(g(x))$, where $f(x)$ and $g(x)$ are convex, and $f(x)$ is non-decreasing. Prove that $f(g(x))$ is a convex function. (Hint: You may find it helpful to use the definition of convexity. Do not use gradient or Hessian, since $f$ and $g$ may not have them.)
+	\item Jenny realizes that she made an error and that her function is instead
+		$f(x)-g(x)$, where $f(x)$ and $g(x)$ are convex functions. Her objective may or may not be convex. Give examples of functions $f(x)$ and $g(x)$ whose difference is convex, and functions $\bar{f}(x)$ and $\bar{g}(x)$ whose difference is non-convex.
+\end{enumerate}
+``I now know that my function is non-convex,'' Jenny says, ``but why does that matter?''
+\begin{enumerate}[(a)]
+		\setcounter{enumi}{2}
+	\item Why was Jenny getting poor results with a non-convex function?
+	\item One approach for convex optimization is to iteratively compute a descent direction and take a step along that direction to have a new value of the parameters. The choice of a proper stepsize is not so trivial. In gradient descent algorithm, the stepsize is chosen such that it is proportional to the magnitude of the gradient at the current point. What might be the problem if we fix the stepsize to a constant regardless of the current gradient? Discuss when stepsize is too small or too large.
+\end{enumerate}
+
+
+\end{document}
