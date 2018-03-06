@@ -1,4 +1,5 @@
 import numpy as np
+from scipy.special import expit
 
 
 class Model(object):
@@ -92,40 +93,70 @@ class LogisticRegression(Model):
 
         # If we do not select to use all features...
         if (self.num_features_to_select != -1):
+            if (self.num_features_to_select > self.num_input_features):
+                self.num_features_to_select = self.num_input_features
 
+            # Compute information gain
+            ig = self.ig(X, y)
 
+            # Gets indices of largest IGs for feature selection
+            ind = np.argpartition(ig, -self.num_features_to_select)[-self.num_features_to_select:]
+        else:
+            # Otherwise use all features
+            ind = np.arange(self.num_input_features)
 
-            # Initialize w to a vector of 0s to be trained
-        self.w = np.zeros(self.num_input_features)
+        X = X[:, ind]
+        print('features', ind, '\n')
+
+        # Initialize w to a vector of 0s to be trained using only top features
+        w = np.zeros(len(ind))
+
+        for i in range(self.gd_iterations):
+
+            # Matrices in summation for gradient calculation
+            summand_1 = np.multiply(np.multiply(expit(np.dot(X.toarray(), -w)), y), X.toarray().T).T
+            summand_2 = np.multiply(np.multiply(expit(np.dot(X.toarray(), w)), 1-y), -X.toarray().T).T
+
+            # Calculates summation to get vector form of gradient of w
+            w_grad = np.sum(summand_1 + summand_2, axis = 0)
+
+            w += self.online_learning_rate * w_grad
+
+        # insert 0s in w for unused features
+        w_2 = np.zeros(self.num_input_features)
+        w_2[ind] = w
+        
+        self.w = w_2
 
     def predict(self, X):
-        # TODO: Write code to make predictions.
-        pass
+        num_examples, num_input_features = X.shape
+        if num_input_features < self.num_input_features:
+            X = X.copy()
+            X._shape = (num_examples, self.num_input_features)
+        # Or perhaps more features are seen at test time, in which case we will
+        # simply ignore them.
+        if num_input_features > self.num_input_features:
+            X = X[:, :self.num_input_features]
 
-    def g(z):
-        return 1 / (1 + np.exp(-z))
+        predictions = expit(np.dot(X.toarray(), self.w))
+
+        y_hat = np.where(predictions >= 0.5, 1, 0)
+
+        return y_hat
 
     # Returns the vector of information gain
-    def ig(X, y):
+    def ig(self, X, y):
         num_examples, num_input_features = X.shape
         # Initialize vector of information gain
         ig = np.zeros(num_input_features)
 
         for j in range(num_input_features):
             # x_j is the array of feature values for feature j
-            x_j = X[:, j].toarray()[0]
+            x_j = X[:, j].toarray().T[0]
 
-            if (len(np.unique(x_j)) > 2):
-                # More than 2 distinct values for feature j, so we take it to be continuous
-                # Modify x_j to make everything 0 and 1
-
-                mean = np.mean(x_j)
-                # Initialize x_j_binary to vector of 0s
-                x_j_binary = np.zeros(self.num_examples)
-                # Change everywhere x_j is at least the mean to 1 in x_j_binary
-                x_j_binary[np.where(x_j >= mean)] = 1
-                # Sets x_j to the binary version
-                x_j = x_j_binary
+            # sets x_j to 1 if greater than mean, 0 otherwise
+            mean = np.mean(x_j)
+            np.where(x_j >= mean, 1, 0)
 
             # possible values x_j and y can take on
             xvals = [0, 1]
@@ -133,13 +164,16 @@ class LogisticRegression(Model):
 
             for xj in xvals:
                 for yi in yvals:
-                    # Conditional probability
-                    y_xj = y[np.where(x_j == xj)]
-                    p = len(y_xj[y_xj == yi])/len(y_xj)
+                    # p(x_j)
+                    q = len(x_j[x_j == xj]) / len(x_j)
 
-                    # only update ig if p is non-zero since otherwise log is undefined
-                    if (p > 0):
-                        ig[j] -= p * np.log(p)
+                    # p(x_j, y_i)
+                    y_xj = y[x_j == xj]
+                    p = len(y_xj[y_xj == yi]) / len(y)
+
+                    # If only update IG if p and q are not 0
+                    if ((q > 0) & (p > 0)):
+                        ig[j] -= p * np.log(p / q)
 
         return ig
 

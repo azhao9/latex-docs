@@ -21,7 +21,7 @@ def get_args():
 
     # TODO: Add optional command-line arguments as necessary.
     parser.add_argument("--online-learning-rate", type=float, help="The learning rate for logistic regression", default=0.01)
-    parser.add_argument("--num-features-to-select", type=int, help=_"The number of features to use for logistic regression", default=-1)
+    parser.add_argument("--num-features-to-select", type=int, help="The number of features to use for logistic regression", default=-1)
     parser.add_argument("--gd-iterations", type=int, help="The number of iterations of gradient descent to perform", default=20)
 
     args = parser.parse_args()

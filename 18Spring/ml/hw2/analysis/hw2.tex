@@ -56,6 +56,21 @@ The kernel trick extends SVMs to learn nonlinear functions. However, an improper
 We say $K$ is a kernel function, if there exists some transformation $\phi:\mathbb{R}^m\rightarrow \mathbb{R}^{m'}$ such that $K(x_i,x_{i'}) = \left<\phi(x_i),\phi(x_{i'})\right>$.
 \begin{enumerate}[(c)]
 	\item Let $K_1$ and $K_2$ be two kernel functions. Prove that $K(x_i,x_{i'}) = K_1(x_i,x_{i'}) + K_2(x_i,x_{i'})$ is also a kernel function.
+		\begin{proof}
+			Since $K_1$ and $K_2$ are kernel functions, there exist transformations $\varphi, \theta:\RR^m\to\RR^{m'}$ such that $K_1(x_i, x_{i'}) = \left< \varphi(x_i), \varphi(x_{i'})\right>$ and $K_2(x_i, x_{i'}) = \left< \theta(x_i), \theta(x_{i'})\right>.$ Then if $\gamma(x_i)=\begin{bmatrix}
+				\varphi(x_i) & \theta(x_i)
+			\end{bmatrix}$ be $\varphi$ concatenated with $\theta,$ then we have
+			\begin{align*}
+				K(x_i, x_{i'}) &= K_1(x_i, x_{i'}) + K_2(x_i, x_{i'}) = \varphi(x_i)^T \varphi(x_{i'}) + \theta(x_i)^T\theta(x_{i'}) \\
+				&= \begin{bmatrix}
+					\varphi(x_i) & \theta(x_i)
+				\end{bmatrix}^T \begin{bmatrix}
+					\varphi(x_{i'}) & \theta(x_{i'})
+				\end{bmatrix} \\
+				&= \left< \gamma(x_i), \gamma(x_{i'})\right>
+			\end{align*}
+			so $K$ is also a kernel function.
+		\end{proof}
 \end{enumerate}
 
 \paragraph{4) Dual Perceptron (8 points)} 
@@ -74,14 +89,43 @@ who took CS 475 at Johns Hopkins, she asks for advice. ``Have you checked that y
 ``How?'' asks Jenny.
 \begin{enumerate}[(a)]
 	\item Jenny's function can be written as $f(g(x))$, where $f(x)$ and $g(x)$ are convex, and $f(x)$ is non-decreasing. Prove that $f(g(x))$ is a convex function. (Hint: You may find it helpful to use the definition of convexity. Do not use gradient or Hessian, since $f$ and $g$ may not have them.)
+		\begin{proof}
+			Let $t\in [0, 1]$ and let $x, y$ be in the domain of $g.$ Then since $g$ is convex, we have
+			\begin{align*}
+				g\left[ tx + (1-t)y \right] \le tg(x) + (1-t)g(y)
+			\end{align*}
+			and since $f$ is non-decreasing, that means $f(a)\le f(b)$ whenever $a\le b,$ so it follows that
+			\begin{align*}
+				f\big(g\left[ tx+(1-t)y \right]\big) \le f\left[ tg(x) + (1-t)g(y) \right]
+			\end{align*}
+			and since $f$ is convex, we finally have
+			\begin{align*}
+				f\left[ tg(x) + (1-t)g(y) \right] &\le t f(g(x)) + (1-t)f(g(y))
+			\end{align*}
+			so $f(g(x))$ is convex.
+		\end{proof}
+		
 	\item Jenny realizes that she made an error and that her function is instead
 		$f(x)-g(x)$, where $f(x)$ and $g(x)$ are convex functions. Her objective may or may not be convex. Give examples of functions $f(x)$ and $g(x)$ whose difference is convex, and functions $\bar{f}(x)$ and $\bar{g}(x)$ whose difference is non-convex.
+		\begin{soln}
+			Let $f(x)\equiv 3$ and $g(x)\equiv 2.$ Then $f$ and $g$ are both convex, then $f-g \equiv 1$ which is convex.
+
+			Let $\bar f(x)\equiv0$ and $\bar g(x)=x^2.$ Then $f$ and $g$ are both convex, but $\bar f-\bar g=-x^2,$ which is not convex.		
+		\end{soln}
 \end{enumerate}
 ``I now know that my function is non-convex,'' Jenny says, ``but why does that matter?''
 \begin{enumerate}[(a)]
 		\setcounter{enumi}{2}
 	\item Why was Jenny getting poor results with a non-convex function?
+		\begin{answer*}
+			Non-convex functions will not have a single, distinct global minimum.
+		\end{answer*}
+
 	\item One approach for convex optimization is to iteratively compute a descent direction and take a step along that direction to have a new value of the parameters. The choice of a proper stepsize is not so trivial. In gradient descent algorithm, the stepsize is chosen such that it is proportional to the magnitude of the gradient at the current point. What might be the problem if we fix the stepsize to a constant regardless of the current gradient? Discuss when stepsize is too small or too large.
+		\begin{answer*}
+			If the step size is constant, we may run into the issue where we end up oscillating around the global minimum. 
+		\end{answer*}<++>
+
 \end{enumerate}
 
 
