@@ -1,0 +1,190 @@
+\documentclass{article}
+\usepackage[sexy, hdr, fancy]{evan}
+\usepackage{graphicx}
+\graphicspath{.}
+\setlength{\droptitle}{-4em}
+
+\DeclareMathOperator{\re}{Re}
+\DeclareMathOperator{\im}{Im}
+\DeclareMathOperator{\Log}{Log}
+\DeclareMathOperator{\Arg}{Arg}
+
+\lhead{Homework 5}
+\rhead{Complex Analysis}
+\lfoot{}
+\cfoot{\thepage}
+
+\begin{document}
+\title{Homework 5}
+\maketitle
+\thispagestyle{fancy}
+
+\section*{Section 3.2}
+
+\begin{itemize}
+	\item[7.] Show that the formula $e^{iz} = \cos z + i\sin z$ holds for all complex numbers $z.$
+		\begin{proof}
+			We have
+			\begin{align*}
+				\cos z + i\sin z &= \frac{e^{iz} + e^{-iz}}{2} + i\cdot \frac{e^{iz} -e^{-iz}}{2i} = e^{iz}
+			\end{align*}
+			as desired.
+		\end{proof}
+
+	\item[17.] Find all numbers $z$ (if any) such that
+		\begin{enumerate}[(a)]
+			\item $e^{4z} = 1$
+				\begin{soln}
+					We have $e^{4z} = 1 = e^{0}$ holds whenever $4z = 0 + 2k\pi i \implies z = k\pi i/2, k\in\ZZ.$
+				\end{soln}
+
+			\item $e^{iz} = 3$
+				\begin{soln}
+					We have $e^{iz} = 3 = e^{\Log 3}$ holds whenever $iz = \Log 3 + 2k\pi i\implies z = -i \Log 3 + 2k\pi$
+				\end{soln}
+
+			\item $\cos z = i\sin z$
+				\begin{soln}
+					We have
+					\begin{align*}
+						\cos z &= \frac{e^{iz} + e^{-iz}}{2} \\
+						i\sin z &= i\cdot \frac{e^{iz} - e^{-iz}}{2i} = \frac{e^{iz} - e^{-iz}}{2} \\
+						\cos z = i\sin z &\implies \frac{e^{iz}+e^{-iz}}{2} = \frac{e^{iz} - e^{-iz}}{2} \\
+						&\implies e^{-iz} = -e^{-iz} \implies e^{-iz} = 0
+					\end{align*}
+					but this has no solution.
+				\end{soln}
+				
+		\end{enumerate}
+
+	\item[20.] Show that the function $w=e^z$ maps the shaded rectangle in Fig 3.2(a) one-to-one onto the semi-annulus in Fig 3.2(b).
+		\begin{proof}
+			The rectangle in fig 3.2(a) is the set $A=\left\{ x+iy:-1\le x\le 1, 0\le y\le \pi \right\},$ and the semi-annulus in fig 3.2(b) is the set $B=\left\{ z:e^{-1}\le \abs{z}\le e, \im z \ge 0 \right\}.$ Suppose $f(x_1+iy_1)=f(x_2+iy_2),$ so 
+			\begin{align*}
+				e^{x_1+iy_1} = e^{x_2+iy_2} &\implies x_1 + iy_1 = x_2 + iy_2 + 2k\pi i \\
+				\implies x_1 = x_2 \quad &\text{and}\quad y_1 = y_2 + 2k\pi
+			\end{align*}
+			Since $0\le y_1, y_2\le \pi,$ it follows that $k=0$ and so $y_1=y_2,$ so $x_1+iy_1=x_2+iy_2,$ and thus $f$ is injective.
+
+			Take some $z\in B,$ so $z=re^{i\theta}$ where
+			\begin{align*}
+				e^{-1}\le r\le e\implies -1 \le \Log r \le 1
+			\end{align*}
+			and $\theta$ lies in quadrants 1 and 2. Then let $\theta_0$ be the argument of $z$ in $[-\pi, \pi].$ Then we have
+			\begin{align*}
+				f(\Log r + i\theta_0) = re^{i\theta_0} = re^{i\theta}
+			\end{align*}
+			where $\Log r + i\theta_0\in A,$ so $f$ is surjective.
+		\end{proof}
+
+	\item[21.]
+		\begin{enumerate}[(a)]
+			\item Show that the mapping $w=\sin z$ is one-to-one in the semi-infinite strip
+				\begin{align*}
+					S_1 = \left\{ x+iy:-\pi<x<\pi, y>0 \right\}
+				\end{align*}
+				and find the image of this strip. Hint: See prob 16.
+				\begin{proof}
+					Suppose $\sin z_1 = \sin z_2$ with $z_1, z_2\in S_1.$ By the result of exercise 16, we have
+					\begin{align*}
+						0 = \sin z_2-\sin z_1 = 2\cos\left( \frac{z_2+z_1}{2} \right)\sin\left( \frac{z_2-z_1}{2} \right)
+					\end{align*}
+					Thus, either $\cos \left( \frac{z_2+z_1}{2} \right)=0$ or $\sin\left( \frac{z_2-z_1}{2} \right)=0.$ We know that $\cos z = 0$ if and only if $z=k\pi+\pi/2$ and $\sin z = 0$ if and only if $z=k\pi$ for $k\in\ZZ.$ Thus we have either
+					\begin{align*}
+						\frac{z_2+z_1}{2} &= k\pi+\frac{\pi}{2} \implies z_2+z_1 = \pi + 2k\pi \\
+						\frac{z_2-z_1}{2} &= k\pi \implies z_2-z_1 = 2k\pi
+					\end{align*}
+					The RHS of both sides is real, so the first option is not possible because $y_1, y_2>0.$ Thus in the second case, we have $y_2=y_1,$ and $x_2-x_1=2k\pi.$ But since $-\pi<x_1, x_1<\pi,$ the only way this equality can hold is if $x_2-x_1=0,$ and thus $z_1=x_1+iy_1 = x_2 + iy_2 = z_2,$ so this mapping is injective on this domain.
+				\end{proof}
+
+			\item For $w=\sin z,$ what is the image of the smaller semi-infinite strip
+				\begin{align*}
+					S_2 = \left\{ x+iy:-\pi/2<x<\pi/2, y>0 \right\}?
+				\end{align*}
+				\begin{soln}
+					Let $z=x+iy\in S_2,$ so
+					\begin{align*}
+						\sin z &= \sin\left( x+iy \right) = \sin x \cos (iy) + \sin(iy)\cos x \\
+						&= \sin x \cosh y + i\sinh y\cos x
+					\end{align*}
+					Here, $-1\le \sin x\le 1$ and $\cosh y>0,$ so $\sin x\cosh y$ can be anything. Then $\sinh y>0j$ and $0\le \cos x\le 1,$ so the image is the entire upper half plane, excluding the real axis.
+				\end{soln}
+
+		\end{enumerate}
+
+\end{itemize}
+
+\section*{Section 3.5}
+
+\begin{itemize}
+	\item[3.] Find the principal value of each of the following.
+		\begin{enumerate}[(a)]
+			\item $4^{1/2}$
+				\begin{soln}
+					This is $4^{1/2} = e^{\frac{1}{2}\Log 4}=e^{\Log 2} = 2.$
+				\end{soln}
+
+			\item $i^{2i}$
+				\begin{soln}
+					This is
+					\begin{align*}
+						i^{2i} &= e^{2i\Log i} = e^{2i\left( \Log \abs{i} + i\Arg(i) \right)} = e^{2i\cdot i\pi/2} = e^{-\pi}
+					\end{align*}
+				\end{soln}
+
+			\item $(1+i)^{1+i}$
+				\begin{soln}
+					This is 
+					\begin{align*}
+						(1+i)^{1+i} &= e^{(1+i)\Log(1+i)} = e^{(1+i)\left[ \Log\abs{1+i} + i\Arg(1+i) \right]} \\
+						&= e^{(1+i)\left( \Log \sqrt{2} + i \pi/4\right)} = e^{\Log \sqrt{2} + i\pi/4 + i\Log\sqrt{2} - \pi/4} \\
+						&= e^{\Log \sqrt{2} - \pi/4} e^{i\left( \Log \sqrt{2} + \pi/4 \right)} \\
+						&= \sqrt{2}e^{i\pi/4} e^{-\pi/4 + i\Log \sqrt{2}} = (1+i)\exp\left( -\frac{\pi}{4} + \frac{i}{2}\Log 2 \right)
+					\end{align*}
+				\end{soln}
+
+		\end{enumerate}
+
+	\item[8.] Show that all solutions of the equation $\sin z=2$ are given by $\pi/2 + 2k\pi \pm i\Log(2+\sqrt{3}),$ where $k=0, \pm 1, \pm 2, \cdots.$
+		\begin{proof}
+			We have
+			\begin{align*}
+				\sin z &= \frac{e^{iz}-e^{-iz}}{2i} = 2 \\
+				\implies e^{iz} - e^{-iz} &= 4i \implies e^{2iz} - 1 = 4ie^{iz} \\
+				\implies e^{2iz} - 4ie^{iz} - 1 &= 0
+			\end{align*}
+			so by the quadratic formula, we have
+			\begin{align*}
+				e^{iz} &= \frac{4i \pm \sqrt{(-4i)^2 - 4(-1)}}{2} = \frac{4i \pm \sqrt{-12}}{2} =i\left( 2 \pm \sqrt{3}\right) \\
+				&= e^{i\pi/2+\Log\left( 2\pm \sqrt{3} \right)}\\
+				\implies iz &= \frac{i\pi}{2} + \Log\left( 2\pm \sqrt{3} \right) + 2k\pi i, \quad k\in\ZZ
+			\end{align*}
+			Now, we have
+			\begin{align*}
+				\frac{1}{2-\sqrt{3}} &= \frac{2+\sqrt{3}}{2^2-3} = 2+\sqrt{3} \\
+				\implies \Log\left( 2+\sqrt{3} \right) &= -\Log\left( 2-\sqrt{3} \right)
+			\end{align*}
+			so the solution is given by
+			\begin{align*}
+				z &= \frac{\pi}{2} \pm i\Log\left( 2+\sqrt{3} \right) + 2k\pi, \quad k\in\ZZ
+			\end{align*}
+			as desired.
+		\end{proof}
+
+	\item[11.] Find all solutions of the equation $\sin z = \cos z.$
+		\begin{soln}
+			We have
+			\begin{align*}
+				\sin z = \frac{e^{iz}-e^{-iz}}{2i} &= \frac{e^{iz} + e^{-iz}}{2} = \cos z \\
+				\implies e^{iz} - e^{-iz} &= ie^{iz} + ie^{-iz} \\
+				\implies e^{2iz} - 1 &= ie^{2iz} + i \\
+				\implies e^{2iz} &= \frac{1+i}{1-i} = \frac{(1+i)^2}{1^2+1^2} = \frac{1}{2}(1+i)^2 \\
+				\implies e^{2iz} &= \frac{1}{2} \left( \sqrt{2}e^{i\pi/4} \right)^2 = e^{i\pi/2} \\
+				\implies 2iz &= \frac{i\pi}{2} + 2k\pi i, \quad k\in\ZZ \\
+				\implies z &= \frac{\pi}{4} + k\pi, \quad k\in\ZZ
+			\end{align*}
+		\end{soln}
+
+\end{itemize}
+
+\end{document}
