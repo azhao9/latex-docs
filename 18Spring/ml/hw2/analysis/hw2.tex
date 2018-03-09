@@ -1,6 +1,8 @@
 \documentclass{article}
 \usepackage[sexy, hdr, fancy]{evan}
 \setlength{\droptitle}{-4em}
+\usepackage{tikz}
+\usetikzlibrary{automata, arrows}
 
 \lhead{Homework 2}
 \rhead{Machine Learning}
@@ -30,8 +32,43 @@ Consider a binary classification task (label $y$) with four features ($x$):
 
 \begin{enumerate}[(a)]
 	\item Can this function be learned using a decision tree? If so, provide such a tree (describe each node in the tree). If not, prove it.
+		\begin{soln}
+			Yes, this function can be learned using a decision tree.
+			\begin{center}
+				\begin{tikzpicture}[->, >=stealth', shorten >=1pt, auto, node distance=2cm, thick, main node/.style={circle, draw, font=\sffamily\Large\bfseries}]
+
+					\node[initial, state] (0) {$x_2$};
+					\node[state] (1) [below right of = 0] {$x_4$};
+					\node[state] (2) [below left of = 0] {$x_4$};
+					\node[state] (3) [below of = 1] {1};
+					\node[state] (4) [below right of = 1] {0};
+					\node[state] (5) [below left of = 2] {0};
+					\node[state] (6) [below of = 2] {1};
+
+					\path[every node/.style={font=\sffamily\small}]
+					(0) edge node {1} (1)
+					edge node [above left]{-1} (2)
+					(1) edge node {-1} (3)
+					edge node {1} (4)
+					(2) edge node [above left] {-1} (5)
+					edge node {1} (6);
+				\end{tikzpicture}
+			\end{center}
+		\end{soln}
 
 	\item Can this function be learned using a logistic regression classifier? If yes, give some example parameter weights. If not, why not.
+		\begin{soln}
+			Suppose this function can be learned using a logistic regression classifier, and let the parameter weight be $\mathbf{w} = \begin{bmatrix}
+				w_1 & w_2 & w_3 & w_4
+			\end{bmatrix}.$ Suppose we label the examples from the table as $x^{(1)}, x^{(2)}, x^{(3)}, x^{(4)}.$ Then if $g$ represents the logistic function, we predict $y^{(i)}=1$ when $g\left(\mathbf{w}\cdot x^{(i)}\right) > 0.5$ and 0 otherwise. 
+			\begin{align*}
+				\frac{1}{1+e^{\mathbf{w}\cdot x^{(1)}}} &= \frac{1}{1+e^{w_2+w_3-w_4}} > \frac{1}{2} \implies e^{w_2+w_3-w_4} < 1 \implies w_2+w_3-w_4 < 0 \\
+				\frac{1}{1+e^{\mathbf{w}\cdot x^{(2)}}} &= \frac{1}{1+e^{w_2+w_3+w_4}} \le \frac{1}{2} \implies e^{w_2+w_3+w_4} \ge 1 \implies w_2+w_3+w_4 \ge 0 \\
+				\frac{1}{1+e^{\mathbf{w}\cdot x^{(3)}}} &= \frac{1}{1+e^{-w_2+w_3+w_4}} > \frac{1}{2} \implies e^{-w_2+w_3+w_4} < 1 \implies -w_2+w_3+w_4 < 0 \\
+				\frac{1}{1+e^{\mathbf{w}\cdot x^{(4)}}} &= \frac{1}{1+e^{-w_2+w_3-w_4}} \le \frac{1}{2} \implies e^{-w_2+w_3-w_4} \ge 1 \implies -w_2+w_3-w_4 \ge 0 \\
+			\end{align*}
+			Here, if we add equations 1 and 3, and equations 2 and 4, respectively, then we get $2w_3 < 0$ and $2w_3\ge 0,$ a contradiction. Thus, there do not exist parameter weights that can describe this function.
+		\end{soln}
 
 	\item For the models above where you can learn this function, the learned model may over-fit the data. Propose a solution for each model on how to avoid over-fitting.
 \end{enumerate}
@@ -77,6 +114,7 @@ We say $K$ is a kernel function, if there exists some transformation $\phi:\math
 \begin{enumerate}[(c)]
 	\item You train a Perceptron classifier in the primal form on an infinite stream of data. This stream of data is not-linearly separable. Will the Perceptron have a bounded number of prediction errors?
 	\item Switch the primal Perceptron in the previous step to a dual Perceptron with a linear kernel. After observing $T$ examples in the stream, will the two Perceptrons have learned the same prediction function?
+
 	\item What computational issue will you encounter if you continue to run the dual Perceptron and allow $T$ to approach $\infty$? Will this problem happen with the primal Percepton? Why or why not?
 \end{enumerate}
 
@@ -118,13 +156,13 @@ who took CS 475 at Johns Hopkins, she asks for advice. ``Have you checked that y
 		\setcounter{enumi}{2}
 	\item Why was Jenny getting poor results with a non-convex function?
 		\begin{answer*}
-			Non-convex functions will not have a single, distinct global minimum.
+			Non-convex functions will not have a single, distinct global minimum. We might get stuck at a local minimum that isn't the global minimum.
 		\end{answer*}
 
 	\item One approach for convex optimization is to iteratively compute a descent direction and take a step along that direction to have a new value of the parameters. The choice of a proper stepsize is not so trivial. In gradient descent algorithm, the stepsize is chosen such that it is proportional to the magnitude of the gradient at the current point. What might be the problem if we fix the stepsize to a constant regardless of the current gradient? Discuss when stepsize is too small or too large.
 		\begin{answer*}
-			If the step size is constant, we may run into the issue where we end up oscillating around the global minimum. 
-		\end{answer*}<++>
+			If the step size is constant, we may run into the issue where we end up oscillating around the global minimum. If the step size is too small, it may take too long to converge, and if the step size is too large, we may overshoot the minimum
+		\end{answer*}
 
 \end{enumerate}
 

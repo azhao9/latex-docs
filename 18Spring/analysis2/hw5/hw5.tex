@@ -1,0 +1,144 @@
+\documentclass{article}
+\usepackage[sexy, hdr, fancy]{evan}
+\setlength{\droptitle}{-4em}
+
+\lhead{Homework 5}
+\rhead{Honors Analysis II}
+\lfoot{}
+\cfoot{\thepage}
+
+\begin{document}
+\title{Homework 5}
+\maketitle
+\thispagestyle{fancy}
+
+\section*{Chapter 15: Lebesgue Measure}
+
+\begin{itemize}
+	\item[25.] Suppose that $m^*(E)>0.$ Given $0<\alpha<1,$ show that there exists an open interval $I$ such that $m^*(E\cap I)>\alpha m^*(I).$ (Hint: It is enough to consider the case $m^*(E)<\infty.$ Now suppose that the conclusion fails.)
+		\begin{proof}
+			Consider the case when $m^*(E) < \infty.$ Fix $\alpha$ and $\varepsilon>0,$ and suppose that $m^*(E\cap I)\le \alpha m^*(I)$ for any open interval $I.$ Then there exists an open set $G\supset E$ such that $m^*(G) < m^*(E) + \varepsilon.$ Then $G=\bigcup_{n=1}^\infty I_n$ for disjoint, open intervals $I_n,$ and we have $E = \bigcup_{n=1}^\infty E\cap I_n.$ Now,
+			\begin{align*}
+				m^*(E) &= m^*\left( \bigcup_{n=1}^\infty (E\cap I_n) \right) \le \sum_{n=1}^\infty m^*(E\cap I_n) \le \sum_{n=1}^\infty \alpha m^*(I_n) = \alpha\sum_{n=1}^\infty m^*(I_n) < \sum_{n=1}^{\infty} m^*(I_n) = m^*(G)
+			\end{align*}
+			This is a contradiction, so there must exist an open interval $I$ such that $m^*(E\cap I)>\alpha m^*(I).$
+		\end{proof}
+
+	\item[28.] Fix $\alpha$ with $0<\alpha<1$ and repeat our "middle thirds" construction for the Cantor set except that now, at the $n$th stage, each of the $2^{n-1}$ open intervals we discard from $[0, 1]$ is to have length $(1-\alpha)3^{-n}.$ Check that $m^*(\Delta_\alpha)=\alpha.$ (Hint: You only need upper estimates for $m^*(\Delta_\alpha)$ and $m^*(\Delta_\alpha^c).$)
+		\begin{proof}
+			For $\Delta_\alpha^c,$ this is the union of all the middle third intervals, which are all disjoint, bounded, open intervals, and thus $\Delta_\alpha^c$ is measurable with
+			\begin{align*}
+				m^*(\Delta_\alpha^c) = m(\Delta_\alpha^c) &= \sum_{n=1}^{\infty} 2^{n-1} (1-\alpha)3^{-n} = \frac{1-\alpha}{2}\sum_{n=1}^{\infty} \left( \frac{2}{3} \right)^n = \frac{1-\alpha}{2} \cdot \frac{2/3}{1-\frac{2}{3}} = 1-\alpha
+			\end{align*}
+			so $m^*(\Delta_\alpha) = 1-(1-\alpha) = \alpha.$
+		\end{proof}
+
+	\item[38.] Prove that $E$ is measurable if and only if $E\cap K$ is measurable for every compact set $K.$
+		\begin{proof}
+			$(\implies):$ Since compact sets are measurable, and intersections of measurable sets are measurable, it follows that $E\cap K$ is measurable.
+
+			$(\impliedby):$ Let $E_n=E\cap [-n, n].$ Then since $[-n, n]$ is compact, $E_n$ is measurable for all $n,$ and $E=\bigcup_{n=1}^\infty E_n,$ so $E$ is measurable.
+		\end{proof}
+
+	\item[40.] If $A$ and $B$ are measurable sets, show that $m(A\cup B)+m(A\cap B) = m(A)+m(B).$
+		\begin{proof}
+			Define the sets
+			\begin{align*}
+				E_1 &= A\cap B \\
+				E_2 &= A\setminus(A\cap B) \\
+				E_3 &= B\setminus (A\cap B)
+			\end{align*}
+			Then $E_1, E_2, E_3$ are pairwise disjoint sets, and we have
+			\begin{align*}
+				E_1\cup E_2 &= A \\
+				E_1\cup E_3 &= B \\
+				E_1\cup E_2\cup E_3 &= A\cup B \\
+				\implies m(A\cup B) + m(A\cap B) &= m(E_1\cup E_2\cup E_3) + m(E_1) \\
+				&= m(E_1) + m(E_2) + m(E_3) + m(E_1) \\
+				&= m(E_1\cup E_2) + m(E_1\cup E_3) = m(A) + m(B)
+			\end{align*}
+			as desired.
+		\end{proof}
+		
+	\item[45.] Let $f:X\to Y$ be any function.
+		\begin{enumerate}[(a)]
+			\item If $\mathcal B$ is a $\sigma$-algebra of subsets of $Y,$ show that $\mathcal A=\left\{ f\inv(B):B\in\mathcal B \right\}$ is a $\sigma$-algebra of subsets of $X.$
+				\begin{proof}
+					We have $\varnothing\in\mathcal A$ since $\varnothing\in \mathcal B$ and $\varnothing=f\inv(\varnothing).$ Let $A\in\mathcal A,$ so $A=f\inv(B)=\left\{ a\in X:f(a)\in B \right\}$ for some $B\in\mathcal B.$ Then
+					\begin{align*}
+						A^c = \left\{ a\in X:f(a)\not\in B \right\} = \left\{ a\in X:f(a)\in B^c \right\}
+					\end{align*}
+					Here $B^c\in \mathcal B$ since $\mathcal B$ is a $\sigma$-algebra, so $A^c\in \mathcal A,$ so $\mathcal A$ is closed under complement.
+
+					Let $(A_n)$ be a sequence of subsets of $X$ in $\mathcal A.$ Then let $(B_n)$ be a sequence of subsets in $\mathcal B$ such that $A_i=f\inv(B_i)$ for all $i.$ We have
+					\begin{align*}
+						\bigcup_{n=1}^\infty A_n &= \bigcup_{n=1}^\infty \left\{ a\in X: f(a)\in B_n \right\} = \left\{ a\in X:f(a)\in \bigcup_{n=1}^\infty B_n \right\}
+					\end{align*} 
+					and since $\mathcal B$ is closed under countable union, $\bigcup_{n=1}^\infty B_n\in\mathcal B,$ so it follows that $\bigcup_{n=1}^\infty A_n\in \mathcal A,$ so $\mathcal A$ is closed under countable union. Similarly,
+					\begin{align*}
+						\bigcap_{n=1}^\infty A_n &= \bigcap_{n=1}^\infty \left\{ a\in X:f(a)\in B_n \right\} = \left\{ a\in X: f(a)\in\bigcap_{n=1}^\infty B_n \right\}
+					\end{align*}
+					and since $\mathcal B$ is closed under countable intersection, it follows that $\bigcap_{n=1}^\infty A_n\in\mathcal A,$ so $\mathcal A$ is closed under countable intersection. Thus, $\mathcal A$ is a $\sigma$-algebra of subsets of $X.$
+				\end{proof}
+
+			\item If $\mathcal A$ is a $\sigma$-algebra of subsets of $X,$ show that $\mathcal B=\left\{ B:f\inv(B)\in\mathcal A \right\}$ is a $\sigma$-algebra of subsets of $Y.$
+				\begin{proof}
+					We have $\varnothing\in\mathcal B$ since $\varnothing\in\mathcal A$ and $f\inv(\varnothing)=\varnothing.$ Let $B\in\mathcal B,$ so $f\inv(B)=\left\{ a\in X:f(a)\in B \right\}\in\mathcal A.$ Then
+					\begin{align*}
+						f\inv(B^c) &= \left\{ a\in X:f(a)\in B^c \right\} = \left( \left\{ a\in X: f(a)\in B \right\} \right)^c
+					\end{align*}
+					and since $\mathcal A$ is closed under complement, it follows that $f\inv(B^c)\in\mathcal A,$ so $\mathcal B$ is closed under complement.
+
+					Let $(B_n)$ be a sequence of subsets of $Y$ in $\mathcal B.$ Then it follows that $f\inv(B_i)\in\mathcal A$ for all $i,$ so then 
+					\begin{align*}
+						\bigcup_{n=1}^\infty f\inv(B_n)=\bigcup_{n=1}^\infty \left\{ a\in X: f(a)\in B_n \right\} = \left\{ a\in X: f(a)\in \bigcup_{n=1}^\infty B_n \right\} \in\mathcal A
+					\end{align*}
+					so it follows that $\bigcup_{n=1}^\infty B_n\in\mathcal B,$ so $\mathcal B$ is closed under countable unions. Similarly,
+					\begin{align*}
+						\bigcap_{n=1}^\infty f\inv(B_n) &= \bigcap_{n=1}^\infty \left\{ a\in X:f(a)\in B_n \right\} = \left\{ a\in X: f(a)\in\bigcap_{n=1}^\infty B_n\right\} \in \mathcal A
+					\end{align*}
+					so it follows that $\bigcap_{n=1}^\infty B_n\in \mathcal B,$ so $\mathcal B$ is closed under countable intersections Thus, $\mathcal B$ is a $\sigma$-algebra of subsets of $Y.$
+				\end{proof}
+				
+		\end{enumerate}
+
+	\item[51.] Let $\mathcal A=\left\{ E\subset\RR:\text{either }E\text{ or } E^c\text{ is finite} \right\}.$ Is $\mathcal A$ an algebra? Is $\mathcal A$ a $\sigma$-algebra? Explain.
+		\begin{soln}
+			Clearly $\varnothing\in \mathcal A$ since it is empty and thus finite. Then if $E\in\mathcal A,$ either $E$ or $E^c$ is finite, so $E^c\in\mathcal A$ as well. If $E_1, \cdots, E_N\in\mathcal A,$ then either $E_n$ or $E_n^c$ is finite for all $1\le n\le N.$ If all the $E_n$ are finite, then clearly $\bigcup_{n=1}^N E_n$ is finite. Otherwise, if $E_k^c$ is finite for some $k,$ then
+			\begin{align*}
+				\left( \bigcup_{n=1}^N E_n \right)^c &= \bigcap_{n=1}^N E_n^c \subset E_k^c
+			\end{align*}
+			which is finite. Thus, $\mathcal A$ is closed under finite union. Similarly, if $E_k$ is finite for some $k,$ then $\bigcap_{n=1}^N E_n\subset E_k$ which is finite. Otherwise, $E_n^c$ is finite for all $n,$ wo
+			\begin{align*}
+				\left( \bigcap_{n=1}^N E_n \right)^c &= \bigcup_{n=1}^N E_n^c
+			\end{align*}
+			is finite. Thus, $\mathcal A$ is closed under finite intersections. 
+
+			If $E_n=\left\{ n \right\},$ then each of the $E_n$ is finite, but $\bigcup{n=1}^\infty E_n=\NN$ is not finite, and neither is $\RR\setminus\NN.$ Thus, $\mathcal A$ is not closed under countable union, so it is not a $\sigma$-algebra.
+		\end{soln}
+
+	\item[61.] Find a sequence of measurable sets $(E_n)$ that decrease to $\varnothing,$ but with $m(E_n)=\infty$ for all $n.$
+		\begin{soln}
+			Let $E_n=\bigcup_{k=1}^\infty \left( k, k+\frac{1}{n} \right).$ Then as $n\to\infty,$ each of these sets goes to $\varnothing,$ but $m(E_n)=\infty$ for all finite $n.$
+		\end{soln}
+
+	\item[66.] In the notation of Exercise 65, define $d(E, F)=m(E\Delta F)$ for $E, F\in \mathcal M_1.$ Prove that $d$ defines a pseudometric on $\mathcal M_1.$ (That is, $d$ induces a metric on $\mathcal M_1/\sim,$ the set of equivalence classes under equality a.e.)
+		\begin{proof}
+			Since measure is non-negative, we have $d(E, F)\ge 0.$ Then
+			\begin{align*}
+				d(E, E) &= m(E\Delta E) = m(\varnothing) = 0 \\
+				d(E, F) &= m(E\Delta F) = m(F\Delta E) = d(F, E) \\
+				d(E, F) + d(F, G) &= m(E\Delta F) + m(F\Delta G) \ge m\left[ (E\Delta F) \cup (F\Delta G) \right]
+			\end{align*}
+			Now, it is relatively easy to show $(E\Delta F)\cup (F\Delta G) = (E\cup F\cup G)\setminus(E\cap F\cap G).$ Then 
+			\begin{align*}
+				G\Delta E &= (G\setminus E)\cup (E\setminus G) \subset (E\cup F\cup G)\setminus (E\cap F\cap G) \\
+				\implies d(G, E) &= m(G\Delta E) \le m\left[ (E\cup F\cup G)\setminus (E\cap F\cap G) \right] \\
+				&\le m(E\Delta F) + m(F\Delta G) = d(E, F) + d(F, G)
+			\end{align*}
+			Thus, $d$ defines a pseudometric on $\mathcal M_1.$
+		\end{proof}
+
+\end{itemize}
+
+\end{document}

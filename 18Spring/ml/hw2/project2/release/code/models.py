@@ -96,18 +96,16 @@ class LogisticRegression(Model):
             if (self.num_features_to_select > self.num_input_features):
                 self.num_features_to_select = self.num_input_features
 
-            # Compute information gain
-            #ig = self.ig(X, y)
-            num_examples, num_input_features = X.shape
-            # Initialize vector of information gain
-            ig = np.zeros(num_input_features)
+            # Initialize vector of information gain (technically -h(y|x))
+            info_gain = np.zeros(self.num_input_features)
 
-            for j in range(num_input_features):
+            for j in range(self.num_input_features):
 
                 x_j = X[:, j].toarray().T[0]
 
                 mean = np.mean(x_j)
-                np.where(x_j >= mean, 1, 0)
+                # Adjust each feature to 0 or 1 using thresholding
+                x_j = np.where(x_j >= mean, 1, 0)
 
                 for yi in [0, 1]:
                     for xj in [0, 1]:
@@ -119,16 +117,15 @@ class LogisticRegression(Model):
                         p = len(y_xj[y_xj == yi])/len(y)
 
                         if ((p > 0) & (q > 0)):
-                            ig[j] -= p * np.log(p/q)
+                            info_gain[j] += p * np.log(p/q)
 
             # Gets indices of largest IGs for feature selection
-            ind = np.argpartition(ig, -self.num_features_to_select)[-self.num_features_to_select:]
+            ind = np.argpartition(info_gain, -self.num_features_to_select)[-self.num_features_to_select:]
         else:
             # Otherwise use all features
             ind = np.arange(self.num_input_features)
 
         X = X[:, ind]
-        print('features', ind, '\n')
 
         # Initialize w to a vector of 0s to be trained using only top features
         w = np.zeros(len(ind))
