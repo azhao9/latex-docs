@@ -33,7 +33,7 @@ Consider a binary classification task (label $y$) with four features ($x$):
 \begin{enumerate}[(a)]
 	\item Can this function be learned using a decision tree? If so, provide such a tree (describe each node in the tree). If not, prove it.
 		\begin{soln}
-			Yes, this function can be learned using a decision tree.
+			Yes, this function can be learned using a decision tree because it is a proper boolean function, that is, $y(x_1)=y(x_2)$ whenever $x_1=x_2.$ The decision tree is given as
 			\begin{center}
 				\begin{tikzpicture}[->, >=stealth', shorten >=1pt, auto, node distance=2cm, thick, main node/.style={circle, draw, font=\sffamily\Large\bfseries}]
 
@@ -71,23 +71,41 @@ Consider a binary classification task (label $y$) with four features ($x$):
 		\end{soln}
 
 	\item For the models above where you can learn this function, the learned model may over-fit the data. Propose a solution for each model on how to avoid over-fitting.
+		\begin{answer*}
+			For decision tree learning, we can use fewer splits, so for example only split based on $x_2.$ 
+		\end{answer*}
 \end{enumerate}
 
+\newpage
 \paragraph{2) Stochastic Gradient Descent (10 points)}
 In the programming part of this assignment you implemented Gradient Descent. A stochastic variation of that method (Stochastic Gradient Descent) takes an estimate of the gradient based on a single sampled example, and takes a step based on that gradient. This process is repeated many times until convergence. To summarize:
 \begin{enumerate}
 	\item Gradient descent: compute the gradient over all the training examples, take a gradient step, repeat until convergence.
+
 	\item Stochastic gradient descent: sample a single training example, compute the gradient over that training example, take a gradient step, repeat until convergence.
+
 \end{enumerate}
 
 In the limit, will both of these algorithms converge to the same optimum or different optimum? Answer this question for both convex and non-convex functions. Prove your answers.
+\begin{soln}
+	In the case of a convex function, there is a single global minimum. Since both gradient descent and stochastic gradient descent converge to a local minimum, they will both converge to the same (and only) global minimum.
 
+	In the case of a non-convex function, stochastic gradient can escape the local minimum, whereas gradient descent does not (assuming the learning rate is properly adjusted). Thus, they will not converge to the same local optimum in general.
+\end{soln}
+
+\newpage
 \paragraph{3) Kernel Trick (10 points)}
 The kernel trick extends SVMs to learn nonlinear functions. However, an improper use of a kernel function can cause serious over-fitting. Consider the following kernels.
 \begin{enumerate}[(a)]
 	\item Inverse Polynomial kernel: given $\|x\|_2\leq 1$ and $\|x'\|_2\leq 1$, we define $K(x, x') = 1/(d-x^\top x')$, where $d\geq 2$. Does increasing $d$ make over-fitting more or less likely?
+		\begin{soln}
+			As $d$ increases, $K$ decreases. However, if $d$ is large then $K(x, x')$ is small no matter what $x$ and $x'$ are, so the kernel is very inflexible, and thus will likely lead to under-fitting.
+		\end{soln}
 
 	\item Chi squared kernel: Let $x_j$ denote the $j$-th entry of $x$. Given $x_j>0$ and $x_j'>0$ for all $j$, we define $K(x, x') = \exp\left(-\sigma\sum_j\frac{(x_j-x'_j)^2}{x_j+x'_j}\right)$, where $\sigma>0$. Does increasing $\sigma$ make over-fitting more or less likely?
+		\begin{soln}
+			Increasing $\sigma$ decreases the value of the kernel function, so the support vectors have a smaller influence area, which increases the chance of over-fitting. $K$ is flexible because if $x$ and $x'$ are close, then the value of $K(x, x')$ has a large range, and thus is more prone to over-fitting.
+		\end{soln}
 
 \end{enumerate}
 We say $K$ is a kernel function, if there exists some transformation $\phi:\mathbb{R}^m\rightarrow \mathbb{R}^{m'}$ such that $K(x_i,x_{i'}) = \left<\phi(x_i),\phi(x_{i'})\right>$.
@@ -109,16 +127,34 @@ We say $K$ is a kernel function, if there exists some transformation $\phi:\math
 			so $K$ is also a kernel function.
 		\end{proof}
 \end{enumerate}
+\newpage
 
 \paragraph{4) Dual Perceptron (8 points)} 
-\begin{enumerate}[(c)]
+\begin{enumerate}[(a)]
 	\item You train a Perceptron classifier in the primal form on an infinite stream of data. This stream of data is not-linearly separable. Will the Perceptron have a bounded number of prediction errors?
+		\begin{soln}
+			If the perceptron had a bounded number of prediction errors, then there exists $N\in\NN$ such that the perceptron correctly classifies every example $x_n$ for all $n\ge N.$ At this point, $\mathbf{w}$ will not be changing anymore, so it follows that the data is linearly separable, a contradiction. Thus, the number of prediction errors is unbounded.
+		\end{soln}
+
 	\item Switch the primal Perceptron in the previous step to a dual Perceptron with a linear kernel. After observing $T$ examples in the stream, will the two Perceptrons have learned the same prediction function?
+		\begin{soln}
+			In the dual formulation, we have $\mathbf{w} = \sum_{i=1}^{n} \alpha_i y_i x_i$ where $\alpha_i=1$ if $x_i$ was misclassified, and 0 otherwise. Using the linear kernel, we have
+			\begin{align*}
+				\hat y_d(x_{T+1}) &= \sign\left( \sum_{i=1}^{T} \alpha_i y_i x_i^T x_{T+1} \right) \\
+				\hat y(x_{T+1}) &= \sign\left( w^T x \right) = \sign\left[ \left( \sum_{i=1}^{T} \alpha_i y_i x_i \right)^T x_{T+1} \right] = \sign\left( \sum_{i=1}^{T} \alpha_i y_i x_i^T x_{T+1} \right)
+			\end{align*}
+			so the two functions are the same.
+		\end{soln}
 
 	\item What computational issue will you encounter if you continue to run the dual Perceptron and allow $T$ to approach $\infty$? Will this problem happen with the primal Percepton? Why or why not?
+		\begin{soln}
+			In the dual formulation, we have $\hat y(x_{n+1}) = \sign\left( \sum_{i=1}^{n}\alpha_i y_i x_i^T x \right),$ where $\alpha_i=1$ if example $i$ was classified wrong, and 0 otherwise, since that is when $w$ is updated each time. As $T\to\infty,$ this becomes a sum with more and more terms since the data is not linearly separable, which will become computationally difficult. The primal perceptron will not have this problem because the number of features of $\mathbf{w}$ is not changing, so at each example only a dot product needs to be computed.
+		\end{soln}
+
 \end{enumerate}
 
 
+\newpage
 \paragraph{5) Convex Optimization (12 points)}
 Jenny at Acme Inc. is working hard on her new machine learning algorithm. She starts by writing an objective function
 that captures her thoughts about the problem. However, after writing the program that optimizes the objective
