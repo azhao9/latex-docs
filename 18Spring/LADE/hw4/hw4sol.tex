@@ -85,11 +85,19 @@
 						&= a^2y^2 + a^2z^2 + b^2x^2+b^2z^2 + c^2x^2+c^2y^2 - 2abxy - 2acxz - 2bcyz
 					\end{align*}
 					and we can see that this expression is equivalent to the one in equation (1), so the two quantities are equal, as desired.
+
+					Alternatively, we can use the identities
+					\begin{align*}
+						\left\lVert \vu\times\vv \right\rVert &= \left\lVert \vu \right\rVert\left\lVert \vv \right\rVert\sin \theta \\
+						\vu\cdot\vv &= \left\lVert \vu \right\rVert\left\lVert \vv \right\rVert\cos \theta \\
+						\implies \left\lVert \vu\times\vv \right\rVert^2 + (\vu\cdot\vv)^2 &= \left\lVert \vu \right\rVert^2\left\lVert \vv \right\rVert^2\sin^2\theta + \left\lVert \vu \right\rVert^2\left\lVert \vv \right\rVert^2\cos^2\theta \\
+						&= \left\lVert \vu \right\rVert^2\left\lVert \vv \right\rVert^2\left( \sin^2\theta+\cos^2\theta \right) = \left\lVert \vu \right\rVert^2\left\lVert \vv \right\rVert^2	 \\
+						\implies \left\lVert \vu\times\vv \right\rVert^2 &= \left\lVert \vu \right\rVert^2\left\lVert \vv \right\rVert^2 + (\vu\cdot\vv)^2
+					\end{align*}
 				\end{proof}
 
 		\end{enumerate}
 
-		\newpage
 	\item[4.]
 		\begin{enumerate}[(a)]
 			\item Express $\vu = 1\vi + 4\vj + 3\vk$ as a sum of vectors parallel and perpendicular to $\vv=-2\vi + 5\vj + 4\vk.$
@@ -146,7 +154,6 @@
 			so $V$ is closed under scalar multiplication.
 		\end{proof}
 
-		\newpage
 	\item[7.] (E\&P 4.1.36) $V$ is the set of all $(x, y, z)$ such that $xyz=1.$
 		\begin{soln}
 			This is not a subspace. Consider the vector $\vu =(1, 1, 1)\in V$ since $1\cdot 1\cdot 1 = 1,$ and let $k=2.$ Then $k\vu = (2, 2, 2),$ but $2\cdot2\cdot 2=8\neq 1,$ so $V$ is not closed under scalar multiplication.
