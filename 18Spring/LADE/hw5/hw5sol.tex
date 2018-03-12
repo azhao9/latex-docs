@@ -1,0 +1,170 @@
+\documentclass{article}
+\usepackage[sexy, hdr, fancy]{evan}
+\setlength{\droptitle}{-4em}
+
+\newcommand{\vu}{{\bf u}}
+\newcommand{\vv}{{\bf v}}
+\newcommand{\vi}{{\bf i}}
+\newcommand{\vj}{{\bf j}}
+\newcommand{\vk}{{\bf k}}
+
+\DeclareMathOperator{\proj}{proj}
+
+\lhead{Homework 5 Solutions}
+\rhead{Linear Algebra and Differential Equations}
+\lfoot{}
+\cfoot{\thepage}
+
+\begin{document}
+\title{Homework 5 Solutions}
+\maketitle
+\thispagestyle{fancy}
+
+\begin{itemize}
+	\item[1.] MATLAB exercise. When trying to use Cramer's rule on the selected exercise, the answer is unreasonably large because the matrix is singular.
+
+	\item[2.] MATLAB exercise. 
+
+	\item[3.] 
+		\begin{enumerate}[(a)]
+			\item Let $\mathbf{u} = (-4, 4, -1), \mathbf{v}=(-1, -2, 2).$ Compute $\mathbf{u}\times\mathbf{v}.$
+				\begin{soln}
+					We have
+					\begin{align*}
+						\vu\times\vv &= \det\begin{bmatrix}
+							\vi & \vj & \vk \\
+							-4 & 4 & -1 \\
+							-1 & -2 & 2
+						\end{bmatrix} = \vi\abs{\begin{bmatrix}
+							4 & -1 \\
+							-2 & 2
+						\end{bmatrix}} - \vj\abs{\begin{bmatrix}
+							-4 & -1 \\
+							-1 & 2
+						\end{bmatrix}} + \vk\abs{\begin{bmatrix}
+							-4 & 4 \\
+							-1 & -2
+						\end{bmatrix}} \\
+						&= \vi (4\cdot 2-(-1)\cdot(-2)) - vj (-4\cdot 2 - (-1)\cdot (-1)) + \vk(-4\cdot(-2) - 4\cdot (-1)) \\
+						&= 6\vi + 9\vj + 12\vk = (6, 9, 12)
+					\end{align*}
+				\end{soln}
+
+			\item Prove for all $\mathbf{u}, \mathbf{v}\in\RR^3,$
+				\begin{align*}
+					\left\lVert \mathbf{u}\times\mathbf{v} \right\rVert^2 = \left\lVert \mathbf{u} \right\rVert^2\left\lVert \mathbf{v} \right\rVert^2 - (\mathbf{u}\cdot \mathbf{v})^2
+				\end{align*}
+				\begin{proof}
+					Let $\vu = (a, b, c)$ and let $\vv = (x, y, z).$ Then
+					\begin{align*}
+						\vu\times\vv &= \det\begin{bmatrix}
+							\vi & \vj & \vk \\
+							a & b & c \\
+							x & y & z
+						\end{bmatrix} = \vi\abs{\begin{bmatrix}
+							b & c \\
+							y & z
+						\end{bmatrix}} - \vj\abs{\begin{bmatrix}
+							a & c \\ x & z
+						\end{bmatrix}} + \vk\abs{\begin{bmatrix}
+							a & b \\
+							x & y
+						\end{bmatrix}} \\
+						&= \vi(bz-cy) + \vj(cx-az) + \vk(ay-bx) \\
+						\implies \left\lVert \vu\times\vv \right\rVert^2 &= (bz-cy)^2 + (cx-az)^2 + (ay-bx)^2 \\
+						&= b^2z^2 -2bcyz+c^2y^2 + c^2x^2-2acxz + a^2z^2 + a^2y^2 - 2abxy + b^2x^2\tag{1}
+					\end{align*}
+					We also have
+					\begin{align*}
+						\left\lVert \vu \right\rVert^2 &= a^2+b^2+c^2 \\
+						\left\lVert \vv \right\rVert^2 &= x^2+y^2+z^2 \\
+						\vu\cdot\vv &= ax+by+cz \\
+						\implies \left\lVert \vu \right\rVert^2\left\lVert \vv \right\rVert^2 - (\vu\cdot\vv)^2 &= (a^2+b^2+c^2)(x^2+y^2+z^2) - (ax+by+cz)^2 \\
+						&= a^2x^2 + a^2y^2+a^2z^2 + b^2x^2+b^2y^2+b^2z^2 + c^2x^2+c^2y^2+c^2z^2  \\
+						&-\left( a^2x^2+b^2y^2+c^2z^2 + 2abxy + 2acxz + 2bcyz \right) \\
+						&= a^2y^2 + a^2z^2 + b^2x^2+b^2z^2 + c^2x^2+c^2y^2 - 2abxy - 2acxz - 2bcyz
+					\end{align*}
+					and we can see that this expression is equivalent to the one in equation (1), so the two quantities are equal, as desired.
+				\end{proof}
+
+		\end{enumerate}
+
+		\newpage
+	\item[4.]
+		\begin{enumerate}[(a)]
+			\item Express $\vu = 1\vi + 4\vj + 3\vk$ as a sum of vectors parallel and perpendicular to $\vv=-2\vi + 5\vj + 4\vk.$
+				\begin{soln}
+					We have
+					\begin{align*}
+						\vu_{\parallel} &= \proj_{\vv}\vu = \frac{\vu\cdot\vv}{\left\lVert \vv \right\rVert^2}\vv = \frac{1\cdot -2 + 4\cdot 5 + 3\cdot 4}{(-2)^2+5^2+4^2}\vv = \frac{30}{45}(-2, 5, 4) = \left( -\frac{4}{3}, \frac{10}{3}, \frac{8}{3} \right) \\
+						\vu_{\bot} &= \vu - \proj_{\vv}\vu = (1, 4, 3) - \left( -\frac{4}{3}, \frac{10}{3}, \frac{8}{3} \right) = \left( \frac{7}{3}, \frac{2}{3}, \frac{1}{3} \right)
+					\end{align*}
+					so now
+					\begin{align*}
+						\vu = (1, 4, 3) = \left( -\frac{4}{3}, \frac{10}{3}, \frac{8}{3} \right) + \left( \frac{7}{3}, \frac{2}{3}, \frac{1}{3} \right)
+					\end{align*}
+				\end{soln}
+
+			\item Show that the vectors $\vu_{\parallel}$ and $\vu_{\bot}$ you obtained in part (a) are orthogonal.
+				\begin{proof}
+					The dot product between orthogonal vector is 0, and here
+					\begin{align*}
+						\vu_{\parallel}\cdot\vu_{\bot} &= \left( -\frac{4}{3}, \frac{10}{3}, \frac{8}{3} \right)\cdot \left( \frac{7}{3}, \frac{2}{3}, \frac{1}{3} \right) = -\frac{4}{3}\cdot\frac{7}{3} + \frac{10}{3}\cdot \frac{2}{3} + \frac{8}{3}\cdot \frac{1}{3} = \frac{-28}{3} + \frac{20}{3} + \frac{8}{3} = 0
+					\end{align*}
+					so these two vectors are orthogonal, as desired.
+				\end{proof}
+
+		\end{enumerate}
+
+	\item[5.] MATLAB exercise. For the vectors $\vu = (2, 8, -3, -1, 2)$ and $\vv = (-5, 3, 1, 1, 6),$ we have
+		\begin{align*}
+			\left\lVert \vu \right\rVert &= \sqrt{2^2+8^2+(-3)^2+(-1)^2+2^2} = \sqrt{82}\approx 9.055 \\
+			\left\lVert \vv \right\rVert &= \sqrt{(-5)^2 + 3^2 + 1^2+1^2+6^2} = 6\sqrt{2} \approx8.485 \\
+			\vu\cdot\vv &= 2\cdot-5 + 8\cdot3 + -3\cdot1 + -1\cdot 1 + 2\cdot 6 = 22 \\
+			\left\lVert \vu-\vv \right\rVert &= \left\lVert (7, 5, -4, -2, -4) \right\rVert = \sqrt{7^2+5^2+(-4)^2+(-2)^2+(-4)^2} = \sqrt{110} \approx10.488 \\
+			\cos \theta &= \frac{\vu\dot \vv}{\left\lVert \vu \right\rVert\left\lVert \vv \right\rVert} = \frac{22}{\sqrt{82}\cdot 6\sqrt{2}} \approx0.286
+		\end{align*}
+
+	\item[6.] (E\&P 4.1.30) $V$ is the set of all $(x, y, z)$ such that $x+y+z=0.$
+		\begin{proof}
+			Let $\vu, \vv\in V,$ where $\vu = (u_1, u_2, u_3)$ and $\vv=(v_1, v_2, v_3),$ and let $k\in\RR.$ Then since $\vu$ and $\vv$ are in $V,$ they have the property that $u_1+u_2+u_3=0$ and $v_1+v_2+v_3 = 0.$ Now,
+			\begin{align*}
+				\vu + \vv &= \left( u_1+v_1, u_2+v_2, u_3+v_3 \right)
+			\end{align*}
+			where
+			\begin{align*}
+				(u_1+v_1) + (u_2+v_2) + (u_3+v_3) &= (u_1+u_2+u_3) + (v_1+v_2+v_3) = 0 + 0 = 0
+			\end{align*}
+			so $V$ is closed under addition. Then we have
+			\begin{align*}
+				k\vu &= (ku_1, ku_2, ku_3)
+			\end{align*}
+			where
+			\begin{align*}
+				ku_1 + ku_2 + ku_3 = k(u_1+u_2+u_3) = k\cdot 0 = 0
+			\end{align*}
+			so $V$ is closed under scalar multiplication.
+		\end{proof}
+
+		\newpage
+	\item[7.] (E\&P 4.1.36) $V$ is the set of all $(x, y, z)$ such that $xyz=1.$
+		\begin{soln}
+			This is not a subspace. Consider the vector $\vu =(1, 1, 1)\in V$ since $1\cdot 1\cdot 1 = 1,$ and let $k=2.$ Then $k\vu = (2, 2, 2),$ but $2\cdot2\cdot 2=8\neq 1,$ so $V$ is not closed under scalar multiplication.
+		\end{soln}
+
+	\item[8.] (E\&P 4.2.8) $W$ is the set of all vectors in $\RR^2$ such that $(x_1)^2+(x_2)^2=0.$
+		\begin{proof}
+			Let $\vu, \vv\in V,$ where $\vu=(u_1, u_2)$ and $\vv=(v_1, v_2),$ and let $k\in\RR.$ Then it follows that $u_1^2+u_2^2=0\implies u_1=u_2=0,$ and similarly $v_1=v_2=0.$ Thus,
+			\begin{align*}
+				\vu+\vv = (u_1+v_1, u_2+v_2) = (0+0, 0+0) = (0, 0)\in V
+			\end{align*}
+			so $V$ is closed under addition, and
+			\begin{align*}
+				k\vu = k(u_1, u_2) = k(0, 0) = (0, 0)\in V
+			\end{align*}
+			so $V$ is closed under scalar multiplication. In a sense, $V$ is vacuously a subspace because it contains only the 0 vector.
+		\end{proof}
+
+\end{itemize}
+
+\end{document}
