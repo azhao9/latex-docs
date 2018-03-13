@@ -1,0 +1,168 @@
+\documentclass{article}
+\usepackage[sexy, hdr, fancy]{evan}
+\usepackage{graphicx}
+\graphicspath{.}
+\setlength{\droptitle}{-4em}
+
+\DeclareMathOperator{\re}{Re}
+\DeclareMathOperator{\im}{Im}
+
+\lhead{Homework 6}
+\rhead{Complex Analysis}
+\lfoot{}
+\cfoot{\thepage}
+
+\begin{document}
+\title{Homework 6}
+\maketitle
+\thispagestyle{fancy}
+
+\section*{Section 4.1}
+
+\begin{itemize}
+	\item[1.] For each of the following smooth curves give an admissible parametrization that is consistent with the indicated direction.
+		\begin{itemize}
+			\item[b.] the circle $\abs{z-2i}=4$ traversed once in the clockwise direction starting from the point $z=4+2i.$
+				\begin{soln}
+					This is a circle radius 4 centered at $2i,$ so we have $z(t)=4e^{-it} + 2i, 0\le t\le 2\pi.$
+				\end{soln}
+
+			\item[d.] the segment of the parabola $y=x^2$ from the point $(1, 1)$ to the point $(3, 9).$
+				\begin{soln}
+					Each point on this parabola is of the form $(x, ix^2),$ so we have $z(t)=t + it^2, 1\le t\le 3.$
+				\end{soln}
+
+		\end{itemize}
+
+	\item[3.] Show that the ellipse $x^2/a^2+y^2/b^2=1$ is a smooth curve by producing an admissible parametrization.
+		\begin{soln}
+			The typical parametrization of an ellipse into polar coordinates is $x(t)=a\cos t$ and $y(t)=b\sin t,$ so that $x^2/a^2+y^2/b^2=\cos^2t+\sin^2t=1.$ In the complex plane, we can just parametrize it as
+			\begin{align*}
+				z(t) = a\cos t + ib\sin t, \quad 0\le t\le 2\pi
+			\end{align*}
+		\end{soln}
+
+	\item[4.] Show that the range of the function $z(t)=t^3+it^6, -1\le t\le 1,$ is a smooth curve even though the given parametrization is not admissible.
+		\begin{soln}
+			We have $\im z = (\re z)^2,$ so this is the curve $y=x^2,$ with an admissible parametrization of $z_2(t) = t + it^2, -1\le t\le 1.$ The given parametrization is not admissible because $z'(0)=0.$
+		\end{soln}
+
+\end{itemize}
+
+\section*{Section 4.2}
+
+\begin{itemize}
+	\item[3.] Evaluate each of the following integrals.
+		\begin{itemize}
+			\item[b.] $\int_{-2}^0 (1+i)\cos(it)\, dt$
+				\begin{soln}
+					This is
+					\begin{align*}
+						\int_{-2}^0 (1+i)\cos(it)\, dt &= \left[ (1+i)\cdot \frac{1}{i}\sin(it) \right]\bigg|_{-2}^0 = \frac{1+i}{i}\sin 0 - \frac{1+i}{i}\sin(-2i) \\
+						&= \frac{1+i}{i} \frac{e^{i(-2i)} - e^{-i(-2i)}}{2i} = \frac{1+i}{2}\left( e^2-e^{-2} \right)
+					\end{align*}
+				\end{soln}
+
+				\newpage
+			\item[d.] $\int_0^2 \frac{t}{(t^2+i)^2}\, dt$
+				\begin{soln}
+					Using the substitution $u=t^2+i\implies du=2t\, dt,$ we have
+					\begin{align*}
+						\int_0^2 \frac{t}{(t^2+i)^2}\, dt &= \int_i^{4+i} \frac{1/2}{u^2}\, du = \left[ -\frac{1}{2} u^{-1} \right]_{i}^{4+i} = -\frac{1}{2}\cdot\frac{1}{4+i} + \frac{1}{2}\cdot\frac{1}{i} \\
+						&= -\frac{4-i}{2(4^2+1^2)} - \frac{i}{2} = -\frac{2}{17} - \frac{8}{17}i
+					\end{align*}
+				\end{soln}
+
+		\end{itemize}
+
+	\item[6.] Compute $\int_{\Gamma}\bar z\, dz$ where
+		\begin{enumerate}[(a)]
+			\item $\Gamma$ is the circle $\abs{z}=2$ traversed once counterclockwise. 
+				\begin{soln}
+					Let $\gamma(t) = 2e^{it}, 0\le t\le 2\pi$ be a parametrization. Then $\gamma'(t)=2ie^{it},$ so 
+					\begin{align*}
+						\int_{\Gamma} \bar z\, dz &= \int_0^{2\pi} \overline{2e^{it}} \cdot 2ie^{it}\, dt = \int_{0}^{2\pi} 2e^{-it}\cdot 2ie^{it}\, dt = \int_0^{2\pi} 4i\, dt = 8\pi i
+					\end{align*}
+				\end{soln}
+
+			\item $\Gamma$ is the circle $\abs{z}=2$ traversed once clockwise.
+				\begin{soln}
+					Let $\varphi(t)=2e^{-it}, 0\le t\le 2\pi$ be a parametrization. Then $\varphi'(t)=-2ie^{-it},$ so
+					\begin{align*}
+						\int_{\Gamma} \bar z\, dz &= \int_0^{2\pi} \overline{ 2e^{-it}}\cdot -2ie^{-it}\, dt = \int_0^{2\pi} 2e^{it}\cdot -2ie^{-it}\, dt = \int_0^{2\pi} -4i\, dt = -8\pi i
+					\end{align*}
+				\end{soln}
+
+			\item $\Gamma$ is the circle $\abs{z}=2$ traversed three times clockwise. 
+				\begin{soln}
+					Let $\theta(t)=2e^{-it}, 0\le t\le 6\pi$ be a parametrization. Then $\theta'(t)=-2ie^{-it},$ so
+					\begin{align*}
+						\int_\Gamma\bar z\, dz &= \int_0^{6\pi} -4i\, dt = -24\pi i
+					\end{align*}
+					using the result of part b.
+				\end{soln}
+
+		\end{enumerate}
+
+	\item[7.] Compute $\int_\Gamma \re z\, dz$ along the directed line segment from $z=0$ to $z=1+2i.$
+		\begin{soln}
+			Let $z(t)=(1+2i)t, 0\le t\le 1$ be a parametrization. Then $z'(t)=1+2i,$ so
+			\begin{align*}
+				\int_\Gamma\re z\, dz &= \int_0^{1} \re\left[ (1+2i)t \right]\cdot (1+2i)\, dt = \int_0^1 t(1+2i)\, dt = \left[ \frac{1}{2}(1+2i)t^2 \right]\bigg|_0^1 = \frac{1}{2} + i
+			\end{align*}
+		\end{soln}
+
+	\item[8.] Let $C$ be the perimeter of the square with vertices at the points $z=0, z=1, z=1+i,$ and $z=i$ traversed once in that order. Show that
+		\begin{align*}
+			\int_C e^z\, dz=0
+		\end{align*}
+		\begin{soln}
+			We can parametrize these segments by
+			\begin{align*}
+				z_1(t) &= t, 0\le t\le 1 \implies z_1'(t) = 1 \\
+				z_2(t) &= (1+i)t + (1-t) = 1+it, 0\le t\le 1 \implies z_2'(t) = i \\
+				z_3(t) &= it + (1-t)(1+i) = 1+i-t, 0\le t\le 1 \implies z_3'(t) = -1\\
+				z_4(t) &= (1-t)i, 0\le t\le 1 \implies z_4'(t)=-i\\
+				\implies\int_C e^{z}\, dz &= \int_0^1 e^t\, dt + \int_0^1 e^{1+it}\cdot i\, dt + \int_0^1 e^{1+i-t}\cdot -1\, dt + \int_0^1 e^{(1-t)i}\cdot -i\, dt \\
+				&= \int_0^1 \left( e^t + ie^{1+it} - e^{1+i-t} - ie^{(1-t)i} \right)\, dt \\
+				&= \left[ e^t + e^{1+it} + e^{1+i-t} + e^{(1-t)i} \right]\bigg|_0^1 \\
+				&= \left( e^1 + e^{1+i} + e^{i} + e^{0} \right) - \left( e^0 + e^1 + e^{1+i} + e^{i} \right) = 0
+			\end{align*}
+			as desired.
+		\end{soln}
+
+	\item[9.] Evaluate $\int_\Gamma (x-2xyi)\, dz$ over the contour $\Gamma: z=t+it^2, 0\le t\le 1,$ where $x=\re z, y=\im z.$
+		\begin{soln}
+			This integral is equal to $\int_\Gamma(\re z - 2i\re z\im z )\, dz,$ and using the given parametrization where $z'(t)=1+2it,$ we have
+			\begin{align*}
+				\int_\Gamma\left( \re z - 2i\re z\im z \right)\, dz &= \int_0^1 \left[ \re(t+it^2) - 2i\re(t+it^2)\im(t+it^2) \right]\cdot (1+2it)\, dt \\
+				&= \int_0^1 \left( t - 2it\cdot t^2 \right)(1+2it)\, dt = \int_0^1 \left( t-2it^3+2it^2+4t^4 \right)\, dt \\
+				&= \left[ \frac{1}{2}t^2 - \frac{i}{2}t^4 + \frac{2i}{3} t^3 + \frac{4}{5} t^5 \right]\bigg|_0^1 = \frac{1}{2} - \frac{i}{2} + \frac{2i}{3} + \frac{4}{5} = \frac{13}{10} + \frac{1}{6}i
+			\end{align*}
+		\end{soln}
+
+	\item[10.] Compute $\int_C \bar z^2\, dz$ along the perimeter of the square in Prob 8.
+		\begin{soln}
+			If $f(z)=\bar z^2,$ using the parametrization from Prob 8, we have
+			\begin{align*}
+				\int_C f(z)\, dz &= \int_0^1 \bigg[ f(t) + f\left[ (1+i)t \right]\cdot i + f(1+i-t)\cdot -1 + f\left[ (1-t)i \right]\cdot -i \bigg]\, dt \\
+				&= \int_0^1 \left[ t^2 + (1-it)^2i - (1-i-t)^2 - \left[ -(1-t)i \right]^2i\right]\, dt \\
+				&= \int_0^1 \left[ t^2 + \left( i+2t-it^2 \right) - (t^2-2t+2it-2i) + (i-2it+it^2) \right]\, dt \\
+				&= \int_0^1\left[ (4-4i)t + 4i \right]\, dt = \left[ (2-2i)t^2 + 4it \right]\bigg|_0^1 = (2-2i)+4i = 2+2i
+			\end{align*}
+		\end{soln}
+
+	\item[13.] Compute $\int_\Gamma\left( \abs{z-1+i}^2-z \right)\, dz$ along the semicircle $z=1-i+e^{it}, 0\le t\le \pi.$
+		\begin{soln}
+			We have $\gamma(t)=1-i+e^{it}, 0\le t\le \pi$ is a parametrization, where $\gamma'(t)=ie^{it},$ so
+			\begin{align*}
+				\int_\Gamma\left( \abs{z-1+i}^2-z \right)\, dz &= \int_0^\pi \left( \abs{(1-i+e^{it}) - 1 + i}^2 - (1-i+e^{it}) \right)\cdot ie^{it}\, dt \\
+				&= \int_0^\pi \left( \abs{e^{it}}^2 - 1 + i -e^{it} \right)\cdot ie^{it}\, dt = \int_0^\pi \left( 1-1+i-e^{it} \right)\cdot ie^{it}\, dt \\
+				&= \int_0^\pi \left( -e^{it} - ie^{2it} \right)\, dt = \left[ -\frac{1}{i} e^{it} - \frac{i}{2i}e^{2it} \right]\bigg|_0^\pi = \left[ ie^{it} - \frac{1}{2}e^{2it} \right]\bigg|_0^\pi \\
+				&= \left[ ie^{\pi i} - \frac{1}{2} e^{2\pi i} \right] - \left[ ie^{0} - \frac{1}{2}e^0 \right] = -2i
+			\end{align*}
+		\end{soln}
+
+\end{itemize}
+
+\end{document}
