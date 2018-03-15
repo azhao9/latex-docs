@@ -39,6 +39,7 @@
 				
 		\end{enumerate}
 
+		\newpage
 	\item
 		\begin{enumerate}[(a)]
 			\item Let $B=\left\{ 1^k y:y\in\left\{ 0, 1 \right\}^*\text{ and } y\text{ contains at least }k\text{ 1s, for any }k\ge 1 \right\}.$ Is $B$ a regular language? Prove your answer.
@@ -58,11 +59,13 @@
 
 		\end{enumerate}
 
+		\newpage
 	\item Let $\Sigma=\left\{ 0, 1 \right\}.$ Say that a language $L\subset\Sigma^*$ satisfies property (a) if the following holds: there exists a string $w\in L$ such that $0w\in L.$ Give an (efficient) algorithm that takes as input any DFA $M,$ tests if $L(M)$ satisfies property (a). Describe your algorithm and briefly explain (informally) why it is correct.
 		\begin{soln}
 			Given a DFA $M,$ construct a new DFA $N$ with a new start state that transitions to the original start state along 0, and transitions to a garbage state along 1, keeping everything else the same. Then it's clear that $N$ accepts all strings $0w$ where $w\in L(M).$ We require that $L=L(M)\cap L(N)\neq\varnothing.$ Since regular languages are closed under intersection, $L$ can be recognized by some DFA, which we can explicitly construct. From there, we just need to check that this DFA accepts some string, which can be done using a graph DFS from the start state. If there is a path to an accept state, then $L(M)$ satisfies property (a), and otherwise, it does not.
 		\end{soln}
 
+		\newpage
 	\item Give a context-free grammar that generates the following language, where the alphabet $\Sigma$ is $\left\{ 0, 1 \right\}: \left\{ w:w\text{ is not empty ands starts and ends with the same symbol} \right\}.$
 		\begin{soln}
 			Let $E$ be the start variable. Then we have the rules
