@@ -1,0 +1,78 @@
+\documentclass{article}
+\usepackage[sexy, hdr, fancy]{evan}
+\setlength{\droptitle}{-4em}
+
+\lhead{Homework 4}
+\rhead{Automata and Computation Theory}
+\lfoot{}
+\cfoot{\thepage}
+
+\begin{document}
+\title{Homework 4}
+\maketitle
+\thispagestyle{fancy}
+
+\begin{enumerate}
+	\item Prove that the following languages are not regular.
+		\begin{enumerate}[(a)]
+			\item $\left\{ 0^n1^m0^{n+m}:m, n\ge 0 \right\}$
+				\begin{proof}
+					Suppose this language was regular. Then by the pumping lemma, there exists an integer $p$ which is the pumping length. Let $s=0^p 1^p 0^{2p}$ be in this language. Here, $\abs{s}\ge p,$ so there exists a decomposition $s=xyz$ with $\abs{y}>0$ and $\abs{xy}\le p.$ Thus, $y$ can contain only 0s, so suppose $y=0^k.$ We have
+					\begin{align*}
+						s &= xyz = 0^{p-k}0^k1^p0^{2p} \\
+						\implies s' &= xy^2z = 0^{p-k}0^{2k} 1^p 0^{2p} = 0^{p+k}1^p 2^{2p}
+					\end{align*}
+					but $s'$ is not in our language, a contradiction, so the language is not regular.
+				\end{proof}
+
+			\item $\left\{ w:w\in\left\{ 0, 1 \right\}^*\text{ is not a palindrome} \right\}.$
+				\begin{proof}
+					Consider the complement language $\left\{ w\in\left\{ 0, 1 \right\}^*\text{ is a palindrome} \right\}.$ If we show the complement is not regular, then this language is not regular by the closure of regular languages. 
+
+					Suppose the complement was regular. Then by the pumping lemma, there exists an integer $p$ which is the pumping length. Let $s=0^p110^p$ be in this language. Here $\abs{s}\ge p,$ so there exists a decomposition $s=xyz$ with $\abs{y}>0$ and $\abs{xy}\le p.$ Thus, $y$ can contain only 0s, so suppose $y=0^k.$ We have
+					\begin{align*}
+						s &= xyz = 0^{p-k}0^k 11 0^p \\
+						\implies s' &= xy^2z = 0^{p-k}0^{2k}110^p = 0^{p+k}110^{p}
+					\end{align*}
+					which is not a palindrome, and not in this language. Thus, this complement language is not regular, so the original language is also not regular.
+				\end{proof}
+				
+		\end{enumerate}
+
+	\item
+		\begin{enumerate}[(a)]
+			\item Let $B=\left\{ 1^k y:y\in\left\{ 0, 1 \right\}^*\text{ and } y\text{ contains at least }k\text{ 1s, for any }k\ge 1 \right\}.$ Is $B$ a regular language? Prove your answer.
+				\begin{proof}
+					The only strings not in $B$ are those starting with 0 and the strings of the form $10^k.$ Let $L_1$ be the set of strings starting with 0, and $L_2$ be the set of strings of the form $10^k.$ Then $L_1$ and $L_2$ are clearly regular languages (it is trivial to design DFAs that recognize these), and thus $L_1\cup L_2$ is regular, so $B=\left( L_1\cup L_2 \right)^c$ is also regular, as desired.
+				\end{proof}
+
+			\item Let $C=\left\{ 1^k y:y\in\left\{ 0, 1 \right\}^*\text{ and } y\text{ contains at most }k\text{ 1s, for any }k\ge 1 \right\}.$ Is $C$ a regular language? Prove your answer.
+				\begin{proof}
+					Suppose $C$ was a regular language. Then by the pumping lemma there exists an integer $p$ which is the pumping length. Let $s=1^p01^p\in C.$ Here $\abs{s}\ge p,$ so there exists a decomposition $s=xyz$ with $\abs{y}>0$ and $\abs{xy}\le p.$ Thus, $y$ can contain only 1s, so suppose $y=1^n.$ we have
+					\begin{align*}
+						s &= xys = 1^{p-n}1^n01^{p} \\
+						\implies s' &= xy^0z = 1^{p-n}01^{p}
+					\end{align*}
+					which is not in $C,$ because $k$ can be at most $p-n,$ but then the rest of the string would contain at least $p$ 1s. This is a contradiction, so $C$ is not regular.
+				\end{proof}
+
+		\end{enumerate}
+
+	\item Let $\Sigma=\left\{ 0, 1 \right\}.$ Say that a language $L\subset\Sigma^*$ satisfies property (a) if the following holds: there exists a string $w\in L$ such that $0w\in L.$ Give an (efficient) algorithm that takes as input any DFA $M,$ tests if $L(M)$ satisfies property (a). Describe your algorithm and briefly explain (informally) why it is correct.
+		\begin{soln}
+			Given a DFA $M,$ construct a new DFA $N$ with a new start state that transitions to the original start state along 0, and transitions to a garbage state along 1, keeping everything else the same. Then it's clear that $N$ accepts all strings $0w$ where $w\in L(M).$ We require that $L=L(M)\cap L(N)\neq\varnothing.$ Since regular languages are closed under intersection, $L$ can be recognized by some DFA, which we can explicitly construct. From there, we just need to check that this DFA accepts some string, which can be done using a graph DFS from the start state. If there is a path to an accept state, then $L(M)$ satisfies property (a), and otherwise, it does not.
+		\end{soln}
+
+	\item Give a context-free grammar that generates the following language, where the alphabet $\Sigma$ is $\left\{ 0, 1 \right\}: \left\{ w:w\text{ is not empty ands starts and ends with the same symbol} \right\}.$
+		\begin{soln}
+			Let $E$ be the start variable. Then we have the rules
+			\begin{align*}
+				E &\to E1\mid E0\mid \varepsilon \\
+				F&\to 0 \mid 1\mid 0E0\mid 1E1
+			\end{align*}
+			Here, the first rule generates any string, and the second rule generates any string that has either 0s on both ends or 1s on both ends, or is just a single element 0 or 1.
+		\end{soln}
+		
+\end{enumerate}
+
+\end{document}
