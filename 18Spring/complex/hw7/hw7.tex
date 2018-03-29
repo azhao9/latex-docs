@@ -1,0 +1,315 @@
+\documentclass{article}
+\usepackage[sexy, hdr, fancy]{evan}
+\usepackage{graphicx}
+\graphicspath{.}
+\setlength{\droptitle}{-4em}
+
+\DeclareMathOperator{\re}{Re}
+\DeclareMathOperator{\im}{Im}
+\DeclareMathOperator{\Log}{Log}
+\DeclareMathOperator{\Arg}{Arg}
+
+\lhead{Homework 7}
+\rhead{Complex Analysis}
+\lfoot{}
+\cfoot{\thepage}
+
+\begin{document}
+\title{Homework 7}
+\maketitle
+\thispagestyle{fancy}
+
+\section*{Section 4.2}
+
+\begin{itemize}
+	\item[5.] Utilize Example 2 to evaluate
+		\begin{align*}
+			\int_{C} \left[ \frac{6}{(z-i)^2} + \frac{2}{z-i} + 1 - 3(z-i)^2 \right]\, dz
+		\end{align*}
+		where $C$ is the circle $\abs{z-i}=4$ traversed once counterclockwise.
+		\begin{soln}
+			From the result of example 2, since this is a circle centered at $z_0=i,$ we have
+			\begin{align*}
+				\int_C (z-i)^n\, dz &= \begin{cases}
+					0 & n \neq -1 \\
+					2\pi i & n = -1
+				\end{cases} \\
+				&\implies \int_C \left[ \frac{6}{(z-i)^2} + \frac{2}{z-i} + 1 - 3\left( z-i \right)^2 \right]\, dz \\
+				&= 6\int_C (z-i)^{-2}\, dz + 2\int_C (z-i)^{-1}\, dz + \int_C (z-i)^0\, dz - 3\int_C (z-i)^2\, dz \\
+				&= 6\cdot 0 + 2\cdot 2\pi i + 0 - 3\cdot 0 = 4\pi i
+			\end{align*}
+		\end{soln}
+		
+\end{itemize}
+
+\section*{Section 4.3}
+
+\begin{itemize}
+	\item[1.] Calculate each of the following integrals along the indicated contours.
+		\begin{itemize}
+			\item[(b)] $\int_\Gamma e^z\, dz$ along the upper half of the circle $\abs{z}=1$ from $z=1$ to $z=-1.$
+				\begin{soln}
+					Since $e^z$ is entire, by the FTC, we have
+					\begin{align*}
+						\int_\Gamma e^z\, dz = e^z\bigg|_1^{-1} = e^{-1} - e
+					\end{align*}
+				\end{soln}
+
+			\item[(e)] $\int_\Gamma\sin^2z\cos z\, dz$ along the contour in Fig 4.24.
+				\begin{soln}
+					Since $\sin^2z\cos z$ is entire, by the FTC, we have
+					\begin{align*}
+						\int_\Gamma \sin^2z\cos z\, dz = \left[ \frac{1}{3}\sin^3z \right]\bigg|_{\pi}^{i} = \frac{1}{3}\sin^3 i - \frac{1}{3}\sin^3 \pi = \frac{1}{3} \cdot \frac{e^{i\cdot i} - e^{-i\cdot i}}{2i} = \frac{e\inv-e}{6i}
+					\end{align*}
+				\end{soln}
+
+			\item[(g)] $\int_\Gamma z^{1/2}\, dz$ for the principal branch of $z^{1/2}$ along the contour in Fig 4.24.
+				\begin{soln}
+					By the FTC, we have
+					\begin{align*}
+						\int_\Gamma z^{1/2}\, dz &= \left[ \frac{2}{3} z^{3/2} \right]\bigg|_\pi^i = \frac{2}{3} i^{3/2} - \frac{2}{3} \pi^{3/2} = \frac{2}{3} (e^{\pi i/2})^{3/2} - \frac{2}{3} \pi^{3/2} = \frac{2}{3} \left( -\frac{\sqrt{2}}{2} + i\frac{\sqrt{2}}{2} \right) - \frac{2}{3} \pi^{3/2} \\
+						&= \left( -\frac{\sqrt{2}}{3} - \frac{2}{3} \pi^{3/2} \right) +i \frac{\sqrt{2}}{3}
+					\end{align*}
+				\end{soln}
+
+			\item[(h)] $\int_\Gamma(\Log z)^2\, dz$ along the line segment from $z=1$ to $z=i.$
+				\begin{soln}
+					By the FTC, we have
+					\begin{align*}
+						\int_\Gamma (\Log z)^2\, dz &= \left[ z\Log^2z - 2z\Log z + 2z \right]\bigg|_1^i = (i\Log^2i-2i\Log i + 2i) - \left( 1\Log^21-2\Log1 + 2 \right) \\
+						&= \left[ i\cdot \left( \frac{\pi i}{2} \right)^2 - 2i\cdot \frac{\pi i}{2} + 2i \right] - 2 = \pi - 2 + i\left( 2-\frac{\pi^2}{4} \right)
+					\end{align*}
+				\end{soln}
+
+			\item[(i)] $\int_\Gamma 1/(1+z^2)\, dz$ along the line segment from $z=1$ to $z=1+i.$
+				\begin{soln}
+					By the FTC, we have
+					\begin{align*}
+						\int_\Gamma \frac{1}{1+z^2}\, dz = \tan\inv z\bigg|_1^{1+i} = \tan\inv(1+i) - \tan\inv1 = \tan\inv(1+i) - \frac{\pi}{4}
+					\end{align*}
+					Suppose $\tan z = 1+i.$ Then we have
+					\begin{align*}
+						\tan z &= \frac{e^{2iz} - 1}{i(e^{2iz} + 1)} = 1+i \\
+						\implies e^{2iz} - 1 &= i(1+i)\left( e^{2iz}+1 \right) \\
+						\implies e^{2iz} - 1 &= (i-1)e^{2iz} + (i-1) \\
+						\implies e^{2iz}\left[ 1-(i-1) \right] &= e^{2iz}(2-i) = e^{2iz}e^{\Log(2-i)}=e^{\pi i/2} \\
+						\implies e^{2iz} &= e^{\pi i/2-\Log(2-i)} \\
+						\implies 2iz &= \frac{\pi i}{2} - \left( \Log\abs{2-i} + i\Arg(2-i) \right) \\
+						\implies z &= \frac{1}{2i} \left( \frac{\pi i}{2} - \Log\sqrt{5} - i\Arg(2-i) \right) \\
+						&= \frac{\pi}{4} - \frac{1}{4i}\Log 5 + \frac{1}{2}\tan\inv\frac{1}{2} = \frac{\pi}{4} + \frac{i}{4}\Log 5 + \frac{1}{2}\tan\inv\frac{1}{2} \\
+						\implies \tan\inv(1+i)-\frac{\pi}{4} &= \frac{i}{4}\Log 5 + \frac{1}{2}\tan\inv\frac{1}{2}
+					\end{align*}
+				\end{soln}
+				
+		\end{itemize}
+
+	\item[2.] If $P(z)$ is a polynomial and $\Gamma$ is any closed contour, explain why $\int_\Gamma P(z)\, dz=0.$
+		\begin{answer*}
+			Since polynomials are entire and continuous on all of $\CC,$ the integral is always 0 for any closed contour since closed contours can be decomposed into closed loops.
+		\end{answer*}
+
+	\item[4.] True or false: If $f$ is analytic at each point of a closed contour $\Gamma,$ then $\int_{\Gamma}f(z)\, dz=0.$
+		\begin{answer*}
+			This is false. If $f(z)=1/z$ and if $\Gamma$ is the unit circle centered at the origin oriented counterclockwise, then $f$ is analytic on all of $\Gamma,$ but $\int_\Gamma f(z)\, dz = 2\pi i.$
+		\end{answer*}
+
+	\item[6.] Apply Theorem 6 to compute the integral along the portion of $C$ from $\alpha$ to $\beta$ as indicated in Fig 4.25. Now let $\alpha$ and $\beta$ approach the point $\tau$ on the cut to evaluate the given integral over all of $C.$
+		\begin{soln}
+			By Theorem 6, since $1/z$ has continuous anti-derivative $\Log(z-z_0),$ along the curve $\gamma$ from $\alpha$ to $\beta,$ we have
+			\begin{align*}
+				\int_{\gamma} \frac{1}{z-z_0}\, dz &= \Log(\beta-z_0) - \Log(\alpha-z_0) \\
+				&= \Log\abs{\beta-z_0} + i\Arg(\beta-z_0) - \Log\abs{\alpha-z_0} - i\Arg(\alpha-z_0)
+			\end{align*}
+			As $\alpha, \beta\to\tau,$ we have
+			\begin{align*}
+				\lim_{\alpha, \beta\to\tau}\bigg( \Log\abs{\beta-z_0} + i\Arg(\beta-z_0) - \Log\abs{\alpha-z_0} - i\Arg(\alpha-z_0)\bigg) &= i\Arg(\tau-z_0) - i\Arg(\tau-z_0)\\
+				&= i\pi - (-i\pi) =  2\pi i
+			\end{align*}
+		\end{soln}
+
+	\item[7.] Show that if $C$ is a positively oriented circle and $z_0$ lies outside $C,$ then
+		\begin{align*}
+			\int_C \frac{dz}{z-z_0} = 0
+		\end{align*}
+		\begin{proof}
+			If $z_0$ lies outside $C,$ then we can choose a domain $D$ containing $C$ and not containing $z_0,$ where $1/(z-z_0)$ is analytic on all of $D.$ Then $\int dz/(z-z_0) = \Log(z-z_0),$ and by the FTC, this is equal to 0 because we are integrating over a closed loop.
+		\end{proof}
+
+\end{itemize}
+
+\section*{Section 4.4}
+
+\begin{itemize}
+	\item[13.] Evaluate $\int 1/(z^2+1)\, dz$ along the three closed contours $\Gamma_1, \Gamma_2, \Gamma_3$ in Fig 4.47.
+		\begin{enumerate}[(a)]
+			\item 
+				\begin{soln}
+					We first find the partial fraction decomposition of the integrand as
+					\begin{align*}
+						\frac{1}{z^2+1} &= \frac{1}{(z-i)(z+i)} = \frac{A}{z-i} + \frac{B}{z+i} \\
+						\implies A(z+i) + B(z-i) &= 1 
+					\end{align*}
+					Letting $z=i$ and $z=-i,$ we have
+					\begin{align*}
+						A(i+i) &= 1 \implies A = \frac{1}{2i} = -\frac{i}{2} \\
+						B(-i-i) &= 1 \implies B = \frac{1}{-2i} = \frac{i}{2}
+					\end{align*}
+					Thus the integral is 
+					\begin{align*}
+						\int_{\Gamma_1} \frac{1}{z^2+1}\, dz = -\frac{i}{2}\int_{\Gamma_1} \frac{1}{z-i}\, dz + \frac{i}{2}\int_{\Gamma_1}  \frac{1}{z+i}\, dz
+					\end{align*}
+					Since $\Gamma_1$ is a counterclockwise loop around $i$ not containing $-i,$ the integral $\int_{\Gamma_1} \frac{1}{z+i}\, dz$ vanishes, so we have
+					\begin{align*}
+						\int_{\Gamma_1}\frac{1}{z^2+1}\, dz &= -\frac{i}{2}\int_{\Gamma_1} \frac{1}{z-i}\, dz =-\frac{i}{2}\cdot 2\pi i = \pi
+					\end{align*}
+				\end{soln}
+
+			\item 
+				\begin{soln}
+					Using the same partial fraction decomposition, we have
+					\begin{align*}
+						\int_{\Gamma_1} \frac{1}{z^2+1}\, dz = -\frac{i}{2}\int_{\Gamma_2} \frac{1}{z-i}\, dz + \frac{i}{2}\int_{\Gamma_2}\frac{1}{z+i}\, dz
+					\end{align*}
+					and since $\Gamma_2$ is the counterclockwise loop containing both $i$ and $-i,$ both integrals evaluate to $2\pi i,$ so the result is 0.
+				\end{soln}
+
+			\item 
+				\begin{soln}
+					Using the same partial fraction decomposition, we have
+					\begin{align*}
+						\int_{\Gamma_1} \frac{1}{z^2+1}\, dz = -\frac{i}{2}\int_{\Gamma_2} \frac{1}{z-i}\, dz + \frac{i}{2}\int_{\Gamma_2}\frac{1}{z+i}\, dz
+					\end{align*}
+					and since $\Gamma_3$ contains a counterclockwise loop around $-i$ and a clockwise loop not containing $i,$ the integral $\int_{\Gamma_3}\frac{1}{z-i}\, dz$ vanishes, so we have
+					\begin{align*}
+						\int_{\Gamma_3} \frac{1}{z^2+1} = \frac{i}{2}\int_{\Gamma_3} \frac{1}{z+i}\, dz = \frac{i}{2}\cdot 2\pi i = -\pi
+					\end{align*}
+				\end{soln}
+				
+		\end{enumerate}
+
+	\item[15.] Evaluate 
+		\begin{align*}
+			\int_{\Gamma} \frac{z}{(z+2)(z-1)}\, dz
+		\end{align*}
+		where $\Gamma$ is the circle $\abs{z}=4$ traversed twice in the clockwise direction.
+		\begin{soln}
+			We first find the partial fraction decomposition of the integrand as
+			\begin{align*}
+				\frac{z}{(z+2)(z-1)} &= \frac{A}{z+2} + \frac{B}{z-1} \\
+				\implies z &= A(z-1) + B(z+2)
+			\end{align*}
+			Letting $z=1$ and $z=-2,$ we have
+			\begin{align*}
+				1 &= B(1+2) \implies B = \frac{1}{3} \\
+				-2 &= A(-2-1) \implies A = \frac{2}{3} \\
+				\implies \int_\Gamma \frac{z}{(z+2)(z-1)}\, dz &= \frac{2}{3}\int_\Gamma \frac{1}{z+2}\, dz + \frac{1}{3}\int_\Gamma \frac{1}{z-1}\, dz
+			\end{align*}
+			This circle contains both 1 and -2, and since it goes around twice, we have
+			\begin{align*}
+				\frac{2}{3}\int_{\Gamma} \frac{1}{z+2}\, dz + \frac{1}{3}\int_{\Gamma} \frac{1}{z-1}\, dz = \frac{2}{3} \cdot 2\cdot -2\pi i + \frac{1}{3} \cdot 2\cdot -2\pi i = -4\pi i
+			\end{align*}
+		\end{soln}
+
+	\item[17.] Evaluate
+		\begin{align*}
+			\int_\Gamma \frac{2z^2-z+1}{(z-1)^2(z+1)}\, dz
+		\end{align*}
+		where $\Gamma$ is the figure-eight contour traversed once as shown in Fig 4.49.
+		\begin{soln}
+			We first find the partial fraction decomposition of the integrand as
+			\begin{align*}
+				\frac{2z^2-z+1}{(z-1)^2(z+1)} &= \frac{A}{(z-1)^2}+\frac{B}{z-1} + \frac{C}{z+1} \\
+				\implies 2z^2-z+1 &= A(z+1) + B(z-1)(z+1) + C(z-1)^2
+			\end{align*}
+			Letting $z=1$ and $z=-1,$ we have 
+			\begin{align*}
+				2(1)^2-1+1 &= A(1+1) \implies A = 1 \\
+				2(-1)^2-(-1)+1 &= C(-1-1)^2 \implies C = 1
+			\end{align*}
+			and finally
+			\begin{align*}
+				2z^2-z+1 &= (z+1) + B(z^2-1) + (z^2-2z+1) \implies B = 1
+			\end{align*}
+			Since $\frac{1}{(z-1)^2}$ has an anti-derivative, the integral vanishes. If $\gamma_1$ is the clockwise contour around 1 and $\gamma_2$ is the counterclockwise contour around -1, then we have
+			\begin{align*}
+				\int_\Gamma \left( \frac{1}{(z-1)^2} + \frac{1}{z-1} + \frac{1}{z+1} \right)\, dz &= \int_{\gamma_1} \frac{1}{z-1}\, dz + \int_{\gamma_1}\frac{1}{z+1}\, dz + \int_{\gamma_2} \frac{1}{z-1}\, dz + \int_{\gamma_2} \frac{1}{z+1}\, dz \\
+				&= -2\pi i + 0 + 0 + 2\pi i = 0
+			\end{align*}
+		\end{soln}
+		
+\end{itemize}
+
+\section*{Section 4.5}
+
+\begin{itemize}
+	\item[3.] Let $C$ be the circle $\abs{z}=2$ traversed once in the positive sense. Compute each of the following integrals.
+		\begin{itemize}
+			\item[(d)] $\int_C \frac{5z^2+2z+1}{(z-i)^3}\, dz$
+				\begin{soln}
+					We first find the partial fraction decomposition of the integrand as
+					\begin{align*}
+						\frac{5z^2+2z+1}{(z-i)^3} &= \frac{A}{(z-i)^3} + \frac{B}{(z-i)^2} + \frac{C}{z-i} \\
+						\implies 5z^2+2z+1 &= A + B(z-i) + C(z-i)^2 = A + Bz - Bi + Cz^2-2Ciz -C \\
+						&= Cz^2 + (B - Ci)z + (A-Bi-C) \implies C = 5
+					\end{align*}
+					Then the integrals of $1/(z-i)^2$ and $1/(z-i)^3$ vanish since these have anti-derivatives, and we have 
+					\begin{align*}
+						\int_C \frac{5z^2+2z+1}{(z-i)^3}\, dz &= 5\int_C \frac{1}{z-i}\, dz = 5\cdot 2\pi i= 10\pi i
+					\end{align*}
+				\end{soln}
+				
+		\end{itemize}
+
+	\item[4.] Compute
+		\begin{align*}
+			\int_C \frac{z+i}{z^3+2z^2}\, dz
+		\end{align*}
+		where $C$ is
+		\begin{enumerate}[(a)]
+			\item the circle $\abs{z}=1$ traversed once counterclockwise.
+				\begin{soln}
+					We first find the partial fraction decomposition of the integrand as
+					\begin{align*}
+						\frac{z+i}{z^3+2z^2} &= \frac{z+i}{z^2(z+2)} = \frac{A}{z^2}+\frac{B}{z} + \frac{C}{z+2} \\
+						\implies z+i &= A(z+2) + Bz(z+2) + Cz^2 = Az + 2A + Bz^2 + 2Bz + Cz^2 \\
+						&= (B+C)z^2 + (A+2B)z + 2A 
+					\end{align*}
+					so we have the equations
+					\begin{align*}
+						i &= 2A \implies A = \frac{i}{2} \\
+						1 &= A+2B = \frac{i}{2} + 2B \implies B = \frac{1}{2} - \frac{i}{4} \\
+						0 &= B+C \implies C = -\frac{1}{2} + \frac{i}{4}
+					\end{align*}
+					and thus the integral is given by
+					\begin{align*}
+						\int_C \frac{z+i}{z^3+2z^2}\, dz &= \frac{i}{2}\int_C\frac{1}{z^2}\, dz + \left( \frac{1}{2} - \frac{i}{4} \right)\int_C \frac{1}{z} \, dz + \left( -\frac{1}{2} + \frac{i}{4} \right)\int_C \frac{1}{z+2}\, dz \\
+						&= \left( \frac{1}{2}-\frac{i}{4} \right)\int_C \frac{1}{z}\, dz + \left( -\frac{1}{2} + \frac{i}{4} \right)\int_C \frac{1}{z+2}\, dz
+					\end{align*}
+					since $1/z^2$ has an anti-derivative, so its integral vanishes on any closed loop. Now, $C$ contains 0 and not -2, so this evaluates to
+					\begin{align*}
+						\left( \frac{1}{2}-\frac{i}{4} \right)\cdot 2\pi i = \frac{\pi}{2} + \pi i
+					\end{align*}
+				\end{soln}
+
+			\item the circle $\abs{z+2-i}=2$ traversed once counterclockwise.
+				\begin{soln}
+					Using the decomposition from above, we have
+					\begin{align*}
+						\int_C \frac{z+i}{z^3+2z^2}\, dz = \left( \frac{1}{2} - \frac{i}{4} \right)\int_C \frac{1}{z} + \left( -\frac{1}{2} + \frac{i}{4} \right)\int_C \frac{1}{z+2}\, dz
+					\end{align*}
+					Here, $C$ contains -2 and not 0, so this evaluates to 
+					\begin{align*}
+						\left( -\frac{1}{2} + \frac{i}{4} \right)\cdot 2\pi i = -\frac{\pi}{2} - \pi i
+					\end{align*}
+				\end{soln}
+
+			\item the circle $\abs{z-2i}=1$ traversed once counterclockwise.
+				\begin{soln}
+					Using the same decomposition from above, we find that $C$ does not contain either 0 or -2, so both integrals evaluate to 0.
+				\end{soln}
+				
+		\end{enumerate}
+		
+\end{itemize}
+
+\end{document}
