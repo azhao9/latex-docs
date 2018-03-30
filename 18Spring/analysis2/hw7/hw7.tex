@@ -1,0 +1,109 @@
+\documentclass{article}
+\usepackage[sexy, hdr, fancy]{evan}
+\setlength{\droptitle}{-4em}
+
+\lhead{Homework 7}
+\rhead{Honors Analysis II}
+\lfoot{}
+\cfoot{\thepage}
+
+\begin{document}
+\title{Homework 7}
+\maketitle
+\thispagestyle{fancy}
+
+\section*{Chapter 17: Measurable Functions}
+
+\begin{itemize}
+	\item[1.] Prove Corollary 17.2. Let $f:D\to\RR$ where $D$ is measurable. Then $f$ is measurable if and only if $f\inv(U)$ is measurable for every open set $U\subset\RR.$
+		\begin{proof}
+			$(\implies):$ If $f$ is measurable, then $\left\{ \alpha<f<\beta \right\}$ is measurable for every $\alpha<\beta.$ Then since any open set $U\subset\RR$ can be written as a countable union of open intervals, we have
+			\begin{align*}
+				f\inv(U) &= \left\{ x\in D: f(x)\in U \right\} = \left\{ x\in D: f(x)\in\bigcup_{n=1}^\infty (a_n, b_n) \right\} \\
+				&= \bigcup_{n=1}^\infty \left\{ x\in D: f(x)\in (a_n, b_n) \right\} = \bigcup_{n=1}^\infty \left\{ a_n<f<b_n \right\}
+			\end{align*}
+			and since $\left\{ a_n<f<b_n \right\}$ are all measurable, this union is measurable by the $\sigma$-algebra property of $\mathcal M.$
+
+			$(\impliedby):$ If $f\inv(U)$ is measurable for every open set $U,$ then since $(\alpha, \infty)$ is open for every $\alpha,$ it follows that
+			\begin{align*}
+				\left\{ f>\alpha \right\} &= \left\{ x\in D:f(x)\in(\alpha, \infty) \right\} = f\inv( (\alpha, \infty))
+			\end{align*}
+			which is measurable, and thus $f$ is measurable.
+		\end{proof}
+
+	\item[3.] Let $f:D\to\RR$ where $D$ is measurable. Show that $f$ is measurable if and only if the function $g:\RR\to\RR$ is measurable, where $g(x)=f(x)$ for $x\in D$ and $g(x)=0$ for $x\not\in D.$
+		\begin{proof}
+			We have
+			\begin{align*}
+				\left\{ g>\alpha \right\} = \left\{ x\in\RR: g(x)>\alpha \right\} &= \left\{ x\in D:g(x)>\alpha \right\} \cup \left\{ x\in \RR\setminus D: g(x)>\alpha \right\}
+			\end{align*}
+			Now, since $f$ and $g$ agree on $D,$ we have $\left\{ x\in D:g(x)>\alpha \right\} = \left\{ x\in D:f(x)>\alpha \right\}.$ Then since $g(x)=0$ for all $x\in\RR\setminus D,$ we have
+			\begin{align*}
+				\left\{ x\in\RR\setminus D:g(x)>\alpha \right\} &= \begin{cases}
+					\varnothing & \alpha \ge 0 \\
+					\RR\setminus D & \alpha < 0
+				\end{cases}
+			\end{align*}
+			which are both measurable since $D$ is measurable. Now, if $f$ is measurable, then $\left\{ g>\alpha \right\} = \left\{ f>\alpha \right\} \cup \left\{ x\in\RR\setminus D: g(x)>\alpha \right\}$ is measurable since $\left\{ f>\alpha \right\}$ is measurable, and thus $g$ is measurable. Likewise, if $g$ is measurable, then it must be that $\left\{ f>\alpha \right\}$ is measurable, and thus $f$ is measurable.
+		\end{proof}
+
+	\item[4.] Prove that $\chi_E$ is measurable if and only if $E$ is measurable.
+		\begin{proof}
+			We have
+			\begin{align*}
+				\left\{ \chi_E>\alpha \right\} &= \begin{cases}
+					\varnothing & \alpha > 1 \\
+					E & 0< \alpha\le 1 \\
+					\RR & \alpha \le 0
+				\end{cases}
+			\end{align*}
+			If $\chi_E$ is measurable, it follows that $E$ is measurable, and if $E$ is measurable, since $\varnothing$ and $\RR$ are measurable, it follows that $\chi_E$ is also measurable.
+		\end{proof}
+
+	\item[5.] Let $N$ be a non-measurable subset of $(0, 1),$ and let $f(x)=x\cdot\chi_N(x).$ Show that $f$ is non-measurable, but that each of the sets $\left\{ f=\alpha \right\}$ is measurable.
+		\begin{proof}
+			Let $\alpha=0.$ Now, $f(x)=x\cdot \chi_N(x)=x$ whenever $x\in N$ and $0$ otherwise. Thus,
+			\begin{align*}
+				\left\{ f>0 \right\}=\left\{ x\in\RR: f(x)>0 \right\} &=  N
+			\end{align*}
+			which is not measurable, since $N$ is not measurable. Thus, $f$ is not measurable. 
+
+			Now, we have $f(x)=x$ whenever $x\in N,$ and $f(x)=0$ otherwise, so
+			\begin{align*}
+				\left\{ f=\alpha \right\} &= \begin{cases}
+					\left\{ \alpha \right\} & \alpha \in N \\
+					\varnothing & \alpha\in\RR\setminus (N\cup \left\{ 0 \right\})
+				\end{cases}
+			\end{align*}
+			which are both measurable sets. However, it seems like the case when $\alpha=0$ is not measurable\ldots
+		\end{proof}
+
+	\item[8.] Suppose that $D=A\cup B,$ where $A$ and $B$ are measurable. Show that $f:D\to\RR$ is measurable if and only if $f\mid_A$ and $f\mid_B$ are measurable.
+		\begin{proof}
+			We have
+			\begin{align*}
+				\left\{ f>\alpha \right\} &= \left\{ x\in D: f(x)>\alpha \right\} = \left\{ x\in A:f(x)>\alpha \right\} \cup \left\{ x\in B: f(x)>\alpha \right\} \\
+				&= \left\{ f\mid_A>\alpha \right\} \cup \left\{ f\mid_B>\alpha \right\}
+			\end{align*}
+			If $f\mid_A$ and $f\mid_B$ are both measurable, then the union of the two above sets is measurable, and thus $f$ is also measurable, and likewise if $f$ is measurable, this forces both $f\mid_A$ and $f\mid_B$ to be measurable.
+		\end{proof}
+
+	\item[12.] If $f:[a, b]\to\RR$ is Lipschitz with constant $K,$ and if $E\subset [a, b],$ show that $m^*(f(E))\le Km^*(E).$ In particular, $f$ maps null sets to null sets.
+		\begin{proof}
+			This was a question from HW4\ldots If $E$ has measure $\infty,$ the inequality trivially holds. Otherwise, $m^*(E)<\infty.$ Let $\varepsilon>0.$ Then there exists a sequence of intervals $(a_n, b_n)$ such that $E\subset \bigcup_{n=1}^\infty (a_n, b_n).$ Then we have $\sum_{n=1}^{\infty} (b_n-a_n) < m^*(E) + \frac{\varepsilon}{K}.$ We also have that $f(E) \subset \bigcup_{n=1}^\infty f\left[ (a_n, b_n) \right],$ where
+			\begin{align*}
+				f[(a_n, b_n)] = (f(c_n), f(d_n)), \quad c_n, d_n\in (a_n, b_n)
+			\end{align*}
+			since Lipschitz functions are continuous. Then since $f[(a_n, b_n)]$ is a covering of $f(E),$ we have
+			\begin{align*}
+				m^*(f(E)) &\le \sum_{n=1}^{\infty}\ell\bigg(f[(a_n, b_n)]\bigg) = \sum_{n=1}^{\infty} (f(d_n)-f(c_n))\le \sum_{n=1}^{\infty} K(d_n-c_n)\le \sum_{n=1}^{\infty} K(b_n-a_n) \\
+				&< Km^*(E) + \varepsilon \\ 
+				\implies m^*(f(E)) &\le Km^*(E)
+			\end{align*}
+
+			If $E$ is a null set, then $m^*(f(E))\le Km^*(E)=0$ so $m^*(f(E))=0,$ and thus $f$ maps null sets to null sets.
+		\end{proof}
+		
+\end{itemize}
+
+\end{document}
