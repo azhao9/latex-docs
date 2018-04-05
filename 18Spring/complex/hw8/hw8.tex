@@ -1,0 +1,271 @@
+\documentclass{article}
+\usepackage[sexy, hdr, fancy]{evan}
+\usepackage{graphicx}
+\graphicspath{.}
+\setlength{\droptitle}{-4em}
+
+\DeclareMathOperator{\re}{Re}
+\DeclareMathOperator{\im}{Im}
+
+\lhead{Homework 8}
+\rhead{Complex Analysis}
+\lfoot{}
+\cfoot{\thepage}
+
+\begin{document}
+\title{Homework 8}
+\maketitle
+\thispagestyle{fancy}
+
+\section*{Section 4.4}
+
+\begin{itemize}
+	\item[5.] Write down a function $z(s, t)$ deforming $\Gamma_0$ to $\Gamma_1$ in the domain $D,$ where $\Gamma_0$ is the ellipse $x^2/4+y^2/9=1$ traversed once counterclockwise starting from $(2, 0),$ and $\Gamma_1$ is the circle $\abs{z}=1$ traversed once counterclockwise starting from $(1, 0),$ and $D$ is the annulus $1/2<\abs{z}<4.$
+		\begin{soln}
+			We start with the parametrization $x(t)=2\cos 2\pi t, y(t)=3\sin 2\pi t, 0\le t\le 1$ for $\Gamma_0.$ We wish to deform this to the parametrization $x'(t) = \cos 2\pi it, y(t)=\sin 2\pi i, 0\le t\le 1$ for $\Gamma_1,$ which can be accomplished with the function
+			\begin{align*}
+				z(s, t) &= (2-s)\cos 2\pi t + i(3-2s)\sin 2\pi t, \quad 0\le 1\le 1, 0\le s\le 1
+			\end{align*}
+		\end{soln}
+
+	\item[9.] Which of the following domains are simply connected?
+		\begin{enumerate}[(a)]
+			\ii the horizontal strip $\abs{\im z}<1$
+			\ii the annulus $1<\abs{z}<2$
+			\ii the set of all points in the plane except those on the non-positive $x$-axis
+			\ii the interior of the ellipse $4x^2+y^2=1$
+			\ii the exterior of the ellipse $4x^2+y^2=1$
+			\ii the domain $D$ in Fig 4.46.
+		\end{enumerate}
+		\begin{answer*}
+			The domains in (a), (c), (d), and (f) are simply connected.
+		\end{answer*}
+
+	\item[18.] Let
+		\begin{align*}
+			I:= \oint_{\abs{z}=2} \frac{dz}{z^2(z-1)^3}
+		\end{align*}
+		Below is an outline of a proof that $I=0.$ Justify each step.
+		\begin{enumerate}[(a)]
+			\item For every $R>2, I=I(R),$ where
+				\begin{align*}
+					I(R) := \oint_{\abs{z}=R} \frac{1}{z^2(z-1)^3}\, dz
+				\end{align*}
+				\begin{answer*}
+					The poles of the integrand are 0 and 1, so if $R>2,$ there exists a continuous deformation from the circle $\abs{z}=R$ to the circle $\abs{z}=2,$ so the two integrals are equal.
+				\end{answer*}
+
+			\item $\abs{I(R)}\le \frac{2\pi}{R(R-1)^3}$ for $R>2.$
+				\begin{answer*}
+					We have
+					\begin{align*}
+						\abs{I(R)} &= \abs{\oint_{\abs{z}=R} \frac{1}{z^2(z-1)^3}\, dz} \le \oint_{\abs{z}=R} \abs{\frac{1}{z^2(z-1)^3}}\, dz = \oint_{\abs{z}=R} \frac{1}{\abs{z}^2 \abs{z-1}^3}\, dz
+					\end{align*}
+					By the triangle inequality, we have
+					\begin{align*}
+						\abs{z}\le \abs{z-1}+\abs{1} \implies \abs{z}-1\le \abs{z-1} \implies \frac{1}{\abs{z-1}} \le \frac{1}{\abs{z}-1}
+					\end{align*}
+					so the integral along the contour $\abs{z}=R$ is
+					\begin{align*}
+						\oint_{\abs{z}=R} \frac{1}{\abs{z}^2\abs{z-1}^3}\, dz &\le \oint_{\abs{z}=R} \frac{1}{\abs{z}^2\left( \abs{z}-1 \right)^3}\, dz = \frac{2\pi R}{R^2(R-1)^3} = \frac{2\pi}{R(R-1)^3}
+					\end{align*}
+				\end{answer*}
+
+			\item $\lim_{R\to+\infty} I(R)=0$
+				\begin{answer*}
+					Since
+					\begin{align*}
+						\lim_{R\to+\infty} \abs{I(R)} &= \lim_{R\to+\infty} \frac{2\pi}{R(R-1)^3} = 0
+					\end{align*} 
+					it must be that $I(R)$ tends to the origin as $R\to \infty.$
+				\end{answer*}
+
+			\item $I=0.$
+				\begin{answer*}
+					Since $I(R)$ is arbitrarily small as $R\to \infty$ and $I=I(R)$ for $R>2,$ it follows that $I=I(R)=0.$
+				\end{answer*}
+				
+		\end{enumerate}
+
+	\item[19.] Using the method of proof in Prob 18, establish the following theorem. If $P$ is a polynomial of degree at least 2 and $P$ has all its zeros inside the circle $\abs{z}=r,$ then
+		\begin{align*}
+			\oint_{\abs{z}=r} \frac{1}{P(z)}\, dz = 0
+		\end{align*}
+		\begin{proof}
+			Let $I$ be the value of this integral. If $P$ is a polynomial of degree at least 2 with roots $r_1, \cdots, r_n$ all inside the circle $\abs{z}=r,$ then $P$ factorizes as
+			\begin{align*}
+				P(z) &= c(z-r_1)\cdots(z-r_n) \\
+				\implies \frac{1}{P(z)} &= \frac{1}{c(z-r_1)\cdots(z-r_n)}
+			\end{align*}
+			Now, for $R>r,$ all poles will lie inside the contour $\abs{z}=R,$ so there exists a continuous deformation from the circle $\abs{z}=r$ to $\abs{z}=R,$ so thus
+			\begin{align*}
+				I(R) :=\oint_{\abs{z}=R} \frac{1}{P(z)} \, dz = \oint_{\abs{z}=r} \frac{1}{P(z)}\, dz
+			\end{align*}
+			Now, we have
+			\begin{align*}
+				\abs{I(R)} &= \abs{\oint_{\abs{z}=R} \frac{1}{c(z-r_1)\cdots(z-r_n)}\, dz} \le \oint_{\abs{z}=R} \abs{\frac{1}{c(z-r_1)\cdots(z-r_n)}}\, dz \\
+				&= \frac{1}{\abs{c}} \oint_{\abs{z}=R} \frac{1}{\abs{z-r_1}\cdots\abs{z-r_n}}\, dz \le \frac{1}{\abs{c}} \oint_{\abs{z}=R} \frac{1}{\left( \abs{z}-r_1 \right)\cdots\left( \abs{z}-r_n \right)}\, dz \\
+				&= \frac{1}{\abs{c}} \frac{1}{(R-r_1)\cdots(R-r_n)} \\
+				\implies \lim_{R\to\infty} \abs{I(R)} &= 0 \\
+				\implies I &= I(R) = 0
+			\end{align*}
+		\end{proof}
+
+	\item[20.] Let $\Gamma$ denote the four-leaf clover path traversed once as shown in Fig 4.50. Show that
+		\begin{align*}
+			\int_\Gamma \frac{1}{z^4-1}\, dz = 0
+		\end{align*}
+		in two ways; first, by using partial fractions, and second, by using the result of Prob 19.
+		\begin{proof}
+			We have the partial fraction decomposition
+			\begin{align*}
+				\frac{1}{z^4-1} &= \frac{1}{(z-1)(z+1)(z-i)(z+i)} = \frac{A}{z-1} + \frac{B}{z+1} + \frac{C}{z-i} + \frac{D}{z+i} \\
+				\implies 1 &= A(z+1)(z-i)(z+i) + B(z-1)(z-i)(z+i) + C(z-1)(z+1)(z+i) + D(z-1)(z+1)(z-i)
+			\end{align*}
+			and substituting $z=1, -1, i, -i,$ we have
+			\begin{align*}
+				1 &= A(1+1)(1-i)(1+i) = 4A \implies A = \frac{1}{4} \\
+				1 &= B(-1-1)(-1-i)(-1+i) = -4B \implies B = - \frac{1}{4} \\
+				1 &= C(i-1)(i+1)(i+i) = 4iC \implies C = \frac{1}{4i} = -\frac{i}{4} \\
+				1 &= D(-i-1)(-i+1)(-i-i) = -4iD \implies D = \frac{1}{-4i} = \frac{i}{4}
+			\end{align*}
+			Since $\Gamma$ forms counterclockwise loops around each of these poles, we have
+			\begin{align*}
+				\int_\Gamma \frac{1}{z^4-1}\, dz &= \frac{1}{4}\int_\Gamma \frac{1}{z-1}\, dz - \frac{1}{4} \int_\Gamma\frac{1}{z+1}\, dz - \frac{i}{4}\int_\Gamma\frac{1}{z-i} + \frac{i}{4}\int_\Gamma\frac{1}{z+i}\, dz \\
+				&= \frac{1}{4} (2\pi i) - \frac{1}{4}(2\pi i) - \frac{i}{4}(2\pi i) + \frac{i}{4}(2\pi i) = 0
+			\end{align*}
+
+			By the result of Prob 19, since the four-leaf clover can be continuously deformed to the circle $\abs{z}=2$ that contains all 4 roots of $P(z)=z^4-1,$ it follows that
+			\begin{align*}
+				\oint_{\abs{z}=2} \frac{1}{z^4-1}\, dz = 0
+			\end{align*}
+		\end{proof}
+		
+\end{itemize}
+
+\section*{Section 4.5}
+
+\begin{itemize}
+	\item[3.] Let $C$ be the circle $\abs{z}=2$ traversed once in the positive sense. Compute each of the following integrals.
+		\begin{itemize}
+			\item[(b)] $\int_C \frac{ze^z}{2z-3}\, dz$
+				\begin{soln}
+					This is
+					\begin{align*}
+						\int_C \frac{ze^z/2}{z-3/2}\, dz
+					\end{align*}
+					where $3/2$ is contained in $C$ and $f(z)=\frac{z}{2}e^z$ is analytic on and inside of $C.$ Then
+					\begin{align*}
+						f\left( \frac{3}{2} \right) &= \frac{1}{2\pi i}\int_C \frac{f(z)}{z-3/2}\, dz \\
+						\implies \int_C \frac{ze^z/2}{z-3/2}\, dz &= 2\pi i f\left( \frac{3}{2} \right) = 2\pi i \cdot\left( \frac{3/2}{2} e^{3/2} \right) = \frac{3\pi i}{2}e^{3/2}
+					\end{align*}
+				\end{soln}
+
+			\item[(c)] $\int_C \frac{\cos z}{z^3+9z}\, dz$
+				\begin{soln}
+					This is
+					\begin{align*}
+						\int_C \frac{\cos z}{z(z^2+9)}\, dz = \int_C \frac{\frac{\cos z}{z^2+9}}{z}\, dz
+					\end{align*}
+					where 0 is contained in $C$ and $f(z)=\frac{\cos z}{z^2+9}$ is analytic on and inside of $C.$ Then
+					\begin{align*}
+						f\left( 0 \right) &= \frac{1}{2\pi i}\int_C \frac{f(z)}{z}\, dz \\
+						\implies \int_C \frac{\frac{\cos z}{z^2+9}}{z}\, dz &= 2\pi i f(0) = 2\pi i \cdot \frac{\cos 0}{0^2+9} = \frac{2\pi i}{9}
+					\end{align*}
+				\end{soln}
+
+			\item[(e)] $\int_C \frac{e^{-z}}{(z+1)^2}\, dz$
+				\begin{soln}
+					Here, $f(z)=e^{-z}\implies f'(z)=-e^{-z}$ is analytic on and inside of $C,$ and -1 is contained inside of $C,$ so 
+					\begin{align*}
+						f^{(1)}(-1) &= \frac{1!}{2\pi i}\int_C \frac{f(z)}{(z+1)^2}\, dz \\
+						\implies \int_C \frac{e^{-z}}{(z+1)^2}\, dz &= 2\pi i f'(-1) = 2\pi i (-e^{-(-1)}) = -2\pi i e
+					\end{align*}
+				\end{soln}
+				
+		\end{itemize}
+
+	\item[5.] Let $C$ be the ellipse $x^2/4+y^2/9=1$ traversed once in the positive direction, and define
+		\begin{align*}
+			G(z):= \int_C \frac{\zeta^2-\zeta+2}{\zeta-z}\, d\zeta\quad (z\text{ inside } C)
+		\end{align*}
+		Find $G(1), G'(i),$ and $G''(-i).$
+		\begin{soln}
+			$f(\zeta) = \zeta^2-\zeta+2$ is analytic on and inside of $C.$ We have the relation
+			\begin{align*}
+				f(z) &= \frac{1}{2\pi i} \int_C \frac{f(\zeta)}{\zeta-z}\, d\zeta = \frac{1}{2\pi i} \int_C \frac{\zeta^2-\zeta+2}{\zeta-z}\, d\zeta = \frac{1}{2\pi i} G(z) \\
+				\implies G(z) &= 2\pi i f(z) \implies G(1) = 2\pi i\cdot(1^2-1+2) = 4\pi i \\
+				\implies G'(z) &= 2\pi i f'(z) \implies G'(i) = 2\pi i(2i-1) = -4\pi - 2\pi i \\
+				\implies G''(z) &= 2\pi i f''(z) \implies G''(-i) = 2\pi i(2) = 4\pi i
+			\end{align*}
+		\end{soln}
+
+	\item[6.] Evaluate 
+		\begin{align*}
+			\int_\Gamma \frac{e^{iz}}{(z^2+1)^2}\, dz
+		\end{align*}
+		where $\Gamma$ is the circle $\abs{z}=3$ traversed once counterclockwise. 
+		\begin{soln}
+			Here, we can continuously deform $\Gamma$ to enclose the two poles separately in the limit, so
+			\begin{align*}
+				\int_\Gamma \frac{e^{iz}}{(z^2+1)^2}\, dz &= \int_{\Gamma_1} \frac{e^{iz}/(z+i)^2}{(z-i)^2}\, dz + \int_{\Gamma_2} \frac{e^{iz}/(z-i)^2}{(z+i)^2}\, dz
+			\end{align*}
+			where $\Gamma_1$ and $\Gamma_2$ are circles of radius 1 enclosing $i$ and $-i,$ respectively. Then $\Gamma_1$ doesn't contain $-i$ and $\Gamma_2$ doesn't contain $i,$ so $f(z)=e^{iz}/(z+i)^2$ and $g(z)=e^{iz}/(z-i)^2$ are analytic on and inside $\Gamma_1$ and $\Gamma_2,$ respectively. We have
+			\begin{align*}
+				f'(z) &= \frac{(z+i)^2ie^{iz} - 2(z+i)e^{iz}}{(z+i)^4} = \frac{e^{iz}(i(z+i)-2)}{(z+i)^3} \\
+				g'(z) &= \frac{(z-i)^2ie^{iz} - 2(z-i)e^{iz}}{(z-i)^4} = \frac{e^{iz}(i(z-i) - 2)}{(z-i)^3}
+			\end{align*}
+			so the integrals evaluate as
+			\begin{align*}
+				\int_{\Gamma_1} \frac{e^{iz}/(z+i)^2}{(z-i)^2}\, dz + \int_{\Gamma_2} \frac{e^{iz}/(z-i)^2}{(z+i)^2}\, dz &= 2\pi i f'(i) + 2\pi i g'(-i) \\
+				&= 2\pi i \left( \frac{e^{i^2}(i(i+i)-2)}{(i+i)^3} + \frac{e^{-i^2}(i(-i-i)-2)}{(-i-i)^3} \right) \\
+				&= 2\pi i \left( \frac{e\inv}{2i} \right) = \frac{\pi}{e}
+			\end{align*}
+		\end{soln}
+
+	\item[7,] Compute
+		\begin{align*}
+			\int_{\Gamma} \frac{\cos z}{z^2(z-3)}\, dz
+		\end{align*}
+		along the contour indicated in Fig 4.55.
+
+		\begin{soln}
+			This contour contains 0 and not 3, so we can write this integral as
+			\begin{align*}
+				\int_\Gamma \frac{\frac{\cos z}{z-3}}{z^2}\, dz
+			\end{align*}
+			where $f(z)=\frac{\cos z}{z-3},$ which is analytic inside and on $\Gamma.$ Then since $\Gamma$ is counterclockwise, 
+			\begin{align*}
+				f^{(1)}(0) &= \frac{1!}{2\pi i} \int_\Gamma \frac{f(z)}{(z-0)^{1+1}}\, dz \\
+				\implies \int_\Gamma \frac{\frac{\cos z}{z-3}}{z^2}\, dz &= 2\pi i f'(0) \\
+				&= 2\pi i \left( \frac{(z-3)(-\sin z) - \cos z}{(z-3)^2} \right)\bigg|_0 = -\frac{2\pi i}{9}
+			\end{align*}
+		\end{soln}
+
+	\item[9.] Suppose that $f$ is analytic inside and on the unit circle $\abs{z}=1.$ Prove that if $\abs{f(z)}\le M$ for $\abs{z}=1,$ then $\abs{f(0)}\le M$ and $\abs{f'(0)}\le M.$ What estimate can you give for $\abs{f^{(n)}(0)}?$
+		\begin{proof}
+			If $f$ is analytic inside and on the unit circle, then
+			\begin{align*}
+				f(z_0) = \frac{1}{2\pi i} \oint_{\abs{z}=1} \frac{f(z)}{z-z_0}\, dz
+			\end{align*}
+			for any $z_0$ inside the unit circle. In particular, if $z_0=0,$ then
+			\begin{align*}
+				f(0) &= \frac{1}{2\pi i} \oint_{\abs{z}=1} \frac{f(z)}{z}\, dz \\
+				\implies \abs{f(0)} &= \abs{\frac{1}{2\pi i} \oint_{\abs{z}=1} \frac{f(z)}{z}\, dz} \le \frac{1}{2\pi} \oint_{\abs{z}=1} \abs{\frac{f(z)}{z}}\, dz \\
+				&= \frac{1}{2\pi} \oint_{\abs{z}=1} \frac{\abs{f(z)}}{\abs{z}}\, dz \le \frac{1}{2\pi} \oint_{\abs{z}=1} \frac{M}{\abs{z}}\, dz = \frac{1}{2\pi} (M\cdot 2\pi\cdot 1) = M
+			\end{align*}
+			Similarly, we have
+			\begin{align*}
+				f'(0) &= \frac{1!}{2\pi i}\oint_{\abs{z}=1} \frac{f(z)}{z^2}\, dz \\
+				\implies \abs{f'(0)} &\le \frac{1}{2\pi} \oint_{\abs{z}=1} \frac{\abs{f(z)}}{ \abs{z}^2}\, dz \le \frac{1}{2\pi} (M\cdot 2\pi \cdot 1) = M
+			\end{align*}
+			and in general, we have
+			\begin{align*}
+				f^{(n)}(0) &= \frac{n!}{2\pi i} \oint_{\abs{z}=1} \frac{f(z)}{z^{n+1}}\, dz \\
+				\implies \abs{f^{(n)}(0)} &\le \frac{n!}{2\pi} \oint_{\abs{z}=1} \frac{\abs{f(z)}}{\abs{z}^{n+1}}\, dz \le \frac{n!}{2\pi}(M\cdot 2\pi \cdot 1) = M\cdot n!
+			\end{align*}
+		\end{proof}
+		
+\end{itemize}
+
+\end{document}

@@ -123,7 +123,7 @@
 
 	\item Determine if $y_1=x^3-1, y_2=x+1, y_3=x^3+x^2,$ and $y_4=x^2+x$ form a basis for $\mathcal P_4$ (the space of all polynomials of degree less than 4.)
 		\begin{soln}
-			We claim this is a basis for $\mathcal P_4.$ We must show these span $\mathcal P_4$ and are linearly independent.
+			We claim this is a basis for $\mathcal P_4.$ We must show these span $\mathcal P_4$ and are linearly independent. Since $\mathcal P_4$ is a vector space of dimension 4, these are equivalent, so we only need to show one of them.
 
 			To show they are spanning, take $ax^3+bx^2+cx+d\in\mathcal P_4$ to be an arbitrary element of $\mathcal P_4.$ Now, let $k_1, k_2, k_3, k_4\in\RR$ such that
 			\begin{align*}
@@ -147,9 +147,23 @@
 					k_1 \\ k_2 \\ k_3 \\ k_4
 				\end{bmatrix}
 			\end{align*}
-			Now, by performing Gaussian elimination on this matrix, we find that it is non-singular, and thus a solution exists for $k_1, k_2, k_3, k_4,$ so any arbitrary element of $\mathcal P_4$ can be represented as a linear combination of the 4 given polynomials.
+			Now, by performing Gaussian elimination on this matrix, we find that it is non-singular, and thus a solution exists for $k_1, k_2, k_3, k_4,$ so any arbitrary element of $\mathcal P_4$ can be represented as a linear combination of the 4 given polynomials, so $y_1, y_2, y_3, y_4$ span $\mathcal P_4,$ and thus form a basis.
 
-			Now, because $\mathcal P_4$ has dimension 4, any 4 spanning elements must be linearly independent. Thus, $\left\{ y_1, y_2, y_3, y_4 \right\}$ form a basis for $\mathcal P_4,$ as desired.
+			Alternatively, we can show that the polynomials are linearly independent. Suppose
+			\begin{align*}
+				0 &= k_1y_1+k_2y_2+k_3y_3+k_4y_4 \\
+				\implies \begin{bmatrix}
+					0 \\ 0 \\ 0 \\ 0
+				\end{bmatrix} &= \begin{bmatrix}
+					1 & 0 & 1 & 0 \\
+					0 & 0 & 1 & 1 \\
+					0 & 1 & 0 & 1 \\
+					-1 & 1 & 0 & 0
+				\end{bmatrix}\begin{bmatrix}
+					k_1 \\ k_2 \\ k_3 \\ k_4
+				\end{bmatrix}
+			\end{align*}
+			By performing Gaussian elimination, we find that $k_1=k_2=k_3=k_4,$ so it follows that $y_1, y_2, y_3, y_4$ are linearly independent, and thus they form a basis for $\mathcal P_4.$
 		\end{soln}
 
 	\item MATLAB Practice Lesson 10
@@ -203,8 +217,8 @@
 							1 & -1 & -1 \\ 1 & 1 & 2
 						\end{bmatrix}\begin{bmatrix}
 							5 \\ 4 \\ 5
-						\end{bmatrix} = \frac{1}{15}\begin{bmatrix}
-							15 \\ 49
+						\end{bmatrix} = \frac{1}{14}\begin{bmatrix}
+							14 \\ 49
 						\end{bmatrix} = \begin{bmatrix}
 							1 \\ 7/2
 						\end{bmatrix}
