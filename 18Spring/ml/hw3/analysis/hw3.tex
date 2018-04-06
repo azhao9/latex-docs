@@ -1,0 +1,118 @@
+\documentclass{article}
+\usepackage[sexy, hdr, fancy]{evan}
+\setlength{\droptitle}{-4em}
+
+\lhead{Homework 3}
+\rhead{Machine Learning}
+\lfoot{}
+\cfoot{\thepage}
+\newcommand{\vwi}{{\bf w}_i}
+\newcommand{\vw}{{\bf w}}
+\newcommand{\vx}{{\bf x}}
+\newcommand{\vy}{{\bf y}}
+\newcommand{\vxi}{{\bf x}_i}
+\newcommand{\yi}{y_i}
+\newcommand{\vxj}{{\bf x}_j}
+\newcommand{\vxn}{{\bf x}_n}
+\newcommand{\yj}{y_j}
+\newcommand{\ai}{\alpha_i}
+\newcommand{\aj}{\alpha_j}
+\newcommand{\X}{{\bf X}}
+\newcommand{\Y}{{\bf Y}}
+\newcommand{\vz}{{\bf z}}
+\newcommand{\msigma}{{\bf \Sigma}}
+\newcommand{\vmu}{{\bf \mu}}
+\newcommand{\vmuk}{{\bf \mu}_k}
+\newcommand{\msigmak}{{\bf \Sigma}_k}
+\newcommand{\vmuj}{{\bf \mu}_j}
+\newcommand{\msigmaj}{{\bf \Sigma}_j}
+\newcommand{\pij}{\pi_j}
+\newcommand{\pik}{\pi_k}
+\newcommand{\D}{\mathcal{D}}
+\newcommand{\el}{\mathcal{L}}
+\newcommand{\N}{\mathcal{N}}
+\newcommand{\vxij}{{\bf x}_{ij}}
+\newcommand{\vt}{{\bf t}}
+\newcommand{\yh}{\hat{y}}
+\newcommand{\code}[1]{{\footnotesize \tt #1}}
+\newcommand{\alphai}{\alpha_i}
+
+\begin{document}
+\title{Homework 3}
+\maketitle
+\thispagestyle{fancy}
+
+
+\section{Analytical (50 points)}
+
+\paragraph{1) Deep Neural Networks (12 points)}
+
+\begin{enumerate}[(a)]
+	\item Consider a 2-layer neural network, with $M$ input nodes, $Z$ nodes in the hidden layer and $K$ nodes in the output layer. The network is fully connected, i.e. every node in the $n-1$th layer is connected to every node in the $n$th layer. However, for your application of interest, you suspect that only some of the nodes in the input are relevant. How would you modify the objective function to reflect this belief?
+
+	\item Consider a $N$ layer neural network. We could (a) train the entire network at once using back-propagation or (b) pre-train each layer individually, and then tune the final network with back-propagation. Will (a) and (b) converge to the same solution? Why would we favor strategy (a) vs. strategy (b)?
+
+	\item Consider a $N\ge2$ layer neural network with a single node in the output layer. We wish to train this network for binary classification. Rather than use a cross entropy objective, we want to take a max-margin approach and ensure a margin of $\gamma=1$. Describe the structure of the last layer of the network, including the final activation function, and the training objective function that implements a max-margin neural network. What are the benefits of this network compared to one trained with cross entropy? Will a max-margin trained neural network learn the same decision boundary as an SVM?
+
+
+\end{enumerate}
+
+
+\paragraph{2) Adaboost (12 points)} There is one good example at $x=0$ and two negative examples at $x = \pm 1$. There are three weak classifiers are
+\begin{align*}
+	h_1(x) & = 1\cdot{\bf1}(x > 1/2) -1\cdot{\bf1}(x \leq 1/2),\\
+	h_2(x) & = 1\cdot{\bf1}(x > -1/2) -1\cdot{\bf1}(x \leq -1/2)\\
+	h_3(x) & =1.
+\end{align*}
+Show that this data can be classified correctly by a strong classifier which uses only three weak classifiers. Calculate the first two iterations of AdaBoost for this problem. Are they sufficient to classify the data correctly?
+
+\paragraph{3) Ensemble Methods (12 points)}
+
+Consider the following binary classification Boosting algorithm.
+\begin{enumerate}
+	\item Given $\{\vxi, \yi\}_{i=1}^N$, number of iterations $T$, weak learner $f$.
+	\item Initialize $\D_0$ to be a uniform distribution over examples.
+	\item For each iteration $t = 1 \ldots T$:
+		\begin{enumerate}
+			\item Train a weak learner $f$ on the data given $\D_t$ to produce hypothesis $h_t$.
+			\item Compute the error of $h_t$ as $\epsilon_t = P_{\D_t} [h_t(\vxi) \ne \yi]$
+			\item Compute $\alpha_t = \frac{1}{2} \log \frac{1-\epsilon_t}{\epsilon_t}$
+			\item Update $\D$ as:\\
+				$\D_{t+1}(i) = \frac{\D_t(i)}{Z_t} \times \left\{
+					\begin{array}{lr}
+						\exp(-\alpha_t + (T-t) / T) ~~  \textrm{if} ~~ h_t(\vxi) = \yi  \\
+						\exp(\alpha_t + (T-t) / T) ~~ \textrm{otherwise}
+					\end{array}
+					\right.$
+			\end{enumerate}
+		\item Output final hypothesis $H(\vx)=\textrm{sign} \left\{ \sum_{t=1}^T \alpha_t h_t(\vx) \right\}$
+	\end{enumerate}
+
+	$Z_t$ is a normalization constant so that $\D$ is a valid probability distribution.
+
+	Describe the difference between this algorithm and the AdaBoost algorithm we learned about in class. What problem of AdaBoost is this change designed to fix? How does changing the algorithm's user provided parameter affect this behavior?
+
+	\paragraph{4. Overfitting in Clustering (14 points)}
+
+	Given the data set $x_1,...,x_n$, we want cluster the data using the K-means algorithm. The K-means algorithm aims to partition the $n$ observations into $k$ sets ($k < n$) $S = \{S_1, S_2, \ldots, S_k\}$ so as to minimize the within-cluster sum of squares
+	\begin{eqnarray}
+		\mathop{\textrm{argmin}}_{S=\{S_1,...,S_k\}}\sum_{j=1}^k\sum_{x_i\in S_j}\|x_j-\mu_j\|_2^2
+		\label{objective1}
+	\end{eqnarray}
+	where $\mu_j$ is the mean of points in $S_j$.
+
+	\begin{enumerate}[(a)]
+		\item Let $\gamma_k$ denote the optimal value of the objective function, prove $\gamma_k$ is non-increasing in $k$.
+		\item Suppose we modified the objective function as follows:
+			\begin{eqnarray}
+				\mathop{\textrm{argmin}}_{S=\{S_1,...,S_k\}}\sum_{j=1}^k\sum_{x_i\in S_j}\max(\|x_j-\mu_j\|_2^2, \tau)
+				\label{objective2}
+			\end{eqnarray}
+			where $\tau$ is some (given) constant and $\gamma'_k$ is the optimal value of this new objective function. Compare the values of 
+			$\gamma_k$ and $\gamma'_k$ ($<, \le, =, \ge, >$) and prove this relation.
+		\item K-medoids is an algorithm similar to K-means. Both K-means and K-medoids attempt to minimize the squared error but unlike K-means, K-medoids chooses a provided example as a cluster center (medoids) rather than the mean of a subset of the examples. For a given data set $\X$, compare the optimal clusterings produced by K-means and K-medoids ($<, \le, =, \ge, >$) and prove this relation.
+		\item Suppose you wanted to select $k$ (the number of clusters) to minimize the objective function. Should you work with objective \ref{objective1} or \ref{objective2}? If \ref{objective2}, how does your choice of $\tau$ effect your choice of $k$?
+	\end{enumerate}
+
+
+	\end{document}
