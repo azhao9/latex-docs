@@ -1,0 +1,299 @@
+\documentclass[11pt]{article}
+
+\usepackage{graphicx}
+\usepackage{wrapfig}
+\usepackage{url}
+\usepackage{wrapfig}
+\usepackage{color}
+\usepackage{marvosym}
+\usepackage{enumerate}
+\usepackage{subfigure}
+\usepackage{tikz}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{hyperref}
+\usepackage{bbm}
+
+
+\oddsidemargin 0mm
+\evensidemargin 5mm
+\topmargin -20mm
+\textheight 240mm
+\textwidth 160mm
+
+
+
+\newcommand{\vwi}{{\bf w}_i}
+\newcommand{\vw}{{\bf w}}
+\newcommand{\vx}{{\bf x}}
+\newcommand{\vy}{{\bf y}}
+\newcommand{\vxi}{{\bf x}_i}
+\newcommand{\yi}{y_i}
+\newcommand{\vxj}{{\bf x}_j}
+\newcommand{\vxn}{{\bf x}_n}
+\newcommand{\yj}{y_j}
+\newcommand{\ai}{\alpha_i}
+\newcommand{\aj}{\alpha_j}
+\newcommand{\X}{{\bf X}}
+\newcommand{\Y}{{\bf Y}}
+\newcommand{\vz}{{\bf z}}
+\newcommand{\msigma}{{\bf \Sigma}}
+\newcommand{\vmu}{{\bf \mu}}
+\newcommand{\vmuk}{{\bf \mu}_k}
+\newcommand{\msigmak}{{\bf \Sigma}_k}
+\newcommand{\vmuj}{{\bf \mu}_j}
+\newcommand{\msigmaj}{{\bf \Sigma}_j}
+\newcommand{\pij}{\pi_j}
+\newcommand{\pik}{\pi_k}
+\newcommand{\D}{\mathcal{D}}
+\newcommand{\el}{\mathcal{L}}
+\newcommand{\N}{\mathcal{N}}
+\newcommand{\vxij}{{\bf x}_{ij}}
+\newcommand{\vt}{{\bf t}}
+\newcommand{\yh}{\hat{y}}
+\newcommand{\code}[1]{{\footnotesize \tt #1}}
+\newcommand{\alphai}{\alpha_i}
+
+\pagestyle{myheadings}
+\markboth{Homework 2}{Spring 2018 CS 475 Machine Learning: Homework 3}
+
+
+\title{CS 475 Machine Learning: Homework 3\\Non-linear Methods\\
+	\Large{Due: Friday April 13, 2018, 11:59pm}\\
+	100 Points Total \hspace{1cm} Version 1.0}
+\author{}
+\date{}
+
+\begin{document}
+	\large
+	\maketitle
+	\thispagestyle{headings}
+	
+	\vspace{-.5in}
+	
+	{\bf Make sure to read from start to finish before beginning the assignment.}
+	\section{Programming (60 points)}
+	
+	\subsection{Boosting (30 Points)}
+	You will implement the AdaBoost algorithm for binary classification. AdaBoost takes a weak learner and boosts it into a strong learner. The weak learner you will be using will be a decision stump: a linear classifier \textbf{in one dimension of the data}. This is essentially a decision tree that can only take a single feature (hence a stump). For the weak learner you can choose any cutoff in one dimension (more details below).\\
+	\\
+	The hypothesis set $H$ is the set of all one dimensional linear classifiers:\\
+	\[
+	H=\{h_{j,c} : \textrm{$j$ is the feature index and $c$ is the cutoff}\} 
+	\]
+	where \\
+	\[
+	h_{j,c}(\vxi) =\left\{
+	\begin{array}{lr}
+	\displaystyle \arg\max_{\yh} \sum_{\forall k : \vx_{kj} > c} [y_k = \yh] ~~  \textrm{if} ~~ \vxij > c  \\
+	\displaystyle \arg\max_{\yh} \sum_{\forall k : \vx_{kj} \le c} [y_k = \yh] ~~ \textrm{otherwise}
+	\end{array}
+	\right.
+	\]
+	\\   
+	$h_t$ will be used to describe the optimal $h_{j,c}$ at iteration $t$.\\
+	\\
+	The AdaBoost algorithm is as follows:\\
+	\begin{enumerate}
+		\item Input: $(y_1,\vx_1),...,(y_n,\vxn) \text{ where } \vxi \in \mathbb{R}^m \text{ and } y_i \in \{-1, 1\} $
+		\item Initialize: $D_1(i) = \frac{1}{n}$ \\
+		where  $D_t(i)$ is the weight of instance $(y_i,\vxi)$ at iteration $t$
+		\item For each iteration $t \in \{1,2,...,T\}$ do:
+		\begin{enumerate}
+			\item $h_t = \arg \min_{h' \in H} \epsilon_t(h')$ \\
+			where $\epsilon_t(h) \equiv \sum_{i=1}^n { D_t(i) [ h(\vxi) \neq y_i ] }$
+			
+			\item $\alpha_t = \frac{1}{2} \log{ \frac{1-\epsilon_t(h_t)}{\epsilon_t(h_t)} }$
+			\item $D_{t+1}(i) = \frac{1}{Z_{t+1}} D_t(i) \exp( -\alpha_t y_i h_t(\vxi) ) $ \\
+			where $Z_{t+1} = \sum_{i=1}^n D_t(i) \exp( -\alpha_t y_i h_t(\vxi) )$ is the normalizing factor \\
+		\end{enumerate}
+	\end{enumerate}
+	
+	Note for the log used in calculating $\alpha_t$, the natural log should be used, which is \code{math.log()} in Python (do \code{import math} before using the log function). This algorithm will be selected with the value \code{adaboost} for the argument \code{algorithm} on the command line.
+	
+	
+	\subsubsection{Choosing $h_{j,c}$}
+	Remember that when you are finding the best $h \in H$, you only need to check up to $n-1$ values of $c$ per dimension. This is because more values will have no affect on your training set. You are only choosing values of $c$ that partition the examples into non-empty sets.\\
+	\\
+	To this end, you should choose values of $c$ in line with something like the \emph{max-margin principle}, where the observable error does not distinguish values of $c$.\begin{samepage}
+		That is, assuming you are choosing $c$ for $h_{j,c}$ (i.e. in dimension $j$) with examples sorted in ascending order of value in $j$: choose from values of $c$ that will partition the data into $\{\vx_{1},...,\vx_{k}\}$ and $\{\vx_{k+1},...,\vx_n\}$ in dimension $j$ as $c \in \{ \frac{1}{2}(\vx_{k+1,j} + \vx_{k,j}) : k \in \{1,2,...,n-1\}\}$. Note that the number of distinct values of $c$ may be less than $n-1$ in cases where there are duplicate values in dimension $j$ for some instances. You will choose one dimension $j$ and one of these (up to) $n-1$ values for $c$ that minimizes the error of $h_{j,c}$:\\
+		\[
+		h_t = \displaystyle \arg\min_{h_{j,c}} { \epsilon_t(h_{j,c}) } = \displaystyle \arg\min_{h_{j,c}} { \sum_{i=1}^n { D_t(i) [ h_{j,c}(\vxi) \neq y_i ] } }
+		\]
+		
+		Observe that you can cache these choices after the first time computing them and use the cached values in each iteration of boosting.
+		
+	\end{samepage}
+	
+	\subsubsection{Making Predictions}
+	In AdaBoost, you make your predictions as a weighted vote of the classifiers learned on each iteration:
+	\[
+	\yh = f(x) = \arg \max_{\yh'} \sum_{t=1}^T { \alpha_t [ h_t(x) = \yh ]}
+	\]
+	Keep in mind that each $h_t$ is the $h_{j,c}$ at iteration $t$.
+	
+	\subsubsection{Boosting Iterations}
+	The number of boosting iterations to run will be given as a command line flag. Add this command line option by adding the following code block to the \code{get\_args} function in \code{classify.py}.
+	
+	\begin{footnotesize}
+		\begin{verbatim}
+		parser.add_argument("--num-boosting-iterations", type=int, help="The number of boosting iterations to run.",
+		default=10)
+		\end{verbatim}
+	\end{footnotesize}
+	The default number of iterations is $10$.
+	
+	\subsubsection{Stopping Criteria}
+	In some cases, your error $\epsilon_t$ will reach 0. In this case, $\alpha_t$ will become infinite. Therefore, we will place a stopping criteria on boosting. When you encounter an $\epsilon_t$ that is close to $0$, where close to $0$ is measured as less than $0.000001$, stop boosting and do not use the current hypothesis (since we cannot set $\alpha_t$ for this hypothesis). You should stop even if you have not performed every boosting iteration requested by \code{--num-boosting-iterations}.
+	
+	\subsubsection{Deliverables}
+	You need to implement AdaBoost. Your predictor will be selected by passing the string \code{adaboost} as the argument for the \code{algorithm} parameter.
+	
+	\subsubsection{How Your Code Will Be Called}
+	You may use the following commands to test your algorithm.
+	\begin{footnotesize}
+		\begin{verbatim}
+		python classify.py --mode train --algorithm adaboost --model-file speech.adaboost.model \
+		--data speech.train --num-boosting-iterations 10
+		\end{verbatim}
+	\end{footnotesize}
+	To run the trained model on development data:
+	\begin{footnotesize}
+		\begin{verbatim}
+		python classify.py --mode test --model-file speech.adaboost.model --data speech.dev \
+		--predictions-file speech.dev.predictions
+		\end{verbatim}
+	\end{footnotesize}
+	
+	\subsection{Data Sets}
+	Because the complexity of AdaBoost depends heavily on the number of features in the data, we will not test your algorithms on the NLP data set.
+	
+	\subsection{Multi-layer Perceptron on MNIST (30 Points)}
+	
+	You will implement a simple multi-layer perceptron in pytorch. Because of computational constraints, please restrict the number of hidden layers to 3 or less and the number of neurons in each layer to 500 or less. We suggest you use ReLU activations and a batch size somewhere around 30 to 200. 
+	
+	For pytorch installation, please refer to \texttt{http://pytorch.org/}.
+	
+	For basics and help, please refer to the pytorch tutorial recitation slides (a similar coding example for perceptron is given) on piazza as well as \texttt{http://pytorch.org/tutorials/}.
+	
+	The purpose of this question is to serve as a warm-up for future asignments that will involve pytorch.
+	
+	\subsubsection{Importing and iterating over data}
+	
+	The MNIST dataset can be easily imported using the function \texttt{torchvision.datasets.MNIST} (see documentation: \texttt{http://pytorch.org/docs/master/torchvision/datasets.html\#mnist}). 
+	For iterating over the data during training, you will need to input the dataset into a dataloader using \texttt{torch.utils.data.DataLoader} (see documentation: 
+	
+	\texttt{http://pytorch.org/docs/master/data.html}).
+	
+	Note that when drawing samples from the data loader you will need to convert the drawn samples into a torch Variable in order to make use of training and inference.
+	
+	\subsubsection{Deliverables}
+	
+	Code for this question must be saved in a file named \texttt{MLP\_MNIST.py}. To assess correctness of implementation we will be directly instantiating a model from your model class. Thus, submit a second code file \texttt{MLP\_MNIST\_test.py} that is identical to your \texttt{MLP\_MNIST.py} except that it does \textbf{not} include training of your model. (If your model starts training then you will run  into a timeout error on gradescope.)
+	
+	Please save your trained model as \texttt{model.pkl} in the root directory of your submission. Your trained model will need to achieve a test accuracy of 90\% or greater for full credit.
+	
+	Use the following code for saving:
+	
+	\texttt{torch.save(my\_net.state\_dict(), 'model.pkl')}
+	
+	where \texttt{my\_net} is your trained model instantiation. 
+	
+	Make sure your model initialization is done in the following manner:
+	
+	\texttt{my\_net = Net()}
+	
+	i.e. Your model class must be named \texttt{Net} and it must not require any inputted parameters for initialization. Additionally, inference must be called in the following manner:
+	
+	\texttt{output = my\_net.forward(x)}
+	
+	i.e. The method for inference must be named \texttt{forward} and take only data input \texttt{x} as a parameter.
+	If you deviate from these specifications your code will likely run into errors on gradescope.
+	
+	\section{Analytical (50 points)}
+	
+	\paragraph{1) Deep Neural Networks (12 points)}
+	
+	\begin{enumerate}[(a)]
+		\item Consider a 2-layer neural network, with $M$ input nodes, $Z$ nodes in the hidden layer and $K$ nodes in the output layer. The network is fully connected, i.e. every node in the $n-1$th layer is connected to every node in the $n$th layer. However, for your application of interest, you suspect that only some of the nodes in the input are relevant. How would you modify the objective function to reflect this belief?
+		
+		\item Consider a $N$ layer neural network. We could (a) train the entire network at once using back-propagation or (b) pre-train each layer individually, and then tune the final network with back-propagation. Will (a) and (b) converge to the same solution? Why would we favor strategy (a) vs. strategy (b)?
+		
+		\item Consider a $N\ge2$ layer neural network with a single node in the output layer. We wish to train this network for binary classification. Rather than use a cross entropy objective, we want to take a max-margin approach and ensure a margin of $\gamma=1$. Describe the structure of the last layer of the network, including the final activation function, and the training objective function that implements a max-margin neural network. What are the benefits of this network compared to one trained with cross entropy? Will a max-margin trained neural network learn the same decision boundary as an SVM?
+		
+		
+	\end{enumerate}
+		
+	
+	\paragraph{2) Adaboost (12 points)} There is one good example at $x=0$ and two negative examples at $x = \pm 1$. There are three weak classifiers are
+	\begin{align*}
+	h_1(x) & = 1\cdot{\bf1}(x > 1/2) -1\cdot{\bf1}(x \leq 1/2),\\
+	h_2(x) & = 1\cdot{\bf1}(x > -1/2) -1\cdot{\bf1}(x \leq -1/2)\\
+	h_3(x) & =1.
+	\end{align*}
+	Show that this data can be classified correctly by a strong classifier which uses only three weak classifiers. Calculate the first two iterations of AdaBoost for this problem. Are they sufficient to classify the data correctly?
+	
+	\paragraph{3) Ensemble Methods (12 points)}
+	
+	Consider the following binary classification Boosting algorithm.
+	\begin{enumerate}
+		\item Given $\{\vxi, \yi\}_{i=1}^N$, number of iterations $T$, weak learner $f$.
+		\item Initialize $\D_0$ to be a uniform distribution over examples.
+		\item For each iteration $t = 1 \ldots T$:
+		\begin{enumerate}
+			\item Train a weak learner $f$ on the data given $\D_t$ to produce hypothesis $h_t$.
+			\item Compute the error of $h_t$ as $\epsilon_t = P_{\D_t} [h_t(\vxi) \ne \yi]$
+			\item Compute $\alpha_t = \frac{1}{2} \log \frac{1-\epsilon_t}{\epsilon_t}$
+			\item Update $\D$ as:\\
+			$\D_{t+1}(i) = \frac{\D_t(i)}{Z_t} \times \left\{
+			\begin{array}{lr}
+			\exp(-\alpha_t + (T-t) / T) ~~  \textrm{if} ~~ h_t(\vxi) = \yi  \\
+			\exp(\alpha_t + (T-t) / T) ~~ \textrm{otherwise}
+			\end{array}
+			\right.$
+		\end{enumerate}
+		\item Output final hypothesis $H(\vx)=\textrm{sign} \left\{ \sum_{t=1}^T \alpha_t h_t(\vx) \right\}$
+	\end{enumerate}
+	
+	$Z_t$ is a normalization constant so that $\D$ is a valid probability distribution.
+	
+	Describe the difference between this algorithm and the AdaBoost algorithm we learned about in class. What problem of AdaBoost is this change designed to fix? How does changing the algorithm's user provided parameter affect this behavior?
+	
+	\paragraph{4. Overfitting in Clustering (14 points)}
+	
+	Given the data set $x_1,...,x_n$, we want cluster the data using the K-means algorithm. The K-means algorithm aims to partition the $n$ observations into $k$ sets ($k < n$) $S = \{S_1, S_2, \ldots, S_k\}$ so as to minimize the within-cluster sum of squares
+	\begin{eqnarray}
+	\mathop{\textrm{argmin}}_{S=\{S_1,...,S_k\}}\sum_{j=1}^k\sum_{x_i\in S_j}\|x_j-\mu_j\|_2^2
+	\label{objective1}
+	\end{eqnarray}
+	where $\mu_j$ is the mean of points in $S_j$.
+	
+	\begin{enumerate}[(a)]
+		\item Let $\gamma_k$ denote the optimal value of the objective function, prove $\gamma_k$ is non-increasing in $k$.
+		\item Suppose we modified the objective function as follows:
+		\begin{eqnarray}
+		\mathop{\textrm{argmin}}_{S=\{S_1,...,S_k\}}\sum_{j=1}^k\sum_{x_i\in S_j}\max(\|x_j-\mu_j\|_2^2, \tau)
+		\label{objective2}
+		\end{eqnarray}
+		where $\tau$ is some (given) constant and $\gamma'_k$ is the optimal value of this new objective function. Compare the values of 
+		$\gamma_k$ and $\gamma'_k$ ($<, \le, =, \ge, >$) and prove this relation.
+		\item K-medoids is an algorithm similar to K-means. Both K-means and K-medoids attempt to minimize the squared error but unlike K-means, K-medoids chooses a provided example as a cluster center (medoids) rather than the mean of a subset of the examples. For a given data set $\X$, compare the optimal clusterings produced by K-means and K-medoids ($<, \le, =, \ge, >$) and prove this relation.
+		\item Suppose you wanted to select $k$ (the number of clusters) to minimize the objective function. Should you work with objective \ref{objective1} or \ref{objective2}? If \ref{objective2}, how does your choice of $\tau$ effect your choice of $k$?
+	\end{enumerate}
+	
+	\section{What to Submit}
+	In each assignment you will submit two things.
+	\begin{enumerate}
+		\item {\bf Code:} Your code as a zip file named {\tt code.zip}. {\bf You must submit source code (.py files)}. We will run your code using the exact command lines described above, so make sure it works ahead of time. Remember to submit all of the source code, including what we have provided to you. We will include the libraries specific in {\tt requirements.txt} but nothing else.
+		\item {\bf Writeup:} Your writeup as a {\bf PDF file} (compiled from latex) containing answers to the analytical questions asked in the assignment. Make sure to include your name in the writeup PDF and use the provided latex template for your answers.
+	\end{enumerate}
+	Make sure you name each of the files exactly as specified (code.zip and writeup.pdf).
+	
+	To submit your assignment, visit the ``Homework'' section of the website (\href{http://www.cs475.org/}{http://www.cs475.org/}.)
+	
+	
+	
+	\section{Questions?}
+	Remember to submit questions about the assignment to the appropriate group on Piazza: \href{https://piazza.com/class/it1vketjjo71l1}{https://piazza.com/class/it1vketjjo71l1}.
+	
+\end{document}

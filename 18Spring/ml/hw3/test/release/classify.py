@@ -4,8 +4,10 @@ import sys
 import pickle
 import numpy as np
 
+from data import load_data
 from cs475_types import ClassificationLabel, FeatureVector, Instance, Predictor
 
+'''
 def load_data(filename):
     instances = []
     with open(filename) as reader:
@@ -28,7 +30,7 @@ def load_data(filename):
             
             for item in split_line[1:]:
                 try:
-                    index = int(item.split(":")[0]) - 1
+                    index = int(item.split(":")[0])
                 except ValueError:
                     raise ValueError("Unable to convert index " + item.split(":")[0] + " to integer.")
                 try:
@@ -43,7 +45,7 @@ def load_data(filename):
             instances.append(instance)
 
     return instances
-
+'''
 
 def get_args():
     parser = argparse.ArgumentParser(description="This is the main test harness for your algorithms.")
@@ -57,6 +59,7 @@ def get_args():
     parser.add_argument("--algorithm", type=str, help="The name of the algorithm for training.")
 
     parser.add_argument("--num-boosting-iterations", type=int, help="The number of boosting iterations to run.", default=10)
+    
     
     args = parser.parse_args()
     check_args(args)
@@ -77,145 +80,106 @@ def check_args(args):
 class Adaboost(Predictor):
     def __init__(self, num_boosting_iterations):
         self.num_boosting_iterations = num_boosting_iterations
-        self.j = np.array(num_boosting_iterations)
-        self.c = np.array(num_boosting_iterations)
-        self.alpha = np.array(num_boosting_iterations)
+        self.j = np.zeros(num_boosting_iterations)
+        self.c = np.zeros(num_boosting_iterations)
+        self.alpha = np.zeros(num_boosting_iterations)
 
-    def train(self, instances):
-        N = len(instances)
-        num_features = np.max([len(instance.feature_vector._feature_vector) for instance in instances])
+    def train(self, X, y):
+        self.num_examples, self.num_input_features = X.shape
 
         # Initialize uniform distribution
-        D = np.ones(N)/N
+        D = np.ones(self.num_examples)/self.num_examples
 
+        # Set default stop hypothesis to use all iterations
         stop_hypothesis = self.num_boosting_iterations
 
-        '''
-        # Prediction function evaluation
-        def h(i, j, c, instances):
-            values = [instance.feature_vector.get(j) for instance in instances]
-            y = [instance.label._label for instance in instances]
-
-            if (instances[i].feature_vector.get(j) > c):
-                correct = np.where(values > c, 1, 0)
-            else:
-                correct = np.where(values <= c, 1, 0)
-
-            result = np.dot(correct, y)
-            if (result >= 0):
-                return 1
-            else:
-                return -1
-        '''
-
         for t in range(self.num_boosting_iterations):
-            # Initialize error array along each feature
-            error_j = [None] * N
-            y = np.array([instance.label._label for instance in instances])
+            # Initialize error along each feature
+            error_j = [None] * self.num_examples
 
-            for j in range(num_features):
-                print('testing feature ', j)
-                values = np.array([instance.feature_vector.get(j) for instance in instances])
-                unique = np.sort(np.unique(values))
+            for j in range(self.num_input_features):
+                x = X[:, j].toarray()
+                unique = np.sort(np.unique(x))
 
                 error_c = np.zeros(len(unique))
 
                 for k in range(len(unique)):
-                    for i in range(N):
-                        if (instances[i].feature_vector.get(j) > unique[k]):
-                            correct = np.where(values > unique[k], y, 0)
+                    gr = np.where(X > unique[k], y
+                    for i in range(self.num_examples):
+                        if (X[i, j] > unique[k]):
+                            correct = np.where(x > unique[k], y, 0)
                         else:
-                            correct = np.where(values <= unique[k], y, 0)
+                            correct = np.where(x <= unique[k], y, 0)
 
                         if (np.sum(correct) >= 0):
                             y_hat = 1
                         else:
                             y_hat = -1
-                        
+
                         if (y_hat != y[i]):
                             error_c[k] += D[i]
-            
+
                 error_j[j] = error_c
 
-            # Finding index of argmin j
-            min_inds = [np.argmin(error_j[j]) for j in range(num_features)]  
-            min_feature_ind = np.argmin([error_j[j][min_inds[j]] for j in range(num_features)])
+            # Finding index for argmin j
+            min_inds = [np.argmin(error_j[j]) for j in range(self.num_features)]
+            min_feature_ind = np.argmin([error_j[j][min_inds[j]] for j in range(self.num_features)])
             self.j[t] = min_feature_ind
 
-            # Finding value of argmax c
+            # Finding value for argmin c
             min_c_ind = np.argmin(error_j[min_feature_ind])
-            self.c[t] = np.sort(np.unique(np.array([instance.feature_vector.get(min_feature_ind) for instance in instances])))[min_c_ind]
+            self.c[t] = np.sort(np.unique(X[:, min_feature_ind].toarray()))[min_c_ind]
 
-            error_t = 0
-            for i in range(N):
-                if(h(i, self.j[t], self.c[t], instances) != y[i]):
-                    error_t += D[i]
+            # error_t given by the smallest error
+            error_t = error_j[min_feature_ind][min_c_ind]
 
             if (error_t < 0.000001):
                 # stop and only use up to previous hypothesis
                 stop_hypothesis = t
                 continue
-
+        
             self.alpha[t] = 0.5 * np.log((1-error_t)/error_t)
 
             # Calculate normalizing factor
-            Z = 0
-            for i in range(N):
-                Z += D[i] * np.exp(-self.alpha[t] * y[i] * h(i, self.j[t], self.c[t], instances))
+            h = np.where(X[:, self.j[t]] > c, 1, -1)
+            Z = np.dot(D, np.exp(-self.alpha[t] * y * h))
+            D *= 1/Z * np.exp(-self.alpha[t] * y * h)
 
-            # Calculate new distribution D
-            for i in range(N):
-                D[i] *= 1/Z * np.exp(-self.alpha[t] * y[i] * h(i, self.j[t], self.c[t], instances))
-
-        # Truncate values if we stopped early, otherwise stop hypothesis is number of iterations
+        # Truncate values if we stopped early
         self.j = self.j[:stop_hypothesis]
         self.c = self.c[:stop_hypothesis]
         self.alpha = self.alpha[:stop_hypothesis]
 
-    def h(i, j, c, instances):
-        values = np.array([instance.feature_vector.get(j) for instance in instances])
-        y = np.array([instance.label._label for instance in instances])
-        x = instances[i].feature_vector._feature_vector
+    def predict(self, X):
+        num_examples, num_input_features = X.shape
+        if num_input_features < self.num_input_features:
+            X = X.copy()
+            X._shape = (num_examples, self.num_input_features)
+        if num_input_features > self.num_input_features:
+            X = X[:, :self.num_input_features]
 
-        if (x[j] > c):
-            correct = np.where(values > c, 1, 0)
-        else:
-            correct = np.where(values <= c, 1, 0)
+        predictions = np.zeros(num_examples)
 
-        result = np.dot(correct, y)
-        if (result >= 0):
-            return 1
-        else:
-            return -1
-
-    def predict(self, instance):
-        # Sums for keeping track of whether y_hat = 1 or y_hat = -1 are better
-        sum_1 = 0
-        sum_2 = 0
-        for t in range(len(self.alpha)):
-            if (instance.feature_vector.get(self.j[t]) > self.c[t]):
-                sum_1 += self.alpha[t]
+        for i in range(num_examples):
+            votes = np.where(x[self.j] > self.c, self.alpha, -self.alpha)
+            if (np.sum(votes) >= 0):
+                predictions[i] = 1
             else:
-                sum_2 += self.alpha[t]
+                predictions[i] = 0
 
-        if (sum_1 >= sum_2):
-            return 1
-        else:
-            return -1
-       
+        return predictions
 
-def train(instances, args):
+def train(X, y, args):
     if (args.algorithm.lower() == 'adaboost'):
         predictor = Adaboost(args.num_boosting_iterations)
-
-    predictor.train(instances)
-
     # TODO This is where you will add new algorithms that will subclass Predictor
     
+    predictor.train(X, y)
+
     return predictor
 
 
-def write_predictions(predictor, instances, predictions_file):
+def write_predictions(predictor, X, predictions_file):
     try:
         with open(predictions_file, 'w') as writer:
             for instance in instances:
@@ -232,10 +196,10 @@ def main():
 
     if args.mode.lower() == "train":
         # Load the training data.
-        instances = load_data(args.data)
+        X, y = load_data(args.data)
 
         # Train the model.
-        predictor = train(instances, args)
+        predictor = train(X, y, args)
         try:
             with open(args.model_file, 'wb') as writer:
                 pickle.dump(predictor, writer)
@@ -246,7 +210,7 @@ def main():
             
     elif args.mode.lower() == "test":
         # Load the test data.
-        instances = load_data(args.data)
+        X, y = load_data(args.data)
 
         predictor = None
         # Load the model.
@@ -258,7 +222,12 @@ def main():
         except pickle.PickleError:
             raise Exception("Exception while loading pickle.")
             
-        write_predictions(predictor, instances, args.predictions_file)
+        y_hat = predictor.predict(X)
+        invalid_label_mask = (y_hat != 0) & (y_hat != 1) 
+        if any(invalid_label_mask):
+            raise Exception('All predictions must be 0 or 1, but found other predictions.')
+        np.savetxt(args.predictions_file, y_hat, fmt='%d')
+        #write_predictions(predictor, X, args.predictions_file)
     else:
         raise Exception("Unrecognized mode.")
 
