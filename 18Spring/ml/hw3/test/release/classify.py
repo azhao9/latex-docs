@@ -104,7 +104,6 @@ class Adaboost(Predictor):
                 error_c = np.zeros(len(unique))
 
                 for k in range(len(unique)):
-                    gr = np.where(X > unique[k], y
                     for i in range(self.num_examples):
                         if (X[i, j] > unique[k]):
                             correct = np.where(x > unique[k], y, 0)
