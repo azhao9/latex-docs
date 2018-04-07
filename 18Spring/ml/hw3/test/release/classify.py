@@ -83,6 +83,8 @@ class Adaboost(Predictor):
         self.j = np.zeros(num_boosting_iterations)
         self.c = np.zeros(num_boosting_iterations)
         self.alpha = np.zeros(num_boosting_iterations)
+        self.upper = np.zeros(num_boosting_iterations)
+        self.lower = np.zeros(num_boosting_iterations)
 
     def train(self, X, y):
         self.num_examples, self.num_input_features = X.shape
@@ -104,19 +106,21 @@ class Adaboost(Predictor):
                 error_c = np.zeros(len(unique))
 
                 for k in range(len(unique)):
-                    for i in range(self.num_examples):
-                        if (X[i, j] > unique[k]):
-                            correct = np.where(x > unique[k], y, 0)
-                        else:
-                            correct = np.where(x <= unique[k], y, 0)
+                    # Prediction if x_ij > c
+                    if (np.sum(np.where(x > unique[k], y, 0)) >= 0):
+                        upper = np.where(x > unique[k], 1, 0)
+                    else:
+                        upper = np.where(x > unique[k], -1, 0)
 
-                        if (np.sum(correct) >= 0):
-                            y_hat = 1
-                        else:
-                            y_hat = -1
+                    # Prediction if x_ij <= c
+                    if (np.sum(np.where(x <= unique[k], y, 0)) >= 0):
+                        lower = np.where(x <= unique[k], 1, 0)
+                    else:
+                        lower = np.where(x <= unique[k], -1, 0)
 
-                        if (y_hat != y[i]):
-                            error_c[k] += D[i]
+                    predictions = upper + lower
+
+                    error_c[k] = np.dot(np.where(predictions != y, 1, 0), D)
 
                 error_j[j] = error_c
 

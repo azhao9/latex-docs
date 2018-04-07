@@ -65,6 +65,27 @@
 	h_3(x) & =1.
 \end{align*}
 Show that this data can be classified correctly by a strong classifier which uses only three weak classifiers. Calculate the first two iterations of AdaBoost for this problem. Are they sufficient to classify the data correctly?
+\begin{soln}
+	We have
+	\begin{align*}
+		\mathcal D = \left\{ (0, 1), (-1, -1), (1, -1) \right\}
+	\end{align*}
+	We wish to find constants $\alpha_1, \alpha_2, \alpha_3$ such that
+	\begin{align*}
+		h(x) = \alpha_1h_1(x) + \alpha_2h_2(x) + \alpha_3h_3(x) = y
+	\end{align*}
+	for our three training examples. Evaluating $h_1, h_2, h_3$ at each of $x_1, x_2, x_3,$ we have the equations
+	\begin{align*}
+		-\alpha_1 + \alpha_2 + \alpha_3 &= 1 \\
+		-\alpha_1 - \alpha_2 + \alpha_3 &= -1 \\
+		\alpha_1+\alpha_2+\alpha_3 &= -1
+	\end{align*}
+	which has solution $(\alpha_1, \alpha_2, \alpha_3) = (-1, 1, -1),$ so the data is correctly classified by the strong classifier 
+	\begin{align*}
+		h(x) = -h_1(x) + h_2(x) - h_3(x)
+	\end{align*}
+
+\end{soln}<++>
 
 \paragraph{3) Ensemble Methods (12 points)}
 
@@ -84,8 +105,8 @@ Consider the following binary classification Boosting algorithm.
 						\exp(\alpha_t + (T-t) / T) ~~ \textrm{otherwise}
 					\end{array}
 					\right.$
-			\end{enumerate}
-		\item Output final hypothesis $H(\vx)=\textrm{sign} \left\{ \sum_{t=1}^T \alpha_t h_t(\vx) \right\}$
+		\end{enumerate}
+	\item Output final hypothesis $H(\vx)=\textrm{sign} \left\{ \sum_{t=1}^T \alpha_t h_t(\vx) \right\}$
 	\end{enumerate}
 
 	$Z_t$ is a normalization constant so that $\D$ is a valid probability distribution.
@@ -103,6 +124,9 @@ Consider the following binary classification Boosting algorithm.
 
 	\begin{enumerate}[(a)]
 		\item Let $\gamma_k$ denote the optimal value of the objective function, prove $\gamma_k$ is non-increasing in $k$.
+			\begin{proof}
+				Suppose $S=\left\{ S_1, \cdots, S_k \right\}$ and $T = \left\{ T_1, \cdots, T_{k+1} \right\}$ are the partitions that give the optimal objective function values for $k$ and $k+1.$
+			\end{proof}<++>
 		\item Suppose we modified the objective function as follows:
 			\begin{eqnarray}
 				\mathop{\textrm{argmin}}_{S=\{S_1,...,S_k\}}\sum_{j=1}^k\sum_{x_i\in S_j}\max(\|x_j-\mu_j\|_2^2, \tau)
