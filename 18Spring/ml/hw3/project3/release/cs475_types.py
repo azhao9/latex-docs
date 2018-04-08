@@ -10,40 +10,40 @@ class Label:
        
 class ClassificationLabel(Label):
     def __init__(self, label):
-        self._label = label
-
+        # TODO
+        pass
+        
     def __str__(self):
         # TODO
         pass
 
 class FeatureVector:
     def __init__(self):
-        self._feature_vector = []
+        # TODO
+        pass
         
     def add(self, index, value):
-            # Fill in missing features with 0
-            for i in range(len(self._feature_vector), index):
-                self._feature_vector.append(0)
-
-            self._feature_vector.append(value)
+        # TODO
+        pass
         
     def get(self, index):
-        return self._feature_vector[index]
+        # TODO
+        return 0.0
         
 
 class Instance:
     def __init__(self, feature_vector, label):
-        self.feature_vector = feature_vector
-        self.label = label
+        self._feature_vector = feature_vector
+        self._label = label
 
 # abstract base class for defining predictors
 class Predictor:
     __metaclass__ = ABCMeta
 
     @abstractmethod
-    def train(self, instances): pass
+    def train(self, X, y): pass
 
     @abstractmethod
-    def predict(self, instance): pass
+    def predict(self, X): pass
 
        
