@@ -80,7 +80,7 @@ def check_args(args):
 class Adaboost(Predictor):
     def __init__(self, num_boosting_iterations):
         self.num_boosting_iterations = num_boosting_iterations
-        self.j = np.zeros(num_boosting_iterations)
+        self.j = np.zeros(num_boosting_iterations, dtype=int)
         self.c = np.zeros(num_boosting_iterations)
         self.alpha = np.zeros(num_boosting_iterations)
         self.upper = np.zeros(num_boosting_iterations)
@@ -89,6 +89,9 @@ class Adaboost(Predictor):
     def train(self, X, y):
         self.num_examples, self.num_input_features = X.shape
 
+        # Relabel y with 1 and -1
+        y = np.where(y == 0, -1, 1)
+
         # Initialize uniform distribution
         D = np.ones(self.num_examples)/self.num_examples
 
@@ -96,62 +99,95 @@ class Adaboost(Predictor):
         stop_hypothesis = self.num_boosting_iterations
 
         for t in range(self.num_boosting_iterations):
-            # Initialize error along each feature
-            error_j = [None] * self.num_examples
+            # Initialize values associated with the minimum error
+            min_error = float('inf')
+            min_c = 0
+            min_j = 0
+            min_upper = 0
+            min_lower = 0
+            min_predictions = np.zeros(self.num_examples)
 
             for j in range(self.num_input_features):
-                x = X[:, j].toarray()
-                unique = np.sort(np.unique(x))
+                x = X[:, j].toarray().T[0]
 
-                error_c = np.zeros(len(unique))
-
-                for k in range(len(unique)):
+                for c in np.unique(x):
                     # Prediction if x_ij > c
-                    if (np.sum(np.where(x > unique[k], y, 0)) >= 0):
-                        upper = np.where(x > unique[k], 1, 0)
+                    if (np.sum(np.where(x > c, y, 0)) >= 0):
+                        upper = np.where(x > c, 1, 0)
+                        u = 1
                     else:
-                        upper = np.where(x > unique[k], -1, 0)
+                        upper = np.where(x > c, -1, 0)
+                        u = -1
 
                     # Prediction if x_ij <= c
-                    if (np.sum(np.where(x <= unique[k], y, 0)) >= 0):
-                        lower = np.where(x <= unique[k], 1, 0)
+                    if (np.sum(np.where(x <= c, y, 0)) >= 0):
+                        lower = np.where(x <= c, 1, 0)
+                        l = 1
                     else:
-                        lower = np.where(x <= unique[k], -1, 0)
+                        lower = np.where(x <= c, -1, 0)
+                        l = -1
 
                     predictions = upper + lower
 
-                    error_c[k] = np.dot(np.where(predictions != y, 1, 0), D)
+                    error = np.sum(np.where(predictions != y, D, 0))
 
-                error_j[j] = error_c
+                    if (error < min_error):
+                        min_error = error
+                        min_c = c
+                        min_j = j
+                        min_upper = u
+                        min_lower = l
+                        min_predictions = predictions
 
-            # Finding index for argmin j
-            min_inds = [np.argmin(error_j[j]) for j in range(self.num_features)]
-            min_feature_ind = np.argmin([error_j[j][min_inds[j]] for j in range(self.num_features)])
+            '''
+            # Finds c and j with minimum error
+            min_c_ind, min_feature_ind = np.unravel_index(error.argmin(), error.shape)
+            self.c[t] = X[min_c_ind, min_feature_ind]
             self.j[t] = min_feature_ind
+            '''
 
-            # Finding value for argmin c
-            min_c_ind = np.argmin(error_j[min_feature_ind])
-            self.c[t] = np.sort(np.unique(X[:, min_feature_ind].toarray()))[min_c_ind]
-
-            # error_t given by the smallest error
-            error_t = error_j[min_feature_ind][min_c_ind]
-
-            if (error_t < 0.000001):
+            self.c[t] = min_c
+            self.j[t] = min_j
+            self.upper[t] = min_upper
+            self.lower[t] = min_lower
+            
+            if (min_error < 0.000001):
                 # stop and only use up to previous hypothesis
                 stop_hypothesis = t
-                continue
+                break
         
-            self.alpha[t] = 0.5 * np.log((1-error_t)/error_t)
+            self.alpha[t] = 0.5 * np.log((1-min_error)/min_error)
+
+            '''
+            # Determine how h_jc predicts
+            x_j = X[:, self.j[t]].toarray().T[0]
+            if (np.sum(np.where(x_j > self.c[t], y, 0) >= 0)):
+                upper = np.where(x_j > self.c[t], 1, 0)
+                #self.upper[t] = 1
+            else:
+                upper = np.where(x_j > self.c[t], -1, 0)
+                #self.upper[t] = -1
+
+            if (np.sum(np.where(x_j <= self.c[t], y, 0) >= 0)):
+                lower = np.where(x_j <= self.c[t], 1, 0)
+                #self.lower[t] = 1
+            else:
+                lower = np.where(x_j <= self.c[t], -1, 0)
+                #self.lower[t] = -1   
+
+            predictions = upper + lower
+            '''
 
             # Calculate normalizing factor
-            h = np.where(X[:, self.j[t]] > c, 1, -1)
-            Z = np.dot(D, np.exp(-self.alpha[t] * y * h))
-            D *= 1/Z * np.exp(-self.alpha[t] * y * h)
+            Z = np.dot(D, np.exp(-self.alpha[t] * y * min_predictions))
+            D *= 1/Z * np.exp(-self.alpha[t] * y * min_predictions)
 
         # Truncate values if we stopped early
         self.j = self.j[:stop_hypothesis]
         self.c = self.c[:stop_hypothesis]
         self.alpha = self.alpha[:stop_hypothesis]
+        self.upper = self.upper[:stop_hypothesis]
+        self.lower = self.lower[:stop_hypothesis]
 
     def predict(self, X):
         num_examples, num_input_features = X.shape
@@ -164,8 +200,16 @@ class Adaboost(Predictor):
         predictions = np.zeros(num_examples)
 
         for i in range(num_examples):
-            votes = np.where(x[self.j] > self.c, self.alpha, -self.alpha)
-            if (np.sum(votes) >= 0):
+            x_i = X[i, :].toarray()[0]
+            votes = np.zeros(len(self.alpha))
+
+            for t in range(len(self.alpha)):
+                if (x_i[self.j[t]] > self.c[t]):
+                    votes[t] = self.upper[t]
+                else:
+                    votes[t] = self.lower[t]
+
+            if (np.dot(votes, self.alpha) >= 0):
                 predictions[i] = 1
             else:
                 predictions[i] = 0
