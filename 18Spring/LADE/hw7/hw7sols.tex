@@ -1,0 +1,254 @@
+\documentclass{article}
+\usepackage[sexy, hdr, fancy]{evan}
+\setlength{\droptitle}{-4em}
+
+\lhead{Homework 7 Solutions}
+\rhead{Linear Algebra and Differential Equations}
+\lfoot{}
+\cfoot{\thepage}
+
+\begin{document}
+\title{Homework 7 Solutions}
+\maketitle
+\thispagestyle{fancy}
+
+\begin{enumerate}
+	\item (E\&P 5.2.36) Suppose that one solution $y_1(x)$ of the homogeneous second-order linear differential equation
+		\begin{align*}
+			y''+p(x)y'+q(x)y=0 \tag{18}
+		\end{align*}
+		is known. The method of reduction of order consists of substituting $y_2(x)=v(x)y_1(x)$ in (18) and attempting to determine the function $v(x)$ so that $y_2(x)$ is a second linearly independent solution of (18). After substituting $y=v(x)y_1(x)$ in Eq. (18), use the fact that $y_1(x)$ is a solution to deduce that
+		\begin{align*}
+			y_1v''+(2y_1'+py_1)v'=0\tag{19}
+		\end{align*}
+		\begin{proof}
+			Let $y_2(x)=v(x)y_1(x).$ Then if $y_2$ is a solution to (18), we have
+			\begin{align*}
+				y_2' &= v'y_1 + vy_1' \\
+				y_2'' &= v''y_1 + v'y_1' + v'y_1' + vy_1'' = v''y_1 + 2v'y_1'+vy_1'' \\ 
+				\implies y_2'' + py_2' + qy_2 &= (v''y_1+2v'y_1' + vy_1'') + p(v'y_1+vy_1') + qvy_1 = 0 \\
+				&= v''y_1 + (2y_1'+py')v' + (y_1'' + py_1' + qy_1)v 
+			\end{align*}
+			and since $y_1$ is a solution to (18), the coefficient of $v$ in this equation is 0, so our transformed equation is
+			\begin{align*}
+				y_1v'' + (2y_1' + py_1)v' = 0
+			\end{align*}
+			as desired.
+		\end{proof}
+
+	\item (E\&P 5.2.43) First note that $y_1(x)=x$ is one solution of Legendre's equation of order 1,
+		\begin{align*}
+			(1-x^2)y''-2xy'+2y=0
+		\end{align*}
+		Then use the method of reduction of order to derive the second solution
+		\begin{align*}
+			y_2(x)=1-\frac{x}{2}\ln\frac{1+x}{1-x} \quad (\text{for } -1<x<1)
+		\end{align*}
+		\begin{soln}
+			Suppose $y_2=vy_1=vx$ is another solution. Then
+			\begin{align*}
+				y_2' &= v + v'x \\
+				y_2'' &= v' + v' + v''x = 2v' + v''x \\
+				\implies (1-x^2)(2v'+v''x) - 2x(v + v'x) + 2vx &= x(1-x^2)v'' + 2(1-x^2)v' - 2xv - 2x^2v' + 2vx \\
+				&= x(1-x)(1+x)v'' + (2-4x^2)v' = 0
+			\end{align*}
+			Let $w=v',$ so this equation is
+			\begin{align*}
+				0 &= x(1-x)(1+x)w' + (2-4x^2)w \implies x(1-x)(1+x)w' = (4x^2-2)w \implies \frac{w'}{w} = \frac{4x^2-2}{x(1-x)(1+x)}
+			\end{align*}
+			Now, we find the partial fraction decomposition as
+			\begin{align*}
+				\frac{4x^2-2}{x(1-x)(1+x)} &= \frac{A}{x} + \frac{B}{1-x} + \frac{C}{1+x} \\
+				\implies 4x^2-2 &=A(1-x)(1+x) + Bx(1+x) + Cx(1-x)
+			\end{align*}
+			Substituting $x=0, 1, -1,$ we have the equations
+			\begin{align*}
+				4\cdot 0^2-2 &= A(1-0)(1+0) \implies A = -2 \\
+				4\cdot 1^2-2 &= B(1)(1+1)\implies B = 1 \\
+				4(-1)^2-2 &= C(-1)(1-(-1)) \implies C= -1
+			\end{align*}
+			Thus, we can integrate both sides of the equation
+			\begin{align*}
+				\int \frac{w'}{w}\, dx &= \int \frac{4x^2-2}{x(1-x)(1+x)}\, dx = \int \left( -\frac{2}{x} + \frac{1}{1-x} - \frac{1}{1+x} \right)\, dx \\
+				\implies \ln w &= -2\ln\abs{x} - \ln\abs{1-x} - \ln\abs{1+x} = \ln \frac{1}{x^2(1-x)(1+x)} \\
+				\implies w =v' &= \frac{1}{x^2(1-x)(1+x)}
+			\end{align*}
+			Here, the partial fraction decomposition is given by
+			\begin{align*}
+				\frac{1}{x^2(1-x)(1+x)} &= \frac{D}{x^2} + \frac{E}{x} + \frac{F}{1-x} + \frac{G}{1+x} \\
+				\implies 1 &= D(1-x)(1+x) + Ex(1-x)(1+x) + Fx^2(1+x) + Gx^2(1-x)
+			\end{align*}
+			Substituting $x=0, 1, -1,$ we have the equations
+			\begin{align*}
+				1 &= D(1-0)(1+0) \implies D = 1 \\
+				1 &= F(1+1) \implies F = \frac{1}{2} \\
+				1 &= G(1-(-1)) \implies G = \frac{1}{2}
+			\end{align*}
+			and finally looking at the coefficient of $x^3,$ we have $\left( -E + \frac{1}{2} - \frac{1}{2} \right)x^3 = 0\implies E = 0.$ Thus, we can integrate to solve for $v$ as
+			\begin{align*}
+				\int v' &= \int \frac{1}{x^2(1-x)(1+x)} = \int\left( \frac{1}{x^2} + \frac{1}{2}\cdot \frac{1}{1-x} + \frac{1}{2}\cdot\frac{1}{1+x} \right)\, dx \\
+				\implies v &= -\frac{1}{x} - \frac{1}{2}\ln\abs{1-x} + \frac{1}{2}\ln\abs{1+x}
+			\end{align*}
+			and finally, our second solution $y_2=vx$ can be written as
+			\begin{align*}
+				y_2 &= xv = x\left( -\frac{1}{x} -\frac{1}{2}\ln(1-x) + \frac{1}{2}\ln(1+x) \right) = -1 + \frac{x}{2}\ln \frac{1+x}{1-x}
+			\end{align*}
+			This is a solution up to constant multiple, so we can negate it to get the other solution
+			\begin{align*}
+				y_2 = 1 - \frac{x}{2}\ln \frac{1+x}{1-x}
+			\end{align*}
+		\end{soln}
+
+	\item Solve the following IVP
+		\begin{align*}
+			y''' - 3y'' + 4y' - 2y = 0 \quad y(0) = 1, y'(0) = 0, y''(0) = 0
+		\end{align*}
+		\begin{soln}
+			This IVP has characteristic equation $r^3-3r^2+4r-2=(r-1)(r^2-2r+2),$ which has roots
+			\begin{align*}
+				r_1 &= 1 \\
+				r_2, r_3 &= 1\pm i
+			\end{align*}
+			so the general solution is of the form
+			\begin{align*}
+				y(t) &= c_1e^t + e^t\left( c_2\cos t + c_3\sin t \right) = e^t (c_1 + c_2\cos t + c_3\sin t) \\
+				\implies y'(t) &= e^t(-c_2\sin t + c_3\cos t) + e^t(c_1+c_2\cos t + c_3\sin t) = e^t (c_1 + (c_2+c_3)\cos t + (c_3-c_2)\sin t) \\
+				\implies y''(t) &= e^t (-(c_2+c_3)\sin t + (c_3-c_2)\cos t) + e^t(c_1+(c_2+c_3)\cos t + (c_3-c_2)\sin t) \\
+				&= e^t(c_1 + 2c_3\cos t - 2c_2\sin t)
+			\end{align*}
+			Using the initial conditions, we have the equations
+			\begin{align*}
+				y(0) &= c_1+c_2\cos 0 + c_3\sin 0 = c_1 + c_2 = 1 \\
+				y'(0) &= c_1 + (c_2+c_3)\cos 0 + (c_3-c_2)\sin 0 = c_1 + c_2 + c_3 = 0 \\
+				y''(0) &= c_1 + 2c_3\cos 0 - 2c_2\sin 0 = c_1+2c_3 = 0 \\
+				\implies \begin{bmatrix}
+					c_1 \\ c_2 \\ c_3
+				\end{bmatrix} &= \begin{bmatrix}
+					2 \\ -1 \\ -1
+				\end{bmatrix}
+			\end{align*}
+			so the particular solution is
+			\begin{align*}
+				y(t) &= e^t(2-\cos t-\sin t)
+			\end{align*}
+		\end{soln}
+
+	\item (E\&P 5.3.58) Make the substitution $v=\ln x$ of Problem 51 to find general solutions (for $x>0$) of the Euler equation
+		\begin{align*}
+			x^3y'''+6x^2y''+7xy'+y=0
+		\end{align*}
+		\begin{soln}
+			Here, $a=1, b=6, c=7, d=1,$ so the substitution transforms the equation into
+			\begin{align*}
+				1\cdot\frac{d^3y}{dv^3} + (6-3\cdot 1)\cdot \frac{d^2y}{dv^2} + (7-6+2\cdot 1) \frac{dy}{dv} + dy = \frac{d^3y}{dv^3} + 3\frac{d^2y}{dv^2} + 3\frac{dy}{dv} + dy = 0
+			\end{align*}
+			which has characteristic equation $r^3+3r^2+3r+1=(r+1)^3,$ which has a repeated root $r=-1$ of order 3, so the general solution is
+			\begin{align*}
+				y(v) &= e^{-v} \left( c_1+c_2v+c_3v^2 \right) \\
+				\implies y(x) &= e^{-\ln x} \left( c_1+c_2\ln x + c_3\ln^2 x \right) = \frac{1}{x}\left( c_1+c_2\ln x + c_3\ln^2 x \right)
+			\end{align*}
+		\end{soln}
+
+	\item Use undetermined coefficients to find a general solution for 
+		\begin{align*}
+			y''-4y = \sinh x
+		\end{align*}
+		\begin{soln}
+			For the complementary part, we have the characteristic equation $r^2-4=(r-2)(r+2),$ so the two roots are -2 and 2, so 
+			\begin{align*}
+				y_c(x) &= c_1e^{2x} + c_2e^{-2x}
+			\end{align*}
+			Now, since $\sinh x = \frac{e^{x}-e^{-x}}{2},$ we expect the particular form to be
+			\begin{align*}
+				y_p(x) &= Ae^x + Be^{-x} \\
+				\implies y_p''(x) &= Ae^x + Be^{-x} \\
+				\implies y'' - 4y &= (Ae^x + Be^{-x}) - 4(Ae^x + Be^{-x}) = -3Ae^x - 3Be^{-x} = \frac{e^x}{2} - \frac{e^{-x}}{2} \\
+				\implies A &= -\frac{1}{6}, B = \frac{1}{6}
+			\end{align*}
+			so the general solution is given by
+			\begin{align*}
+				y(x) &= c_1e^{2x} + c_2e^{-2x} - \frac{1}{6}e^x + \frac{1}{6}e^{-x}
+			\end{align*}
+		\end{soln}
+
+	\item (E\&P 5.5.31) Use undetermined coefficients.
+		\begin{align*}
+			y''+4y=2x, \quad y(0)=1, y'(0)=2
+		\end{align*}
+		\begin{soln}
+			For the complementary part, we have the characteristic equation $r^2+4=0\implies r=\pm 2i,$ so
+			\begin{align*}
+				y_c(x) = c_1\cos 2x + c_2\sin 2x
+			\end{align*}
+			Now, we expect the particular form to be
+			\begin{align*}
+				y_p(x) &= Ax+B \\
+				\implies y_p''(x) &= 0 \\
+				\implies y'' + 4y &= 0 + 4(Ax+B) = 2x \\
+				\implies A &= \frac{1}{2}, B = 0
+			\end{align*}
+			so the general solution is given by
+			\begin{align*}
+				y(x) = c_1\cos 2x + c_2\sin 2x + \frac{1}{2}x
+			\end{align*}
+		\end{soln}
+
+	\item (E\&P 5.5.47) Use the method of variation of parameters to find a particular solution
+		\begin{align*}
+			y'' + 3y' + 2y = 4e^x
+		\end{align*}
+		\begin{soln}
+			For the complementary part, the characteristic equation is $r^2+3r+2=(r+1)(r+2),$ so the roots are -1 and -2, so
+			\begin{align*}
+				y_c(x) = c_1e^{-x} + c_2e^{-2x} = c_1y_1 + c_2y_2
+			\end{align*}
+			Now, suppose $y = \mu_1y_1 + \mu_2y_2$ is also a solution. We have
+			\begin{align*}
+				W(y_1, y_2) &= \det \begin{bmatrix}
+					e^{-x} & e^{-2x} \\ -e^{-x} & -2e^{-2x}
+				\end{bmatrix} = e^{-x}(-2e^{-2x}) - e^{-2x}(-e^{-x}) = -e^{-3x}
+			\end{align*}
+			Then by the formulas in the textbook, we have
+			\begin{align*}
+				\mu_1 &= \int \frac{-y_2(x) f(x)}{W(x)}\, dx = \int \frac{-e^{-2x} \cdot 4e^x}{-e^{-3x}}\, dx = \int 4e^{2x}\, dx = 2e^{2x} \\
+				\mu_2 &= \int \frac{y_1(x)f(x)}{W(x)}\, dx = \int \frac{e^{-x}\cdot 4e^{x}}{-e^{-3x}}\, dx = \int -4e^{3x}\, dx = -\frac{4}{3} e^{3x} \\
+				\implies y_p(x) &= \mu_1 y_1 + \mu_2y_2 = 2e^{2x} \cdot e^{-x} - \frac{4}{3}e^{3x}\cdot e^{-2x} = \frac{2}{3} e^x
+			\end{align*}
+		\end{soln}
+
+	\item Use variation of parameters to find a general solution for
+		\begin{align*}
+			4x^2y''-4xy'+3y=8x^{4/3}
+		\end{align*}
+		\begin{soln}
+			This is a Cauchy equation, with characteristic equation
+			\begin{align*}
+				4m(m-1) - 4m + 3 &= 4(m^2-m) - 4m + 3 = 4m^2-8m+3 = (2m-1)(2m-3) \\
+				\implies m = \frac{1}{2}, \frac{3}{2}
+			\end{align*}
+			so the complementary solution is given by
+			\begin{align*}
+				y_c(x) = c_1x^{1/2} + c_2x^{3/2}
+			\end{align*}
+
+			Now, suppose $y=\mu_1y_1+\mu_2y_2$ is also a solution. We have
+			\begin{align*}
+				W(y_1, y_2) &= \det \begin{bmatrix}
+					x^{1/2} & x^{3/2} \\ \frac{1}{2}x^{-1/2} & \frac{3}{2}x^{1/2}
+				\end{bmatrix} = x^{1/2} \left(\frac{3}{2} x^{1/2}\right) - x^{3/2}\left( \frac{1}{2}x^{-1/2} \right) = x
+			\end{align*}
+			Converting the original equation to standard form, $y'' -\frac{1}{x} y' + \frac{3}{x^2}y = 2x^{-2/3},$ we have
+			\begin{align*}
+				\mu_1 &= \int \frac{-y_2(x)f(x)}{W(x)}\, dx = \int \frac{-x^{3/2} \cdot 2x^{-2/3}}{x}\, dx = \int 2x^{-1/6}\, dx = \frac{12}{5} x^{5/6} \\
+				\mu_2 &= \int \frac{y_1(x)f(x)}{W(x)}\, dx = \int \frac{x^{1/2}\cdot 2x^{-2/3}}{x}\, dx = \int 2x^{-7/6}\, dx = -12x^{-1/6} \\
+				\implies y_p(x) &= \mu_1y_1 + \mu_2y_2 = \frac{12}{5}x^{5/6} \cdot x^{1/2} - 12x^{-1/6}\cdot x^{3/2} = -\frac{72}{5} x^{4/3}
+			\end{align*}
+			and thus a general solution is given by
+			\begin{align*}
+				y(x) = c_1x^{1/2} + c_2x^{3/2} - \frac{72}{5}x^{4/3}
+			\end{align*}
+		\end{soln}
+		
+\end{enumerate}
+
+\end{document}

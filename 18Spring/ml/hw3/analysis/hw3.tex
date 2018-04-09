@@ -72,7 +72,7 @@ Show that this data can be classified correctly by a strong classifier which use
 	\end{align*}
 	We wish to find constants $\alpha_1, \alpha_2, \alpha_3$ such that
 	\begin{align*}
-		h(x) = \alpha_1h_1(x) + \alpha_2h_2(x) + \alpha_3h_3(x) = y
+		h(x_i) = \alpha_1h_1(x_i) + \alpha_2h_2(x_i) + \alpha_3h_3(x_i) = y_i
 	\end{align*}
 	for our three training examples. Evaluating $h_1, h_2, h_3$ at each of $x_1, x_2, x_3,$ we have the equations
 	\begin{align*}
@@ -85,6 +85,49 @@ Show that this data can be classified correctly by a strong classifier which use
 		h(x) = -h_1(x) + h_2(x) - h_3(x)
 	\end{align*}
 
+	Applying the Adaboost algorithm, we initialize $D_1 = \begin{bmatrix}
+		1/3 & 1/3 & 1/3
+	\end{bmatrix}.$ Now, using $h_1$ as the first hypothesis, we have
+	\begin{align*}
+		h_1(x_1) &= -1 \neq y_1 \\
+		h_1(x_2) &= -1 = y_2 \\
+		h_1(x_3) &= 1\neq y_3
+	\end{align*}
+	so
+	\begin{align*}
+		\varepsilon_1 &= \frac{2}{3} \implies \alpha_1 = \frac{1}{2}\log \frac{1/3}{2/3} = -\frac{1}{2}\log 2 
+	\end{align*}
+	Now, we update the distribution as
+	\begin{align*}
+		Z_2 &= \sum_{i=1}^{3} D_1(i) \exp(-\alpha_1 y_i h_1(\mathbf{x_i})) = \frac{1}{3} \exp\left( -\frac{1}{2}\log 2 \right) + \frac{1}{3}\exp\left( \frac{1}{2}\log 2 \right) + \frac{1}{3}\left( -\frac{1}{2}\log 2 \right) \\
+		&= \frac{1}{3} \left( \frac{1}{\sqrt{2}} + \sqrt{2} + \frac{1}{\sqrt{2}} \right) = \frac{2\sqrt{2}}{3} \\
+		D_2(1) &= \frac{D_1(1)}{Z_2} \exp\left( -\alpha_1y_1h_1(\mathbf{x_1}) \right) = \frac{1/3}{2\sqrt{2}/3} \exp\left( -\frac{1}{2}\log 2 \right) = \frac{1}{2\sqrt{2}}\cdot \frac{1}{\sqrt{2}} =\frac{1}{4} \\
+		D_2(2) &= \frac{D_1(2)}{Z_2}\exp\left( -\alpha_1y_2h_1(\mathbf{x_2}) \right) = \frac{1/3}{2\sqrt{2/3}}\exp\left( \frac{1}{2}\log 2 \right) = \frac{1}{2\sqrt{2}}\cdot \sqrt{2} = \frac{1}{2} \\
+		D_2(3) &= \frac{1}{4}
+	\end{align*}
+
+	Now, using $h_2$ as the second hypothesis, we have
+	\begin{align*}
+		h_2(x_1) &= 1 = y_1 \\
+		h_2(x_2) &= 1 \neq y_2 \\
+		h_2(x_3) &= 1 \neq y_3
+	\end{align*}
+	so
+	\begin{align*}
+		\varepsilon_2 &= \frac{1}{2} + \frac{1}{4} = \frac{3}{4} \implies \alpha_2 = \frac{1}{2} \log \frac{1/4}{3/4} = -\frac{1}{2}\log 3
+	\end{align*}
+	Now, we update the distribution as
+	\begin{align*}
+		Z_3 &= \sum_{i=1}^{3} D_2(i)\exp\left( -\alpha_2 y_i h_2(x_i) \right) = \frac{1}{4}\exp\left( \frac{1}{2}\log 3 \right) + \frac{1}{2}\exp\left( -\frac{1}{2}\log 3 \right) + \frac{1}{4}\exp\left( -\frac{1}{2}\log 3 \right) \\
+		&= \frac{1}{4} \sqrt{3} + \frac{1}{2\sqrt{3}} + \frac{1}{4\sqrt{3}} = \frac{\sqrt{3}}{2} \\
+		D_3(1) &= \frac{D_2(1)}{Z_3}\exp\left( -\alpha_2 y_1 h_2(x_1) \right) = \frac{1/4}{\sqrt{3}/2}\exp\left( \frac{1}{2}\log 3 \right) = \frac{1}{2\sqrt{3}}\cdot\sqrt{3} = \frac{1}{2} \\
+		D_3(2) &= \frac{D_2(2)}{Z_3}\exp\left( -\alpha_2 y_2h_2(x_2) \right) = \frac{1/2}{\sqrt{3}/2}\exp\left( -\frac{1}{2}\log 3 \right) = \frac{1}{\sqrt{3}}\cdot \frac{1}{\sqrt{3}} = \frac{1}{3} \\
+		D_3(3) &= \frac{1}{6}
+	\end{align*}
+	so our final model is
+	\begin{align*}
+		h(x) = \alpha_1h_1(x) + \alpha_2h_2(x) = -\frac{1}{2} = \left( -\frac{1}{2}\log 2 \right) h_1(x) + \left( -\frac{1}{2}\log 3 \right) h_2(x)
+	\end{align*}<++>
 \end{soln}<++>
 
 \paragraph{3) Ensemble Methods (12 points)}
@@ -112,6 +155,9 @@ Consider the following binary classification Boosting algorithm.
 	$Z_t$ is a normalization constant so that $\D$ is a valid probability distribution.
 
 	Describe the difference between this algorithm and the AdaBoost algorithm we learned about in class. What problem of AdaBoost is this change designed to fix? How does changing the algorithm's user provided parameter affect this behavior?
+	\begin{soln}
+		In this algorithm.
+	\end{soln}<++>
 
 	\paragraph{4. Overfitting in Clustering (14 points)}
 
@@ -125,8 +171,22 @@ Consider the following binary classification Boosting algorithm.
 	\begin{enumerate}[(a)]
 		\item Let $\gamma_k$ denote the optimal value of the objective function, prove $\gamma_k$ is non-increasing in $k$.
 			\begin{proof}
-				Suppose $S=\left\{ S_1, \cdots, S_k \right\}$ and $T = \left\{ T_1, \cdots, T_{k+1} \right\}$ are the partitions that give the optimal objective function values for $k$ and $k+1.$
-			\end{proof}<++>
+				Define
+				\begin{align*}
+					f(S) = \sum_{S_j\in S}^{}\sum_{x_i\in S_j}^{}\left\lVert x_j-\mu_j \right\rVert_2^2
+				\end{align*}
+				to be the objective function evaluated on a partition $S.$ Suppose $S=\left\{ S_1, \cdots, S_k \right\}$ is the partition that gives the optimal objective function value for $k.$ Suppose we created a $k+1$th cluster centered at any of the data points, WLOG $x_1\in S_1.$ Then for the partition $T=\left\{ S_1\setminus\left\{ x_1 \right\}, S_2, \cdots, S_k, \left\{ x_1 \right\} \right\},$ we have
+				\begin{align*}
+					f(T) &= \sum_{T_j\in T}^{}\sum_{x_i\in T_j}^{}\left\lVert x_j-\mu_j \right\rVert_2^2 = \sum_{S_j\in S}^{}\sum_{x_i\in S_j}^{}\left\lVert x_j-\mu_j \right\rVert_2^2 - \left\lVert x_1-\mu_1 \right\rVert_2^2 + \left\lVert x_1-x_1 \right\rVert_2^2 \\
+					&= \gamma_k - \left\lVert x_1-\mu_1 \right\rVert_2^2 \\
+					&\le \gamma_k
+				\end{align*}
+				Since $T$ is a partition with $k+1$ sets, and $\gamma_{k+1}$ is the minimum objective function value over all partition with $k+1$ sets, it follows that
+				\begin{align*}
+					\gamma_{k+1} \le f(T) \le f(S) = \gamma_{k}
+				\end{align*}
+				and thus $\gamma_k$ is non-increasing on $k.$
+			\end{proof}
 		\item Suppose we modified the objective function as follows:
 			\begin{eqnarray}
 				\mathop{\textrm{argmin}}_{S=\{S_1,...,S_k\}}\sum_{j=1}^k\sum_{x_i\in S_j}\max(\|x_j-\mu_j\|_2^2, \tau)
