@@ -89,9 +89,9 @@ Show that this data can be classified correctly by a strong classifier which use
 		1/3 & 1/3 & 1/3
 	\end{bmatrix}.$ Now, using $h_1$ as the first hypothesis, we have
 	\begin{align*}
-		h_1(x_1) &= -1 \neq y_1 \\
-		h_1(x_2) &= -1 = y_2 \\
-		h_1(x_3) &= 1\neq y_3
+		h_1(x_1) &= -1 \neq 1 = y_1 \\
+		h_1(x_2) &= -1 = -1 = y_2 \\
+		h_1(x_3) &= 1\neq -1 = y_3
 	\end{align*}
 	so
 	\begin{align*}
@@ -108,27 +108,33 @@ Show that this data can be classified correctly by a strong classifier which use
 
 	Now, using $h_2$ as the second hypothesis, we have
 	\begin{align*}
-		h_2(x_1) &= 1 = y_1 \\
-		h_2(x_2) &= 1 \neq y_2 \\
+		h_2(x_1) &= 1 = 1 = y_1 \\
+		h_2(x_2) &= -1 =-1 = y_2 \\
 		h_2(x_3) &= 1 \neq y_3
 	\end{align*}
 	so
 	\begin{align*}
-		\varepsilon_2 &= \frac{1}{2} + \frac{1}{4} = \frac{3}{4} \implies \alpha_2 = \frac{1}{2} \log \frac{1/4}{3/4} = -\frac{1}{2}\log 3
+		\varepsilon_2 &= \frac{1}{4}  \implies \alpha_2 = \frac{1}{2} \log \frac{3/4}{1/4} = \frac{1}{2}\log 3
 	\end{align*}
 	Now, we update the distribution as
 	\begin{align*}
-		Z_3 &= \sum_{i=1}^{3} D_2(i)\exp\left( -\alpha_2 y_i h_2(x_i) \right) = \frac{1}{4}\exp\left( \frac{1}{2}\log 3 \right) + \frac{1}{2}\exp\left( -\frac{1}{2}\log 3 \right) + \frac{1}{4}\exp\left( -\frac{1}{2}\log 3 \right) \\
-		&= \frac{1}{4} \sqrt{3} + \frac{1}{2\sqrt{3}} + \frac{1}{4\sqrt{3}} = \frac{\sqrt{3}}{2} \\
-		D_3(1) &= \frac{D_2(1)}{Z_3}\exp\left( -\alpha_2 y_1 h_2(x_1) \right) = \frac{1/4}{\sqrt{3}/2}\exp\left( \frac{1}{2}\log 3 \right) = \frac{1}{2\sqrt{3}}\cdot\sqrt{3} = \frac{1}{2} \\
+		Z_3 &= \sum_{i=1}^{3} D_2(i)\exp\left( -\alpha_2 y_i h_2(x_i) \right) = \frac{1}{4}\exp\left( -\frac{1}{2}\log 3 \right) + \frac{1}{2}\exp\left( -\frac{1}{2}\log 3 \right) + \frac{1}{4}\exp\left( \frac{1}{2}\log 3 \right) \\
+		&= \frac{1}{4} \frac{1}{\sqrt{3}} + \frac{1}{2}\frac{1}{\sqrt{3}} + \frac{1}{4}\sqrt{3}= \frac{\sqrt{3}}{2} \\
+		D_3(1) &= \frac{D_2(1)}{Z_3}\exp\left( -\alpha_2 y_1 h_2(x_1) \right) = \frac{1/4}{\sqrt{3}/2}\exp\left(- \frac{1}{2}\log 3 \right) = \frac{1}{2\sqrt{3}}\cdot\frac{1}{\sqrt{3}} = \frac{1}{6} \\
 		D_3(2) &= \frac{D_2(2)}{Z_3}\exp\left( -\alpha_2 y_2h_2(x_2) \right) = \frac{1/2}{\sqrt{3}/2}\exp\left( -\frac{1}{2}\log 3 \right) = \frac{1}{\sqrt{3}}\cdot \frac{1}{\sqrt{3}} = \frac{1}{3} \\
-		D_3(3) &= \frac{1}{6}
+		D_3(3) &= \frac{1}{2}
 	\end{align*}
 	so our final model is
 	\begin{align*}
-		h(x) = \alpha_1h_1(x) + \alpha_2h_2(x) = -\frac{1}{2} = \left( -\frac{1}{2}\log 2 \right) h_1(x) + \left( -\frac{1}{2}\log 3 \right) h_2(x)
-	\end{align*}<++>
-\end{soln}<++>
+		H(x) &= \sign\{\alpha_1h_1(x) + \alpha_2h_2(x)\} = \sign\left\{\left( -\frac{1}{2}\log 2 \right) h_1(x) + \left( \frac{1}{2}\log 3 \right) h_2(x) \right\}
+	\end{align*}
+
+	This model is insufficient to classify our data. Consider the point $(1, -1).$ We have
+	\begin{align*}
+		h_1(1) &= 1, \quad h_2(1) = 1 \\
+		\implies H(1) &= \sign\left\{ -\frac{1}{2}\log 2 + \frac{1}{2}\log 3 \right\} = 1 \neq -1
+	\end{align*}
+\end{soln}
 
 \paragraph{3) Ensemble Methods (12 points)}
 
@@ -156,8 +162,18 @@ Consider the following binary classification Boosting algorithm.
 
 	Describe the difference between this algorithm and the AdaBoost algorithm we learned about in class. What problem of AdaBoost is this change designed to fix? How does changing the algorithm's user provided parameter affect this behavior?
 	\begin{soln}
-		In this algorithm.
-	\end{soln}<++>
+		As written, this algorithm behaves identically to the original AdaBoost algorithm. Here, we have
+		\begin{align*}
+			D_{t+1}(i) &= \frac{D_t(i)}{Z_t} \exp\left\{ -\alpha_t y_i h_t(x_i) \right\} \exp\left\{ (T-t)/T \right\}
+		\end{align*}
+		where $Z_t$ is the normalizing constant
+		\begin{align*}
+			Z_t &= \sum_{i=1}^{N} D_t(i) \exp\left\{ -\alpha_t y_i h_t(x_i) \right\} \exp\left\{ (T-t)/T \right\} = \exp\left\{ (T-t)/T \right\} \sum_{i=1}^{N} D_t(i)\exp\left\{ -\alpha_t y_i h_t(x_i) \right\} \\
+			\implies D_{t+1}(i) &= \frac{D_t(i)}{\exp\left\{ (T-t)/T \right\}\sum_{i=1}^{N} D_t(i)\exp\left\{ -\alpha_t y_i h_t(x_i) \right\}} \exp\left\{ -\alpha_t y_i h_t(x_i) \right\} \exp\left\{ (T-t)/T \right\} \\
+			&= \frac{D_t(i)}{\sum_{i=1}^{N} \exp\left\{ -\alpha_t y_i h_t(x_i) \right\}}\exp\left\{ -\alpha_t y_i h_t(x_i) \right\}
+		\end{align*}
+		which is exactly the update performed in the original AdaBoost algorithm. Larger values of $T$ will increase the number of hypotheses used, which is expected to improve the test accuracy of AdaBoost since it is resistant to overfitting.
+	\end{soln}
 
 	\paragraph{4. Overfitting in Clustering (14 points)}
 
@@ -187,6 +203,7 @@ Consider the following binary classification Boosting algorithm.
 				\end{align*}
 				and thus $\gamma_k$ is non-increasing on $k.$
 			\end{proof}
+
 		\item Suppose we modified the objective function as follows:
 			\begin{eqnarray}
 				\mathop{\textrm{argmin}}_{S=\{S_1,...,S_k\}}\sum_{j=1}^k\sum_{x_i\in S_j}\max(\|x_j-\mu_j\|_2^2, \tau)
@@ -194,7 +211,42 @@ Consider the following binary classification Boosting algorithm.
 			\end{eqnarray}
 			where $\tau$ is some (given) constant and $\gamma'_k$ is the optimal value of this new objective function. Compare the values of 
 			$\gamma_k$ and $\gamma'_k$ ($<, \le, =, \ge, >$) and prove this relation.
+			\begin{proof}
+				We claim that $\gamma_k \le \gamma'_k.$ Let $S=\left\{ S_1, \cdots, S_k \right\}$ be the optimal partition for $\gamma'_k,$ and let $f(S)$ be the objective function for $\gamma_k,$ and let $g(S, \tau)$ be the objective function for $\gamma'_k,$ both evaluated on the partition $S.$ For any point $x_i,$ we have
+				\begin{align*}
+					\left\lVert x_i-\mu_j \right\rVert_2^2 &\le \max\left\{ \left\lVert x_i-\mu_j \right\rVert_2^2, \tau \right\} \\
+					\implies f(S) = \sum_{j=1}^{k} \sum_{x_i\in S_j}^{} \left\lVert x_i-\mu_j \right\rVert_2^2 &\le \sum_{j=1}^{k} \sum_{x_i\in S_j}^{} \max\left\{ \left\lVert x_i-\mu_j \right\rVert_2^2, \tau \right\} = g(S, \tau) = \gamma'_k
+				\end{align*}
+				Thus, since $\gamma_k\le f(S),$ we conclude that $\gamma_k\le \gamma'_k.$
+
+				We can have equality if $\tau \le \left\lVert x_i-\mu_j \right\rVert_2^2$ for all $i, j.$ However, the inequality does not necessarily hold in the other direction. If $\tau$ is a positive constant, and we take $k=N$ so that every data point is its own cluster, we have
+				\begin{align*}
+					\gamma'_N = \sum_{i=1}^{N} \max\left\{ \left\lVert x_i-\mu_i \right\rVert_2^2, \tau \right\} = \sum_{i=1}^{N} \tau = N\tau \not\le 0 = \gamma_N
+				\end{align*}
+			\end{proof}
+
 		\item K-medoids is an algorithm similar to K-means. Both K-means and K-medoids attempt to minimize the squared error but unlike K-means, K-medoids chooses a provided example as a cluster center (medoids) rather than the mean of a subset of the examples. For a given data set $\X$, compare the optimal clusterings produced by K-means and K-medoids ($<, \le, =, \ge, >$) and prove this relation.
+			\begin{proof}
+				Let $\varphi_k$ be the optimal objective function value for K-medoids on $k$ clusters. We claim that $\gamma_k\le \varphi_k.$ Let $f(S)$ be the objective function value for K-means evaluated on the partition $S,$ and let $g(S, M)$ be the objective function values for K-medoids evaluated on the partition $S$ with set of median points $M.$ Fix $k,$ and let $S=\left\{ S_1, \cdots, S_k \right\}, M=\left\{ m_1, \cdots, m_k \right\}$ be the optimal clustering and choice of median for K-medoids, so that $\varphi_k=g(S, M).$
+				
+				Consider cluster $j.$ Then if $E(\alpha) = \sum_{x_i\in S_j}^{} \left\lVert x_i-\alpha \right\rVert_2^2,$ it is well known that $\alpha=\frac{1}{\abs{S_j}}\sum_{x_i\in S_j}^{}x_i = \mu_j$ minimizes $E(\alpha),$ the squared error. Thus,
+				\begin{align*}
+					\sum_{x_i\in S_j}^{}\left\lVert x_i-\mu_j \right\rVert_2^2&\le \sum_{x_i\in S_j}^{}\left\lVert x_i-m_j \right\rVert_2^2 \\
+					\implies f(S) = \sum_{j=1}^{k} \sum_{x_i\in S_j}^{}\left\lVert x_i-\mu_j \right\rVert_2^2 &\le \sum_{j=1}^{k} \sum_{x_i\in S_j}^{}\left\lVert x_i-m_j \right\rVert_2^2 = g(S, M) = \varphi_k
+				\end{align*}
+				Thus, since $\gamma_k\le f(S),$ we conclude that $\gamma_k\le \varphi_k.$
+
+				We can have equality if we take $k=N$ so that every data point is its own cluster. In this case, the mean and median of every cluster is the same, and the objective function values are both 0. However, the inequality does not necessarily hold in the other direction. Suppose $\gamma_k>\varphi_k$ for some $k$ and let $S=\left\{ S_1, \cdots, S_k \right\}$ be the optimal partition for K-means, and let $T=\left\{ T_1, \cdots, T_k \right\}, M=\left\{ m_1, \cdots, m_k \right\}$ be the optimal partition and choice of medians for K-medoids. Then
+				\begin{align*}
+					f(S) = \sum_{j=1}^{k} \sum_{x_i\in S_j}^{} \left\lVert x_i-\mu_j \right\rVert_2^2 &> \sum_{j=1}^{k} \sum_{x_i\in T_j}^{}\left\lVert x_i-m_j \right\rVert_2^2 = g(T, M)
+				\end{align*}
+				Then from above, we have
+				\begin{align*}
+					\sum_{j=1}^{k} \sum_{x_i\in T_j}^{}\left\lVert x_i-m_j \right\rVert_2^2 \ge \sum_{j=1}^{k} \sum_{x_i\in T_j}^{}\left\lVert x_i - \mu(T_j) \right\rVert_2^2 = f(T)
+				\end{align*}
+				so it follows that $f(T) < f(S),$ which is a contradiction since we assumed that $f(S)$ was minimal. Thus, we have the final relation $\gamma_k\le \varphi_k.$
+			\end{proof}
+
 		\item Suppose you wanted to select $k$ (the number of clusters) to minimize the objective function. Should you work with objective \ref{objective1} or \ref{objective2}? If \ref{objective2}, how does your choice of $\tau$ effect your choice of $k$?
 	\end{enumerate}
 
