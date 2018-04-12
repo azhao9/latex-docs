@@ -1,0 +1,225 @@
+\documentclass{article}
+\usepackage[sexy, hdr, fancy]{evan}
+\usepackage{graphicx}
+\graphicspath{.}
+\setlength{\droptitle}{-4em}
+
+\DeclareMathOperator{\re}{Re}
+\DeclareMathOperator{\im}{Im}
+\DeclareMathOperator{\Log}{Log}
+
+\lhead{Homework 9}
+\rhead{Complex Analysis}
+\lfoot{}
+\cfoot{\thepage}
+
+\begin{document}
+\title{Homework 9}
+\maketitle
+\thispagestyle{fancy}
+
+\section*{Section 5.2}
+
+\begin{itemize}
+	\item[4.] Let $\alpha$ be a complex number. Show that if $(1+z)^\alpha$ is taken as $e^{\alpha\Log(1+z)},$ then for $\abs{z}<1$
+		\begin{align*}
+			(1+z)^\alpha = 1+\frac{\alpha}{1}z + \frac{\alpha(\alpha-1)}{1\cdot 2}z^2 + \frac{\alpha(\alpha-1)(\alpha-2)}{1\cdot 2\cdot 3}z^3 + \cdots
+		\end{align*}
+		\begin{proof}
+			We have
+			\begin{align*}
+				\frac{d}{dz}\left[ (1+z)^\alpha \right] &= \alpha(1+z)^{\alpha-1} \\
+				\frac{d^2}{dz} \left[ (1+z)^\alpha \right] &= \alpha(\alpha-1) (1+z)^{\alpha-2} \\
+				&\vdots \\
+				\frac{d^j}{dz^j} \left[ (1+z)^\alpha \right] &= \alpha(\alpha-1)\cdots(\alpha-j+1) (1+z)^{\alpha-j}
+			\end{align*}
+			and since $(1+z)^\alpha$ is analytic on the disc $\abs{z}<1,$ it is given by its Maclaurin series, which is
+			\begin{align*}
+				(1+z)^\alpha &= \sum_{j=0}^{\infty} \frac{f^{(j)}(0)}{j!}z^j= \sum_{j=0}^{\infty} \frac{\alpha(\alpha-1)\cdots(\alpha-j+1)}{j!}z^j
+			\end{align*}
+			which is the form desired.
+		\end{proof}
+
+	\item[5.] Find and state the convergence properties of the Taylor series for the following.
+		\begin{itemize}
+			\item[(a)] $\frac{1}{1+z}$ around $z_0=0$
+				\begin{soln}
+					This is just $\frac{1}{1-(-z)}= \sum_{j=0}^{\infty} (-z)^j,$ which converges for all $\abs{z}<1.$
+				\end{soln}
+
+			\item[(c)] $z^3\sin 3z$ around $z_0=0$
+				\begin{soln}
+					$f$ is analytic on the entire complex plane, so the Taylor series converges for all $z.$
+				\end{soln}
+
+			\item[(e)] $\frac{1+z}{1-z}$ around $z_0=i$
+				\begin{soln}
+					$f$ is analytic on $\CC\setminus\left\{ 1 \right\},$ where $\abs{1-i} = \sqrt{2},$ so the Taylor series converges on the largest open disc centered at $i$ which does not intersect 1, which is $\abs{z-i}<\sqrt{2}.$
+				\end{soln}
+
+			\item[(g)] $\frac{z}{(1-z)^2}$ around $z_0=0$ 
+				\begin{soln}
+					$f$ is analytic on $\CC\setminus\left\{ 1, -1 \right\},$ so the Taylor series converges on the largest open disc centered at 0 which does not intersect these points, which is $\abs{z}<1.$
+				\end{soln}
+				
+		\end{itemize}
+
+	\item[8.] Use Taylor series to verify the following identities
+		\begin{itemize}
+			\item[(d)] $e^{2z}=e^z\cdot e^z$
+				\begin{soln}
+					We have
+					\begin{align*}
+						e^z &= 1 + z + \frac{z^2}{2!} + \cdots = \sum_{j=0}^{\infty} \frac{z^j}{j!} \\
+						\implies e^z\cdot e^z &= \sum_{j=0}^{\infty} c_j z^j
+					\end{align*}
+					where
+					\begin{align*}
+						c_j &= \sum_{\ell=0}^{j} a_{j-\ell}b_\ell = \sum_{\ell=0}^{j} \frac{1}{(j-\ell)!}\cdot \frac{1}{\ell!} = \frac{1}{j!} \sum_{\ell=0}^{j} \frac{j!}{(j-\ell)!\ell!} = \frac{1}{j!}\cdot 2^j \\
+						\implies e^z\cdot e^z &= \sum_{j=0}^{\infty} \frac{2^j}{j!} z^j = \sum_{j=0}^{\infty} \frac{(2z)^j}{j!} \\
+						&= e^{2z}
+					\end{align*}
+				\end{soln}
+				
+		\end{itemize}
+
+	\item[11.] Using Theorem 6 for computing the product of Taylor series, find the first three nonzero terms in the Maclaurin expansion of the following
+		\begin{itemize}
+			\item[(a)] $e^{z}\cos z$
+				\begin{soln}
+					Let $f=e^z$ and $g=\cos z,$ with Taylor expansions
+					\begin{align*}
+						f &= 1 + z + \frac{z^2}{2!} + \frac{z^3}{3!} + \cdots \\
+						g &= 1 - \frac{z^2}{2!} + \frac{z^4}{4!} - \frac{z^6}{6!} + \cdots
+					\end{align*}
+					so the Cauchy product of the two Taylor series is
+					\begin{align*}
+						fg &= \sum_{j=0}^{\infty}c_j z^j
+					\end{align*}
+					where
+					\begin{align*}
+						c_0 &= 1\cdot 1 = 1 \\
+						c_1 &= 1\cdot 1 = 1 \\
+						c_2 &= 1\cdot \left( -\frac{1}{2!} \right) + \frac{1}{2!}\cdot 1 = 0 \\
+						c_3 &= 1\cdot \left( -\frac{1}{2!} \right) + \frac{1}{3!}\cdot 1 = -\frac{1}{3}
+					\end{align*}
+					so the first three terms are
+					\begin{align*}
+						fg =e^z\cos z = 1 + z - \frac{1}{3}z^3 + \cdots
+					\end{align*}
+				\end{soln}
+				
+		\end{itemize}
+
+\end{itemize}
+
+\section*{Section 5.4}
+
+\begin{itemize}
+	\item[10.] The defining relations for the terms are
+		\begin{align*}
+			a_0 &= a_1 = 1 \\
+			a_n &= a_{n-1} + a_{n-2} \quad (n\ge 2)
+		\end{align*} 
+		Show that
+		\begin{align*}
+			f(z):=a_0+a_1z+a_2z^2+\cdots
+		\end{align*}
+		defines an analytic function satisfying the equation 
+		\begin{align*}
+			f(z)=1+zf(z)+z^2f(z)
+		\end{align*}
+		Solve for $f(z)$ and compute the Maclaurin series to derive the expression
+		\begin{align*}
+			a_j=\frac{1}{\sqrt{5}}\left[ \left( \frac{1+\sqrt{5}}{2} \right)^{j+1} - \left( \frac{1-\sqrt{5}}{2} \right)^{j+1} \right]
+		\end{align*}
+		\begin{proof}
+			We have
+			\begin{align*}
+				zf(z) &= 0 + a_0z + a_1z^2 + a_2z^3 + \cdots \\
+				z^2 f(z) &= 0 + 0z + a_0z^2 + a_1z^3 + \cdots \\
+				\implies 1 + zf(z) + z^2f(z) &= 1 + a_0z + (a_0+a_1)z^2 + (a_1+a_2)z^3 + \cdots \\
+				&= a_0 + a_1z + a_2z^2 + a_3z^3 + \cdots = f(z)
+			\end{align*}
+			by applying $a_0=a_1=1$ and the recursive definition of $a_n.$ We have
+			\begin{align*}
+				f(z) &= 1 + zf(z) + z^2f(z) \implies f(z) = \frac{1}{1-z-z^2}
+			\end{align*}
+			The denominator has roots $\frac{1\pm \sqrt{5}}{2},$ so let $r_1=\frac{1+\sqrt{5}}{2}, r_2=\frac{1-\sqrt{5}}{2}.$ Then we have the partial fraction decomposition
+			\begin{align*}
+				\frac{-1}{(z-r_1)(z-r_2)} &= \frac{A}{r_1-z} + \frac{B}{r_2-z} \\
+				\implies -1 &= A(r_2-z) + B(r_1-z) 
+			\end{align*}
+			and substituting $z=r_1, r_2,$ we have the equations
+			\begin{align*}
+				-1 &= A(r_2-r_1) = A\left( \frac{1-\sqrt{5}}{2} - \frac{1+\sqrt{5}}{2} \right) = A\left(-\sqrt{5}\right) \implies A = \frac{1}{\sqrt{5}} \\
+				-1 &= B(r_1-r_2) = B\left( \sqrt{5} \right)\implies B = -\frac{1}{\sqrt{5}}
+			\end{align*}
+			and thus the partial fraction decomposition
+			\begin{align*}
+				f(z) &= \frac{-1}{1-z-z^2} = \frac{1}{\sqrt{5}}\cdot \frac{1}{r_1-z} - \frac{1}{\sqrt{5}}\cdot \frac{1}{r_2-z} = \frac{1}{\sqrt{5}}\cdot \frac{1/r_1}{1-(z/r_1)} - \frac{1}{\sqrt{5}}\cdot \frac{1/r_2}{1-(z/r_2)}
+			\end{align*}
+			and using the Taylor expansion of $(1-(z/r_1))\inv$ and $(1-(z/r_2))\inv,$ we have
+			\begin{align*}
+				f(z) &= \frac{1}{\sqrt{5}r_1}\cdot \sum_{j=0}^{\infty} \left( \frac{z}{r_1} \right)^j - \frac{1}{\sqrt{5}r_2} \sum_{j=0}^{\infty} \left( \frac{z}{r_2} \right)^j = \sum_{j=0}^{\infty} \frac{1}{\sqrt{5}} \left( \frac{1}{r_{1}^{j+1}} - \frac{1}{r_2^{j+1}} \right)z^j = \sum_{j=0}^{\infty} \frac{1}{\sqrt{5}}\left( \frac{r_2^{j+1}-r_1^{j+1}}{r_1^{j+1}r_2^{j+1}} \right)z^j
+			\end{align*}
+			where $r_1r_2 = \frac{1+\sqrt{5}}{2}\cdot \frac{1-\sqrt{5}}{2} = -1,$ so this is
+			\begin{align*}
+				f(z) &= \sum_{j=0}^{\infty} \frac{1}{\sqrt{5}} \left( (-r_2)^{j+1} + r_1^{j+1} \right)=\sum_{j=0}^{\infty} \frac{1}{\sqrt{5}} (-1)^{j+1} \left[ \left( \frac{1+\sqrt{5}}{2} \right)^{j+1} - \left( \frac{1-\sqrt{5}}{2} \right)^{j+1} \right]z^j \\
+				\implies a_j &= \frac{1}{\sqrt{5}}\left[ \left( \frac{1+\sqrt{5}}{2} \right)^{j+1} - \left( \frac{1-\sqrt{5}}{2} \right)^{j+1} \right]
+			\end{align*}
+		\end{proof}
+		
+\end{itemize}
+
+\section*{Section 5.6}
+
+\begin{itemize}
+	\item[2.] What is the order of the pole of 
+		\begin{align*}
+			f(z)= \frac{1}{(2\cos z-2+z^2)^2}
+		\end{align*}
+		at $z=0?$ (Hint: Work with $1/f(z).$)
+		\begin{soln}
+			Consider $g(z)=\sqrt{1/f(z)}=2\cos z-2+z^2.$ Then the order of the pole of $f(z)$ is twice the degree of the zero $z=0$ of $g(z).$ We have
+			\begin{align*}
+				g(0) &= 2\cos 0-2+0^2 = 0 \\
+				\implies g'(z) &= -2\sin z + 2z \implies g'(0) = -2\sin 0 + 2\cdot 0 = 0 \\
+				\implies g''(z) &= -2\cos z + 2 \implies g''(0) = -2\cos 0 + 2 = 0\\
+				\implies g^{(3)}(z) &= 2\sin z \implies g^{(3)}(0) = 2\sin 0 = 0 \\
+				\implies g^{(4)}(z) &= -2\cos z \implies g^{(4)}(0) = -2\cos 0 = -2\neq 0
+			\end{align*}
+			so $z=0$ is a zero of order 4 for $g,$ and thus a pole of order 8 for $f(z).$
+		\end{soln}
+
+	\item[3.] Construct a function $f,$ analytic in the plane except for isolated singularities, that satisfies the given conditions.
+		\begin{itemize}
+			\item[(a)] $f$ has a zero of order 2 at $z=i$ and a pole of order 5 at $z=2-3i.$
+				\begin{soln}
+					Let
+					\begin{align*}
+						f = \frac{(z-i)^2}{(z-2+3i)^5}
+					\end{align*}
+				\end{soln}
+		
+		\end{itemize}
+
+	\item[5.] For each of the following, determine whether the statement made is always true or sometimes false.
+		\begin{itemize}
+			\item[(a)] If $f$ and $g$ have a pole at $z_0,$ then $f+g$ has a pole at $z_0.$
+				\begin{answer*}
+					This is sometimes false. Take $f=\frac{z}{z-z_0}$ and $g=\frac{-z_0}{z-z_0}.$ Then both $f$ and $g$ have a pole at $z_0,$ but $f+g=\frac{z-z_0}{z-z_0}=1$ does not have any poles.
+				\end{answer*}
+
+			\item[(c)] If $f(z)$ has a pole of order $m$ at $z=0,$ then $f(z^2)$ has a pole of order $2m$ at $z=0.$
+				\begin{answer*}
+					This is always true. Let $f(z)=z^m g(z),$ where $g(0)\neq 0.$ Then $f(z^2)=z^{2m} g(z^2),$ where $g(0^2)=g(0)\neq 0.$
+				\end{answer*}
+				
+		\end{itemize}
+
+	\item[16.] Sketch the graphs for $s=1, \frac{1}{2}, 2, \frac{1}{3}, 3, \cdots$ of the level curves $\abs{e^{1/z}}=s,$ and observe that they all converge at the essential singularity $z=0$ of $e^{1/z}.$ (Hint: the level curves are all circles.)
+		
+\end{itemize}
+
+\end{document}

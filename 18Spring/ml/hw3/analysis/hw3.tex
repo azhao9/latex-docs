@@ -219,10 +219,15 @@ Consider the following binary classification Boosting algorithm.
 				\end{align*}
 				Thus, since $\gamma_k\le f(S),$ we conclude that $\gamma_k\le \gamma'_k.$
 
-				We can have equality if $\tau \le \left\lVert x_i-\mu_j \right\rVert_2^2$ for all $i, j.$ However, the inequality does not necessarily hold in the other direction. If $\tau$ is a positive constant, and we take $k=N$ so that every data point is its own cluster, we have
+				We can have equality if $\tau \le \left\lVert x_i-\mu_j \right\rVert_2^2$ for all $i, j.$ However, the inequality does not necessarily hold in the other direction. Suppose $\gamma_k>\gamma'_k$ for some $k$ and let $S=\left\{ S_1, \cdots, S_k \right\}$ be the optimal partition for $\gamma_k$ and let $T=\left\{ T_1, \cdots, T_k \right\}$ be the optimal partition for $\gamma'_k.$ Then 
 				\begin{align*}
-					\gamma'_N = \sum_{i=1}^{N} \max\left\{ \left\lVert x_i-\mu_i \right\rVert_2^2, \tau \right\} = \sum_{i=1}^{N} \tau = N\tau \not\le 0 = \gamma_N
+					f(S) &= \sum_{j=1}^{k} \sum_{x_i\in S_j}^{}\left\lVert x_i-\mu(S_j) \right\rVert_2^2 > \sum_{j=1}^{k} \sum_{x_i\in T_j}^{}\max\left\{ \left\lVert x_i-\mu(T_j) \right\rVert_2^2, \tau \right\} = g(T, \tau)
 				\end{align*}
+				for a given $\tau.$ Then we have
+				\begin{align*}
+					\sum_{j=1}^{k} \sum_{x_i\in T_j}^{}\max\left\{ \left\lVert x_i-\mu(T_j) \right\rVert_2^2, \tau \right\} \ge \sum_{j=1}^{k} \sum_{x_i\in T_j}^{} \left\lVert x_i-\mu(T_j) \right\rVert_2^2 = f(T)
+				\end{align*}
+				so it follows that $f(T)<f(S),$ which is a contradiction since we assumed that $f(S)$ was minimal. Thus, we have the final relation $\gamma_k\le \gamma'_k.$
 			\end{proof}
 
 		\item K-medoids is an algorithm similar to K-means. Both K-means and K-medoids attempt to minimize the squared error but unlike K-means, K-medoids chooses a provided example as a cluster center (medoids) rather than the mean of a subset of the examples. For a given data set $\X$, compare the optimal clusterings produced by K-means and K-medoids ($<, \le, =, \ge, >$) and prove this relation.
@@ -248,6 +253,18 @@ Consider the following binary classification Boosting algorithm.
 			\end{proof}
 
 		\item Suppose you wanted to select $k$ (the number of clusters) to minimize the objective function. Should you work with objective \ref{objective1} or \ref{objective2}? If \ref{objective2}, how does your choice of $\tau$ effect your choice of $k$?
+			\begin{soln}
+				WLOG, all data points are unique. If we use objective 1, to achieve the minimum objective function we must have $k=N,$ which will give an objective function value of 0.
+
+				If we use objective 2, assuming $\tau$ is a positive constant, then taking $k=N$ again we achieve the minimum objective function value of $N\tau.$ WLOG the distance between $x_1$ and $x_2$ is minimal in the data set, so that $\left\lVert x_1-x_2 \right\rVert_2^2 \le \left\lVert x_i-x_j \right\rVert_2^2$ for all $i\neq j.$ Take $\tau\ge\frac{1}{4}\left\lVert x_1-x_2 \right\rVert_2^2.$ Then if $S=\left\{ \left\{ x_1, x_2 \right\}, x_3, \cdots, x_N \right\},$ we have
+				\begin{align*}
+					g(S, \tau) &= \sum_{j=1}^{N-1} \sum_{x_i\in S_j}^{}\max\left\{ \left\lVert x_i-\mu_j \right\rVert_2^2, \tau \right\} \\
+					&= \max\left\{ \left\lVert x_1-\frac{x_1+x_2}{2} \right\rVert_2^2, \tau \right\} + \max\left\{ \left\lVert x_2-\frac{x_1+x_2}{2} \right\rVert_2^2, \tau \right\} + (N-2)\tau \\
+					&= \max\left\{ \left\lVert \frac{x_1-x_2}{2} \right\rVert_2^2, \tau \right\} + \max\left\{ \left\lVert \frac{x_2-x_1}{2} \right\rVert_2^2, \tau \right\} + (N-2)\tau \\
+					&= 2\max\left\{ \frac{1}{4}\left\lVert x_1-x_2 \right\rVert_2^2, \tau \right\} + (N-2)\tau = 2\tau + (N-2)\tau = N\tau
+				\end{align*}
+				Thus, the minimum objective function value can be achieved using $k-1$ clusters. Generalizing, if we increase $\tau,$ we can achieve the minimum objective function value using smaller $k.$
+			\end{soln}
 	\end{enumerate}
 
 
