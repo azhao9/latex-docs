@@ -1,0 +1,52 @@
+\documentclass{article}
+\usepackage[sexy, hdr, fancy]{evan}
+\setlength{\droptitle}{-4em}
+
+\lhead{Homework 8}
+\rhead{Honors Analysis II}
+\lfoot{}
+\cfoot{\thepage}
+
+\begin{document}
+\title{Homework 8}
+\maketitle
+\thispagestyle{fancy}
+
+\section*{Chapter 17: Measurable Functions}
+
+\begin{itemize}
+	\item[14.] If $f$ is measurable and $B$ is a Borel set, show that $f\inv(B)$ is measurable. (Hint: $\left\{ A:f\inv(A)\in\mathcal M \right\}$ is a $\sigma$-algebra containing the open sets.)
+
+	\item[17.] If $f, g:\RR\to\RR$ are Borel measurable, show that $f\circ g$ is Borel measurable. If $f$ is Borel measurable and $g$ is Lebesgue measurable, show that $f\circ g$ is Lebesgue measurable.
+
+	\item[21.] Let $f$ be a non-negative, bounded, measurable function on $[a, b]$ with $0\le f\le M.$ Let 
+		\begin{align*}
+			E_{n, k} = \left\{ \frac{kM}{2^n}\le f\le \frac{(k+1)M}{2^n} \right\}
+		\end{align*}
+		for each $n=1, 2, \cdots,$ and $k=0, 1, \cdots, 2^n,$ and set
+		\begin{align*}
+			\varphi_n = \sum_{k=0}^{2^n} \frac{kM}{2^n} \chi_{E_{n, k}}
+		\end{align*}
+		Prove that $0\le \varphi_n\le \varphi_{n+1}\le f$ and that $0\le f-\varphi_n\le 2^{-n}M$ for each $n.$ Thus, $(\varphi_n)$ is a sequence of simple functions that converges uniformly to $f$ on $[a, b].$ (Hint: Notice that $E_{n, k}=E_{n+1, 2k}\cup E_{n+1, 2k+1}.$)
+
+	\item[31.] Let $(f_n)$ be a sequence of measurable functions, all defined on some measurable set $D.$ Show that the set $C=\left\{ x\in D:\lim_{n\to\infty} f_n(x) \text{ exists}\right\}$ is measurable. (Hint: $C$ is the set where $(f_n(x))$ is Cauchy.)
+
+	\item[35.] Give an example showing that the requirement that $m(D)<\infty$ cannot be dropped from Egorov's theorem.
+
+	\item[36.] If $(f_n)$ converges almost uniformly to $f,$ prove that $(f_n)$ converges almost everywhere to $f.$ (Hint: For each $k,$ choose a set $E_k$ such that $m(E_k)<1/k$ and $f\implies f$ off $E_k.$ Then $m\left( \bigcap_{k=1}^\infty E_k \right)=0.$)
+		
+\end{itemize}
+
+\section*{Chapter 18: The Lebesgue Integral}
+
+\begin{itemize}
+	\item[1.] If $\psi$ s a non-negative simple function, check that
+		\begin{align*}
+			\int \psi = \sup\left\{ \int\varphi:0\le \varphi\le \psi: \varphi\text{ simple and integrable} \right\}
+		\end{align*}
+
+	\item[3.] Prove that $\int_1^\infty (1/x)\, dz=\infty$ (as a Lebesgue integral).
+		
+\end{itemize}
+
+\end{document}
