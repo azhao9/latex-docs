@@ -45,20 +45,31 @@
 
 \section{Analytical (50 points)}
 
-\paragraph{1) Deep Neural Networks (12 points)}
+\paragraph{1. Deep Neural Networks (12 points)}
 
 \begin{enumerate}[(a)]
 	\item Consider a 2-layer neural network, with $M$ input nodes, $Z$ nodes in the hidden layer and $K$ nodes in the output layer. The network is fully connected, i.e. every node in the $n-1$th layer is connected to every node in the $n$th layer. However, for your application of interest, you suspect that only some of the nodes in the input are relevant. How would you modify the objective function to reflect this belief?
+		\begin{answer*}
+			We could modify the objective function by adding a regularization term of the form $\lambda w^T w.$ This will force some of the weights to be zero, which is equivalent to saying those features (input nodes) are not relevant.
+		\end{answer*}
 
 	\item Consider a $N$ layer neural network. We could (a) train the entire network at once using back-propagation or (b) pre-train each layer individually, and then tune the final network with back-propagation. Will (a) and (b) converge to the same solution? Why would we favor strategy (a) vs. strategy (b)?
+		\begin{answer*}
+			(a) and (b) will not necessarily converge to the same solution. The purpose of pre-training is to try to initialize the weight vector at a better local optimum, whereas back-propagation of the entire network will likely find a worse local optimum. 
+
+			We would prefer to use pre-training when the network is deep due to the vanishing gradient problem. This allows us to initialize weights that are more "tuned" to the problem, which allows us to avoid vanishing gradients. On the other hand, if we have a lot of labeled data, there may be no need to go through pre-training. Pre-training will also be more computationally difficult, but will probably perform better.
+		\end{answer*}
 
 	\item Consider a $N\ge2$ layer neural network with a single node in the output layer. We wish to train this network for binary classification. Rather than use a cross entropy objective, we want to take a max-margin approach and ensure a margin of $\gamma=1$. Describe the structure of the last layer of the network, including the final activation function, and the training objective function that implements a max-margin neural network. What are the benefits of this network compared to one trained with cross entropy? Will a max-margin trained neural network learn the same decision boundary as an SVM?
+		\begin{answer*}
+			We can use the binary hinge loss as the objective function, since this is used in the setting of max-margin, with a ReLU activation function. Using hinge loss is computationally more efficient than cross entropy. These two models might not learn the same decision boundary because while SVM has a convex objective function and therefore a distinct global minimum, the neural network objective functions are non-convex with the non-linear activation functions, so the neural network might learn the decision boundary given at a local minimum.
+		\end{answer*}
 
 
 \end{enumerate}
 
 
-\paragraph{2) Adaboost (12 points)} There is one good example at $x=0$ and two negative examples at $x = \pm 1$. There are three weak classifiers are
+\paragraph{2. Adaboost (12 points)} There is one good example at $x=0$ and two negative examples at $x = \pm 1$. There are three weak classifiers are
 \begin{align*}
 	h_1(x) & = 1\cdot{\bf1}(x > 1/2) -1\cdot{\bf1}(x \leq 1/2),\\
 	h_2(x) & = 1\cdot{\bf1}(x > -1/2) -1\cdot{\bf1}(x \leq -1/2)\\
@@ -136,7 +147,8 @@ Show that this data can be classified correctly by a strong classifier which use
 	\end{align*}
 \end{soln}
 
-\paragraph{3) Ensemble Methods (12 points)}
+\newpage
+\paragraph{3. Ensemble Methods (12 points)}
 
 Consider the following binary classification Boosting algorithm.
 \begin{enumerate}
@@ -175,7 +187,9 @@ Consider the following binary classification Boosting algorithm.
 		which is exactly the update performed in the original AdaBoost algorithm. Larger values of $T$ will increase the number of hypotheses used, which is expected to improve the test accuracy of AdaBoost since it is resistant to overfitting.
 	\end{soln}
 
-	\paragraph{4. Overfitting in Clustering (14 points)}
+\newpage
+
+\paragraph{4. Overfitting in Clustering (14 points)}
 
 	Given the data set $x_1,...,x_n$, we want cluster the data using the K-means algorithm. The K-means algorithm aims to partition the $n$ observations into $k$ sets ($k < n$) $S = \{S_1, S_2, \ldots, S_k\}$ so as to minimize the within-cluster sum of squares
 	\begin{eqnarray}

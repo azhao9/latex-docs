@@ -4,7 +4,7 @@ import os
 ALGORITHM = 'adaboost'
 DATA_DIR = 'datasets'
 OUTPUT_DIR = 'output'
-DATASETS = ['easy', 'hard', 'bio', 'finance', 'speech', 'vision']
+DATASETS = ['easy', 'hard', 'bio', 'finance', 'speech']
 
 
 if not os.path.exists(DATA_DIR):
