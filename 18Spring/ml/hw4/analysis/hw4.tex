@@ -1,0 +1,185 @@
+\documentclass{article}
+\usepackage[sexy, hdr, fancy]{evan}
+\setlength{\droptitle}{-4em}
+
+\newcommand{\vwi}{{\bf w}_i}
+\newcommand{\vw}{{\bf w}}
+\newcommand{\vx}{{\bf x}}
+\newcommand{\vy}{{\bf y}}
+\newcommand{\vxi}{{\bf x}_i}
+\newcommand{\yi}{y_i}
+\newcommand{\vxj}{{\bf x}_j}
+\newcommand{\vxn}{{\bf x}_n}
+\newcommand{\yj}{y_j}
+\newcommand{\ai}{\alpha_i}
+\newcommand{\aj}{\alpha_j}
+\newcommand{\X}{{\bf X}}
+\newcommand{\Y}{{\bf Y}}
+\newcommand{\vz}{{\bf z}}
+\newcommand{\msigma}{{\bf \Sigma}}
+\newcommand{\vmu}{{\bf \mu}}
+\newcommand{\vmuk}{{\bf \mu}_k}
+\newcommand{\msigmak}{{\bf \Sigma}_k}
+\newcommand{\vmuj}{{\bf \mu}_j}
+\newcommand{\msigmaj}{{\bf \Sigma}_j}
+\newcommand{\pij}{\pi_j}
+\newcommand{\pik}{\pi_k}
+\newcommand{\D}{\mathcal{D}}
+\newcommand{\el}{\mathcal{L}}
+\newcommand{\N}{\mathcal{N}}
+\newcommand{\vxij}{{\bf x}_{ij}}
+\newcommand{\vt}{{\bf t}}
+\newcommand{\yh}{\hat{y}}
+\newcommand{\code}[1]{{\footnotesize \tt #1}}
+\newcommand{\alphai}{\alpha_i}
+
+\lhead{Homework 4}
+\rhead{Machine Learning}
+\lfoot{}
+\cfoot{\thepage}
+
+\begin{document}
+\title{Homework 4}
+\maketitle
+\thispagestyle{fancy}
+
+
+\section{Analytical (60 points)}
+
+\paragraph{1) Clustering (14 points)}
+
+We want to cluster the data set $\vx_1,\ldots,\vx_n$ using the K-means algorithm. The K-means algorithm partitions the $n$ observations into $k$ sets ($k < n$) $\mathbf{S} = \{S_1, S_2, \ldots, S_k\}$ so as to minimize the within-cluster sum of squares:
+\begin{eqnarray*}
+	\mathop{\textrm{argmin}}_{\mathbf{S}=\{S_1,\ldots,S_k\}}\sum_{j=1}^k\sum_{\vxi\in S_j}\|\vx_i-\mu_j\|_2^2
+\end{eqnarray*}
+where $\mu_j$ is the mean of the examples in $S_j$.
+
+\begin{enumerate}[(a)]
+	\item Prove that the objective is non-increasing after each E/M step.
+		\begin{proof}
+			Suppose at some EM step, we have $\theta=\left\{ \mu_1, \cdots, \mu_k \right\}$ is a vector containing the centroid values. Then $Z=\left\{ r_{nk} \right\}$ is a binary matrix where $r_{ij}=1$ if $x_i$ is in cluster $j,$ and 0 otherwise. Thus our objective function can be written as
+			\begin{align*}
+				J &= \sum_{i=1}^{n} \sum_{j=1}^{k} r_{ij} \left\lVert x_i-\mu_j \right\rVert_2^2
+			\end{align*}
+			Then using the update rules
+			\begin{align*}
+				r_{ij}^{new} &= \begin{cases}
+					1 & j=\argmin_{\ell} \left\lVert x_i-\mu_\ell \right\rVert_2^2 \\
+					0 & \text{otherwise}
+				\end{cases}
+			\end{align*}
+			we have that for fixed $i,$ suppose WLOG that $r_{i1}^{new}=1$ and all other $r_{ij}^{new}=0,$ and that $r_{i2}=1$ and all other $r_{ij}=0.$ Then
+			\begin{align*}
+				\left\lVert x_i-\mu_1 \right\rVert_2^2 &\le \left\lVert x_i-\mu_2 \right\rVert_2^2 \\ 
+				\implies r_{i1}^{new}\left\lVert x_i-\mu_1 \right\rVert_2^2 &\le r_{i2}\left\lVert x_i-\mu_2 \right\rVert_2^2 \\
+				\implies \sum_{i=1}^{n} \sum_{j=1}^{k} r_{ij}^{new} \left\lVert x_i-\mu_j \right\rVert_2^2&\le \sum_{i=1}^{n} \sum_{j=1}^{k} r_{ij} \left\lVert x_i-\mu_j \right\rVert_2^2
+			\end{align*}
+			Next, using the update rule
+			\begin{align*}
+				\mu_j^{new} &= \frac{\sum_{i}^{}r_{ij}^{new} x_i}{\sum_{i}^{}r_{ij}^{new}} = \mu(S_j^{new})
+			\end{align*}
+		\end{proof}<++>
+
+	\item One variant is called K-medoids. K-medoids is similar to K-means: both K-means and K-medoids minimize the squared error. However, unlike K-means, K-medoids chooses a training example as a cluster center (medoid). It is more robust to noise and outliers as compared to k-means because it minimizes a sum of pairwise dissimilarities instead of a sum of squared Euclidean distances. 
+
+		Give an example to illustrate that K-medoids will be more robust to outliers than K-means.
+
+	\item Another variant of K-means is to change the distance metric to the L1 distance, which is more robust to outliers. In this case, we are minimizing:
+		\begin{align}
+			\min_{S=\{S_1,...,S_k\}}\sum_{j=1}^k\sum_{\vxi\in S_j}\|\vx_j-\mu_j\|_1
+		\end{align}
+		where $\mu_j$ is the center of $S_j$ w.r.t. to L1 distance. It turns out that computing the medians is involved when computing the cluster center. That is why this algorithm is call K-medians. Does the cluster center have to be an actual instance from the dataset? Explain why.
+\end{enumerate}
+
+\paragraph{2) Expectation-Maximization (12 points)} 
+
+As we discussed in class, clustering objectives are non-convex. Therefore, different initializations will lead to different clustering solutions.
+
+As an example, take Gaussian mixture model (GMM) clustering. Suppose all the parameters of the GMM are initialized such that all components/clusters have the same mean $\mu_k=\hat{\mu}$ and same covariance $\Sigma_k=\hat{\Sigma}$ for all $k=1,\ldots,K$.
+\begin{enumerate}[(a)]
+	\item Prove that the EM
+		algorithm will converge after a single iteration for any choice of the initial mixing coefficients $\pi$.
+		\begin{proof}
+			In the E step, using the fact that $\mu_k=\hat\mu$ and $\Sigma_k=\hat\Sigma$ for all $k,$ we have
+			\begin{align*}
+				\gamma(z_{nk}) &= \frac{\pi_k \mathcal N\left(x_n\mid \mu_k, \Sigma_k\right)}{\sum_{j=1}^{K}\pi_j \mathcal N\left( x_n\mid \mu_k, \Sigma_k \right)} = \frac{\pi_k \mathcal N\left( x_n\mid \hat\mu, \hat\Sigma \right)}{\sum_{j=1}^{K} \pi_j \mathcal N\left( x_n\mid \hat\mu, \hat\Sigma \right)} = \frac{\pi_k}{\sum_{j=1}^{K}\pi_j} = \pi_k
+			\end{align*}
+
+			Then in the M step, we have
+			\begin{align*}
+				N_k &= \sum_{n=1}^{N} \gamma(z_{nk}) = \sum_{n=1}^{N} \pi_k = N\pi_k \\
+				\implies \mu_k^{new} &= \frac{1}{N_k} \sum_{n=1}^{N} \gamma(z_{nk}) x_n = \frac{1}{N\pi_k} \sum_{n=1}^{N} \pi_k x_n = \frac{1}{N} \sum_{n=1}^{N} x_n = \bar x \\
+				\implies\Sigma_k^{new} &= \frac{1}{N_k} \sum_{n=1}^{N} \gamma(z_{nk}) \left( x_n-\mu_k^{new} \right)\left( x_n-\mu_k^{new} \right)^T = \frac{1}{N\pi_k} \sum_{n=1}^{N} \pi_k \left( x_n- \bar x\right) \left( x_n-\bar x \right)^T \\
+				&= \frac{1}{N} \sum_{n=1}^{N} \left( x-\bar x \right)\left( x-\bar x \right)^T = \Sigma \\
+				\implies \pi_k^{new} &= \frac{N_k}{N} = \frac{N\pi_k}{N} = \pi_k
+			\end{align*}
+
+			Now, we are in the exact same situation as the initialization, where both means and covariances are equal for all $k$ since $\mu_k=\bar x$ and $\Sigma_k=\Sigma.$ Thus, if we were to perform another EM step, we would find that the parameters $\mu_k^{new} = \bar x, \Sigma_k^{new}=\Sigma$ and $\pi_k^{new} = \pi_k.$ Thus since $\pi$ was arbitrary, the algorithm will have converged after a single iteration.
+		\end{proof}
+
+	\item Show that this solution has the property $\mu_k=\frac{1}{N}\sum_{n=1}^{N}\mathbf{x}_n$ and $\Sigma_k=\frac{1}{N}\sum_{n=1}^{N}(\mathbf{x}_n-\mu_k)(\mathbf{x}_n-\mu_k)^T$, where $N$ is the total number of examples. Note that this represents a degenerate case of the mixture model in which all of the components are identical, and in practice we try to avoid such solutions by using an appropriate initialization.
+		\begin{proof}
+			From part (a), at convergence of the EM algorithm, we have
+			\begin{align*}
+				\mu_k &= \frac{1}{N}\sum_{n=1}^{N} x_n, \quad\quad \Sigma_k = \frac{1}{N} \sum_{n=1}^{N} \left( x_n-\mu_k \right)\left( x_n-\mu_k \right)^T
+			\end{align*}
+		\end{proof}
+
+\end{enumerate}
+
+\paragraph{3) Dimensionality Reduction (9 points)}
+
+Show that in the limit $\sigma^2 \rightarrow 0$, the posterior mean for the probabilistic PCA model becomes an orthogonal projection onto the principal subspace, as in conventional PCA.
+
+
+\paragraph{4) Probabilistic PCA (10 points)}
+
+Draw a directed probabilistic graphical model representing a discrete mixture of probabilistic PCA models in which each PCA model has its own values of $\mathbf{W}$, $\boldsymbol{\mu}$, and $\sigma^2$. Then draw a modified graph in which these parameter values are shared between the components of the mixture. The graph should represent the model for a single data point $\mathbf{x}$. (Hint: refer to slide 24 of the Dimensionality Reduction lecture as a starting point.)
+
+
+\paragraph{5) Graphical Models (15 points)}
+
+Consider the Bayesian Network given in Figure \ref{fig:bn}. Are the sets ${\bf A}$ and ${\bf B}$ d-separated given set ${\bf C}$ for each of the following definitions of ${\bf A}$, ${\bf B}$ and ${\bf C}$? Justify each answer.
+\begin{figure}[h]
+	\begin{center}
+		\begin{tikzpicture}[style=thick,scale=1] 
+			\newcommand{\nsize}{.6}
+			\begin{scope}[shape=circle,minimum size=0.1cm] 
+				\tikzstyle{every node}=[draw,fill] 
+				\node[fill=none,scale=\nsize] (X_0) at (-2,2) {$\mathbf{X_0}$};
+				\node[fill=none,scale=\nsize] (X_1) at (0,2) {$\mathbf{X_1}$};
+				\node[fill=none,scale=\nsize] (X_2) at (2,2) {$\mathbf{X_2}$};
+				\node[fill=none,scale=\nsize] (X_3) at (4,2) {$\mathbf{X_3}$};
+				\node[fill=none,scale=\nsize] (X_4) at (1,1) {$\mathbf{X_4}$};
+				\node[fill=none,scale=\nsize] (X_5) at (3,1) {$\mathbf{X_5}$};
+				\node[fill=none,scale=\nsize] (X_6) at (0,0) {$\mathbf{X_6}$};
+				\node[fill=none,scale=\nsize] (X_7) at (2,0) {$\mathbf{X_7}$};
+				\node[fill=none,scale=\nsize] (X_8) at (4,0) {$\mathbf{X_8}$};
+				\node[fill=none,scale=\nsize] (X_9) at (6,0) {$\mathbf{X_9}$};
+				\draw [->] (X_0) -- (X_1);
+				\draw [->] (X_2) -- (X_1);
+				\draw [->] (X_3) -- (X_2);
+				\draw [->] (X_2) -- (X_4);
+				\draw [->] (X_2) -- (X_5);
+				\draw [->] (X_4) -- (X_7);
+				\draw [->] (X_5) -- (X_7);
+				\draw [->] (X_6) -- (X_7);
+				\draw [->] (X_7) -- (X_8);
+				\draw [->] (X_9) -- (X_8);
+			\end{scope} 
+		\end{tikzpicture}
+		\caption{A directed graph}
+		\label{fig:bn}
+	\end{center}
+\end{figure}\\
+\begin{enumerate}[a.]
+	\item ${\bf A} = \{ X_3 \}$, ${\bf B} = \{ X_4 \}$, ${\bf C} = \{X_1,X_2\}$
+	\item ${\bf A} = \{ X_5 \}$, ${\bf B} = \{X_4\}$, ${\bf C} = \{X_2,X_7\}$
+	\item ${\bf A} = \{X_4\}$, ${\bf B} = \{X_6\}$, ${\bf C} = \{X_8\}$
+	\item ${\bf A} = \{X_5\}$, ${\bf B} = \{X_4\}$, ${\bf C} = \{X_2\}$
+	\item ${\bf A} = \{X_6, X_9\}$, ${\bf B} = \{X_8\}$, ${\bf C} = \{X_3,X_1\}$
+\end{enumerate}
+Now assume that Figure 1 is a Markov Random Field, where each edge is undirected (just drop the direction of each edge.) Re-answer each of the above questions with justifications for your answers.
+
+
+\end{document}
