@@ -16,20 +16,22 @@ def get_args():
     parser.add_argument("--model-file", type=str, required=True,
                         help="The name of the model file to create (for training) or load (for testing).")
     parser.add_argument("--algorithm", type=str,
-                        help="The name of the algorithm to use. (Only used for training; inferred from the model file at test time.)")
+                        help="The name of the algorithm to use. (Only used for training; inferred from the model " +
+                             "file at test time.)")
     parser.add_argument("--predictions-file", type=str, help="The predictions file to create. (Only used for testing.)")
-
-    parser.add_argument("--cluster-lambda", type=float, help="The value of lambda in lambda-means", default=0.0)
-    parser.add_argument("--clustering-training-iterations", type=int, help="The number of training EM iterations", default=10)
-
+    parser.add_argument("--cluster_lambda", type=float,
+                        help="The value of lambda in lambda-means", default=0.0)
+    parser.add_argument("--clustering_training_iterations", type=int,
+                        help="The number of training EM iterations")
+    parser.add_argument("--number_of_clusters", type=int,
+                        help="The number of clusters (K) to be used.")
     args = parser.parse_args()
-
     return args
 
 
 def check_args(args):
     mandatory_args = {'data', 'mode', 'model_file', 'algorithm', 'predictions_file', 'cluster_lambda',
-                      'clustering_training_iterations'}
+                      'clustering_training_iterations', 'number_of_clusters'}
     if not mandatory_args.issubset(set(dir(args))):
         raise Exception('Arguments that we provided are now renamed or missing. If you hand this in, ' +
                         'you will not get full credit')
@@ -52,18 +54,17 @@ def main():
         # Load the training data.
         X, y = load_data(args.data)
 
-        # Create the model.
-        # TODO: Add other algorithms as necessary.
+        # Create and train the model.
         if args.algorithm.lower() == 'useless':
             model = models.Useless()
+            model.fit(X, y)
         elif args.algorithm.lower() == 'lambda_means':
             model = models.LambdaMeans(args.cluster_lambda, args.clustering_training_iterations)
         elif args.algorithm.lower() == 'stochastic_k_means':
-            model = models.StochasticKMeans(args.clustering_training_iterations)
+            model = models.StochasticKMeans(args.number_of_clusters, args.clustering_training_iterations)
         else:
             raise Exception('The model given by --model is not yet supported.')
 
-        # Train the model.
         model.fit(X, y)
 
         # Save the model.

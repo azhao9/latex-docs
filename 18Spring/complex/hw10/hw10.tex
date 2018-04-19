@@ -1,0 +1,317 @@
+\documentclass{article}
+\usepackage[sexy, hdr, fancy]{evan}
+\usepackage{graphicx}
+\graphicspath{.}
+\setlength{\droptitle}{-4em}
+
+\DeclareMathOperator{\re}{Re}
+\DeclareMathOperator{\im}{Im}
+\DeclareMathOperator{\Log}{Log}
+
+\lhead{Homework 10}
+\rhead{Complex Analysis}
+\lfoot{}
+\cfoot{\thepage}
+
+\begin{document}
+\title{Homework 10}
+\maketitle
+\thispagestyle{fancy}
+
+\section*{Section 5.6}
+
+\begin{itemize}
+	\item[1.] Find and classify the isolated singularities of each of the following functions.
+		\begin{enumerate}[(a)]
+			\item $\frac{z^3+1}{z^2(z+1)}$
+				\begin{soln}
+					We can simplify this as
+					\begin{align*}
+						\frac{(z+1)(z^2-z+1)}{z^2(z+1)} = \frac{z^2-z+1}{z^2}
+					\end{align*}
+					which has a pole of order 2 at 0, and a removable singularity at $-1.$
+				\end{soln}
+
+			\item $z^3 e^{1/z}$
+				\begin{soln}
+					This has an essential singularity at 0.
+				\end{soln}
+
+			\item $\frac{\cos z}{z^2+1}+4z$
+				\begin{soln}
+					This has poles of order 1 at $i$ and $-i.$
+				\end{soln}
+
+			\item $\frac{1}{e^z-1}$
+				\begin{soln}
+					This has poles whenever $e^z=1\implies z=2k\pi i$ for $k\in\ZZ.$
+				\end{soln}
+
+			\item $\tan z$
+				\begin{soln}
+					This has poles whenever $\cos z=0\implies z = \left( k+\frac{\pi}{2} \right)i$ for $k\in\ZZ.$
+				\end{soln}
+
+			\item $\cos\left( 1-\frac{1}{z} \right)$
+				\begin{soln}
+					The Taylor series is
+					\begin{align*}
+						\cos\left( 1-\frac{1}{z} \right) = 1 - \frac{1}{2!}\left( 1-\frac{1}{z} \right)^2 + \frac{1}{4!}\left( 1-\frac{1}{z} \right)^4 - \cdots
+					\end{align*}
+					so it has an essential singularity at 0.
+				\end{soln}
+
+			\item $\frac{\sin 3z}{z^2}-\frac{3}{z}$
+				\begin{soln}
+					The Taylor series is
+					\begin{align*}
+						\frac{\sin 3z}{z^2} - \frac{3}{z} &= \frac{1}{z^2}\left( 3z - \frac{(3z)^3}{3!} + \frac{(3z)^5}{5!} - \cdots \right) - \frac{3}{z} = \left(\frac{3}{z} - \frac{3^3z}{3!} + \frac{3^5z^3}{5!} - \cdots \right)  - \frac{3}{z} \\
+						&= -\frac{3^3z}{3!} + \frac{3^5z^3}{5!} - \cdots
+					\end{align*}
+					so it has a removable singularity at 0.
+				\end{soln}
+
+			\item $\cot\frac{1}{z}$
+				\begin{soln}
+					This has poles whenever $\sin \frac{1}{z} = 0\implies z = \frac{1}{k\pi i}$ for $k\in\ZZ,$ and an essential singularity at 0.
+				\end{soln}
+				
+		\end{enumerate}
+
+	\item[3.] For each of the following, construct a function $f,$ analytic in the plane except for isolated singularities, that satisfies the given conditions.
+		\begin{enumerate}[(a)]
+			\item $f$ has a zero of order 2 at $z=i$ and a pole of order 5 at $z=2-3i.$
+				\begin{soln}
+					We can let
+					\begin{align*}
+						f(z) = (z-i)^2\cdot \frac{1}{(z-2+3i)^5}
+					\end{align*}
+				\end{soln}
+
+			\item $f$ has a simple zero at $z=0$ and an essential singularity at $z=1$
+				\begin{soln}
+					We can let
+					\begin{align*}
+						f(z) = z\exp\left\{ \frac{1}{z-1} \right\}
+					\end{align*}
+				\end{soln}
+
+			\item $f$ has a removable singularity at $z=0,$ a pole of order 6 at $z=1,$ and an essential singularity at $z=i.$
+				\begin{soln}
+					We can let
+					\begin{align*}
+						f(z) &= \frac{\sin z}{z}\cdot \frac{1}{(z-1)^6}\cdot \exp\left\{ \frac{1}{z-i} \right\}
+					\end{align*}
+				\end{soln}
+
+			\item $f$ has a pole of order 2 at $z=1+i$ and essential singularities at $z=0$ and $z=1.$
+				\begin{soln}
+					We can let
+					\begin{align*}
+						f(z) = \frac{1}{(z-1-i)^2} \exp\left\{\frac{1}{z(z-1)}\right\}
+					\end{align*}
+				\end{soln}
+
+		\end{enumerate}
+
+	\item[8.] Verify Picard's theorem for the function $\cos(1/z)$ at $z_0=0.$
+		\begin{soln}
+			We have the Taylor series as
+			\begin{align*}
+				\cos \frac{1}{z} &= 1 - \frac{(1/z)^2}{2!} + \frac{(1/z)^4}{4!} - \cdots
+			\end{align*}
+			so $\cos (1/z)$ has an essential singularity at $z=0,$ so it should assume every complex number, with possibly one exception, in any neighborhood of this singularity. Indeed, if
+			\begin{align*}
+				a &= \cos \frac{1}{z} = \frac{e^{i/z} + e^{-i/z}}{2} \implies 2ae^{i/z} = e^{2i/z} + 1 \\
+				\implies e^{2i/z} - 2ae^{i/z} + 1 &= 0 \implies e^{i/z} = \frac{2a \pm \sqrt{4a^2-4}}{2} = a\pm \sqrt{a^2-1} \\
+				\implies \frac{i}{z} &= \Log\left( a\pm \sqrt{a^2-1} \right) \implies z = \frac{i}{\Log\left( a\pm \sqrt{a^2-1} \right)}
+			\end{align*}
+			so every value of $a$ can be achieved.
+		\end{soln}
+
+\end{itemize}
+
+\section*{Section 5.7}
+
+\begin{itemize}
+	\item[1.] Classify the behavior at $\infty$ for each of the following functions (if a zero or pole, give its order):
+		\begin{enumerate}[(a)]
+			\item $e^z$
+				\begin{soln}
+					We have
+					\begin{align*}
+						e^{1/z} &= 1 + \frac{1}{z} + \frac{(1/z)^2}{2!} + \cdots = 1 + z\inv + \frac{1}{2!}z^{-2} + \cdots
+					\end{align*}
+					so $e^{1/z}$ has an essential singularity at 0, and thus $e^z$ has an essential singularity at $\infty.$
+				\end{soln}
+
+			\item $\cosh z$
+				\begin{soln}
+					We have
+					\begin{align*}
+						\cosh \frac{1}{z} &= \frac{1}{2} \left( e^{1/z} + e^{-1/z} \right) = \frac{1}{2} \left[ \left( 1 + \frac{1}{z} + \frac{(1/z)^2}{2!} + \cdots \right) + \left( 1 - \frac{1}{z} + \frac{(-1/z)^2}{2!} + \cdots \right) \right] \\
+						&= 1 + \frac{1}{2!}z^{-2} + \frac{1}{4!}z^{-4} + \cdots 
+					\end{align*}
+					so $\cosh \frac{1}{z}$ has an essential singularity at 0, and thus $\cosh z$ has an essential singularity at $\infty.$
+				\end{soln}
+
+			\item $\frac{z-1}{z+1}$
+				\begin{soln}
+					We have 
+					\begin{align*}
+						\frac{\frac{1}{z}-1}{\frac{1}{z}+1} &= \frac{\frac{1-z}{z}}{\frac{1+z}{z}} = \frac{1-z}{1+z} 
+					\end{align*}
+					is analytic at $z=0,$ so $\frac{z-1}{z+1}$ is analytic at $\infty.$
+				\end{soln}
+
+			\item $\frac{z}{z^3+i}$
+				\begin{soln}
+					We have
+					\begin{align*}
+						\frac{1/z}{(1/z)^3+i} &= \frac{\frac{1}{z}}{\frac{1+iz^3}{z^3}} = \frac{z^2}{1+iz^3}
+					\end{align*}
+					has a root of order 2 at $z=0,$ so the original function has a root of order 2 at $\infty.$
+				\end{soln}
+
+			\item $\frac{z^3+i}{z}$
+				\begin{soln}
+					We have
+					\begin{align*}
+						\frac{(1/z)^3+i}{1/z} = \frac{1+iz^3}{z^2}
+					\end{align*}
+					has a pole of order 2 at $z=0,$ so the original function has a pole of order 2 at $\infty.$
+				\end{soln}
+
+			\item $e^{\sinh z}$
+				\begin{soln}
+					We have
+					\begin{align*}
+						e^{\sinh (1/z)} &= 1+\sinh\frac{1}{z} + \frac{\sinh^2 (1/z)}{2!} + \cdots 
+					\end{align*}
+					which has an essential singularity at $z=0,$ so the original function has an essential singularity at $\infty.$
+				\end{soln}
+
+			\item $\frac{\sin z}{z^2}$
+				\begin{soln}
+					We have
+					\begin{align*}
+						\frac{\sin \frac{1}{z}}{(1/z)^2} &= z^2\sin \frac{1}{z} = z^2\left( \frac{1}{z} - \frac{(1/z)^3}{3!} + \cdots \right) = z - \frac{1}{3!z} + \frac{1}{5!z^3} - \cdots
+					\end{align*}
+					has an essential singularity at $z=0,$ so the original function has an essential singularity at $\infty.$
+				\end{soln}
+
+			\item $\frac{1}{\sin z}$
+				\begin{soln}
+					We have
+					\begin{align*}
+						\frac{1}{\sin \frac{1}{z}} &= \frac{1}{1-\left( 1-\sin \frac{1}{z} \right)} = 1 + \left( 1-\sin \frac{1}{z} \right) + \left( 1-\sin\frac{1}{z} \right)^2 + \cdots \\
+						&= 1 + \left[ 1-\left( \frac{1}{z} - \frac{(1/z)^3}{3!} + \cdots \right) \right] + \left[ 1-\left( \frac{1}{z} - \frac{(1/z)^3}{3!} + \cdots \right) \right]^2 + \cdots
+					\end{align*}
+					has an essential singularity at $z=0,$ so the original function has an essential singularity at $\infty.$
+				\end{soln}
+
+			\item $e^{\tan 1/z}$
+				\begin{soln}
+					We have
+					\begin{align*}
+						e^{\tan 1/(1/z)} &= e^{\tan z} = 1 + \tan z + \frac{\tan^2z}{2!} + \cdots 
+					\end{align*}
+					which is analytic at $z=0,$ so the original function is analytic at $\infty.$
+				\end{soln}
+				
+		\end{enumerate}
+
+	\item[3.] Construct the series mentioned in Prob 2 for the following functions.
+		\begin{enumerate}[(a)]
+			\item $\frac{z-1}{z+1}$
+				\begin{soln}
+					We have
+					\begin{align*}
+						\frac{\frac{1}{z}-1}{\frac{1}{z}+1} &= 1-\frac{2}{1-\left( -\frac{1}{z} \right)} = 1 - 2\left( 1 - \frac{1}{z} + \left( -\frac{1}{z} \right)^2 + \cdots \right) = -1 + \frac{2}{z} - \frac{2}{z^2} + \cdots \\
+						&= -1 + \sum_{j=1}^{\infty} \frac{2(-1)^{j-1}}{z^j}
+					\end{align*}
+				\end{soln}
+
+			\item $\frac{z^2}{z^2+1}$
+				\begin{soln}
+					We have
+					\begin{align*}
+						\frac{(1/z)^2}{(1/z)^2+1} &= 1-\frac{1}{1-(-1/z^2)} = 1-\left( 1 - \frac{1}{z^2} + \left( -\frac{1}{z^2} \right)^2+\cdots \right)  = \frac{1}{z^2}- \frac{1}{z^4}  + \frac{1}{z^6} - \cdots \\
+						&= \sum_{j=1}^{\infty} \frac{(-1)^{j-1}}{z^{2j}}
+					\end{align*}
+				\end{soln}
+
+			\item $\frac{1}{z^3-i}$
+				\begin{soln}
+					We have
+					\begin{align*}
+						\frac{1}{(1/z)^3-i} &= \frac{i}{1-\left( -i/z^3 \right)} = i\left( 1 - \frac{i}{z^3} + \left( -\frac{i}{z^3} \right)^2 + \cdots \right) = i + \frac{1}{z^3} - \frac{i}{z^6} + \cdots  \\
+						&= \sum_{j=1}^{\infty} \frac{i^j}{z^{3j-3}}
+					\end{align*}
+				\end{soln}
+				
+		\end{enumerate}
+
+	\item[4.] State Picard's theorem for functions with an essential singularity at $\infty.$ Verify for $e^z.$
+		\begin{soln}
+			If a function has an essential singularity at $\infty,$ then it assumes the value of every complex number on a neighborhood $\abs{z}>r,$ except for possibly one.
+
+			For $e^z,$ we have
+			\begin{align*}
+				e^{1/z} = 1 + \frac{1}{z} + \frac{(1/z)^2}{2!} + \cdots 
+			\end{align*}
+			which has an essential singularity at 0, so $e^z$ has an essential singularity at $\infty,$ and attains every value except 0 on a neighborhood $\abs{z}>r.$
+		\end{soln}
+
+	\item[5.] What is the order of the zero at $\infty$ if $f(z)$ is a rational function of the form $\frac{P(z)}{Q(z)}$ with $\deg P<\deg Q?$
+		\begin{soln}
+			Suppose
+			\begin{align*}
+				P(z) &= a_0 + a_1z + \cdots + a_n x^m\\
+				Q(z) &= b_0+b_1z+\cdots+b_mz^m
+			\end{align*}
+			where $n<m$ and $a_n, b_m\neq 0.$ Then we have
+			\begin{align*}
+				f\left( \frac{1}{z} \right) &= \frac{P(1/z)}{Q(1/z)} = \frac{a_0+\frac{a_1}{z} + \cdots + \frac{a_n}{z^n}}{b_0+\frac{b_1}{z} + \cdots + \frac{b_m}{z^m}} = \frac{\frac{a_0z^n+a_1z^{n-1} + \cdots + a_n}{z^n}}{\frac{b_0z^{m} + b_1z^{m-1} + \cdots + b_m}{z^m}} = z^{m-n} \frac{a_0z^n + a_1z^{n-1} + \cdots + a_n}{b_0z^m + b_1z^{m-1} + \cdots + b_m}
+			\end{align*}
+			If we evaluate the rational part at $z=0,$ we obtain $\frac{a_n}{b_m}\neq 0$ since $a_n\neq 0,$ so this has a zero of order $m-n=\deg Q-\deg P$ at 0, and thus the original function has a zero of order $\deg Q-\deg P$ at $\infty.$
+		\end{soln}
+		
+\end{itemize}
+
+\section*{Extra}
+
+Determine the images of the following complex analytic functions:
+\begin{enumerate}
+	\item $f:\CC\to\CC$ given by $f(z)=12+e^{z-1}$
+		\begin{soln}
+			The function $e^{z-1}$ cannot attain the value 0, so $12+e^{z-1}$ cannot attain the value 12, so the image is $\CC\setminus\left\{ 12 \right\}.$
+		\end{soln}
+
+	\item $f:\CC\to\CC$ given by $f(z)=z\sin z$
+		\begin{soln}
+			We have
+			\begin{align*}
+				f\left( \frac{1}{z} \right) &= \frac{1}{z}\sin \left( \frac{1}{z} \right) = \frac{1}{z} \left( \frac{1}{z} - \frac{(1/z)^3}{3!} + \frac{(1/z)^5}{5!} - \cdots \right) = \frac{1}{z^2} - \frac{1}{3!z^4} + \frac{1}{5!z^6} - \cdots
+			\end{align*}
+			Here, $a_j\neq 0$ for an infinite number of negative values of $j,$ so 0 is an essential singularity of $f(1/z),$ and thus $\infty$ is an essential singularity of $f(z),$ and thus $z\sin z$ attains all values in $\CC.$
+		\end{soln}
+
+	\item $f:\CC\to\CC$ given by $f(z)=(z^3+1)e^z$
+		\begin{soln}
+			We have an essential singularity at $\infty,$ so $f(z)$ attains all values in $\CC.$
+		\end{soln}
+
+	\item $f:\CC\to\CC$ given by $f(z)=e^{z^2+1}$
+		\begin{soln}
+			This is a composition of two functions $e^z$ and $z^2+1,$ which have images $\CC$ and $\CC\setminus\left\{ 0 \right\},$ so the image of $f$ is $\CC\setminus\left\{ 0 \right\}.$
+		\end{soln}
+
+	\item $f:\CC\to\CC$ given by $f(z)=e^{2z}+e^z+7$
+		\begin{soln}
+			This is a composition of two functions $z^2+z+7$ and $e^z,$ which have images $\CC$ and $\CC\setminus\left\{ 0 \right\},$ so the image of $f$ is $\CC,$ since we can attain $f(z)=7$ with $z$ being a solution to $e^{2z}+e^z=e^z\left( e^z+1 \right)=0,$ which can occur at $z=\pi i.$
+		\end{soln}
+		
+\end{enumerate}
+
+\end{document}
