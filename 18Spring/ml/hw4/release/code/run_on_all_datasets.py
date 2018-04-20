@@ -1,6 +1,7 @@
 import os
 
 ALGORITHMS = ['lambda_means']
+SCRIPTS_DIR = 'clustering_python_scripts'
 DATA_DIR = 'datasets'
 OUTPUT_DIR = 'output'
 DATASETS = ['easy', 'hard', 'bio', 'finance', 'iris', 'speech', 'vision']
@@ -24,15 +25,16 @@ def run_on_dataset(dataset, algorithm, cluster_lambda=0., number_of_clusters=2, 
         print('Generating %s predictions on dataset %s (%s)...' % (algorithm, dataset, subset))
         model_file = os.path.join(OUTPUT_DIR, '%s.train.%s.pkl' % (dataset, algorithm))
         predictions_file = os.path.join(OUTPUT_DIR, '%s.%s.%s.predictions' % (dataset, subset, algorithm))
-        unformatted_cmd = 'python3 clustering_python_scripts/cluster_accuracy.py --data %s --mode test --model-file %s --predictions-file %s'
+        unformatted_cmd = 'python3 classify.py --data %s --mode test --model-file %s --predictions-file %s'
         cmd = unformatted_cmd % (data, model_file, predictions_file)
         os.system(cmd)
-        '''
         if subset != 'test':
             print('Computing accuracy obtained by %s on dataset %s (%s)...' % (algorithm, dataset, subset))
-            cmd = 'python3 clustering_python_scripts/number_clusters.py %s' % (predictions_file)
+            cmd = 'python3 %s/cluster_accuracy.py %s' % (SCRIPTS_DIR, predictions_file)
             os.system(cmd)
-        '''
+            print('Computing number of clusters obtained by %s on dataset %s (%s)...' % (algorithm, dataset, subset))
+            cmd = 'python3 %s/number_clusters.py %s' % (SCRIPTS_DIR, predictions_file)
+            os.system(cmd)
 
 
 if __name__ == "__main__":

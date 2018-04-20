@@ -30,7 +30,7 @@ def get_args():
 
 
 def check_args(args):
-    mandatory_args = {'data', 'mode', 'model_file', 'algorithm', 'predictions_file', 'cluster_lambda',
+    mandatory_args = {'data', 'mode', 'model-file', 'algorithm', 'predictions-file', 'cluster_lambda',
                       'clustering_training_iterations', 'number_of_clusters'}
     if not mandatory_args.issubset(set(dir(args))):
         raise Exception('Arguments that we provided are now renamed or missing. If you hand this in, ' +

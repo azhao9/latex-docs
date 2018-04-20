@@ -1,0 +1,137 @@
+\documentclass{article}
+\usepackage[sexy, hdr, fancy]{evan}
+\setlength{\droptitle}{-4em}
+
+\lhead{Homework 10}
+\rhead{Honors Analysis II}
+\lfoot{}
+\cfoot{\thepage}
+
+\begin{document}
+\title{Homework 10}
+\maketitle
+\thispagestyle{fancy}
+
+\section*{Chapter 15: Fourier Series}
+
+\begin{itemize}
+	\item[6.] Let $f:\RR\to\RR$ be $2\pi$-periodic and Riemann integrable on $[-\pi, \pi].$ Prove that $\lim_{x\to0}\int_{-\pi}^\pi \abs{f(x+t)-f(t)}^2\, dt=0.$
+		\begin{proof}
+			Since $f$ is $2\pi$-periodic, we have
+			\begin{align*}
+				\lim_{x\to 0}\int_{-\pi}^\pi \abs{f(x+t)-f(t)}^2\, dt &= \lim_{x\to0}\int_{-\pi}^\pi f^2(x+t)\, dt - 2\lim_{x\to0}\int_{-\pi}^\pi f(x+t)f(t)\, dt + \lim_{x\to0}\int_{-\pi}^\pi f^2(t)\, dt \\
+				&= \lim_{x\to0} \int_{-\pi+x}^{\pi+x} f^2(t)\, dt - 2\lim_{x\to0}\int_{-\pi}^\pi f(x+t)f(t)\, dt + \int_{-\pi}^\pi f^2(t)\, dt
+			\end{align*}
+			By Parseval's equation, since $f$ is Riemann integrable, we have
+			\begin{align*}
+				\int_{-\pi}^{\pi} f^2(t)\, dt = \pi\left[ \frac{a_0^2}{2} + \sum_{k=1}^{\infty} (a_k^2+b_k^2) \right] = \lim_{x\to0}\int_{-\pi+x}^{\pi+x} f^2(t)\, dt 
+			\end{align*}
+			Now, since $f(x+t)f(t)$ uniformly converges to $f^2(t),$ we can switch the order of limit and integration, so
+			\begin{align*}
+				2\lim_{x\to0}\int_{-\pi}^\pi f(x+t)f(t)\, dt &= 2\int_{-\pi}^\pi \lim_{x\to0} f(x+t)f(t)\, dt = 2\int_{-\pi}^\pi f^2(t)\, dt
+			\end{align*}
+			so combining this with the first result, we get that the resulting integral evaluates to 0.
+		\end{proof}
+		
+\end{itemize}
+
+
+\section*{Chapter 18: The Lebesgue Integral}
+
+\begin{itemize}
+	\item[38.] If $f\in L_1[0, 1],$ show that $x^n f(x)\in L_1[0, 1]$ for $n=1, 2,\cdots$ and compute $\lim_{n\to\infty} \int_0^1 x^n f(x)\, dx.$
+		\begin{proof}
+			Since $f\in L_1[0, 1],$ it follows that $\abs{f}\in L_1[0, 1].$ Because $x\in [0, 1],$ we have
+			\begin{align*}
+				\abs{x^n f(x)} &\le \abs{f(x)} \implies \abs{x^n f(x)}\in L_1[0, 1]\implies x^n f(x)\in L_1[0, 1]
+			\end{align*}
+
+			Then the sequence $(x^n f(x))$ converges to the function
+			\begin{align*}
+				g(x) &= \begin{cases}
+					f(1) & x = 1 \\
+					0 & x\neq 1
+				\end{cases} \\
+			\end{align*}
+			so $g(x)\equiv0$ a.e., and since $\abs{x^n f(x)}\le \abs{f(x)}\in L_1[0, 1],$ by the DCT we have
+			\begin{align*}
+				\lim_{n\to\infty} \int_0^1 x^n f(x)\, dx &= \int_0^1 g(x)\, dx = 0
+			\end{align*}
+		\end{proof}
+
+	\item[40.] Let $(f_n), (g_n),$ and $g$ be integrable, and suppose that $f_n\to f$ a.e., $g_n\to g$ a.e., $\abs{f_n}\le g_n$ a.e., for all $n,$ and that $\int g_n\to \int g.$ Prove that $f\in L_1$ and that $\int f_n\to \int f.$ (Hint: Revise the proof of the DCT)
+		\begin{proof}
+			Since $\abs{f_n}\le g_n,$ the sequences $(g_n+f_n)$ and $(g_n-f_n)$ are non-negative, so by Fatou's lemma, we have
+			\begin{align*}
+				\int\liminf_{n\to\infty} (g_n+f_n) &\le \liminf_{n\to\infty} \int (g_n+f_n) \\
+				\implies \int\liminf_{n\to\infty} g_n + \int\liminf_{n\to\infty} f_n &\le \liminf_{n\to\infty} \int g_n + \liminf_{n\to\infty} \int f_n \\
+				\implies \int g + \int f \le \int g + \liminf_{n\to\infty} \int f_n &\implies \int f\le \liminf_{n\to\infty} \int f_n \\
+				\int\liminf_{n\to\infty} (g_n-f_n) &\le \liminf_{n\to\infty}\int(g_n-f_n) \\
+				\implies \int\liminf_{n\to\infty} g_n - \int\liminf_{n\to\infty} f_n &\le \liminf_{n\to\infty} \int g_n - \limsup_{n\to\infty}\int f_n \\
+				\implies \int g - \int f \le \int g - \limsup_{n\to\infty} \int f_n &\implies \int f\ge\limsup_{n\to\infty} \int f_n
+			\end{align*}
+			so we have the inequality
+			\begin{align*}
+				\limsup_{n\to\infty} \int f_n\le \int f\le \liminf_{n\to\infty} \int f_n
+			\end{align*}
+			and thus $f\in L_1$ and $\int f = \lim_{n\to\infty} \int f_n.$
+		\end{proof}
+
+	\item[41.] Let $(f_n), f$ be integrable, and suppose that $f_n\to f$ a.e. Prove that $\int\abs{f_n-f}\to 0$ if and only if $\int \abs{f_n}\to\int \abs{f}.$
+		\begin{proof}
+			$(\implies):$ We have
+			\begin{align*}
+				\abs{f_n-f}+\abs{f} &\ge \abs{f_n}\implies \abs{f_n-f}\ge \abs{f_n}-\abs{f} \\
+				\implies \int \left( \abs{f_n}-\abs{f} \right) &\le \int \abs{f_n-f}\to 0 \implies \int \left( \abs{f_n}-\abs{f} \right) \to 0
+			\end{align*}
+
+			$(\impliedby):$ We have $\abs{f_n-f}+\abs{f}-\abs{f_n}\to 0$ and $\abs{f_n-f}+\abs{f}-\abs{f_n}\le 2\abs{f}\in L_1,$ so by the DCT,
+			\begin{align*}
+				\int\lim_{n\to\infty} \left( \abs{f_n-f}+\abs{f}-\abs{f_n} \right) &= \lim_{n\to\infty} \int \left( \abs{f_n-f}+\abs{f}-\abs{f_n} \right) \\
+				\implies 0 &= \lim_{n\to\infty}\int\abs{f_n-f} + \left[ \int\abs{f}-\lim_{n\to\infty}\int \abs{f_n} \right] = \lim_{n\to\infty} \int\abs{f_n-f}
+			\end{align*}
+		\end{proof}
+
+	\item[42.] Let $(f_n)$ be a sequence of integrable functions and suppose that $\abs{f_n}\le g$ a.e., for all $n,$ for some integrable function $g.$ Prove that
+		\begin{align*}
+			\int\left( \liminf_{n\to\infty} f_n \right)\le\liminf_{n\to\infty} \int f_n\le \limsup_{n\to\infty}\int f_n\le \int\left( \limsup_{n\to\infty} f_n \right)
+		\end{align*}
+		\begin{proof}
+			The second inequality is trivial as a property between $\liminf$ and $\limsup.$		
+
+			For the first inequality, we have the sequence $(g+f_n)$ is non-negative, so by Fatou's lemma, we have
+			\begin{align*}
+				\int \liminf(g+f_n) &\le \liminf \int (g+f_n) \\
+				\implies \int g + \int\liminf f_n \le \int g + \liminf \int f_n &\implies \int\liminf f_n \le \liminf \int f_n
+			\end{align*}
+			and for the third inequality, we have the sequence $(g-f_n)$ is non-negative, so again by Fatou's lemma, we have
+			\begin{align*}
+				\int \liminf (g-f_n) &\le \liminf \int (g-f_n) \\
+				\implies \int g + \int\liminf (-f_n) \le \int g - \limsup \int f_n &\implies \limsup \int f_n \le -\int \liminf(-f_n) = \int \limsup f_n
+			\end{align*}
+		\end{proof}
+
+	\item[43.]  Let $f$ be measurable and finite a.e. on $[0, 1].$
+		\begin{itemize}
+			\item[(a)] If $\int_E f=0$ for all measurable $E\subset[0, 1]$ with $m(E)=1/2,$ prove that $f=0$ a.e. on $[0, 1].$
+				\begin{proof}
+					Suppose $m\left( \left\{ f\neq 0 \right\} \right)>0.$ Then we have
+					\begin{align*}
+						\left\{ f\neq 0 \right\} = \left\{ f>0 \right\}\cup \left\{ f<0 \right\}
+					\end{align*}
+					so WLOG $\left\{ f>0 \right\}$ has positive measure. Then
+					\begin{align*}
+						\left\{ f>0 \right\} &= \bigcup_{n=1}^\infty\left\{ f > \frac{1}{n} \right\}
+					\end{align*} 
+					so one of the sets $\left\{ f>\frac{1}{k} \right\}$ has positive measure, and there exists some $E\subset[0, 1]$ with $m(E)=0$ such that $E\cap \left\{ f>\frac{1}{k} \right\}$ has positive measure. Thus, we have
+					\begin{align*}
+						0 = \int_{E\cap\left\{ f>\frac{1}{k} \right\}}f \ge \int_{E\cap \left\{ f>\frac{1}{k} \right\}}\frac{1}{k} > 0
+					\end{align*}
+					which is a contradiction. Thus, $\left\{ f\neq 0 \right\}$ has measure 0, and thus $f=0$ a.e.
+				\end{proof}
+				
+		\end{itemize}
+		
+\end{itemize}
+
+\end{document}
