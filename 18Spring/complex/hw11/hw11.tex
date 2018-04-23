@@ -1,0 +1,210 @@
+\documentclass{article}
+\usepackage[sexy, hdr, fancy]{evan}
+\usepackage{graphicx}
+\graphicspath{.}
+\setlength{\droptitle}{-4em}
+
+\DeclareMathOperator{\re}{Re}
+\DeclareMathOperator{\im}{Im}
+\DeclareMathOperator{\Res}{Res}
+
+\lhead{Homework 11}
+\rhead{Complex Analysis}
+\lfoot{}
+\cfoot{\thepage}
+
+\begin{document}
+\title{Homework 11}
+\maketitle
+\thispagestyle{fancy}
+
+\section*{Section 6.1}
+
+\begin{itemize}
+	\item[3.] Evaluate each of the following integrals by means of the Cauchy residue theorem.
+		\begin{itemize}
+			\item[(a)] $\oint_{\abs{z}=5} \frac{\sin z}{z^2-4}\, dz$
+				\begin{soln}
+					The integrand has simple poles at $z=2, z=-2,$ which are both contained inside $\abs{z}=5.$ Then we calculate the residues as
+					\begin{align*}
+						\frac{\sin z}{(z-2)(z+2)} &= a_{-1} (z-2)\inv + a_0 + \cdots \implies \frac{\sin z}{z+2} = a_{-1} + a_0(z-2) + \cdots \\
+						\implies \Res(2) &= a_{-1} = \frac{\sin z}{z+2}\bigg\vert_2 = \frac{\sin 2}{4} \\
+						\frac{\sin z}{(z-2)(z+2)} &= b_{-1} (z+2)\inv + b_0 + \cdots \implies \frac{\sin z}{z-2} = b_{-1} + b_0(z+2) + \cdots \\
+						\implies \Res(-2) &= b_{-1} = \frac{\sin z}{z-2}\bigg\vert_{-2} = \frac{\sin (-2)}{-4} = \frac{\sin 2}{4}
+					\end{align*}
+					so by the Residue theorem, the integral is equal to
+					\begin{align*}
+						2\pi i\left( \Res(2) + \Res(-2) \right) = 2\pi i\left( \frac{\sin 2}{4} + \frac{\sin 2}{4} \right) = \pi i \sin 2
+					\end{align*}
+				\end{soln}
+
+			\item[(d)] $\oint_{\abs{z}=3} \frac{e^{iz}}{z^2(z-2)(z+5i)}\, dz$
+				\begin{soln}
+					The integrand has simple poles at 2 and $-5i,$ and a pole of order 2 at 0. Only the poles at 2 and 0 are contained inside $\abs{z}=3,$ so we calculate the residues as
+					\begin{align*}
+						\frac{e^{iz}}{z^2(z-2)(z+5i)} &= a_{-1}(z-2)\inv + a_0 + \cdots \implies \frac{e^{iz}}{z^2(z+5i)} = a_{-1} + a_0(z-2) + \cdots \\
+						\implies \Res(2) &= a_{-1} = \frac{e^{iz}}{z^2(z+5i)}\bigg\vert_2 = \frac{e^{2i}}{2^2(2+5i)} = \frac{e^{2i}(2-5i)}{116} \\
+						\frac{e^{iz}}{z^2(z-2)(z+5i)} &= b_{-2}z^{-2} + b_{-1}z\inv + b_0 + \cdots \implies \frac{e^{iz}}{(z-2)(z+5i)} = b_{-2} + b_{-1}z + b_0 + \cdots \\
+						\implies \Res(0) &= b_{-1} = \frac{d}{dz}\left[ \frac{e^{iz}}{(z-2)(z+5i)} \right]\bigg\vert_0 = \frac{12-5i}{-100}
+					\end{align*}
+					so by the Residue theorem, the integral is equal to
+					\begin{align*}
+						2\pi i\left( \Res(2)+\Res(0) \right) &= 2\pi i\left( \frac{e^{2i}(2-5i)}{116} - \frac{12-5i}{100} \right)
+					\end{align*}
+				\end{soln}
+
+			\item[(e)] $\oint_{\abs{z}=1} \frac{1}{z^2\sin z}\, dz$
+				\begin{soln}
+					The integrand has a pole of order 2 at 0, and simple poles at $k\pi$ for $k\in\ZZ,$ so the only one inside $\abs{z}=1$ is the pole $z=0$ of order 3. Then we calculate the residue as
+					\begin{align*}
+						\frac{1}{z^2\sin z} &= a_{-3}z^{-3} + a_{-2}z^{-2} + a_{-1}z\inv + a_0 + \cdots \implies \frac{z}{\sin z} = a_{-3} + a_{-2}z + a_{-1}z^2+a_0z^3+\cdots \\
+						\implies \Res(0) &= a_{-1} = \lim_{z\to0}\frac{1}{2!}\frac{d^2}{dz^2}\left[ \frac{z}{\sin z} \right] = \frac{1}{6}
+					\end{align*}
+					so by the Residue theorem, the integral is  equal to
+					\begin{align*}
+						2\pi i\Res(0) = \frac{\pi i}{3}
+					\end{align*}
+				\end{soln}
+
+			\item[(f)] $\oint_{\abs{z}=3} \frac{3z+1}{z^4+1}\, dz$
+				\begin{soln}
+					The integrand has simple poles at the solutions to 
+					\begin{align*}
+						z^4+1=0\implies z^4=-1=e^{\pi i} \implies z = e^{\pi i/4}, e^{3\pi i/4 }, e^{5\pi i/4}, e^{7\pi i/4}=r_1, r_2, r_3, r_4
+					\end{align*}
+					where we have
+					\begin{align*}
+						\Res\left(e^{\pi i/4}\right) &= \frac{3z+2}{(z-r_2)(z-r_3)(z-r_4)}\bigg\vert_{r_1} = \frac{3r_1+2}{(r_1-r_2)(r_1-r_3)(r_1-r_4)} \\
+						\Res\left(e^{3\pi i/4}\right) &= \frac{3z+2}{(z-r_1)(z-r_3)(z-r_4)}\bigg\vert_{r_2} = \frac{3r_2+2}{(r_2-r_1)(r_2-r_3)(r_2-r_4)} \\
+						\Res\left( e^{5\pi i/4} \right) &= \frac{3z+2}{(z-r_1)(z-r_2)(z-r_4)} \bigg\vert_{r_3} = \frac{3r_3+2}{(r_3-r_1)(r_3-r_2)(r_3-r_4)} \\
+						\Res\left( e^{7\pi i/4} \right) &= \frac{3z+2}{(z-r_1)(z-r_2)(z-r_3)}\bigg\vert_{r_4} = \frac{3r_4+2}{(r_4-r_1)(r_4-r_2)(r_4-r_3)}
+					\end{align*}
+					so by the Residue theorem, the integral is equal to
+					\begin{align*}
+						&2\pi i\left( \Res\left( e^{\pi i/4}  \right)+ \Res\left( e^{3\pi i/4} \right)+ \Res\left(e^{5\pi i/4}\right) + \Res\left(e^{7\pi i/4} \right)\right) \\
+						&= 2\pi i \left( \frac{(3r_1+2)(r_2-r_3)(r_2-r_4)(r_3-r_4) - (3r_2+2)(r_1-r_3)(r_1-r_4)(r_3-r_4)}{(r_1-r_2)(r_1-r_3)(r_1-r_4)(r_2-r_3)(r_2-r_4)(r_3-r_4)} \right) \\
+						&+ 2\pi i \left( \frac{(3r_3+2)(r_1-r_2)(r_1-r_4)(r_2-r_4) - (3r_4+2)(r_1-r_2)(r_1-r_3)(r_2-r_3)}{(r_1-r_2)(r_1-r_3)(r_1-r_4)(r_2-r_3)(r_2-r_4)(r_3-r_4)} \right) \\
+						&= 0
+					\end{align*}
+				\end{soln}
+				
+		\end{itemize}
+
+	\item[5.] Is there a function $f$ having a simple pole at $z_0$ with $\Res(f; z_0)=0?$ How about a function with a pole of order 2 at $z_0$ and $\Res(f; z_0)=0?$
+		\begin{answer*}
+			The first scenario is impossible, because since poles are isolated, there exists a sufficiently small $\varepsilon$ such that $z_0$ is the only pole contained in $B_\varepsilon(z_0),$ and the integral around this circle would be 0 because $\Res(f; z_0)=0,$ but it should be $2\pi i.$
+
+			For the second scenario, we can take $f(z)=1/z^2,$ which has a pole of order 2 at 0 but $\Res(f; 0)=0.$
+		\end{answer*}
+
+	\item[7.] Evaluate
+		\begin{align*}
+			\oint_{\abs{z}=1} e^{1/z}\sin(1/z)\, dz
+		\end{align*}
+		\begin{soln}
+			The integrand has a pole at 0. We have the Taylor series
+			\begin{align*}
+				e^{1/z} &= 1 + \frac{1}{z} + \frac{(1/z)^2}{2!} + \cdots \\
+				\sin(1/z) &= \frac{1}{z} - \frac{(1/z)^3}{3!} + \cdots \\
+				\implies e^{1/z}\sin(1/z) &= \left( 1+\frac{1}{z} + \cdots \right)\left( \frac{1}{z} - \cdots \right) = \frac{1}{z} + \cdots \\
+				\implies \Res(0) &= 1
+			\end{align*}
+			so the integral is $2\pi i\Res(0)=2\pi i.$
+		\end{soln}
+		
+\end{itemize}
+
+
+\section*{Section 6.2}
+
+\begin{itemize}
+	\item[1.] $\int_0^{2\pi} \frac{d\theta}{2+\sin \theta} = \frac{2\pi}{\sqrt{3}}$
+		\begin{soln}
+			Using the substitution $\sin \theta = \frac{1}{2i}\left( z-\frac{1}{z} \right)$ along the parametrization $e^{i\theta}$ of the unit circle, 
+			\begin{align*}
+				\int_0^{2\pi} \frac{d\theta}{2+\sin \theta} &= \oint_{\abs{z}=1} \frac{1}{2+\frac{1}{2i}\left( z-\frac{1}{z} \right)}\cdot \frac{1}{iz}\, dz = \oint_{\abs{z}=1} \frac{2}{(z^2+4iz-1)}
+			\end{align*}
+			The poles are at the roots
+			\begin{align*}
+				r_1, r_2 &= \frac{-4i\pm\sqrt{(4i)^2+4}}{2} = \left( -2\pm \sqrt{3} \right)i
+			\end{align*}
+			where only the root $r_1=\left( -2+\sqrt{3} \right)i$ lies inside the unit circle, so
+			\begin{align*}
+				\Res(r_1) &= \frac{2}{z-r_2}\bigg\vert_{r_1} = \frac{2}{\left( -2+\sqrt{3} \right)i - \left( -2-\sqrt{3} \right)i} = \frac{1}{i\sqrt{3}}
+			\end{align*}
+			so the integral is $2\pi i\Res(r_1)=2\pi i\cdot \frac{1}{i\sqrt{3}} = \frac{2\pi}{\sqrt{3}}.$
+		\end{soln}
+
+	\item[5.] $\int_0^{2\pi} \frac{d\theta}{1+a\cos \theta} = \frac{2\pi}{\sqrt{1-a^2}}, \quad a^2<1$
+		\begin{soln}
+			Using the substitution $\cos \theta = \frac{1}{2}\left( z+\frac{1}{z} \right)$ along the parametrization $e^{i\theta}$ of the unit circle,
+			\begin{align*}
+				\int_0^{2\pi} \frac{d\theta}{1+a\cos\theta} &= \oint_{\abs{z}=1} \frac{1}{1+a\cdot\frac{1}{2}\left( z+ \frac{1}{z}\right)}\cdot \frac{1}{iz}\, dz = \oint_{\abs{z}=1} \frac{2}{ai\left( z^2+\frac{2}{a}z + 1 \right)}\, dz
+			\end{align*}
+			The poles are at the roots
+			\begin{align*}
+				r_1, r_2 &= \frac{-\frac{2}{a} \pm \sqrt{\left( \frac{2}{a} \right)^2-4}}{2} = \frac{-1\pm \sqrt{1-a^2}}{a}
+			\end{align*}
+			where only the root $r_1=\frac{-1+\sqrt{1-a^2}}{a}$ lies inside the unit circle, so
+			\begin{align*}
+				\Res(r_1) &= \frac{2}{ai(z-r_2)}\bigg\vert_{r_1} = \frac{2}{ai\left( \frac{-1+\sqrt{1-a^2}}{a} - \frac{-1-\sqrt{1-a^2}}{a} \right)} = \frac{1}{i\sqrt{1-a^2}}
+			\end{align*}
+			so the integral is $2\pi i\Res(r_1) = 2\pi i\cdot \frac{1}{i\sqrt{1-a^2}} = \frac{2\pi}{\sqrt{1-a^2}}.$
+		\end{soln}
+
+	\item[8.] $\int_0^{2\pi} \frac{d\theta}{a^2\sin^2\theta + b^2\cos^2\theta} = \frac{2\pi}{ab}, \quad a, b>0$
+		\begin{soln}
+			Using the substitutions on the unit circle, we have
+			\begin{align*}
+				\int_{0}^{2\pi} \frac{d\theta}{a^2\sin^2\theta + b^2\cos^2\theta} &= \oint \frac{1}{a^2\cdot \left( \frac{z^2-1}{2iz} \right)^2 + b^2\cdot \left( \frac{z^2+1}{2z} \right)}\cdot \frac{1}{iz}\, dz \\
+				&= \frac{1}{i}\oint \frac{4z}{(b^2-a^2)z^4+(2b^2+2a^2)z^2 + (b^2-a^2)}\, dz
+			\end{align*}
+			We have
+			\begin{align*}
+				z^2 &= \frac{-(2b^2+2a^2)\pm \sqrt{(2b^2+2a^2)^2-4(b^2-a^2)^2}}{2(b^2-a^2)} = \frac{b^2\pm 2ab + a^2}{a^2-b^2}
+			\end{align*}
+			WLOG $a\ge b,$ so the roots are
+			\begin{align*}
+				r_1 &= \frac{a-b}{\sqrt{a^2-b^2}}, \quad r_2 = \frac{b-a}{\sqrt{a^2-b^2}}, \quad r_3 = \frac{b+a}{\sqrt{a^2-b^2}}, \quad r_4 = \frac{-b-a}{\sqrt{a^2-b^2}}
+			\end{align*}
+			where $r_1, r_2$ lie within the unit circle. We have
+			\begin{align*}
+				\Res(r_1) &= \frac{4z}{(b^2-a^2)(z-r_2)\left( z^2-\frac{(a+b)^2}{a^2-b^2} \right)}\Bigg\vert_{r_1} = \frac{4\cdot \frac{a-b}{\sqrt{a^2-b^2}}}{(b^2-a^2)\cdot2\cdot \frac{a-b}{\sqrt{a^2-b^2}}\left( \frac{(a-b)^2}{a^2-b^2} - \frac{(a+b)^2}{a^2-b^2} \right)} \\
+				&= \frac{2}{(a+b)^2-(a-b)^2} = \frac{1}{2ab} \\
+				\Res(r_2) &= \frac{4z}{(b^2-a^2)(z-r_1)\left( z^2-\frac{(a+b)^2}{a^2-b^2} \right)}\Bigg\vert_{r_2} = \frac{4\cdot \frac{b-a}{\sqrt{a^2-b^2}}}{(b^2-a^2)\cdot 2\cdot \frac{b-a}{\sqrt{a^2-b^2}}\left( \frac{(b-a)^2}{a^2-b^2} - \frac{(a+b)^2}{a^2-b^2} \right)} \\
+				&= \frac{2}{(a+b)^2-(b-a)^2} = \frac{1}{2ab}
+			\end{align*}
+			so by the Residue theorem, the integral is
+			\begin{align*}
+				2\pi i\cdot \frac{1}{i}\left( \Res(r_1)+\Res(r_2) \right) = 2\pi\left( \frac{1}{2ab} + \frac{1}{2ab} \right) = \frac{2\pi}{ab}
+			\end{align*}
+		\end{soln}
+
+	\item[9.] $\int_0^{2\pi} (\cos\theta)^{2n}\, d\theta = \frac{\pi\cdot (2n)!}{2^{2n-1}(n!)^2}, \quad n=1, 2, \cdots$
+		\begin{soln}
+			Using the substitutions on the unit circle, we have
+			\begin{align*}
+				\int_0^{2\pi} (\cos\theta)^{2n}\, d\theta &= \oint \left[ \frac{1}{2}\left( z+\frac{1}{z} \right) \right]^{2n}\cdot \frac{1}{iz}\, dz \\
+				&= \frac{1}{2^{2n}i}\oint\frac{1}{z}\left[ z^{2n} + \binom{2n}{1}z^{2n-2} + \cdots + \binom{2n}{n} + \cdots + \binom{2n}{2n-1} \frac{1}{z^{2n-2}} + \frac{1}{z^{2n}} \right]\, dz \\
+				&= \frac{1}{2^{2n}i}\oint \left[ z^{2n-1} + \binom{2n}{1}z^{2n-3} + \cdots + \binom{2n}{n} \frac{1}{z} + \cdots + \binom{2n}{2n-1}\frac{1}{z^{2n-1}} + \frac{1}{z^{2n+1}} \right]\, dz \\
+				&= \frac{1}{2^{2n}i}\cdot 2\pi i \binom{2n}{n} = \frac{\pi (2n)!}{2^{2n-1}(n!)^2}
+			\end{align*}
+		\end{soln}
+
+	\item[10.] $\int_{0}^{2\pi} e^{\cos \theta} \cos\left( n\theta-\sin \theta \right)\, d\theta = \frac{2\pi}{n!}, \quad n=1, 2, \cdots$
+		\begin{soln}
+			We have
+			\begin{align*}
+				\int_0^{2\pi} e^{\cos\theta} \cdot \frac{1}{2} \left[ e^{i( n\theta-\sin\theta)}+e^{i(-n\theta + \sin\theta)} \right]\, d\theta &= \frac{1}{2}\int_0^{2\pi} \left(e^{\cos\theta-i\sin\theta+in\theta} + e^{\cos\theta+i\sin\theta-in\theta}\right)\, d\theta
+			\end{align*}
+			and using the substitution $z=e^{i\theta}=\cos\theta + i\sin\theta$ along the unit circle, this is
+			\begin{align*}
+				&\frac{1}{2}\oint \left( e^{1/z}z^n + e^z z^{-n} \right)\cdot \frac{1}{iz}\, dz = \frac{1}{2i}\left(\oint e^{1/z}z^n\, dz + \oint e^z z^{-n}\, dz\right)\\
+				&= \frac{1}{2i} \left[\oint z^{n-1}\left( 1+\frac{1}{z}+\frac{(1/z)^2}{2} + \cdots + \frac{(1/z)^n}{n!}\right)\, dz +\oint z^{-n-1} \left( 1+z+\frac{z^2}{2} + \cdots+ \frac{z^n}{n!} + \cdots \right)\, dz\right] \\
+				&= \frac{1}{2i}\left[ \oint \left( \cdots + \frac{1}{n!}\frac{1}{z}+\cdots \right)\, dz + \oint \left( \cdots + \frac{1}{n!}\frac{1}{z} + \cdots \right)\, dz\right] = \frac{1}{2i}\cdot 2\pi i\cdot \frac{2}{n!} = \frac{2\pi}{n!}
+			\end{align*}
+		\end{soln}
+		
+\end{itemize}
+
+\end{document}
