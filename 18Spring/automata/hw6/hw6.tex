@@ -1,0 +1,112 @@
+\documentclass{article}
+\usepackage[sexy, hdr, fancy]{evan}
+\setlength{\droptitle}{-4em}
+
+\lhead{Homework 6}
+\rhead{Automata and Computation Theory}
+\lfoot{}
+\cfoot{\thepage}
+
+\begin{document}
+\title{Homework 6}
+\maketitle
+\thispagestyle{fancy}
+
+\begin{enumerate}
+	\item Show that a language can be decided by a TM (i.e., can be recognized by some TM that halts on all inputs), if and only if some machine can enumerate the language (i.e., enumerate all strings in this language) in lexicographic order. You may assume the alphabet is $\left\{ 0, 1 \right\}.$
+		\begin{proof}
+			$(\implies):$ Let $w_1, w_2, \cdots$ be a lexicographic ordering of the strings in a language $L$ that can be decided by a TM $R.$ Then we can define such an enumerator:
+			\begin{enumerate}[(1)]
+				\ii For $i=1, 2, \cdots:$
+				\begin{enumerate}[(a)]
+					\ii Simulate $R$ on $w_i.$
+					\ii If $R$ accepts $w_i,$ print $w_i.$ Otherwise, continue.
+				\end{enumerate}
+			\end{enumerate}
+
+			Since $R$ decides $L,$ it is guaranteed to halt on all inputs $w_i,$ so this machine prints all strings in $L$ in lexicographic order.
+
+			$(\impliedby):$ Suppose $L$ can be enumerated in lexicographic order by a machine $E.$ If $L$ is finite, then it is decidable. If $L$ is infinite, then construct the TM $R$ as follows:
+
+			$R=$ on input $w:$
+			\begin{enumerate}[(a)]
+				\ii Let $E$ print the next string $x$ in $L.$
+				\begin{enumerate}[(a)]
+					\ii If $x=w,$ accept.
+					\ii Else if $x$ is lexicographically after $w,$ reject.
+					\ii Else (if $x$ is lexicographically before $w$), continue.
+				\end{enumerate}
+			\end{enumerate}
+
+			Since $L$ is infinite, but $w$ has a finite lexicographic position, this machine must halt at some point, and since $w$ was arbitrary, $E$ halts on all inputs in $L.$
+		\end{proof}
+
+		\newpage
+	\item Let $T=\left\{ \left< M\right>\mid M\text{ is a TM that accepts }\alpha^{\mathcal R}\text{ whenever it accepts }\alpha \right\}.$ Show that $T$ is undecidable.
+		\begin{proof}
+			Suppose $T$ is decidable, and that $R$ is a decider. Construct a TM $S$ to decide $A_{TM}$ as follows:
+
+			$S=$ on input $\left< M, w\right>$ where $M$ is a $TM$ and $w$ is a string:
+			\begin{enumerate}[(1)]
+				\ii Construct a TM $N$ as follows:
+
+				$N=$ on input $x:$
+				\begin{enumerate}[(a)]
+					\ii Simulate $M$ on $w.$
+					\ii If $M$ accepts $w$ and $x=01,$ then $N$ accepts. Otherwise, $N$ rejects.
+					\ii If $M$ rejects $w,$ then $N$ rejects.
+				\end{enumerate}
+				\ii Simulate $R$ on $\left< N\right>.$
+				\ii If $R$ rejects, then $S$ accepts, otherwise $S$ rejects.
+			\end{enumerate}
+
+			Now, if $M$ accepts $w,$ then $N$ only accepts $\left\{ 01 \right\},$ so $R$ would reject $\left< N\right>,$ and thus $S$ would accept $\left< M, w\right>.$ On the other hand, if $M$ rejects $w,$ then $N$ rejects every string, so $R$ would accept $\left< N\right>,$ and thus $S$ would reject $\left< M, w\right>.$ Thus, $S$ would be TM that decides $A_{TM},$ which is a contradiction since $E_{TM}$ is undecidable.
+		\end{proof}
+
+		\newpage
+	\item Define the language
+		\begin{align*}
+			C_{TM}=\left\{ \left< M_1, M_2\right>\mid M_1, M_2\text{ are two Turing machines such that }L(M_1)\subseteq L(M_2) \right\}
+		\end{align*}
+		Show that $C_{TM}$ is undecidable.
+		\begin{proof}
+			Suppose that $C_{TM}$ was decidable by $R.$ Then construct the TM $S$ to decide $E_{TM}$ as follows:
+
+			$S=$ on input $\left< M\right>$ where $M$ is a TM: 
+			\begin{enumerate}[(1)]
+				\ii Run $R$ on input $\left< M, M_1\right>$ where $M_1$ is a TM that rejects all inputs.
+				\ii If $R$ accepts, $S$ accepts, otherwise $S$ rejects.
+			\end{enumerate}
+
+			Now, if $R$ accepts $\left< M, M_1\right>,$ then $L(M)\subseteq L(M_1)=\varnothing\implies L(M)=\varnothing,$ so $S$ would correctly accept $M,$ and likewise if $R$ rejects $\left< M, M_1\right>,$ then $L(M)\neq\varnothing,$ so $S$ would correctly reject. Thus, $S$ would be a TM that decides $E_{TM},$ which is a contradiction since $E_{TM}$ is undecidable.
+		\end{proof}
+
+		\newpage
+	\item Prove that the following language is in $P.$ 
+		\begin{align*}
+			2COL = \left\{ G:\text{graph } G\text{ has a coloring with 2 colors} \right\}
+		\end{align*}
+		Here a coloring of $G$ with $c$ colors is an assignment of a number in $\left\{ 1, \cdots, c \right\}$ to each vertex such that no adjacent vertices get the same number.
+		\begin{proof}
+			Consider the following algorithm, where $v$ is an arbitrary starting vertex:
+
+			\begin{enumerate}[(1)]
+				\ii Begin by marking every vertex with 0.
+				\ii Mark $v$ with color 1.
+				\ii For all vertices $w$ with an edge to $v:$
+				\begin{enumerate}[(a)]
+					\ii If $w$ has color 0, then give it the opposite color of $v.$
+					\begin{enumerate}[(i)]
+						\ii Recursively call this coloring subroutine on $w$ and its neighbors.
+					\end{enumerate}
+					\ii If $w$ has the same color as $v,$ reject.
+				\end{enumerate}
+				\ii Accept
+			\end{enumerate}
+
+			This is a modification of the DFS graph search algorithm, which runs in polynomial time in the size of the graph. If we reach the end of the algorithm and accept, then every vertex will have been reached (assuming a connected graph), and we will have a 2-coloring since the only time this algorithm rejects is when adjacent vertices have the same color, and vice versa. Thus, $2COL$ is in $P.$
+		\end{proof}
+		
+\end{enumerate}
+
+\end{document}

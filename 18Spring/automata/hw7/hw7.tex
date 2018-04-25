@@ -1,0 +1,72 @@
+\documentclass{article}
+\usepackage[sexy, hdr, fancy]{evan}
+\setlength{\droptitle}{-4em}
+
+\lhead{Homework 7}
+\rhead{Automata and Computation Theory}
+\lfoot{}
+\cfoot{\thepage}
+
+\begin{document}
+\title{Homework 7}
+\maketitle
+\thispagestyle{fancy}
+
+\begin{enumerate}
+	\item Let HALT be the Halting language. Show that HALT is NP-hard. Is it NP-complete?
+
+	\item Call graphs $G$ and $H$ isomorphic if the nodes of $G$ can be reordered so that the graph $G$ is identical to $H.$ Let ISO$=\left\{ \left< G, H\right>: G, H\text{ are isomorphic} \right\}.$ Show that ISO$\in \bf{NP}.$
+		\begin{proof}
+			Suppose we are given $G$ and $H$ and a certificate $c=\left\{ i_1, \cdots, i_m \right\}$ of indices. Then we construct the verifier as $V( \left< G, H\right>, c)$ as
+			\begin{enumerate}[(1)]
+				\ii Suppose $G$ has $n$ vertices. First check if $H$ also has $n$ vertices. If not, reject.
+				\ii Now check if $\left\{ i_1, \cdots, i_m \right\}$ is a permutation of $\left\{ 1, \cdots, n \right\}.$ If not, reject.
+				\ii Now for each vertex $v_j$ in $H,$ take the map $v_i\mapsto v_{i_j}.$ Now check if $G$ and the transformed $H$ are identical. If they are, accept, otherwise, reject.
+			\end{enumerate}
+
+			Step (1) can be completed using a DFS, which takes $O\left(\abs{V}+\abs{E}\right)$ time. Step (2) can be completed using a sorting algorithm, which takes $O(n^2)=O\left( \abs{V}^2 \right)$ time. Step (3) can be completed by just checking every edge and every vertex, which takes $O\left( \abs{V}+\abs{E} \right).$ Thus, this verifier runs in polynomial time in the size of the inputs. It is clearly a correct verifier since it checks everything that needs to be checked, so ISO is in NP.
+		\end{proof}
+
+	\item Show that, if $\bf{P}=\bf{NP},$ then every language $A\in\bf{P},$ except $A=\varnothing$ and $A=\Sigma^*,$ is NP-complete.
+		\begin{proof}
+			If $\bf{P}=\bf{NP},$ then if $A\in\bf{P}$ we have $A\in\bf{NP}.$ Now, to show that $A$ is NP-hard, we need to show that any $B\in\bf{NP}$ can be solved in polynomial time using an oracle for $A.$ Since $\bf{P}=\bf{NP},$ this means $B\in \bf{P}$ so every language can be solved in polynomial time given an oracle for $A$ (that we wouldn't even need to use). Thus, $A$ is NP-hard, and thus $A$ is NP-complete. 
+		\end{proof}
+
+	\item Let $\phi$ be a 3CNF. An $\neq$-assignment to the variables of $\phi$ is one where each clause contains two literals with unequal truth values.
+		\begin{enumerate}[(a)]
+			\item Show that any $\neq$-assignment automatically satisfies $\phi,$ and the negation of any $\neq$-assignment to $\phi$ is also an $\neq$-assignment.
+				\begin{proof}
+					If $(x\vee y\vee z)$ is a clause in a $\neq$-assignment, where WLOG $x$ and $y$ have unequal truth values, this clause evaluates to 1. Since all clauses satisfy this property, combining all clauses will also yield a truth value of 1, and thus satisfy $\phi.$
+
+					If we negate the $\neq$-assignment, consider the clause $(x\vee y\vee z)$ in the original, which becomes $(\neg x\vee\neg y\vee\neg z).$ If WLOG $x$ and $y$ had unequal truth values in the original, then $\neg x$ and $\neg y$ have unequal truth values, so each clause still satisfies the property of being a $\neq$-assignment.
+				\end{proof}
+
+			\item Let $\neq$SAT be the collection of 3CNFs that have an $\neq$-assignment. Show that we obtain a polynomial time reduction from 3SAT to $\neq$SAT by replacing each clause
+				\begin{align*}
+					c_i=\left( y_1\vee y_2\vee y_3 \right)
+				\end{align*}
+				with the two clauses
+				\begin{align*}
+					\left( y_1\vee y_2\vee z_i \right)\text{ and } \left(\bar z_i\vee y_3\vee b\right)
+				\end{align*}
+				where $z_i$ is a new variable for each clause $c_i$ and $b$ is a single additional new variable.
+				\begin{proof}
+					$(\implies):$ Consider a satisfying assignment to clause $i$ being $(y_1\vee y_2\vee y_3).$ Take $b=0.$ Then if $y_1, y_2$ are both 0, we must have $y_3$ be 1 in order for the clause to be satisfied, so we can take $z_i=1$ and construct the two clauses $(y_1\vee y_2\vee 1)$ and $(0\vee y_3\vee 0)$ which are both valid and satisfying $\neq$-assignments. 
+					
+					Otherwise, one of $y_1, y_2$ is not 0, so we can take $z_i=0,$ so we can construct the two clauses $(y_1\vee y_2\vee 0)$ and $(1\vee y_3\vee 0),$ which are both valid $\neq$-assignments. This is clearly polynomial time since we have only doubled the number of clauses, so if there exists a satisfying assignment to the original 3SAT, there exists a satisfying $\neq$-assignment.
+
+					$(\impliedby):$ Consider a satisfying $\neq$-assignment to clauses $i$ being $(y_1\vee y_2\vee z_i)$ and $(\bar z_i\vee y_3\vee b).$ If one of $y_1, y_2,$ or $y_3$ is not 0, then the clause $(y_1\vee y_2\vee y_3)$ would be satisfied. Otherwise, if they are all 0, then by part (a), negating this $\neq$-assignment will still be satisfying, which means one of $\bar y_1, \bar y_2,$ or $\bar y_3$ would not be 0, and thus $(\bar y_1\vee \bar y_2\vee\bar y_3)$ is a satisfying assignment for 3SAT. Clearly this is polynomial time, so if there exists a satisfying assignment to the $\neq$SAT, there exists a satisfying assignment for SAT.
+				\end{proof}
+
+			\item Conclude that $\neq$SAT is NP-complete.
+				\begin{proof}
+					Clearly, if given an assignment, we can determine if it is a valid $\neq$-assignment in polynomial time (just go through each clause and check), and we can also determine if it is satisfying by simply evaluating, so $\neq$SAT is in NP.
+
+					Since 3SAT is NP-complete and there exists a polynomial time reduction from 3SAT to $\neq$SAT, it follows that $\neq$SAT is NP-hard, and thus NP-complete.
+				\end{proof}
+
+		\end{enumerate}
+
+\end{enumerate}
+
+\end{document}
