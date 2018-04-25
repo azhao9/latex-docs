@@ -74,18 +74,25 @@
 					\end{align*}
 					where we have
 					\begin{align*}
-						\Res\left(e^{\pi i/4}\right) &= \frac{3z+2}{(z-r_2)(z-r_3)(z-r_4)}\bigg\vert_{r_1} = \frac{3r_1+2}{(r_1-r_2)(r_1-r_3)(r_1-r_4)} \\
-						\Res\left(e^{3\pi i/4}\right) &= \frac{3z+2}{(z-r_1)(z-r_3)(z-r_4)}\bigg\vert_{r_2} = \frac{3r_2+2}{(r_2-r_1)(r_2-r_3)(r_2-r_4)} \\
-						\Res\left( e^{5\pi i/4} \right) &= \frac{3z+2}{(z-r_1)(z-r_2)(z-r_4)} \bigg\vert_{r_3} = \frac{3r_3+2}{(r_3-r_1)(r_3-r_2)(r_3-r_4)} \\
-						\Res\left( e^{7\pi i/4} \right) &= \frac{3z+2}{(z-r_1)(z-r_2)(z-r_3)}\bigg\vert_{r_4} = \frac{3r_4+2}{(r_4-r_1)(r_4-r_2)(r_4-r_3)}
+						\lim_{z\to r_i} \frac{z^4+1}{z-r_i} = \frac{d}{dz}\left[ z^4+1 \right]\bigg\vert_{r_i} = 4r_i^3
 					\end{align*}
-					so by the Residue theorem, the integral is equal to
+					for all $i,$ so
 					\begin{align*}
-						&2\pi i\left( \Res\left( e^{\pi i/4}  \right)+ \Res\left( e^{3\pi i/4} \right)+ \Res\left(e^{5\pi i/4}\right) + \Res\left(e^{7\pi i/4} \right)\right) \\
-						&= 2\pi i \left( \frac{(3r_1+2)(r_2-r_3)(r_2-r_4)(r_3-r_4) - (3r_2+2)(r_1-r_3)(r_1-r_4)(r_3-r_4)}{(r_1-r_2)(r_1-r_3)(r_1-r_4)(r_2-r_3)(r_2-r_4)(r_3-r_4)} \right) \\
-						&+ 2\pi i \left( \frac{(3r_3+2)(r_1-r_2)(r_1-r_4)(r_2-r_4) - (3r_4+2)(r_1-r_2)(r_1-r_3)(r_2-r_3)}{(r_1-r_2)(r_1-r_3)(r_1-r_4)(r_2-r_3)(r_2-r_4)(r_3-r_4)} \right) \\
+						\Res\left(e^{\pi i/4}\right) &= \frac{3z+2}{(z-r_2)(z-r_3)(z-r_4)}\bigg\vert_{r_1} = \frac{3r_1+2}{4r_1^3} = \frac{3e^{\pi i/4}+2}{4e^{3\pi i/4}} \\
+						\Res\left(e^{3\pi i/4}\right) &= \frac{3z+2}{(z-r_1)(z-r_3)(z-r_4)}\bigg\vert_{r_2} = \frac{3r_2+2}{4r_2^3} = \frac{3e^{3\pi i/4}+2}{4e^{9\pi i/4}} = \frac{3e^{3\pi i/4}+2}{4e^{\pi i/4}} \\
+						\Res\left( e^{5\pi i/4} \right) &= \frac{3z+2}{(z-r_1)(z-r_2)(z-r_4)} \bigg\vert_{r_3} = \frac{3r_3+2}{4r_3^3} = \frac{3e^{5\pi i/4}+2}{4e^{15\pi i/4}} = \frac{3e^{5\pi i/4}+2}{4e^{7\pi i/4}} \\
+						\Res\left( e^{7\pi i/4} \right) &= \frac{3z+2}{(z-r_1)(z-r_2)(z-r_3)}\bigg\vert_{r_4} = \frac{3r_4+2}{4r_4^3} = \frac{3e^{7\pi i/4}+2}{4e^{21\pi i/4}} = \frac{3e^{7\pi i/4}+2}{4e^{5\pi i/4}}
+					\end{align*}
+					where the sum of the residues is
+					\begin{align*}
+						&\frac{3e^{\pi i/4}+2}{4e^{3\pi i/4}} + \frac{3e^{3\pi i/4}+2}{4e^{\pi i/4}} + \frac{3e^{5\pi i/4}+2}{4e^{7\pi i/4}} + \frac{3e^{7\pi i/4}+2}{4e^{5\pi i/4}} \\
+						&= \frac{1}{4e^{\pi i/4}}\left( \frac{3e^{\pi i/4}+2}{e^{\pi i/2}} + \frac{3e^{3\pi i/4}+2}{1} + \frac{3e^{5\pi i/4}+2}{e^{3\pi i/2}} + \frac{3e^{7\pi i/4}+2}{e^{\pi i}} \right) \\
+						&= \frac{1}{4e^{\pi i/4}} \left( -i\left( 3e^{\pi i/4}+2 \right) + \left( 3e^{3\pi i/4}+2 \right) + i\left( 3e^{5\pi i/4}+2 \right) - \left( 3e^{7\pi i/4}+2 \right) \right) \\
+						&= \frac{3}{4e^{\pi i/4}}\left[ -i\left( \frac{1}{\sqrt{2}} + i\frac{1}{\sqrt{2}} \right) + \left( -\frac{1}{\sqrt{2}} + i\frac{1}{\sqrt{2}} \right) + i\left( -\frac{1}{\sqrt{2}} - i\frac{1}{\sqrt{2}} \right) - \left( \frac{1}{\sqrt{2}} - i\frac{1}{\sqrt{2}} \right),\right] \\
+						&= \frac{3}{4e^{\pi i/4}}\left[ -i\frac{1}{\sqrt{2}} + \frac{1}{\sqrt{2}} - \frac{1}{\sqrt{2}} + i\frac{1}{\sqrt{2}} - i\frac{1}{\sqrt{2}} + \frac{1}{\sqrt{2}} - \frac{1}{\sqrt{2}} + i\frac{1}{\sqrt{2}} \right] \\
 						&= 0
 					\end{align*}
+					so by the Residue theorem, the integral is equal to 0.
 				\end{soln}
 				
 		\end{itemize}

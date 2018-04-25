@@ -6,7 +6,7 @@ class Model(object):
     def __init__(self):
         self.num_input_features = None
 
-    def fit(self, X, y):
+    def fit(self, X, y, **kwargs):
         """ Fit the model.
 
         Args:
@@ -36,7 +36,7 @@ class Useless(Model):
         self.reference_example = None
         self.reference_label = None
 
-    def fit(self, X, y):
+    def fit(self, X, y, **kwargs):
         self.num_input_features = X.shape[1]
         # Designate the first training example as the 'reference' example
         # It's shape is [1, num_features]
@@ -81,30 +81,34 @@ class Useless(Model):
 
 class LambdaMeans(Model):
 
-    def __init__(self, cluster_lambda, clustering_training_iterations):
+    def __init__(self):
         super().__init__()
-        self.cluster_lambda = cluster_lambda
-        self.clustering_training_iterations = clustering_training_iterations
 
-    def fit(self, X, _):
+    def fit(self, X, _, **kwargs):
+        """  Fit the lambda means model  """
+        assert 'lambda0' in kwargs, 'Need a value for lambda'
+        assert 'iterations' in kwargs, 'Need the number of EM iterations'
+        lambda0 = kwargs['lambda0']
+        iterations = kwargs['iterations']
+
         self.num_examples, self.num_input_features = X.shape
-        # Initialize mu_1
-        self.mu = [np.mean(X.toarray(), axis=0)]
-        if not(self.cluster_lambda > 0):
-            # Set lambda to default value
-            self.cluster_lambda = np.mean(np.linalg.norm(X.toarray() - self.mu[0], ord=2, axis=1))
+        X = X.toarray()
+        self.mu = [np.mean(X, axis=0)]
 
-        for i in range(self.clustering_training_iterations):
-            # E step
+        if not(lambda0 > 0):
+            lambda1 = np.mean(np.linalg.norm(X - self.mu[0], axis=1), axis=0)
+
+        for i in range(iterations):
             r = np.zeros((self.num_examples, len(self.mu)))
 
+            # E step
             for n in range(self.num_examples):
-                xn = X[n, :].toarray()[0]
-                norms = np.linalg.norm(self.mu - xn, ord=2, axis=1)
+                xn = X[n, :]
+                norms = np.linalg.norm(self.mu - xn, axis=1)
 
-                if (np.min(norms) > self.cluster_lambda):
-                    r = np.hstack((r, np.zeros((self.num_examples, 1))))
+                if (np.min(norms) > lambda1):
                     self.mu.append(xn)
+                    r = np.hstack((r, np.zeros((self.num_examples, 1))))
                     r[n, len(self.mu)-1] = 1
                 else:
                     r[n, np.argmin(norms)] = 1
@@ -115,9 +119,16 @@ class LambdaMeans(Model):
                 if (len(in_cluster) == 0):
                     self.mu[k] = np.zeros(self.num_input_features)
                 else:
-                    self.mu[k] = np.sum(X.toarray()[in_cluster], axis=0)/len(in_cluster)
+                    self.mu[k] = np.mean(X[in_cluster], axis=0)
 
     def predict(self, X):
+        if self.num_input_features is None:
+            raise Exception('fit must be called before predict.')
+        # Perhaps fewer features are seen at test time than train time, in
+        # which case X.shape[1] < self.num_input_features. If this is the case,
+        # we can simply 'grow' the rows of X with zeros. (The copy isn't
+        # necessary here; it's just a simple way to avoid modifying the
+        # argument X.)
         num_examples, num_input_features = X.shape
         if num_input_features < self.num_input_features:
             X = X.copy()
@@ -127,28 +138,71 @@ class LambdaMeans(Model):
         if num_input_features > self.num_input_features:
             X = X[:, :self.num_input_features]
 
+        X = X.toarray()
         predictions = np.zeros(num_examples)
 
         for n in range(num_examples):
-            xn = X[n, :].toarray()[0]
-            norms = np.linalg.norm(self.mu - xn, ord=2, axis=1)
+            xn = X[n, :]
+            norms = np.linalg.norm(self.mu - xn, axis=1)
 
             predictions[n] = np.argmin(norms)
-
+        
         return predictions
 
 
 class StochasticKMeans(Model):
 
-    def __init__(self, clustering_training_iterations):
+    def __init__(self):
         super().__init__()
-        self.clustering_training_iterations = clustering_training_iterations
 
-    def fit(self, X, _):
+    def fit(self, X, _, **kwargs):
+        assert 'num_clusters' in kwargs, 'Need the number of clusters (K)'
+        assert 'iterations' in kwargs, 'Need the number of EM iterations'
+        num_clusters = kwargs['num_clusters']
+        iterations = kwargs['iterations']
+
         self.num_examples, self.num_input_features = X.shape
+        X = X.toarray()
+        self.centers = [None] * num_clusters
 
+        if (num_clusters == 1):
+            self.centers = np.mean(X.toarray(), axis=0)
+        else:
+            min_center = X.min(0)
+            max_center = X.max(0)
+
+            for k in range(num_clusters):
+                self.centers[k] = (k * max_center + (num_clusters - k) * min_center) / num_clusters
+
+        for i in range(iterations):
+            p = np.zeros((self.num_examples, num_clusters))
+
+            c = 2
+            beta = c * (i+1)
+
+            # E step
+            for n in range(self.num_examples):
+                xn = X[n, :]
+                norms = np.linalg.norm(self.centers - xn, axis=1)
+
+                d_hat = np.mean(norms, axis=0)
+
+                p[n, :] = np.exp(-beta * norms / d_hat)/np.sum(np.exp(-beta * norms / d_hat)) 
+            
+            # M step
+            for k in range(num_clusters):
+                pk = p[:, k]
+
+                self.centers[k] = np.dot(X.T, p[:, k])/np.sum(p[:, k])
 
     def predict(self, X):
+        if self.num_input_features is None:
+            raise Exception('fit must be called before predict.')
+        # Perhaps fewer features are seen at test time than train time, in
+        # which case X.shape[1] < self.num_input_features. If this is the case,
+        # we can simply 'grow' the rows of X with zeros. (The copy isn't
+        # necessary here; it's just a simple way to avoid modifying the
+        # argument X.)
         num_examples, num_input_features = X.shape
         if num_input_features < self.num_input_features:
             X = X.copy()
@@ -158,7 +212,13 @@ class StochasticKMeans(Model):
         if num_input_features > self.num_input_features:
             X = X[:, :self.num_input_features]
 
+        X = X.toarray()
         predictions = np.zeros(num_examples)
 
-        return predictions
+        for n in range(num_examples):
+            xn = X[n, :]
+            norms = np.linalg.norm(self.centers - xn, axis=1)
 
+            predictions[n] = np.argmin(norms)
+        
+        return predictions

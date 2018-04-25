@@ -30,7 +30,7 @@ def get_args():
 
 
 def check_args(args):
-    mandatory_args = {'data', 'mode', 'model-file', 'algorithm', 'predictions-file', 'cluster_lambda',
+    mandatory_args = {'data', 'mode', 'model_file', 'algorithm', 'predictions_file', 'cluster_lambda',
                       'clustering_training_iterations', 'number_of_clusters'}
     if not mandatory_args.issubset(set(dir(args))):
         raise Exception('Arguments that we provided are now renamed or missing. If you hand this in, ' +
@@ -59,13 +59,13 @@ def main():
             model = models.Useless()
             model.fit(X, y)
         elif args.algorithm.lower() == 'lambda_means':
-            model = models.LambdaMeans(args.cluster_lambda, args.clustering_training_iterations)
+            model = models.LambdaMeans()
+            model.fit(X, y, lambda0=args.cluster_lambda, iterations=args.clustering_training_iterations)
         elif args.algorithm.lower() == 'stochastic_k_means':
-            model = models.StochasticKMeans(args.number_of_clusters, args.clustering_training_iterations)
+            model = models.StochasticKMeans()
+            model.fit(X, y, num_clusters=args.number_of_clusters, iterations=args.clustering_training_iterations)
         else:
             raise Exception('The model given by --model is not yet supported.')
-
-        model.fit(X, y)
 
         # Save the model.
         try:
