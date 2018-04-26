@@ -96,7 +96,7 @@ class LambdaMeans(Model):
         self.mu = [np.mean(X, axis=0)]
 
         if not(lambda0 > 0):
-            lambda1 = np.mean(np.linalg.norm(X - self.mu[0], axis=1), axis=0)
+            lambda0 = np.mean(np.linalg.norm(X - self.mu[0], axis=1), axis=0)
 
         for i in range(iterations):
             r = np.zeros((self.num_examples, len(self.mu)))
@@ -106,7 +106,7 @@ class LambdaMeans(Model):
                 xn = X[n, :]
                 norms = np.linalg.norm(self.mu - xn, axis=1)
 
-                if (np.min(norms) > lambda1):
+                if (np.min(norms) > lambda0):
                     self.mu.append(xn)
                     r = np.hstack((r, np.zeros((self.num_examples, 1))))
                     r[n, len(self.mu)-1] = 1
