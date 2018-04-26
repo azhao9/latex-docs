@@ -166,7 +166,7 @@ class StochasticKMeans(Model):
         self.centers = [None] * num_clusters
 
         if (num_clusters == 1):
-            self.centers = np.mean(X.toarray(), axis=0)
+            self.centers = np.mean(X, axis=0)
         else:
             min_center = X.min(0)
             max_center = X.max(0)

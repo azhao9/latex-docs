@@ -68,20 +68,19 @@ where $\mu_j$ is the mean of the examples in $S_j$.
 					0 & \text{otherwise}
 				\end{cases}
 			\end{align*}
-			we have that for fixed $i,$ suppose WLOG that $r_{i1}^{new}=1$ and all other $r_{ij}^{new}=0,$ and that $r_{i2}=1$ and all other $r_{ij}=0.$ Then
+			we have that
 			\begin{align*}
-				\left\lVert x_i-\mu_1 \right\rVert_2^2 &\le \left\lVert x_i-\mu_2 \right\rVert_2^2 \\ 
-				\implies r_{i1}^{new}\left\lVert x_i-\mu_1 \right\rVert_2^2 &\le r_{i2}\left\lVert x_i-\mu_2 \right\rVert_2^2 \\
-				\implies \sum_{i=1}^{n} \sum_{j=1}^{k} r_{ij}^{new} \left\lVert x_i-\mu_j \right\rVert_2^2&\le \sum_{i=1}^{n} \sum_{j=1}^{k} r_{ij} \left\lVert x_i-\mu_j \right\rVert_2^2
+				\sum_{j=1}^{k} r_{ij}^{new} \left\lVert x_i-\mu_j \right\rVert_2^2 &= \min_j \left\lVert x_i-\mu_j \right\rVert_2^2 \le \left\lVert x_i-\mu_\ell \right\rVert_2^2, \quad \forall \ell
 			\end{align*}
-			Next, using the update rule
+			and thus since $\sum_{j=1}^{k} r_{ij}\left\lVert x_i-\mu_j \right\rVert_2^2 = \left\lVert x_i-\mu_\ell \right\rVert$ for some $\ell,$ we have
 			\begin{align*}
-				\mu_j^{new} &= \frac{\sum_{i}^{}r_{ij}^{new} x_i}{\sum_{i}^{}r_{ij}^{new}} = \mu(S_j^{new})
+				\sum_{i=1}^{n} \sum_{j=1}^{k} r_{ij}^{new}\left\lVert x_i-\mu_j \right\rVert_2^2\le \sum_{i=1}^{n} \sum_{j=1}^{k} r_{ij}\left\lVert x_i-\mu_j \right\rVert_2^2
 			\end{align*}
-			we have the well known fact that
+			so the objective is non-increasing after each E step. Next, using the update rule
 			\begin{align*}
-				\sum_{x_i\in S_j^{new}}^{}<++>
-			\end{align*}<++>
+				\mu_j^{new} &= \frac{\sum_{i}^{}r_{ij}^{new} x_i}{\sum_{i}^{}r_{ij}^{new}}
+			\end{align*}
+			we have
 		\end{proof}<++>
 
 	\item One variant is called K-medoids. K-medoids is similar to K-means: both K-means and K-medoids minimize the squared error. However, unlike K-means, K-medoids chooses a training example as a cluster center (medoid). It is more robust to noise and outliers as compared to k-means because it minimizes a sum of pairwise dissimilarities instead of a sum of squared Euclidean distances. 
@@ -134,17 +133,6 @@ As an example, take Gaussian mixture model (GMM) clustering. Suppose all the par
 \paragraph{3) Dimensionality Reduction (9 points)}
 
 Show that in the limit $\sigma^2 \rightarrow 0$, the posterior mean for the probabilistic PCA model becomes an orthogonal projection onto the principal subspace, as in conventional PCA.
-\begin{proof}
-	We have the posterior mean
-	\begin{align*}
-		E\left[ z\mid x \right] = M\inv W^T (x-\bar x) = \left( W^TW+\sigma^2L \right)\inv W^T(x-\bar x)
-	\end{align*}
-	In the limit as $\sigma^2\to 0,$ this is equal to
-	\begin{align*}
-		(W^{T}W)\inv W^T(x-\bar x) = 
-	\end{align*}
-	which is equivalent to an orthogonal projection onto the principal subspace
-\end{proof}
 
 
 \paragraph{4) Probabilistic PCA (10 points)}
@@ -158,8 +146,8 @@ Consider the Bayesian Network given in Figure \ref{fig:bn}. Are the sets ${\bf A
 \begin{figure}[h]
 	\begin{center}
 		\begin{tikzpicture}[style=thick,scale=1] 
-			\newcommand{\nsize}{.6}
-			\begin{scope}[shape=circle,minimum size=0.1cm] 
+			\newcommand{\nsize}{.8}
+			\begin{scope}[shape=circle,minimum size=0.2cm] 
 				\tikzstyle{every node}=[draw,fill] 
 				\node[fill=none,scale=\nsize] (X_0) at (-2,2) {$\mathbf{X_0}$};
 				\node[fill=none,scale=\nsize] (X_1) at (0,2) {$\mathbf{X_1}$};
@@ -190,30 +178,30 @@ Consider the Bayesian Network given in Figure \ref{fig:bn}. Are the sets ${\bf A
 \begin{enumerate}[a.]
 	\item ${\bf A} = \{ X_3 \}$, ${\bf B} = \{ X_4 \}$, ${\bf C} = \{X_1,X_2\}$
 		\begin{answer*}
-			Yes. The path $X_3\to X_2\to X_4$ is the only one from $X_3$ to $X_4,$ and it has an arrows meeting head to tail at $X_2\in C.$
+			Yes. In the path $X_3\to X_2\to X_4,$ the arrows meet head to tail at $X_2\in C.$ In the path $X_3\to X_2\to X_5\to X_7\to X_4,$ the arrows meet head to tail at $X_2\in C.$ These are the only paths.
 
-			If this was an MRF, then $A$ and $B$ would be d-separated because this path passes through $X_2\in C.$
+			If this was an MRF, then $A$ and $B$ would be d-separated because both paths pass through $X_2\in C.$
 		\end{answer*}
 
 	\item ${\bf A} = \{ X_5 \}$, ${\bf B} = \{X_4\}$, ${\bf C} = \{X_2,X_7\}$
 		\begin{answer*}
 			No. The path $X_5\to X_7\to X_4$ has arrows meeting head to head at $X_7\in C.$
 
-			If this was an MRF, then $A$ and $B$ would be d-separated because the two possible paths are $X_5\to X_2\to X_4$ an $X_5\to X_7\to X_4,$ which pass through $X_2$ and $X_7,$ respectively, which are both in $C.$
+			If this was an MRF, then $A$ and $B$ would be d-separated because the two possible paths are $X_5\to X_2\to X_4$ and $X_5\to X_7\to X_4,$ which pass through $X_2\in C$ and $X_7\in C,$ respectively.
 		\end{answer*}
 
 	\item ${\bf A} = \{X_4\}$, ${\bf B} = \{X_6\}$, ${\bf C} = \{X_8\}$
 		\begin{answer*}
-			No. The path $X_4\to X_7\to X_6$ has arrows meeting head to head at $X_7,$ with descendent $X_8\in C.$
+			No. The path $X_4\to X_7\to X_6$ has arrows meeting head to head at $X_7,$ which has descendent $X_8\in C.$
 
 			If this was an MRF, then $A$ and $B$ would not be d-separated because there is no path from $X_4$ to $X_6$ passing through $X_8.$
 		\end{answer*}
 
 	\item ${\bf A} = \{X_5\}$, ${\bf B} = \{X_4\}$, ${\bf C} = \{X_2\}$
 		\begin{answer*}
-			Yes. In the path $X_5\to X_2\to X_4,$ the arrows meet tail to tail at $X_2\in C.$ In the path $X_5\to X_7\to X_4,$ the arrows meet head to head at $X_7,$ whose descendants are not in $C.$
+			Yes. In the path $X_5\to X_2\to X_4,$ the arrows meet tail to tail at $X_2\in C.$ In the path $X_5\to X_7\to X_4,$ the arrows meet head to head at $X_7,$ where $X_2$ is not a descendent.
 
-			If this was an MRf, then $A$ and $B$ would not be d-separated because the path $X_5\to X_7\to X_4$ does not pass through any node in $C.$
+			If this was an MRF, then $A$ and $B$ would not be d-separated because the path $X_5\to X_7\to X_4$ does not pass through any node in $C.$
 		\end{answer*}
 
 	\item ${\bf A} = \{X_6, X_9\}$, ${\bf B} = \{X_8\}$, ${\bf C} = \{X_3,X_1\}$
@@ -222,7 +210,6 @@ Consider the Bayesian Network given in Figure \ref{fig:bn}. Are the sets ${\bf A
 
 			If this was an MRF, then $A$ and $B$ would not be d-separated because the path $X_6\to X_7\to X_8$ does not pass through any node in $C.$
 		\end{answer*}
-
 \end{enumerate}
 Now assume that Figure 1 is a Markov Random Field, where each edge is undirected (just drop the direction of each edge.) Re-answer each of the above questions with justifications for your answers.
 
