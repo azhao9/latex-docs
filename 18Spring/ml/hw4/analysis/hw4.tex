@@ -1,5 +1,8 @@
 \documentclass{article}
 \usepackage[sexy, hdr, fancy]{evan}
+\usepackage{graphicx}
+\usepackage{float}
+\graphicspath{.}
 \setlength{\droptitle}{-4em}
 
 \newcommand{\vwi}{{\bf w}_i}
@@ -111,6 +114,7 @@ where $\mu_j$ is the mean of the examples in $S_j$.
 		\end{answer*}
 \end{enumerate}
 
+\newpage
 \paragraph{2) Expectation-Maximization (12 points)} 
 
 As we discussed in class, clustering objectives are non-convex. Therefore, different initializations will lead to different clustering solutions.
@@ -147,6 +151,7 @@ As an example, take Gaussian mixture model (GMM) clustering. Suppose all the par
 
 \end{enumerate}
 
+\newpage
 \paragraph{3) Dimensionality Reduction (9 points)}
 
 Show that in the limit $\sigma^2 \rightarrow 0$, the posterior mean for the probabilistic PCA model becomes an orthogonal projection onto the principal subspace, as in conventional PCA.
@@ -163,11 +168,26 @@ Show that in the limit $\sigma^2 \rightarrow 0$, the posterior mean for the prob
 \end{proof}
 
 
+\newpage
 \paragraph{4) Probabilistic PCA (10 points)}
 
 Draw a directed probabilistic graphical model representing a discrete mixture of probabilistic PCA models in which each PCA model has its own values of $\mathbf{W}$, $\boldsymbol{\mu}$, and $\sigma^2$. Then draw a modified graph in which these parameter values are shared between the components of the mixture. The graph should represent the model for a single data point $\mathbf{x}$. (Hint: refer to slide 24 of the Dimensionality Reduction lecture as a starting point.)
+\begin{soln}
+	The graphical models are shown below using plate notation.
+	\begin{figure}[ht]
+		\centering
+		\includegraphics[width=4cm]{4a.PNG}
+		\caption{Each PCA model has its own parameters}
+	\end{figure}
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=7cm]{4b.PNG}
+		\caption{Each PCA shares the parameters}
+	\end{figure}	
+\end{soln}
 
 
+\newpage
 \paragraph{5) Graphical Models (15 points)}
 
 Consider the Bayesian Network given in Figure \ref{fig:bn}. Are the sets ${\bf A}$ and ${\bf B}$ d-separated given set ${\bf C}$ for each of the following definitions of ${\bf A}$, ${\bf B}$ and ${\bf C}$? Justify each answer.
