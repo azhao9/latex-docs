@@ -80,18 +80,35 @@ where $\mu_j$ is the mean of the examples in $S_j$.
 			\begin{align*}
 				\mu_j^{new} &= \frac{\sum_{i}^{}r_{ij}^{new} x_i}{\sum_{i}^{}r_{ij}^{new}}
 			\end{align*}
-			we have
-		\end{proof}<++>
+			we have the objective (after switching order of summation)
+			\begin{align*}
+				\sum_{i=1}^{n} \sum_{j=1}^{k} r_{ij}^{new} \left\lVert x_i-\mu_j^{new} \right\rVert_2^2 = \sum_{j=1}^{k} \sum_{i=1}^{n} r_{ij}^{new} \left\lVert x_i-\mu_j^{new} \right\rVert_2^2 = \sum_{j=1}^{k} \sum_{ x_i\in S_j} \left\lVert x_i-\mu_j^{new} \right\rVert_2^2
+			\end{align*}
+			where $\mu_j^{new}=\mu(S_j)$ as defined. From the previous homework, we know that $\mu(S_j)$ minimizes the sum of squared errors, so
+			\begin{align*}
+				\sum_{i=1}^{n} r_{ij}^{new} \left\lVert x_i-\mu_j^{new} \right\rVert=\sum_{x_i\in S_j}^{}\left\lVert x_i-\mu_j^{new} \right\rVert_2^2\le \sum_{x_i\in S_j}^{} \left\lVert x_i-\mu_j \right\rVert_2^2 = \sum_{i=1}^{n} r_{ij}^{new}\left\lVert x_i-\mu_j \right\rVert_2^2
+			\end{align*}
+			and thus
+			\begin{align*}
+				\sum_{j=1}^{k} \sum_{x_i\in S_j}^{} \left\lVert x_i-\mu_j^{new} \right\rVert_2^2= \sum_{j=1}^{k} \sum_{i=1}^{n} r_{ij}^{new} \left\lVert x_i-\mu_j^{new} \right\rVert &\le \sum_{j=1}^{k} \sum_{i=1}^{n} r_{ij}^{new} \left\lVert x_i-\mu_j \right\rVert_2^2
+			\end{align*}
+		\end{proof}
 
 	\item One variant is called K-medoids. K-medoids is similar to K-means: both K-means and K-medoids minimize the squared error. However, unlike K-means, K-medoids chooses a training example as a cluster center (medoid). It is more robust to noise and outliers as compared to k-means because it minimizes a sum of pairwise dissimilarities instead of a sum of squared Euclidean distances. 
 
 		Give an example to illustrate that K-medoids will be more robust to outliers than K-means.
+		\begin{answer*}
+			Consider the dataset $\left\{ 1, 2, 3, 4, 1000 \right\}$ with 1 cluster. Then under K-means, the center is at $\frac{1+2+3+4+1000}{5}=202,$ but under K-medoids, the center is at 3. Thus K-medoids is more robust to outliers because 3 is a better approximation for the cluster center than 202 is.
+		\end{answer*}
 
 	\item Another variant of K-means is to change the distance metric to the L1 distance, which is more robust to outliers. In this case, we are minimizing:
 		\begin{align}
 			\min_{S=\{S_1,...,S_k\}}\sum_{j=1}^k\sum_{\vxi\in S_j}\|\vx_j-\mu_j\|_1
 		\end{align}
 		where $\mu_j$ is the center of $S_j$ w.r.t. to L1 distance. It turns out that computing the medians is involved when computing the cluster center. That is why this algorithm is call K-medians. Does the cluster center have to be an actual instance from the dataset? Explain why.
+		\begin{answer*}
+			The median does not need to be an actual instance from the dataset. If there were an even number of points, then the median would be the average between the two "middle" points, which might not be in the dataset.
+		\end{answer*}
 \end{enumerate}
 
 \paragraph{2) Expectation-Maximization (12 points)} 
@@ -133,6 +150,17 @@ As an example, take Gaussian mixture model (GMM) clustering. Suppose all the par
 \paragraph{3) Dimensionality Reduction (9 points)}
 
 Show that in the limit $\sigma^2 \rightarrow 0$, the posterior mean for the probabilistic PCA model becomes an orthogonal projection onto the principal subspace, as in conventional PCA.
+\begin{proof}
+	From a result in the book, we have the posterior mean
+	\begin{align*}
+		E\left[ z\mid x \right] = M\inv W^T(x-\bar x) = (W^TW+\sigma^2L)\inv W(x-\bar x)
+	\end{align*}
+	In the limit as $\sigma^2\to 0,$ this becomes
+	\begin{align*}
+		(W^TW)\inv W^T(x-\bar x)
+	\end{align*}
+	which is an orthogonal projection onto the principal subspace, as desired.
+\end{proof}
 
 
 \paragraph{4) Probabilistic PCA (10 points)}
