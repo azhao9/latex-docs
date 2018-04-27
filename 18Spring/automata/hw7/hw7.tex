@@ -14,7 +14,13 @@
 
 \begin{enumerate}
 	\item Let HALT be the Halting language. Show that HALT is NP-hard. Is it NP-complete?
+		\begin{proof}
+			We will construct a polynomial time reduction from 3SAT, which is known to be NP-complete. Given an instance $S$ of 3SAT, let $T$ be a TM that iterates over all possible assignments to this instance, so that it only halts if a satisfying assignment is found, otherwise it loops forever. Then if $\left< T, \left< S\right>\right>$ is in the HALT, that must mean there exists a satisfying assignment to $S,$ and if not, there does not exist a satisfying assignment. Thus, this is a reduction from an instance of 3SAT to an instance of HALT, which is clearly polynomial time because converting $T$ and $S$ into representations can only take polynomial time. Thus, HALT is NP-hard.
 
+			HALT is not NP-complete because it is not in NP. We know this because HALT is an undecidable language, and therefore no verifier can run in polynomial time.
+		\end{proof}
+
+		\newpage
 	\item Call graphs $G$ and $H$ isomorphic if the nodes of $G$ can be reordered so that the graph $G$ is identical to $H.$ Let ISO$=\left\{ \left< G, H\right>: G, H\text{ are isomorphic} \right\}.$ Show that ISO$\in \bf{NP}.$
 		\begin{proof}
 			Suppose we are given $G$ and $H$ and a certificate $c=\left\{ i_1, \cdots, i_m \right\}$ of indices. Then we construct the verifier as $V( \left< G, H\right>, c)$ as
@@ -27,11 +33,13 @@
 			Step (1) can be completed using a DFS, which takes $O\left(\abs{V}+\abs{E}\right)$ time. Step (2) can be completed using a sorting algorithm, which takes $O(n^2)=O\left( \abs{V}^2 \right)$ time. Step (3) can be completed by just checking every edge and every vertex, which takes $O\left( \abs{V}+\abs{E} \right).$ Thus, this verifier runs in polynomial time in the size of the inputs. It is clearly a correct verifier since it checks everything that needs to be checked, so ISO is in NP.
 		\end{proof}
 
+		\newpage
 	\item Show that, if $\bf{P}=\bf{NP},$ then every language $A\in\bf{P},$ except $A=\varnothing$ and $A=\Sigma^*,$ is NP-complete.
 		\begin{proof}
 			If $\bf{P}=\bf{NP},$ then if $A\in\bf{P}$ we have $A\in\bf{NP}.$ Now, to show that $A$ is NP-hard, we need to show that any $B\in\bf{NP}$ can be solved in polynomial time using an oracle for $A.$ Since $\bf{P}=\bf{NP},$ this means $B\in \bf{P}$ so every language can be solved in polynomial time given an oracle for $A$ (that we wouldn't even need to use). Thus, $A$ is NP-hard, and thus $A$ is NP-complete. 
 		\end{proof}
 
+		\newpage
 	\item Let $\phi$ be a 3CNF. An $\neq$-assignment to the variables of $\phi$ is one where each clause contains two literals with unequal truth values.
 		\begin{enumerate}[(a)]
 			\item Show that any $\neq$-assignment automatically satisfies $\phi,$ and the negation of any $\neq$-assignment to $\phi$ is also an $\neq$-assignment.
