@@ -154,17 +154,31 @@ As an example, take Gaussian mixture model (GMM) clustering. Suppose all the par
 \newpage
 \paragraph{3) Dimensionality Reduction (9 points)}
 
-Show that in the limit $\sigma^2 \rightarrow 0$, the posterior mean for the probabilistic PCA model becomes an orthogonal projection onto the principal subspace, as in conventional PCA.
+Show that in the limit $\sigma^2 \rightarrow 0$, the posterior mean~\eqref{eq:ppca_postmean}~\eqref{eq:ppca_mmtx} for the probabilistic PCA model becomes an orthogonal projection onto the principal subspace, as in conventional PCA~\eqref{eq:pca_result}.
+
+\begin{align}
+\mathbb{E}[\mathbf{z}\vert\mathbf{x}] &= \mathbf{M}^{-1}\mathbf{W}_{\mathrm{ML}}^{\mathrm{T}} (\mathbf{x} - \bar{\mathbf{x}})
+\label{eq:ppca_postmean} \\
+\mathbf{M} &= \mathbf{W}^{\mathrm{T}} \mathbf{W} + \sigma^2 \mathbf{I}
+\label{eq:ppca_mmtx} \\
+\mathbf{y} &= \mathbf{L}^{-1/2} \mathbf{U}^{\mathrm{T}} (\mathbf{x} - \bar{\mathbf{x}})
+\label{eq:pca_result}
+\end{align}
+	
 \begin{proof}
-	From a result in the book, we have the posterior mean
+	We have
 	\begin{align*}
-		E\left[ z\mid x \right] = M\inv W^T(x-\bar x) = (W^TW+\sigma^2L)\inv W(x-\bar x)
+		E\left[ z\mid x \right] = M\inv W_{ML}^T(x-\bar x) = (W^TW+\sigma^2I)\inv \left[ U\left(L-\sigma^2 I\right)^{1/2} R \right]^T(x-\bar x)
 	\end{align*}
 	In the limit as $\sigma^2\to 0,$ this becomes
 	\begin{align*}
-		(W^TW)\inv W^T(x-\bar x)
+		E\left[ z\mid x \right] &= \left( W^TW \right)\inv \left( U L^{1/2} R \right)^T(x-\bar x) = (W^TW)\inv \left( R^T L^{1/2} U^T \right)(x-\bar x) \\
+		&= \left( W^TW \right)\inv R\inv L^{1/2} U^T(x-\bar x) = \left( RW^TW \right)\inv L^{1/2} U^T(x-\bar x)
 	\end{align*}
-	which is an orthogonal projection onto the principal subspace, as desired.
+	where we have used the fact that $L$ is diagonal and $R$ is orthogonal, so $R^T=R\inv.$ Now $RW^TW=L,$ so we finally get
+	\begin{align*}
+		E\left[ z\mid x \right] = L\inv L^{1/2} U^T(x-\bar x) = L^{-1/2}U^T (x-\bar x) = y
+	\end{align*}
 \end{proof}
 
 
