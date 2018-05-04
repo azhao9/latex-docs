@@ -1,0 +1,116 @@
+\documentclass{article}
+\usepackage[sexy, hdr, fancy]{evan}
+\setlength{\droptitle}{-4em}
+\usepackage{graphicx}
+
+\lhead{Homework 5}
+\rhead{Machine Learning}
+\lfoot{}
+\cfoot{\thepage}
+
+\newcommand{\vwi}{{\bf w}_i}
+\newcommand{\vw}{{\bf w}}
+\newcommand{\vx}{{\bf x}}
+\newcommand{\vy}{{\bf y}}
+\newcommand{\vxi}{{\bf x}_i}
+\newcommand{\yi}{y_i}
+\newcommand{\vxj}{{\bf x}_j}
+\newcommand{\vxn}{{\bf x}_n}
+\newcommand{\yj}{y_j}
+\newcommand{\ai}{\alpha_i}
+\newcommand{\aj}{\alpha_j}
+\newcommand{\X}{{\bf X}}
+\newcommand{\Y}{{\bf Y}}
+\newcommand{\vz}{{\bf z}}
+\newcommand{\code}[1]{{\footnotesize \tt #1}}
+\newcommand{\ztnodesize}{.6}
+
+\begin{document}
+\title{Homework 5}
+\maketitle
+\thispagestyle{fancy}
+
+
+\section{Analytical (15 points)}
+	
+\paragraph{1) (15 points)} The probability density function of most Markov Random Fields cannot be factorized as the product of a few conditional probabilities. This question explores some MRFs that can be factorized in this way.
+
+Consider the graph structure in Figure \ref{fig:utm1}.
+\begin{figure}[h]
+	\begin{center}
+\begin{tikzpicture}[style=thick,scale=1] 
+			\begin{scope}[shape=circle,minimum size=0.1cm] 
+			\tikzstyle{every node}=[draw,fill] 
+			\node[fill=none,scale=\ztnodesize] (X_1) at (0,0.5) {$\mathbf{X_1}$};
+			\node[fill=none,scale=\ztnodesize] (X_2) at (1,0) {$\mathbf{X_2}$};
+			\node[fill=none,scale=\ztnodesize] (X_3) at (1,1) {$\mathbf{X_3}$};
+			\draw [-] (X_1) -- (X_2);
+			\draw [-] (X_1) -- (X_3);
+			\end{scope} 
+		\end{tikzpicture}
+		\caption{The Original Undirected Graph}
+			\label{fig:utm1}
+		\end{center}
+\end{figure}
+From this graph, we know that $X_2$ and $X_3$ are conditionally independent given $X_1$. We can draw the corresponding directed graph as Figure \ref{fig:dtm2}.
+\begin{figure}[h]
+	\begin{center}
+\begin{tikzpicture}[style=thick,scale=1] 
+			\begin{scope}[shape=circle,minimum size=0.1cm] 
+			\tikzstyle{every node}=[draw,fill] 
+			\node[fill=none,scale=\ztnodesize] (X_1) at (0,0.5) {$\mathbf{X_1}$};
+			\node[fill=none,scale=\ztnodesize] (X_2) at (1,0) {$\mathbf{X_2}$};
+			\node[fill=none,scale=\ztnodesize] (X_3) at (1,1) {$\mathbf{X_3}$};
+			\draw [->] (X_1) -- (X_2);
+			\draw [->] (X_1) -- (X_3);
+			\end{scope} 
+		\end{tikzpicture}
+		\caption{The Converted Directed Graph}
+			\label{fig:dtm2}
+		\end{center}
+\end{figure}
+This suggests the following factorization of the joint probability:
+\begin{eqnarray}
+P(X_1, X_2, X_3) = P(X_3 | X_1) P(X_2 | X_1) P(X_1) \nonumber
+\end{eqnarray}
+
+Now consider the following graphical model in Figure \ref{fig:utm}.
+\begin{figure}[h!]
+	\begin{center}
+\begin{tikzpicture}[style=thick,scale=1] 
+			\begin{scope}[shape=circle,minimum size=0.1cm] 
+			\tikzstyle{every node}=[draw,fill] 
+			\node[fill=none,scale=\ztnodesize] (X_1) at (0,2) {$\mathbf{X_1}$};
+			\node[fill=none,scale=\ztnodesize] (X_2) at (1,2) {$\mathbf{X_2}$};
+			\node[fill=none,scale=\ztnodesize] (X_3) at (0,1) {$\mathbf{X_3}$};
+			\node[fill=none,scale=\ztnodesize] (X_4) at (2,1) {$\mathbf{X_4}$};
+			\node[fill=none,scale=\ztnodesize] (X_5) at (0,0) {$\mathbf{X_5}$};
+			\node[fill=none,scale=\ztnodesize] (X_6) at (1,0) {$\mathbf{X_6}$};
+			\node[fill=none,scale=\ztnodesize] (X_7) at (2,0) {$\mathbf{X_7}$};
+			\draw [-] (X_1) -- (X_2);
+			\draw [-] (X_2) -- (X_3);
+			\draw [-] (X_2) -- (X_4);
+			\draw [-] (X_3) -- (X_5);
+			\draw [-] (X_3) -- (X_6);
+			\draw [-] (X_4) -- (X_7);
+			\end{scope} 
+		\end{tikzpicture}
+		\caption{An Undirected Graph}
+			\label{fig:utm}
+		\end{center}
+\end{figure}
+
+As before, we can read the conditional independence relations from the graph. 
+\begin{enumerate}[(a)]
+\item Following the example above, write a factorization of the joint distribution:
+
+\begin{center}
+$P(X_1,X_2,X_3,X_4,X_5,X_6,X_7)$.
+\end{center}
+
+\item Is this factorization unique, meaning, could you have written other factorizations that correspond this model? If the factorization is unique, explain why it is unique. If it is not unique, provide an alternate factorization.
+\item What is it about these examples that allows them to be factored in this way? Show an example MRF that cannot be factored in this way.
+\end{enumerate}
+	
+
+\end{document}
