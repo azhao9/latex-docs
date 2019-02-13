@@ -109,6 +109,7 @@ class SumProduct:
         self.right_messages = -1*np.ones((self.k + 1, self.n + 1))
         self.left_messages = -1*np.ones((self.k + 1, self.n + 1))
         # add whatever data structures needed
+        self.z = 0
 
     def right_message(self, x_i, value):
         if (x_i == self.n):
@@ -147,17 +148,6 @@ class SumProduct:
         return message
 
     def marginal_probability(self, x_i):
-        # TODO: EDIT HERE
-        # should return a python list of type float, with its length=k+1, and the first value 0
-
-        # This code is used for testing only and should be removed in your implementation.
-        # It creates a uniform distribution, leaving the first position 0
-        '''
-        result = [1.0 / (self._potentials.num_x_values())] * (self._potentials.num_x_values() + 1)
-        result[0] = 0
-        return result
-        '''
-
         values = range(1, self.k+1)
 
         fi_xi = [self._potentials.potential(x_i, value) for value in values]
@@ -186,6 +176,7 @@ class SumProduct:
             result = fi_xi * left_prod * right_prod
 
         result = np.insert(result, 0, 0)
+        self.z = np.sum(result)
 
         result /= np.sum(result)
 
@@ -198,89 +189,64 @@ class MaxSum:
         self._assignments = [0] * (p.chain_length() + 1)
         self.n = p.chain_length()
         self.k = p.num_x_values()
-        self.right_messages = -1*np.ones((self.k + 1, self.n + 1))
         self.left_messages = -1*np.ones((self.k + 1, self.n + 1))
+        self.left_message_maxes = -1*np.ones((self.k + 1, self.n + 1), dtype=int)
+        self.max_prob = 0
 
-        # TODO: EDIT HERE
-        # add whatever data structures needed
+        sumprod = SumProduct(p)
+        sumprod.marginal_probability(1)
+        z = sumprod.z
+
+        values = range(1, self.k+1)
+
+        all_left_messages = [self.max_left_message(2, value) for value in values]
+        log_f1_x1 = [np.log(self._potentials.potential(1, value)) for value in values]
+
+        self._assignments[1] = np.argmax(np.add(all_left_messages, log_f1_x1)) + 1
+        max_prob = np.amax(np.add(all_left_messages, log_f1_x1))
+
+        max_prob -= np.log(z)
+        self.max_prob = max_prob
+        
+        for i in range(2, self.n+1):
+            self._assignments[i] = self.left_message_maxes[self._assignments[i-1], i]
+
 
     def get_assignments(self):
         return self._assignments
 
-    def right_message(self, x_i, value):
-        if (x_i == self.n):
-            raise Exception("can't send message to right of x_n")
-
-        if (self.right_messages[value, x_i] != -1):
-            return self.right_messages[value, x_i]
-
-        if (x_i == 1):
-            message = np.log(self._potentials.potential(1, value))
-        else:
-            f_n = x_i + self.n - 1
-            log_f_n_potentials = [np.log(self._potentials.potential(f_n, k, value)) for k in range(1, self.k+1)]
-            previous_messages = [self.right_message(x_i-1, val) for val in range(1, self.k+1)]
-            message = np.log(self._potentials.potential(x_i, value)) + np.max(log_f_n_potentials + previous_messages)
-
-        self.right_messages[value, x_i] = message
-        return message
-
-    def left_message(self, x_i, value):
+    def max_left_message(self, x_i, value):
         if (x_i == 1):
             raise Exception("can't send message to left of x_1")
 
-        if (self.left_messages[value, x_i] != -1):
-            return self.left_messages[value, x_i]
+        f_n = x_i + self.n - 1
+        
+        if (self.left_message_maxes[value, x_i] != -1):
+            val = self.left_message_maxes[value, x_i]
 
-        if (x_i == self.n):
-            message = np.log(self._potentials.potential(self.n, value))
+            log_f = np.log(self._potentials.potential(f_n, value, val))
+            previous_message = np.log(self._potentials.potential(x_i, val))
+            message = log_f + previous_message
+
+            if not (x_i == self.n):
+                #previous_messages = [self.max_left_message(x_i+1, value) for value in range(1, self.k+1)]
+                #message += np.amax(previous_messages)
+                message += self.max_left_message(x_i+1, self.left_message_maxes[value, x_i])
+
         else:
-            f_n = x_i + self.n
-            log_f_n_potentials = [np.log(self._potentials.potential(f_n, value, k)) for k in range(1, self.k+1)]
-            previous_messages = [self.left_message(x_i+1, val) for val in range(1, self.k+1)]
-            message = np.log(self._potentials.potential(x_i, value)) + np.max(log_f_n_potentials + previous_messages)
+            log_f = [np.log(self._potentials.potential(f_n, value, b)) for b in range(1, self.k+1)]
+            previous_messages = [np.log(self._potentials.potential(x_i, b)) for b in range(1, self.k+1)]
 
-        self.left_messages[value, x_i] = message
+            if not (x_i == self.n):
+                previous_messages = np.add(previous_messages,[self.max_left_message(x_i+1, value) for value in range(1, self.k+1)])
+
+            message = np.amax(np.add(log_f, previous_messages))
+            self.left_message_maxes[value, x_i] = np.argmax(np.add(log_f, previous_messages))+ 1
+
         return message
 
     def max_probability(self, x_i):
-        values = range(1, self.k+1)
-
-        max_j = -1
-        max_prob = float('-inf')
-
-        for j in range(1, self.k+1):
-            log_fi_xi = np.log(self._potentials.potential(x_i, j))
-            if (x_i == 1):
-                # f_1 -> x_1 and f_(n+1) -> x_1     
-                all_left_messages = [self.left_message(2, value) for value in values]
-                log_left_f = [np.log(self._potentials.potential(1 + self.n, a, j)) for a in values] 
-                result = log_fi_xi + np.amax(all_left_messages + log_left_f)
-
-            elif (x_i == self.n):
-                # f_n -> x_n and f_(2n-1) -> x_n
-                all_right_messages = [self.right_message(self.n-1, value) for value in values]
-                log_right_f = [np.log(self._potentials.potential(2*self.n-1, j, b)) for b in values] 
-                result = log_fi_xi + np.amax(log_right_f + all_right_messages)
-
-            else:
-                # f_i -> x_i, f_(n+i-1) -> x_i, f_(n+i) -> x_i
-                all_left_messages = [self.left_message(x_i+1, value) for value in values]
-                all_right_messages = [self.right_message(x_i-1, value) for value in values]
-                log_left_f = [np.log(self._potentials.potential(x_i + self.n, j, b)) for b in values]
-                log_right_f = [np.log(self._potentials.potential(x_i + self.n - 1, a, j)) for a in values] 
-
-                left_max = np.amax(all_left_messages + log_left_f)
-                right_max = np.amax(log_right_f + all_right_messages)
-                result = log_fi_xi + left_max + right_max
-
-            if (result > max_prob):
-                max_prob = result
-                max_j = j
-
-        self._assignments[x_i] = max_j
-
-        return max_prob
+        return self.max_prob
 
 
     

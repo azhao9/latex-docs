@@ -101,15 +101,29 @@ Now consider the following graphical model in Figure \ref{fig:utm}.
 \end{figure}
 
 As before, we can read the conditional independence relations from the graph. 
+\newpage
 \begin{enumerate}[(a)]
 \item Following the example above, write a factorization of the joint distribution:
 
 \begin{center}
 $P(X_1,X_2,X_3,X_4,X_5,X_6,X_7)$.
 \end{center}
+\begin{soln}
+	We can let $x_1$ be the root of a tree, so then the factorization would be
+	\begin{align*}
+		p(x_1) p(x_2\mid x_1) p(x_3\mid x_2) p(x_4\mid x_2) p(x_5\mid x_3) p(x_6\mid x_3) p(x_7\mid x_4)
+	\end{align*}
+\end{soln}
 
 \item Is this factorization unique, meaning, could you have written other factorizations that correspond this model? If the factorization is unique, explain why it is unique. If it is not unique, provide an alternate factorization.
+	\begin{soln}
+		This factorization is unique because the graph is a tree structure with no cycles or cliques.
+	\end{soln}
+
 \item What is it about these examples that allows them to be factored in this way? Show an example MRF that cannot be factored in this way.
+	\begin{soln}
+		These examples are both tree structures without cliques, so there exist conditional independences. Consider the complete graph on 3 nodes: there is no conditional independence given only a single node, so there is no way to simplify the factorization.
+	\end{soln}
 \end{enumerate}
 	
 

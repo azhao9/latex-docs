@@ -1,0 +1,99 @@
+\documentclass{article}
+\usepackage[sexy, hdr, fancy]{evan}
+\setlength{\droptitle}{-4em}
+
+\lhead{Homework 1}
+\rhead{Harmonic Analysis}
+\lfoot{}
+\cfoot{\thepage}
+
+\begin{document}
+\title{Homework 1}
+\maketitle
+\thispagestyle{fancy}
+
+Let $K$ be a function defined on the unit square $Q:=[0, 1]\times[0, 1].$ Define the map $f\mapsto Kf$ defined, for functions defined on $[0, 1],$ by $(Kf)(x)=\int_{[0, 1]\times[0, 1]} K(x, y) f(y)\, dy,$ for $x\in[0, 1],$ so that $Kf$ is a function on $[0, 1].$
+\begin{itemize}
+	\item Assume $K\in \mathcal{C}(Q),$ and consider the map above for $f\in \mathcal{C}([0, 1]).$ Is the map well-defined?
+		\begin{answer*}
+			Yes. If $f, g\in \mathcal{C}([0, 1])$ with $f=g$ then for $x\in[0, 1],$ we have
+			\begin{align*}
+				(Kf)(x)-(Kg)(x) &= \int_{[0, 1]} K(x, y)f(y)\, dy - \int_{[0, 1]} K(x, y)g(y)\, dy \\
+				&= \int_{[0, 1]} K(x, y) \left[ f(y)-g(y) \right]\, dy = 0 \\
+				\implies (Kf)(x) &= (Kg)(x) \implies Kf=Kg
+			\end{align*}
+			so the map is well-defined.
+		\end{answer*}
+
+	\item To which space does $Kf$ belong?
+		\begin{answer*}
+			From below, $Kf\in\mathcal C([0, 1]).$
+		\end{answer*}
+
+	\item If yes, does it define a linear operator?
+		\begin{answer*}
+			Yes. Let $f, g\in\mathcal C([0, 1])$ and $\alpha\in\RR.$ We have
+			\begin{align*}
+				K(f+g) &= \int_{[0, 1]} K(x, y)\left[ (f+g)(y) \right]\, dy = \int_{[0, 1]} K(x, y) f(y)\, dy + \int_{[0, 1]} K(x, y) g(y)\, dy = Kf + Kg \\
+				K(\alpha\cdot f) &= \int_{[0, 1]} K(x, y) (\alpha\cdot f)(y)\, dy = \alpha\cdot\int_{[0, 1]} K(x, y) f(y)\, dy = \alpha \cdot Kf
+			\end{align*}
+			so the map is a linear operator.
+		\end{answer*}
+
+	\item If yes, is such a linear operator bounded/continuous/Lipschitz from $\mathcal{C}\left( [0, 1], \left\lVert \cdot \right\rVert_\infty \right)$ onto itself? 
+		\begin{answer*}
+			Since $Q$ is compact and $K\in\mathcal C(Q),$ it must be that $\sup_{x\in [0, 1]} \int_{[0, 1]} \abs{K(x, y)}\, dy=I<\infty.$ Let $\varepsilon>0$ and take $f, g\in \mathcal C([0, 1])$ with $\left\lVert f-g \right\rVert_\infty<\varepsilon/I.$ Then 
+			\begin{align*}
+				\left\lVert Kf-Kg \right\rVert_\infty &= \sup_{x\in[0, 1]} \abs{\int_{[0, 1]} K(x, y)f(y)\, dy - \int_{[0, 1]} K(x, y) g(y)\, dy} = \sup_{x\in[0, 1]}\abs{\int_{[0, 1]} K(x, y) \left[ f(y)-g(y) \right]\, dy} \\
+				&\le \sup_{x\in[0, 1]}\int_{[0, 1]} \abs{K(x, y) \left[ f(y)-g(y) \right]}\, dy \le \sup_{x\in[0, 1]} \int_{[0, 1]} \abs{K(x, y)} \left\lVert f-g \right\rVert_\infty\, dy \\
+				& =\left\lVert f-g \right\rVert_\infty \sup_{x\in[0, 1]} \int_{[0, 1]} \abs{K(x, y)}\, dy < \varepsilon
+			\end{align*}
+		\end{answer*}
+
+	\item If yes, can you find an upper bound on the norm of such an operator; if no make sure you show why it is not bounded/continuous/Lipschitz. 
+		\begin{answer*}
+			We have
+			\begin{align*}
+				\left\lVert Kf \right\rVert_\infty &= \sup_{x\in[0, 1]} \abs{\int_{[0, 1]} K(x, y)f(y)\, dy} \le \sup_{x\in[0, 1]} \int_{[0, 1]} \abs{K(x, y)f(y)}\, dy \le \sup_{x\in[0, 1]}\int_{[0, 1]} \abs{K(x, y)}\left\lVert f \right\rVert_\infty \, dy
+			\end{align*}
+			so $I$ is an upper bound on the value of the operator norm.
+		\end{answer*}
+
+	\item If it is bounded, can you find the exact norm of the operator?
+		\begin{answer*}
+			Consider the value $x_m$ that maximizes $\int_0^1 \abs{K(x, y)}\, dy.$ Then define
+			\begin{align*}
+				f_m(y) &= \begin{cases}
+					1 & K(x_m, y)\ge 0 \\
+					-1 & K(x_m, y)<0
+				\end{cases}
+			\end{align*}
+			so that $\left\lVert f \right\rVert_\infty = 1.$ Then we have
+			\begin{align*}
+				\sup_{x\in[0, 1]} \abs{\int_0^1 K(x, y)f_m(y)\, dy} &\ge \abs{\int_0^1 K(x_m, y)f_m(y)\, dy} = \abs{\int_0^1 \abs{K(x_m, y)}\, dy} = \int_0^1\abs{K(x_m, y)}\, dy \\
+				\implies \left\lVert Kf \right\rVert_\infty &\ge \left\lVert f \right\rVert_\infty \int_0^1 \abs{K(x_m, y)}\, dy = \left\lVert f \right\rVert_\infty \sup_{x\in[0, 1]}\int_0^1 \abs{K(x, y)}\, dy
+			\end{align*}
+			and thus since we have the same inequality in the reverse direction from earlier, it follows that we have equality. Although $f$ is a step-wise function, we can approximate it arbitrarily close with continuous functions, and thus the we can't improve the upper bound, so it is the true norm of the operator.
+		\end{answer*}
+
+	\item Same questions as above, but for $K\in L^2(Q), f\in L^2([0, 1]),$ and the linear operator viewed from $L^2\left( [0, 1], \left\lVert \cdot \right\rVert_2 \right)$ onto itself. Give an example of a $K\in L^2(Q)$ that is not in $\mathcal{C}(Q).$
+		\begin{soln}
+			The map is well-defined and it is also a linear operator for the same reasons as above (neither of these two properties requires the use of the specific norm, only properties of the integral).
+
+			By the Cauchy-Schwarz inequality, We have
+			\begin{align*}
+				(Kf)^2(x) &= \left[ \int_{[0, 1]} K(x, y) f(y)\, dy \right]^2 \le \int_{[0, 1]} K^2(x, y)\, dy \int_{[0, 1]} f^2(y)\, dy
+			\end{align*}
+			and thus
+			\begin{align*}
+				\left\lVert Kf \right\rVert_2 &= \left( \int_0^1 \left[ \int_{[0, 1]} K(x, y)f(y)\, dy \right]^2 \, dx\right)^{1/2} \le \left( \int_0^1 \left[ \int_{[0, 1]} K^2(x, y)\, dy \int_{[0, 1]} f^2(y)\, dy \right]\, dx \right)^{1/2} \\
+				&= \left( \int_{[0, 1]} f^2(y)\, dy \right)^{1/2} \left( \int_0^1 \int_{[0, 1]} K^2(x, y)\, dy\, dx \right)^{1/2} = \left\lVert f \right\rVert_2 \left( \int_0^1 \int_0^1 K^2(x, y)\, dy\, dx \right)^{1/2}
+			\end{align*}
+			so the operator is bounded, and an upper bound for the operator norm is $\left(\int_{Q} K^2(x, y)\right)^{1/2}.$ At the moment I am unable to prove that this upper bound is indeed the best possible bound.
+
+			We can simply use a discontinuous piece-wise function on $Q,$ which will be square-integrable but not continuous.
+		\end{soln}
+
+\end{itemize}
+
+\end{document}
