@@ -1,0 +1,82 @@
+\documentclass{article}
+\usepackage[sexy, hdr, fancy]{evan}
+\setlength{\droptitle}{-4em}
+
+\lhead{Homework 2}
+\rhead{Harmonic Analysis}
+\lfoot{}
+\cfoot{\thepage}
+
+\begin{document}
+\title{Homework 2}
+\maketitle
+\thispagestyle{fancy}
+
+\begin{enumerate}
+	\item Consider the $2\pi$-period odd function defined on $[0, \pi]$ by $f(\theta)=\theta(\pi-\theta).$ NOTE: Discussed with Mauro, I am using the $\pi$-periodic function defined on just $[0, \pi].$ The results will not be identical but they should be okay.
+		
+		\begin{enumerate}[(a)]
+			\ii Draw the graph of $f$
+
+			\ii Compute the Fourier coefficients of $f,$ and show that
+			\begin{align*}
+				f(\theta)=\frac{8}{\pi} \sum_{k\text{ odd }\ge1}^{} \frac{\sin k\theta}{k^3}
+			\end{align*}
+
+			Is this function continuous on the circle? Continuously differentiable on the circle? In $L^2$ of the circle?
+			\begin{soln}
+				We have
+				\begin{align*}
+					\hat f(n) &= \frac{1}{\pi} \int_0^\pi \theta(\pi-\theta) e^{-2in\theta}\, d\theta = \int_0^\pi \theta e^{-2in\theta}\, d\theta - \frac{1}{\pi}\int_0^\pi \theta^2 e^{-2in\theta}\, d\theta
+				\end{align*}
+
+				Integrating by parts, we have
+				\begin{align*}
+					\int_0^\pi \theta e^{-2in\theta}\, d\theta &= -\frac{\theta}{2in} e^{-2in\theta}\bigg\vert_0^\pi - \int_0^\pi -\frac{1}{2in} e^{-2in\theta}\, d\theta \\
+					&= -\frac{\pi}{2in} + \frac{1}{4n^2}e^{-2in\theta}\bigg\vert_0^\pi = -\frac{\pi}{2in} \\
+					\int_0^\pi \theta^2 e^{-2in\theta}\, d\theta &= -\frac{\theta^2}{2in}e^{-2in\theta}\bigg\vert_0^\pi - \int_0^\pi -\frac{1}{2in}e^{-2in\theta}\cdot 2\theta\, d\theta \\
+					&= -\frac{\pi^2}{2in} + \frac{1}{in}\int_0^\pi \theta e^{-2in\theta}\, d\theta = -\frac{\pi^2}{2in} + \frac{1}{in} \cdot \left( -\frac{\pi}{2in} \right) = -\frac{\pi^2}{2in} + \frac{\pi}{2n^2} \\
+					\implies \hat f(n) &= -\frac{\pi}{2in} - \frac{1}{\pi}\left( -\frac{\pi^2}{2in} + \frac{\pi}{2n^2} \right) = -\frac{1}{2n^2}
+				\end{align*}
+
+				Given a fixed $n\neq0,$ we have
+				\begin{align*}
+					\hat g(n, \theta) &= \hat f(n)e^{2in\theta} - \hat f(-n) e^{-2in\theta} = -\frac{1}{2n^2} \left( \cos 2n\theta + i\sin 2n\theta \right) + \frac{1}{2(-n)^2}\left( \cos(-2n\theta) + i\sin(-2n\theta) \right) \\
+					&= -\frac{1}{n^2}\cos2n\theta
+				\end{align*}
+				due to the even and odd properties of $\cos$ and $\sin,$ respectively. We also have
+				\begin{align*}
+					\hat f(0) &= \frac{1}{\pi}\int_0^\pi \theta(\pi-\theta)\, d\theta = \frac{1}{\pi}\left( \frac{\theta^2\pi}{2} - \frac{\theta^3}{3} \right)\bigg\vert_0^\pi = \frac{1}{\pi} \left( \frac{\pi^3}{2} - \frac{\pi^3}{3} \right) = \frac{\pi^2}{6}
+				\end{align*}
+
+				and thus the Fourier series for $f$ is given by
+				\begin{align*}
+					\sum_{n=-\infty}^{\infty} \hat f(n)e^{2in\theta} = \frac{\pi^2}{6} + \sum_{k=1}^{\infty} \hat g(k, \theta) = \frac{\pi^2}{6} - \sum_{k=1}^{\infty} \frac{1}{n^2}\cos 2n\theta
+				\end{align*}
+
+				Now, since $f$ is continuous, we have
+				\begin{align*}
+					\sum_{k=-\infty}^{\infty} \abs{\hat f(k)} = 2\sum_{k=1}^{\infty} \abs{\frac{1}{n^2}} + \abs{\hat f(0)} = 2\cdot\frac{\pi^2}{6}+\frac{\pi^2}{6} < \infty
+				\end{align*}
+				and thus the Fourier series converges uniformly to $f.$ 
+
+				It is not continuously differentiable, it has a cusp at $k\pi$ for $k\in\ZZ.$ It is also in $L^2$ (trivial to show, just integrating a quartic polynomial).
+			\end{soln}
+			
+		\end{enumerate}
+
+	\item Prove that if $f$ is an even $2\pi$-period function, i.e. $f(\theta)=f(-\theta)$ for all $\theta\in[-\pi, \pi],$ then the Fourier series can be written as a cosine series. 
+		\begin{proof}
+			We have
+			\begin{align*}
+				\hat f(n) &= \frac{1}{2\pi}\int_{-\pi}^\pi 
+			\end{align*}<++>
+			The Fourier series of $f$ can be written as
+			\begin{align*}
+				\sum_{n=-\infty}^{\infty} \hat f(n) e^{in\theta} 
+			\end{align*}
+		\end{proof}<++>
+		
+\end{enumerate}
+
+\end{document}
