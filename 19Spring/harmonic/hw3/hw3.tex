@@ -1,0 +1,87 @@
+\documentclass{article}
+\usepackage[sexy, hdr, fancy]{evan}
+\setlength{\droptitle}{-4em}
+
+\lhead{Homework 3}
+\rhead{Harmonic Analysis}
+\lfoot{}
+\cfoot{\thepage}
+
+\begin{document}
+\title{Homework 3}
+\maketitle
+\thispagestyle{fancy}
+
+\begin{enumerate}
+  \ii Prove that the Fejer kernel is given by
+  \begin{align*}
+    F_N(x) = \frac{1}{N} \frac{\sin^2(Nx/2)}{\sin^2(x/2)}
+  \end{align*}
+  
+  Hint: Remember that $NF_N(x) = D_0(x)+\dots+D_{N-1}(x)$ where $D_n(x)$ is the Dirichlet kernel. Therefore, if $\omega=e^{ix}$ we have
+  \begin{align*}
+    NF_N(x) = \sum_{n=0}^{N-1}\frac{\omega^{-n}-\omega^{n+1}}{1-\omega}
+  \end{align*}
+  \begin{proof}
+    From section 1.1 we have the closed form of the Dirichlet kernel
+    \begin{align*}
+      D_n(x) = \frac{\sin \left( n+\frac{1}{2} \right)x}{\sin(x/2)}
+    \end{align*}
+    Also note the following result:
+    \begin{align*}
+      \cos nx &= \cos\left[ \left( n+\frac{1}{2} \right)x - \frac{x}{2} \right] = \cos \left[\left( n+ \frac{1}{2}\right)x\right] \cos \frac{x}{2} + \sin \left[ \left( n+\frac{1}{2} \right)x \right]\sin \frac{x}{2} \\
+      \cos (n+1)x &= \cos\left[ \left( n+\frac{1}{2} \right)x + \frac{x}{2} \right] = \cos\left[ \left( n+\frac{1}{2} \right)x \right] \cos \frac{x}{2} - \sin\left[ \left( n+\frac{1}{2} \right)x \right]\sin \frac{x}{2} \\
+      \implies \cos nx - \cos (n+1)x &= 2\sin \left[ \left( n+\frac{1}{2} \right)x \right]\sin \frac{x}{2}
+    \end{align*}
+
+    Thus, our sum becomes
+    \begin{align*}
+      F_N(x) &= \frac{1}{N} \sum_{n=0}^{N-1} D_n(x) = \frac{1}{N} \sum_{n=0}^{N-1} \frac{\sin \left(n+\frac{1}{2}\right)x}{\sin (x/2)} = \frac{1}{2N\sin^2(x/2)} \sum_{n=0}^{N-1} 2\sin\left[ \left( n+\frac{1}{2} \right)x \right]\sin \frac{x}{2} \\
+      &= \frac{1}{2N\sin^2 (x/2)} \sum_{n=0}^{N-1} \left[ \cos nx - \cos (n+1)x \right] = \frac{1-\cos Nx}{2N\sin^2(x/2)} \\
+      &= \frac{1-\cos \left( 2\cdot \frac{Nx}{2} \right)}{2N\sin^2(x/2)} = \frac{1-\left(1- 2\sin^2 \frac{Nx}{2} \right)}{2N\sin^2(x/2)} = \frac{1}{N} \frac{\sin^2 (Nx/2)}{\sin^2(x/2)}
+    \end{align*}
+    as desired.
+  \end{proof}
+
+  \ii Solve Laplace's equation $\Delta u=0$ on the semi infinite strip
+  \begin{align*}
+    S=\left\{ (x, y):0<x<1, 0<y \right\}
+  \end{align*}
+  subject to the following boundary conditions
+  \begin{align*}
+    \begin{cases}
+      u(0, y)=0 & 0\le y \\
+      u(1, y)=0 & 0\le y \\
+      u(x, 0)=f(x) & 0\le x\le 1
+    \end{cases}
+  \end{align*}
+  where $f$ is a given function, with of course $f(0)=f(1)=0.$ Write
+  \begin{align*}
+    f(x) = \sum_{n=1}^{\infty} a_n \sin(n\pi x)
+  \end{align*}
+  and expand the general solution in terms of the special solutions given by
+  \begin{align*}
+    u_n(x, y) = e^{-n\pi y}\sin(n\pi x)
+  \end{align*}
+  Express $u$ as an integral involving $f,$ analogous to the Poisson kernel formula (6).
+  \begin{soln}
+    Note that $u_n(x, 0)=\sin (n\pi x)$ and it also satisfies the boundary conditions $u_n(x, 0)=u_n(x, 1)=0.$ Thus, since $f$ can be written as a sum of sines, we have
+    \begin{align*}
+      u(x, y) = \sum_{n=1}^{\infty} a_n u_n(x, y)
+    \end{align*}
+    is the general solution because it satisfies the 0 boundary conditions since each of the individual terms is 0, and satisfies the $f$ boundary condition as well. 
+
+    Now, we can also write $a_n$ as the Fourier coefficient 
+    \begin{align*}
+      a_n = \int_0^1 f(z) \sin (n\pi z)\, dz
+    \end{align*}
+    and thus the solution can be written as
+    \begin{align*}
+      u(x, y) &= \sum_{n=1}^{\infty} \int_0^1 f(z)\sin (n\pi z)\, dz \cdot e^{-n\pi y}\sin(n\pi x) \\
+      &= \int_0^1 f(z) \left(\sum_{n=1}^{\infty} e^{-n\pi y}\sin (n\pi x) \sin (n\pi z)\right) \, dz
+    \end{align*}
+  \end{soln}
+
+\end{enumerate}
+
+\end{document}
